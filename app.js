@@ -30,6 +30,7 @@
     totalCurrent: sets.reduce((a, s) => a + s.currentValue, 0),
     totalProjected: sets.reduce((a, s) => a + s.projectedValue, 0),
   };
+  summary.totalPieces = sets.reduce((a, s) => a + s.pieces, 0);
   summary.appreciation = summary.totalCurrent - summary.totalRetail;
   summary.appreciationPct = (summary.appreciation / summary.totalRetail * 100);
   summary.projectedGrowth = summary.totalProjected - summary.totalCurrent;
@@ -122,6 +123,7 @@
     const grid = document.getElementById('statsGrid');
     const cards = [
       { label: 'Total Sets', value: summary.totalSets, sub: `across ${LEGO_DATA.categories.length} themes` },
+      { label: 'Total Pieces', value: summary.totalPieces.toLocaleString(), sub: 'bricks combined' },
       { label: 'Original Retail', value: fmt(summary.totalRetail), sub: 'total invested' },
       { label: 'Current Value', value: fmt(summary.totalCurrent), cls: 'accent', sub: 'built/displayed condition' },
       { label: 'Appreciation', value: fmt(summary.appreciation), cls: 'green', sub: pct(summary.appreciationPct) + ' overall return' },
