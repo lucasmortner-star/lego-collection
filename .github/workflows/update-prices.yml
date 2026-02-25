@@ -1,0 +1,46 @@
+name: Update LEGO Prices
+
+on:
+  # Run daily at 6:00 AM UTC (10:00 PM PT / 1:00 AM ET)
+  schedule:
+    - cron: '0 6 * * *'
+
+  # Allow manual trigger from GitHub Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run price updater
+        run: python scripts/update_prices.py
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet data.js || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push updated prices
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.js index.html
+          git commit -m "chore: update LEGO prices $(date +'%Y-%m-%d')"
+          git push
