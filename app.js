@@ -6,10 +6,15 @@
   'use strict';
 
   // --- State ---
+  let currentPage = 'collection'; // 'collection' or 'wishlist'
   let currentView = 'table';
   let currentSort = { key: 'num', dir: 'asc' };
   let activeThemeFilter = null;
   let searchQuery = '';
+
+  // Wishlist state
+  let wishlistFilter = 'all';
+  let wishlistSearch = '';
 
   // --- Computed data ---
   const sets = LEGO_DATA.sets.map(s => ({
@@ -299,8 +304,8 @@
       (searchQuery ? ` matching "${searchQuery}"` : '');
   }
 
-  // --- Render All ---
-  function render() {
+  // --- Render Collection Page ---
+  function renderCollection() {
     renderStats();
     renderThemeBreakdown();
     if (currentView === 'table') {
@@ -310,7 +315,165 @@
     }
   }
 
+  // ===================================================================
+  // WISHLIST
+  // ===================================================================
+
+  function getFilteredWishlist() {
+    let items = WISHLIST_DATA.items || [];
+
+    if (wishlistFilter !== 'all') {
+      items = items.filter(i => i.priority === wishlistFilter);
+    }
+
+    if (wishlistSearch) {
+      const q = wishlistSearch.toLowerCase();
+      items = items.filter(i =>
+        i.name.toLowerCase().includes(q) ||
+        i.setNumber.toLowerCase().includes(q) ||
+        i.theme.toLowerCase().includes(q) ||
+        (i.notes && i.notes.toLowerCase().includes(q)) ||
+        (i.wantedBy && i.wantedBy.toLowerCase().includes(q))
+      );
+    }
+
+    return items;
+  }
+
+  function renderWishlistStats() {
+    const statsEl = document.getElementById('wishlistStats');
+    const items = WISHLIST_DATA.items || [];
+
+    if (items.length === 0) {
+      statsEl.innerHTML = '';
+      return;
+    }
+
+    const totalItems = items.length;
+    const totalRetail = items.reduce((a, i) => a + (i.retail || 0), 0);
+    const highPriority = items.filter(i => i.priority === 'High').length;
+
+    statsEl.innerHTML = `
+      <div class="wl-stat-card">
+        <div class="wl-stat-label">Wishlist Items</div>
+        <div class="wl-stat-value">${totalItems}</div>
+      </div>
+      <div class="wl-stat-card">
+        <div class="wl-stat-label">Est. Total Cost</div>
+        <div class="wl-stat-value accent">${fmt(totalRetail)}</div>
+      </div>
+      <div class="wl-stat-card">
+        <div class="wl-stat-label">High Priority</div>
+        <div class="wl-stat-value">${highPriority}</div>
+      </div>
+    `;
+  }
+
+  function renderWishlistGrid() {
+    const grid = document.getElementById('wishlistGrid');
+    const empty = document.getElementById('wishlistEmpty');
+    const items = getFilteredWishlist();
+
+    if ((WISHLIST_DATA.items || []).length === 0) {
+      grid.style.display = 'none';
+      empty.style.display = '';
+      return;
+    }
+
+    if (items.length === 0) {
+      grid.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text-muted);">
+        <p>No wishlist items match your search or filter.</p>
+      </div>`;
+      grid.style.display = '';
+      empty.style.display = 'none';
+      return;
+    }
+
+    grid.style.display = '';
+    empty.style.display = 'none';
+
+    // Sort: High priority first, then Medium, then Low
+    const priorityOrder = { 'High': 0, 'Medium': 1, 'Low': 2 };
+    const sorted = [...items].sort((a, b) => {
+      const pa = priorityOrder[a.priority] ?? 1;
+      const pb = priorityOrder[b.priority] ?? 1;
+      return pa - pb;
+    });
+
+    grid.innerHTML = sorted.map(item => {
+      const prioClass = (item.priority || 'Medium').toLowerCase();
+      const piecesStr = item.pieces ? `${item.pieces.toLocaleString()} pcs` : '';
+      const notesHtml = item.notes ? `<div class="wl-card-notes">${item.notes}</div>` : '';
+
+      return `<div class="wl-card">
+        <div class="wl-priority-bar ${prioClass}"></div>
+        <div class="wl-card-body">
+          <div class="wl-card-header">
+            <span class="wl-card-name">${item.name}</span>
+            <span class="wl-card-set-num">${item.setNumber}</span>
+          </div>
+          <div class="wl-card-meta">
+            <span>${item.theme}</span>
+            ${piecesStr ? `<span>&middot; ${piecesStr}</span>` : ''}
+            ${item.wantedBy ? `<span>&middot; Wanted by: <strong>${item.wantedBy}</strong></span>` : ''}
+          </div>
+          ${notesHtml}
+        </div>
+        <div class="wl-card-right">
+          <span class="wl-card-price">${item.retail > 0 ? fmt(item.retail) : 'TBD'}</span>
+          <span class="wl-priority-badge ${prioClass}">${item.priority || 'Medium'}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderWishlist() {
+    renderWishlistStats();
+    renderWishlistGrid();
+  }
+
+  // ===================================================================
+  // PAGE SWITCHING
+  // ===================================================================
+
+  function switchPage(page) {
+    currentPage = page;
+
+    // Update tab buttons
+    document.querySelectorAll('.page-tab').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.page === page);
+    });
+
+    // Toggle page visibility
+    document.getElementById('collectionPage').style.display = page === 'collection' ? '' : 'none';
+    document.getElementById('wishlistPage').style.display = page === 'wishlist' ? '' : 'none';
+
+    // Toggle footer visibility
+    document.getElementById('collectionFooter').style.display = page === 'collection' ? '' : 'none';
+    document.getElementById('wishlistFooter').style.display = page === 'wishlist' ? '' : 'none';
+
+    // Toggle header controls visibility (search/view toggle only for collection)
+    document.querySelector('.header-controls').style.display = page === 'collection' ? '' : 'none';
+
+    // Render the active page
+    if (page === 'collection') {
+      renderCollection();
+    } else {
+      renderWishlist();
+    }
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   // --- Event Listeners ---
+
+  // Page toggle
+  document.querySelectorAll('.page-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchPage(btn.dataset.page);
+    });
+  });
 
   // View toggle
   document.querySelectorAll('.view-btn').forEach(btn => {
@@ -322,7 +485,7 @@
       document.getElementById('tableView').style.display = currentView === 'table' ? '' : 'none';
       document.getElementById('cardsView').style.display = currentView === 'cards' ? '' : 'none';
 
-      render();
+      renderCollection();
     });
   });
 
@@ -332,7 +495,7 @@
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
       searchQuery = e.target.value.trim();
-      render();
+      renderCollection();
     }, 200);
   });
 
@@ -340,7 +503,7 @@
   document.getElementById('sortSelect').addEventListener('change', (e) => {
     const [key, dir] = e.target.value.split('-');
     currentSort = { key, dir };
-    render();
+    renderCollection();
   });
 
   // Table header sort
@@ -367,7 +530,7 @@
       th.classList.add('sorted');
       th.querySelector('.sort-arrow').textContent = currentSort.dir === 'asc' ? '\u25B2' : '\u25BC';
 
-      render();
+      renderCollection();
     });
   });
 
@@ -377,7 +540,7 @@
     if (!pill) return;
     const cat = pill.dataset.cat;
     activeThemeFilter = activeThemeFilter === cat ? null : cat;
-    render();
+    renderCollection();
   });
 
   // Theme bar click
@@ -386,10 +549,32 @@
     if (!seg) return;
     const cat = seg.dataset.cat;
     activeThemeFilter = activeThemeFilter === cat ? null : cat;
-    render();
+    renderCollection();
+  });
+
+  // --- Wishlist Event Listeners ---
+
+  // Wishlist search
+  let wlSearchTimeout;
+  document.getElementById('wishlistSearchInput').addEventListener('input', (e) => {
+    clearTimeout(wlSearchTimeout);
+    wlSearchTimeout = setTimeout(() => {
+      wishlistSearch = e.target.value.trim();
+      renderWishlistGrid();
+    }, 200);
+  });
+
+  // Wishlist filter buttons
+  document.querySelector('.wishlist-filter-group').addEventListener('click', (e) => {
+    const btn = e.target.closest('.wishlist-filter-btn');
+    if (!btn) return;
+    wishlistFilter = btn.dataset.filter;
+    document.querySelectorAll('.wishlist-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderWishlistGrid();
   });
 
   // --- Init ---
-  render();
+  renderCollection();
 
 })();

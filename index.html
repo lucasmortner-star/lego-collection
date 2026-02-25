@@ -22,6 +22,13 @@
           <span>Ortner's Collection &middot; Updated Feb 2026</span>
         </div>
       </div>
+
+      <!-- PAGE TOGGLE (top center) -->
+      <div class="page-toggle">
+        <button class="page-tab active" data-page="collection">Collection</button>
+        <button class="page-tab" data-page="wishlist">Wishlist</button>
+      </div>
+
       <div class="header-controls">
         <div class="search-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -35,8 +42,10 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="dashboard">
+  <!-- ============================================ -->
+  <!-- COLLECTION PAGE (existing content)           -->
+  <!-- ============================================ -->
+  <main class="dashboard" id="collectionPage">
 
     <!-- STATS -->
     <div class="stats-grid" id="statsGrid"></div>
@@ -95,13 +104,66 @@
 
   </main>
 
+  <!-- ============================================ -->
+  <!-- WISHLIST PAGE                                -->
+  <!-- ============================================ -->
+  <main class="wishlist-page" id="wishlistPage" style="display:none;">
+
+    <!-- Wishlist Header -->
+    <div class="wishlist-hero">
+      <div class="wishlist-hero-content">
+        <div class="wishlist-hero-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h2>Wishlist</h2>
+        <p>Sets we want to add to the collection</p>
+      </div>
+    </div>
+
+    <!-- Wishlist Stats -->
+    <div class="wishlist-stats" id="wishlistStats"></div>
+
+    <!-- Wishlist Search -->
+    <div class="wishlist-toolbar">
+      <div class="wishlist-search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="wishlistSearchInput" placeholder="Search wishlist...">
+      </div>
+      <div class="wishlist-filter-group">
+        <button class="wishlist-filter-btn active" data-filter="all">All</button>
+        <button class="wishlist-filter-btn" data-filter="High">High Priority</button>
+        <button class="wishlist-filter-btn" data-filter="Medium">Medium</button>
+        <button class="wishlist-filter-btn" data-filter="Low">Low</button>
+      </div>
+    </div>
+
+    <!-- Wishlist Cards -->
+    <div class="wishlist-grid" id="wishlistGrid"></div>
+
+    <!-- Empty State -->
+    <div class="wishlist-empty" id="wishlistEmpty" style="display:none;">
+      <div class="wishlist-empty-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <h3>Your wishlist is empty</h3>
+      <p>Tell us which LEGO sets you'd like to add and we'll put them here!</p>
+    </div>
+
+  </main>
+
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" id="collectionFooter">
     <p>Values are approximate for built/displayed condition (no box). Sealed/new values would be significantly higher.</p>
     <p>Growth rates based on historical LEGO secondary market trends. Sources: <a href="https://www.brickeconomy.com" target="_blank" rel="noopener">BrickEconomy</a> &amp; <a href="https://www.bricklink.com" target="_blank" rel="noopener">BrickLink</a></p>
   </footer>
 
+  <footer class="footer" id="wishlistFooter" style="display:none;">
+    <p>Retail prices are current MSRP or estimated based on available information.</p>
+    <p>To add sets to the wishlist, update wishlist-data.js and re-deploy.</p>
+  </footer>
+
   <script src="data.js"></script>
+  <script src="wishlist-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
