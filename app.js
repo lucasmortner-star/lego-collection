@@ -122,8 +122,7 @@
   function renderStats() {
     const grid = document.getElementById('statsGrid');
     const cards = [
-      { label: 'Total Sets', value: summary.totalSets, sub: `across ${LEGO_DATA.categories.length} themes` },
-      { label: 'Total Pieces', value: summary.totalPieces.toLocaleString(), sub: 'bricks combined' },
+      { label: 'Total Sets', value: summary.totalSets, sub: summary.totalPieces.toLocaleString() + ' pieces combined' },
       { label: 'Original Retail', value: fmt(summary.totalRetail), sub: 'total invested' },
       { label: 'Current Value', value: fmt(summary.totalCurrent), cls: 'accent', sub: 'built/displayed condition' },
       { label: 'Appreciation', value: fmt(summary.appreciation), cls: 'green', sub: pct(summary.appreciationPct) + ' overall return' },
