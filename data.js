@@ -67,7 +67,7 @@ const LEGO_DATA = {
     { num: 65, setNumber: "76031", name: "The Hulk Buster Smash", theme: "Marvel", category: "MARVEL", year: 2015, pieces: 248, retail: 29.99, condition: "Built/Displayed", currentValue: 60, growth: 0.04 },
     { num: 66, setNumber: "76080", name: "Ayesha's Revenge (GotG)", theme: "Marvel", category: "MARVEL", year: 2017, pieces: 323, retail: 34.99, condition: "Built/Displayed", currentValue: 55, growth: 0.04 },
     { num: 67, setNumber: "76058", name: "Ghost Rider Team-Up", theme: "Marvel", category: "MARVEL", year: 2016, pieces: 217, retail: 19.99, condition: "Built/Displayed", currentValue: 40, growth: 0.04 },
-    { num: 68, setNumber: "76269", name: "Avengers Tower", theme: "Marvel", category: "MARVEL", year: 2024, pieces: 5201, retail: 499.99, condition: "Built/Displayed", currentValue: 617, growth: 0.10 },
+    { num: 68, setNumber: "76269", name: "Avengers Tower", theme: "Marvel", category: "MARVEL", year: 2024, pieces: 5201, retail: 499.99, condition: "On the Way", currentValue: 617, growth: 0.10 },
     { num: 69, setNumber: "76048", name: "Iron Skull Sub Attack", theme: "Marvel", category: "MARVEL", year: 2016, pieces: 329, retail: 29.99, condition: "Built/Displayed", currentValue: 37, growth: 0.02 },
     { num: 70, setNumber: "76049", name: "Avenjet Space Mission", theme: "Marvel", category: "MARVEL", year: 2016, pieces: 523, retail: 59.99, condition: "Built/Displayed", currentValue: 43, growth: 0.0 },
     { num: 71, setNumber: "76079", name: "Ravager Attack", theme: "Marvel", category: "MARVEL", year: 2017, pieces: 197, retail: 19.99, condition: "Built/Displayed", currentValue: 27, growth: 0.03 },
