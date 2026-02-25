@@ -140,6 +140,10 @@
 
   // --- Render Theme Breakdown ---
   function renderThemeBreakdown() {
+    // Remove any active bar popup before re-rendering
+    const existingPopup = document.querySelector('.theme-bar-popup');
+    if (existingPopup) existingPopup.remove();
+
     const bar = document.getElementById('themeBar');
     const legend = document.getElementById('themeLegend');
 
@@ -543,13 +547,76 @@
     renderCollection();
   });
 
-  // Theme bar click
+  // Theme bar click — show popup with value
+  let activeBarPopup = null;
+
+  function removeBarPopup() {
+    if (activeBarPopup) {
+      activeBarPopup.remove();
+      activeBarPopup = null;
+    }
+  }
+
   document.getElementById('themeBar').addEventListener('click', (e) => {
+    e.stopPropagation();
     const seg = e.target.closest('.theme-bar-segment');
-    if (!seg) return;
-    const cat = seg.dataset.cat;
-    activeThemeFilter = activeThemeFilter === cat ? null : cat;
-    renderCollection();
+    if (!seg) { removeBarPopup(); return; }
+
+    const catKey = seg.dataset.cat;
+    const cat = LEGO_DATA.categories.find(c => c.key === catKey);
+    const stats = themeStats[catKey];
+    if (!cat || !stats) return;
+
+    // Remove any existing popup
+    removeBarPopup();
+
+    // Create popup
+    const popup = document.createElement('div');
+    popup.className = 'theme-bar-popup';
+    popup.innerHTML = `<span class="popup-theme-name">${cat.icon} ${cat.label} (${stats.count} sets)</span><span class="popup-theme-value">${fmt(stats.value)}</span><span class="popup-arrow"></span>`;
+
+    // Position it above the clicked segment
+    const breakdown = document.querySelector('.theme-breakdown');
+    const barContainer = document.getElementById('themeBar');
+    const barRect = barContainer.getBoundingClientRect();
+    const segRect = seg.getBoundingClientRect();
+    const breakdownRect = breakdown.getBoundingClientRect();
+
+    // Calculate center of segment relative to .theme-breakdown
+    const segCenterX = (segRect.left + segRect.width / 2) - breakdownRect.left;
+    const barTopY = barRect.top - breakdownRect.top;
+
+    breakdown.appendChild(popup);
+
+    // Adjust so popup doesn't overflow horizontally
+    const popupWidth = popup.offsetWidth;
+    let leftPos = segCenterX - (popupWidth / 2);
+    const maxLeft = breakdownRect.width - popupWidth - 8;
+    if (leftPos < 8) leftPos = 8;
+    if (leftPos > maxLeft) leftPos = maxLeft;
+
+    popup.style.left = leftPos + 'px';
+    popup.style.top = (barTopY - popup.offsetHeight - 8) + 'px';
+
+    // Reposition the arrow to point at segment center
+    const arrowLeft = segCenterX - leftPos;
+    popup.querySelector('.popup-arrow').style.left = arrowLeft + 'px';
+
+    activeBarPopup = popup;
+
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+      if (activeBarPopup === popup) {
+        removeBarPopup();
+      }
+    }, 3000);
+  });
+
+  // Click anywhere else to dismiss popup
+  document.addEventListener('click', (e) => {
+    if (activeBarPopup && !e.target.closest('.theme-bar-container')) {
+      removeBarPopup();
+    }
   });
 
   // --- Wishlist Event Listeners ---
