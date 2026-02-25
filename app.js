@@ -140,9 +140,9 @@
 
   // --- Render Theme Breakdown ---
   function renderThemeBreakdown() {
-    // Remove any active bar popup before re-rendering
-    const existingPopup = document.querySelector('.theme-bar-popup');
-    if (existingPopup) existingPopup.remove();
+    // Remove any active bar info before re-rendering
+    const existingInfo = document.querySelector('.theme-bar-info');
+    if (existingInfo) existingInfo.remove();
 
     const bar = document.getElementById('themeBar');
     const legend = document.getElementById('themeLegend');
@@ -547,76 +547,45 @@
     renderCollection();
   });
 
-  // Theme bar click — show popup with value
-  let activeBarPopup = null;
-
-  function removeBarPopup() {
-    if (activeBarPopup) {
-      activeBarPopup.remove();
-      activeBarPopup = null;
-    }
+  // Theme bar click — show info bar with value below
+  function removeBarInfo() {
+    const existing = document.querySelector('.theme-bar-info');
+    if (existing) existing.remove();
   }
 
   document.getElementById('themeBar').addEventListener('click', (e) => {
-    e.stopPropagation();
     const seg = e.target.closest('.theme-bar-segment');
-    if (!seg) { removeBarPopup(); return; }
+    if (!seg) return;
 
     const catKey = seg.dataset.cat;
     const cat = LEGO_DATA.categories.find(c => c.key === catKey);
     const stats = themeStats[catKey];
     if (!cat || !stats) return;
 
-    // Remove any existing popup
-    removeBarPopup();
+    // Remove any existing info bar
+    removeBarInfo();
 
-    // Create popup
-    const popup = document.createElement('div');
-    popup.className = 'theme-bar-popup';
-    popup.innerHTML = `<span class="popup-theme-name">${cat.icon} ${cat.label} (${stats.count} sets)</span><span class="popup-theme-value">${fmt(stats.value)}</span><span class="popup-arrow"></span>`;
+    // Create info bar
+    const info = document.createElement('div');
+    info.className = 'theme-bar-info';
+    const pctOfTotal = (stats.value / summary.totalCurrent * 100).toFixed(1);
+    info.innerHTML = `
+      <span class="bar-info-dot" style="background:${cat.color}"></span>
+      <span class="bar-info-label">${cat.icon} ${cat.label}</span>
+      <span class="bar-info-value">${fmt(stats.value)}</span>
+      <span class="bar-info-detail">${stats.count} sets &middot; ${pctOfTotal}% of collection</span>
+      <button class="bar-info-close" title="Close">&times;</button>
+    `;
 
-    // Position it above the clicked segment
-    const breakdown = document.querySelector('.theme-breakdown');
+    // Insert right after the bar container
     const barContainer = document.getElementById('themeBar');
-    const barRect = barContainer.getBoundingClientRect();
-    const segRect = seg.getBoundingClientRect();
-    const breakdownRect = breakdown.getBoundingClientRect();
+    barContainer.insertAdjacentElement('afterend', info);
 
-    // Calculate center of segment relative to .theme-breakdown
-    const segCenterX = (segRect.left + segRect.width / 2) - breakdownRect.left;
-    const barTopY = barRect.top - breakdownRect.top;
-
-    breakdown.appendChild(popup);
-
-    // Adjust so popup doesn't overflow horizontally
-    const popupWidth = popup.offsetWidth;
-    let leftPos = segCenterX - (popupWidth / 2);
-    const maxLeft = breakdownRect.width - popupWidth - 8;
-    if (leftPos < 8) leftPos = 8;
-    if (leftPos > maxLeft) leftPos = maxLeft;
-
-    popup.style.left = leftPos + 'px';
-    popup.style.top = (barTopY - popup.offsetHeight - 8) + 'px';
-
-    // Reposition the arrow to point at segment center
-    const arrowLeft = segCenterX - leftPos;
-    popup.querySelector('.popup-arrow').style.left = arrowLeft + 'px';
-
-    activeBarPopup = popup;
-
-    // Auto-hide after 3 seconds
-    setTimeout(() => {
-      if (activeBarPopup === popup) {
-        removeBarPopup();
-      }
-    }, 3000);
-  });
-
-  // Click anywhere else to dismiss popup
-  document.addEventListener('click', (e) => {
-    if (activeBarPopup && !e.target.closest('.theme-bar-container')) {
-      removeBarPopup();
-    }
+    // Close button
+    info.querySelector('.bar-info-close').addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      removeBarInfo();
+    });
   });
 
   // --- Wishlist Event Listeners ---
