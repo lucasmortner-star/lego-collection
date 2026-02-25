@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LEGO Collection Value Tracker | Ortner's Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧱</text></svg>">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-icon">L</div>
+        <div class="logo-text">
+          <h1>LEGO Collection</h1>
+          <span>Ortner's Collection &middot; Updated Feb 2026</span>
+        </div>
+      </div>
+      <div class="header-controls">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Search sets, themes, numbers...">
+        </div>
+        <div class="view-toggle">
+          <button class="view-btn active" data-view="table">Table</button>
+          <button class="view-btn" data-view="cards">Cards</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard">
+
+    <!-- STATS -->
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <!-- THEME BREAKDOWN -->
+    <div class="theme-breakdown">
+      <h3>Collection Breakdown by Theme</h3>
+      <div class="theme-bar-container" id="themeBar"></div>
+      <div class="theme-legend" id="themeLegend"></div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls-bar">
+      <div class="results-count" id="resultsCount"></div>
+      <div class="sort-controls">
+        <label>Sort by</label>
+        <select class="sort-select" id="sortSelect">
+          <option value="num-asc">Collection Order</option>
+          <option value="currentValue-desc">Value (High to Low)</option>
+          <option value="currentValue-asc">Value (Low to High)</option>
+          <option value="growth-desc">Growth Rate (High to Low)</option>
+          <option value="pieces-desc">Pieces (Most First)</option>
+          <option value="pieces-asc">Pieces (Fewest First)</option>
+          <option value="year-desc">Year (Newest First)</option>
+          <option value="year-asc">Year (Oldest First)</option>
+          <option value="name-asc">Name (A-Z)</option>
+          <option value="retail-desc">Retail Price (High to Low)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- TABLE VIEW -->
+    <div class="table-container" id="tableView">
+      <table class="sets-table">
+        <thead>
+          <tr>
+            <th data-sort="num"># <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="setNumber">Set # <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="name">Set Name <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="theme" class="hide-mobile">Theme <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="year">Year <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="pieces" class="hide-mobile">Pieces <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="retail" class="hide-mobile">Retail <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="condition" class="hide-mobile">Condition <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="currentValue">Value <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="growth" class="hide-mobile">Growth <span class="sort-arrow">&#9650;</span></th>
+            <th class="hide-mobile">3-Yr Proj. <span class="sort-arrow">&#9650;</span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- CARDS VIEW -->
+    <div class="cards-grid" id="cardsView" style="display:none;"></div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Values are approximate for built/displayed condition (no box). Sealed/new values would be significantly higher.</p>
+    <p>Growth rates based on historical LEGO secondary market trends. Sources: <a href="https://www.brickeconomy.com" target="_blank" rel="noopener">BrickEconomy</a> &amp; <a href="https://www.bricklink.com" target="_blank" rel="noopener">BrickLink</a></p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
