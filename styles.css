@@ -528,6 +528,15 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+.category-row-stats {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: 8px;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
 .set-number {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   font-size: 13px;

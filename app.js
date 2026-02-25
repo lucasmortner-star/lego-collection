@@ -197,7 +197,9 @@
     sorted.forEach(s => {
       if (useGroups && s.category !== lastCat) {
         lastCat = s.category;
-        html += `<tr class="category-row"><td colspan="11">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)}</td></tr>`;
+        const catSets = sorted.filter(x => x.category === s.category);
+        const catValue = catSets.reduce((a, x) => a + x.currentValue, 0);
+        html += `<tr class="category-row"><td colspan="11">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
       }
 
       const apprClass = s.appreciation >= 0 ? 'positive' : 'negative';

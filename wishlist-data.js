@@ -15,5 +15,6 @@ const WISHLIST_DATA = {
     { setNumber: "75328", name: "The Mandalorian Helmet", theme: "Star Wars", pieces: 584, retail: 69.99, priority: "Low", notes: "Retired - currently below MSRP on aftermarket" },
     { setNumber: "76294", name: "X-Men: The X-Mansion", theme: "Marvel", pieces: 3093, retail: 329.99, priority: "High", notes: "Available - 10 minifigs + Sentinel" },
     { setNumber: "11377", name: "Minas Tirith", theme: "Lord of the Rings", pieces: 8278, retail: 599.99, priority: "High", notes: "Coming soon - expected June 2026, 8,278 pcs, all 7 tiers of the White City" },
+    { setNumber: "43020", name: "FIFA World Cup Official Trophy", theme: "LEGO Editions", pieces: 2842, retail: 199.99, priority: "High", notes: "Releases March 1, 2026 - 1:1 life-size replica, 2,842 pcs, gold elements, hidden compartment with minifigure" },
   ]
 };
