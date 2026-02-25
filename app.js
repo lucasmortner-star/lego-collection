@@ -574,6 +574,24 @@
     renderWishlistGrid();
   });
 
+  // --- Mobile: force card view ---
+  function checkMobile() {
+    if (window.innerWidth <= 600) {
+      currentView = 'cards';
+      document.getElementById('tableView').style.display = 'none';
+      document.getElementById('cardsView').style.display = '';
+      document.querySelectorAll('.view-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.view === 'cards');
+      });
+    }
+  }
+
+  checkMobile();
+  window.addEventListener('resize', () => {
+    checkMobile();
+    if (currentPage === 'collection') renderCollection();
+  });
+
   // --- Init ---
   renderCollection();
 
