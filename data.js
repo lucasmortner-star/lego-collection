@@ -125,9 +125,10 @@ const LEGO_DATA = {
     { num: 123, setNumber: "70608", name: "Master Falls", theme: "Ninjago", category: "NINJAGO", year: 2017, pieces: 312, retail: 29.99, condition: "Selling", currentValue: 30, growth: 0.0 },
     { num: 124, setNumber: "70631", name: "Garmadon's Volcano Lair", theme: "Ninjago", category: "NINJAGO", year: 2017, pieces: 521, retail: 49.99, condition: "Selling", currentValue: 80, growth: 0.05 },
     { num: 125, setNumber: "70403", name: "Dragon Mountain", theme: "Castle", category: "CASTLE / OTHER", year: 2013, pieces: 376, retail: 49.99, condition: "Built/Displayed", currentValue: 110, growth: 0.06 },
-    { num: 126, setNumber: "N/A", name: "Classic Town/City Minifigures (~100)", theme: "Vintage 80s/90s", category: "LOOSE MINIFIGURES", year: 1985, pieces: 100, retail: 0, condition: "Used/Loose", currentValue: 350, growth: 0.03 },
-    { num: 127, setNumber: "11323pb01c01", name: "Rancor (Bigfig)", theme: "Star Wars", category: "LOOSE MINIFIGURES", year: 2012, pieces: 1, retail: 0, condition: "Used/Loose", currentValue: 45, growth: 0.05 },
-    { num: 128, setNumber: "76040-fig", name: "Brainiac (Minifigure from Brainiac Attack)", theme: "DC Super Heroes", category: "LOOSE MINIFIGURES", year: 2015, pieces: 1, retail: 0, condition: "Used/Loose", currentValue: 24, growth: 0.04 },
+    { num: 126, setNumber: "6270", name: "Forbidden Island", theme: "Pirates", category: "CASTLE / OTHER", year: 1989, pieces: 182, retail: 34.99, condition: "Used/Loose", currentValue: 600, growth: 0.05 },
+    { num: 127, setNumber: "N/A", name: "Classic Town/City Minifigures (~100)", theme: "Vintage 80s/90s", category: "LOOSE MINIFIGURES", year: 1985, pieces: 100, retail: 0, condition: "Used/Loose", currentValue: 350, growth: 0.03 },
+    { num: 128, setNumber: "11323pb01c01", name: "Rancor (Bigfig)", theme: "Star Wars", category: "LOOSE MINIFIGURES", year: 2012, pieces: 1, retail: 0, condition: "Used/Loose", currentValue: 45, growth: 0.05 },
+    { num: 129, setNumber: "76040-fig", name: "Brainiac (Minifigure from Brainiac Attack)", theme: "DC Super Heroes", category: "LOOSE MINIFIGURES", year: 2015, pieces: 1, retail: 0, condition: "Used/Loose", currentValue: 24, growth: 0.04 },
   ],
 
   categories: [
