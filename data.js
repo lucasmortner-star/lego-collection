@@ -56,7 +56,7 @@ const LEGO_DATA = {
     { num: 54, setNumber: "76206", name: "Iron Man Figure", theme: "Marvel", category: "MARVEL", year: 2022, pieces: 381, retail: 39.99, condition: "Built/Displayed", currentValue: 55, growth: 0.05 },
     { num: 55, setNumber: "76262", name: "Captain America's Shield", theme: "Marvel", category: "MARVEL", year: 2023, pieces: 3128, retail: 199.99, condition: "On the Way", currentValue: 210, growth: 0.07 },
     { num: 56, setNumber: "76191", name: "Infinity Gauntlet", theme: "Marvel", category: "MARVEL", year: 2021, pieces: 590, retail: 69.99, condition: "On the Way", currentValue: 90, growth: 0.05 },
-    { num: 57, setNumber: "76209", name: "Thor's Hammer", theme: "Marvel", category: "MARVEL", year: 2022, pieces: 979, retail: 99.99, condition: "On the Way", currentValue: 110, growth: 0.06 },
+    { num: 57, setNumber: "76209", name: "Thor's Hammer", theme: "Marvel", category: "MARVEL", year: 2022, pieces: 979, retail: 99.99, condition: "Built/Displayed", currentValue: 117, growth: 0.06 },
     { num: 58, setNumber: "76108", name: "Sanctum Sanctorum Showdown", theme: "Marvel", category: "MARVEL", year: 2018, pieces: 1004, retail: 99.99, condition: "Built/Displayed", currentValue: 180, growth: 0.06 },
     { num: 59, setNumber: "76088", name: "Thor vs. Hulk: Arena Clash", theme: "Marvel", category: "MARVEL", year: 2017, pieces: 492, retail: 49.99, condition: "Built/Displayed", currentValue: 90, growth: 0.05 },
     { num: 60, setNumber: "76084", name: "The Ultimate Battle for Asgard", theme: "Marvel", category: "MARVEL", year: 2017, pieces: 400, retail: 49.99, condition: "Built/Displayed", currentValue: 75, growth: 0.04 },
