@@ -61,6 +61,7 @@
 
   function getConditionClass(c) {
     if (c.includes('Built')) return 'built';
+    if (c.includes('Building')) return 'building';
     if (c.includes('Way')) return 'on-the-way';
     return 'used';
   }

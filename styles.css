@@ -582,6 +582,11 @@ body {
   color: #a16207;
 }
 
+.condition-badge.building {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
 .condition-badge.used {
   background: var(--bg-tertiary);
   color: var(--text-secondary);
