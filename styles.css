@@ -1361,3 +1361,438 @@ body {
 .wl-card:nth-child(3) { animation-delay: 0.06s; }
 .wl-card:nth-child(4) { animation-delay: 0.09s; }
 .wl-card:nth-child(5) { animation-delay: 0.12s; }
+
+/* ===================================================================
+   HOGWARTS CASTLE BUILD PAGE
+   Dark theme scoped under .hogwarts-page
+   =================================================================== */
+
+.hogwarts-page {
+  background: #1a130a;
+  background-image: radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 50%);
+  padding: 30px 20px 40px;
+}
+
+.hw-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+.hw-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.hw-header::before, .hw-header::after {
+  content: ''; display: block; height: 2px;
+  background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+  margin: 10px auto; width: 70%;
+}
+.hw-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  color: #e8c97a;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 40px rgba(201,168,76,0.4);
+  line-height: 1.2;
+}
+.hw-header p {
+  color: #c9a84c;
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  margin-top: 6px;
+  opacity: 0.8;
+}
+
+/* Progress */
+.hw-progress-section {
+  background: rgba(201,168,76,0.07);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.hw-progress-label {
+  font-family: 'Cinzel', serif;
+  color: #c9a84c;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.hw-progress-bar-wrap {
+  flex: 1;
+  min-width: 150px;
+  height: 10px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.hw-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b6914, #e8c97a);
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+.hw-progress-count {
+  font-family: 'Cinzel', serif;
+  color: #e8c97a;
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.hw-progress-cost {
+  color: #c9a84c;
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+/* Section titles */
+.hw-section-title {
+  font-family: 'Cinzel', serif;
+  color: #c9a84c;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  opacity: 0.7;
+  padding-left: 4px;
+}
+
+/* Map */
+.hw-map-container {
+  background: rgba(245,237,214,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 12px;
+  padding: 28px 20px 20px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.hw-castle-map {
+  width: 100%;
+  max-width: 860px;
+  display: block;
+  margin: 0 auto;
+}
+.hw-map-hint {
+  text-align: center;
+  color: rgba(201,168,76,0.35);
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 0.78rem;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* SVG zones */
+.hw-zone { cursor: pointer; }
+.hw-zone.owned .zone-label { fill: #a8e88a !important; }
+.hw-zone.missing .zone-label { fill: #9a8f80 !important; }
+
+/* Key grid */
+.hw-key-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.hw-key-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(245,237,214,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 8px;
+  padding: 11px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.hw-key-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: #8b6914;
+  transition: background 0.2s;
+}
+.hw-key-item.owned::before { background: #5db83a; }
+.hw-key-item.owned {
+  background: rgba(45,90,27,0.15);
+  border-color: rgba(93,184,58,0.3);
+}
+.hw-key-item:hover {
+  border-color: rgba(201,168,76,0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.hw-key-num {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e8c97a;
+  min-width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.hw-key-item.owned .hw-key-num { color: #a8e88a; }
+.hw-key-item.missing .hw-key-num { color: #7a6e5f; }
+.hw-key-info { flex: 1; }
+.hw-key-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  color: #f5edd6;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+.hw-key-item.missing .hw-key-name { color: #7a6e5f; }
+.hw-key-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.hw-key-pieces {
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 0.82rem;
+  color: #c9a84c;
+  opacity: 0.75;
+}
+.hw-key-price {
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 0.82rem;
+  color: #e8c97a;
+  font-weight: 600;
+}
+.hw-key-item.missing .hw-key-price { color: #7a6e5f; opacity: 0.7; }
+.hw-key-badge {
+  font-size: 0.65rem;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.hw-badge-retired { background: rgba(139,32,32,0.3); color: #e87a7a; border: 1px solid rgba(139,32,32,0.4); }
+.hw-badge-retiring { background: rgba(180,100,20,0.3); color: #f0b96e; border: 1px solid rgba(180,100,20,0.4); }
+.hw-badge-available { background: rgba(40,100,40,0.3); color: #90d470; border: 1px solid rgba(40,100,40,0.4); }
+.hw-badge-owned { background: rgba(45,90,27,0.5); color: #a8e88a; border: 1px solid rgba(93,184,58,0.5); }
+.hw-key-toggle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(201,168,76,0.3);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  font-size: 14px;
+  color: transparent;
+}
+.hw-key-item.owned .hw-key-toggle {
+  background: #2d5a1b;
+  border-color: #5db83a;
+  color: #a8e88a;
+}
+
+/* Totals bar */
+.hw-totals-bar {
+  background: rgba(201,168,76,0.07);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  padding: 16px 24px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.hw-total-item { text-align: center; }
+.hw-total-val {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e8c97a;
+  display: block;
+}
+.hw-total-label {
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 0.78rem;
+  color: #c9a84c;
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.hw-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(201,168,76,0.2);
+}
+
+.hw-instruction {
+  text-align: center;
+  color: #c9a84c;
+  font-family: 'Crimson Text', Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0.6;
+  margin-top: 20px;
+}
+
+/* Photo section */
+.hw-photo-section { margin-top: 36px; }
+.hw-photo-container {
+  background: rgba(245,237,214,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 12px;
+  padding: 24px 16px 28px;
+}
+.hw-photo-subtitle {
+  font-family: 'Cinzel', serif;
+  color: #c9a84c;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 14px;
+}
+.hw-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 12px;
+}
+
+/* Photo cards */
+.hw-photo-card {
+  background: rgba(245,237,214,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.hw-photo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  border-color: rgba(201,168,76,0.3);
+}
+.hw-photo-card.owned {
+  border-color: rgba(93,184,58,0.35);
+  background: rgba(45,90,27,0.1);
+}
+.hw-photo-img-wrap {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #111;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.hw-photo-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+.hw-photo-img-wrap img.greyed {
+  filter: grayscale(80%) brightness(0.55);
+}
+.hw-photo-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px; padding: 12px;
+}
+.hw-photo-num-badge {
+  position: absolute; top: 8px; left: 8px; z-index: 3;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid rgba(201,168,76,0.5);
+  color: #e8c97a;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hw-photo-owned-badge {
+  position: absolute; top: 8px; right: 8px; z-index: 3;
+  background: rgba(30,70,20,0.92);
+  border: 1px solid #5db83a;
+  color: #a8e88a;
+  font-size: 0.65rem;
+  font-family: 'Cinzel', serif;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+.hw-photo-info { padding: 10px 12px 12px; }
+.hw-photo-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  color: #f5edd6;
+  line-height: 1.3;
+  margin-bottom: 5px;
+}
+.hw-photo-card.owned .hw-photo-name { color: #a8e88a; }
+.hw-photo-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hw-photo-pieces {
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 0.75rem;
+  color: #c9a84c;
+  opacity: 0.7;
+}
+.hw-photo-price {
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #e8c97a;
+}
+.hw-photo-card.owned .hw-photo-price { color: #90d470; }
+
+/* Hogwarts footer override */
+footer.hogwarts-page {
+  background: #1a130a;
+  padding-bottom: 40px;
+}
+footer.hogwarts-page p {
+  color: rgba(201,168,76,0.5);
+}
+footer.hogwarts-page a {
+  color: rgba(201,168,76,0.7);
+}
+
+/* Hogwarts mobile */
+@media (max-width: 600px) {
+  .hogwarts-page { padding: 16px 14px 30px; }
+  .hw-header { margin-bottom: 20px; }
+  .hw-header::before, .hw-header::after { width: 90%; }
+  .hw-progress-section { padding: 12px 14px; gap: 10px; }
+  .hw-progress-label { font-size: 0.75rem; }
+  .hw-progress-count { font-size: 0.85rem; }
+  .hw-progress-cost { font-size: 0.8rem; }
+  .hw-key-grid { grid-template-columns: 1fr; }
+  .hw-totals-bar { justify-content: center; padding: 14px 16px; }
+  .hw-divider { display: none; }
+  .hw-total-val { font-size: 1.2rem; }
+  .hw-photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+}

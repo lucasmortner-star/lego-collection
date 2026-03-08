@@ -6,7 +6,7 @@
   'use strict';
 
   // --- State ---
-  let currentPage = 'collection'; // 'collection' or 'wishlist'
+  let currentPage = 'collection'; // 'collection', 'wishlist', or 'hogwarts'
   let currentView = 'table';
   let currentSort = { key: 'num', dir: 'asc' };
   let activeThemeFilter = null;
@@ -455,19 +455,26 @@
     // Toggle page visibility
     document.getElementById('collectionPage').style.display = page === 'collection' ? '' : 'none';
     document.getElementById('wishlistPage').style.display = page === 'wishlist' ? '' : 'none';
+    document.getElementById('hogwartsPage').style.display = page === 'hogwarts' ? '' : 'none';
 
     // Toggle footer visibility
     document.getElementById('collectionFooter').style.display = page === 'collection' ? '' : 'none';
     document.getElementById('wishlistFooter').style.display = page === 'wishlist' ? '' : 'none';
+    document.getElementById('hogwartsFooter').style.display = page === 'hogwarts' ? '' : 'none';
 
     // Toggle header controls visibility (search/view toggle only for collection)
     document.querySelector('.header-controls').style.display = page === 'collection' ? '' : 'none';
 
+    // Set body background for hogwarts dark theme
+    document.body.style.background = page === 'hogwarts' ? '#1a130a' : '';
+
     // Render the active page
     if (page === 'collection') {
       renderCollection();
-    } else {
+    } else if (page === 'wishlist') {
       renderWishlist();
+    } else if (page === 'hogwarts') {
+      hwRender();
     }
 
     // Scroll to top
@@ -631,6 +638,184 @@
     checkMobile();
     if (currentPage === 'collection') renderCollection();
   });
+
+  // ===================================================================
+  // HOGWARTS CASTLE TRACKER
+  // ===================================================================
+
+  const HW_SETS = [
+    { id:1,  num:1,  name:"Hogwarts Castle: The Main Tower",   set:"76454", pieces:2135, price:259.99, status:"available", zone:1  },
+    { id:2,  num:2,  name:"Hogwarts Castle: Hospital Wing",    set:"76463", pieces:907,  price:99.99,  status:"available", zone:2  },
+    { id:3,  num:3,  name:"Hogwarts Castle: The Great Hall",   set:"76435", pieces:1732, price:199.99, status:"retiring",  zone:3  },
+    { id:4,  num:4,  name:"Hogwarts Castle: Flying Lessons",   set:"76447", pieces:651,  price:79.99,  status:"available", zone:4  },
+    { id:5,  num:5,  name:"Hogwarts Castle: Herbology Class",  set:"76445", pieces:651,  price:79.99,  status:"available", zone:5  },
+    { id:6,  num:6,  name:"Hogwarts Castle: Boathouse",        set:"76426", pieces:350,  price:37.99,  status:"retired",   zone:6  },
+    { id:7,  num:7,  name:"Hogwarts Castle: Owlery",           set:"76430", pieces:364,  price:39.99,  status:"retired",   zone:7  },
+    { id:8,  num:8,  name:"Hagrid's Hut: An Unexpected Visit", set:"76428", pieces:896,  price:74.99,  status:"retired",   zone:8  },
+    { id:9,  num:9,  name:"Hogwarts Castle: Charms Class",     set:"76442", pieces:204,  price:19.99,  status:"available", zone:9  },
+    { id:10, num:10, name:"Hogwarts Castle: Potions Class",    set:"76431", pieces:397,  price:44.99,  status:"retired",   zone:10 },
+    { id:11, num:11, name:"Hogwarts Castle: Dueling Club",     set:"76441", pieces:158,  price:24.99,  status:"retired",   zone:11 },
+  ];
+
+  const HW_IMGS = {
+    76454: "https://images.brickset.com/sets/images/76454-1.jpg",
+    76463: "https://images.brickset.com/sets/images/76463-1.jpg",
+    76435: "https://images.brickset.com/sets/images/76435-1.jpg",
+    76447: "https://images.brickset.com/sets/images/76447-1.jpg",
+    76445: "https://images.brickset.com/sets/images/76445-1.jpg",
+    76426: "https://images.brickset.com/sets/images/76426-1.jpg",
+    76430: "https://images.brickset.com/sets/images/76430-1.jpg",
+    76428: "https://images.brickset.com/sets/images/76428-1.jpg",
+    76442: "https://images.brickset.com/sets/images/76442-1.jpg",
+    76431: "https://images.brickset.com/sets/images/76431-1.jpg",
+    76441: "https://images.brickset.com/sets/images/76441-1.jpg",
+  };
+
+  const HW_URLS = {
+    76454: "https://www.lego.com/en-us/product/hogwarts-castle-the-main-tower-76454",
+    76463: "https://www.lego.com/en-us/product/hogwarts-castle-hospital-wing-76463",
+    76435: "https://www.lego.com/en-us/product/hogwarts-castle-the-great-hall-76435",
+    76447: "https://www.lego.com/en-us/product/hogwarts-castle-flying-lessons-76447",
+    76445: "https://www.lego.com/en-us/product/hogwarts-castle-herbology-class-76445",
+    76426: "https://www.lego.com/en-us/product/hogwarts-castle-boathouse-76426",
+    76430: "https://www.lego.com/en-us/product/hogwarts-castle-owlery-76430",
+    76428: "https://www.lego.com/en-us/product/hagrid-s-hut-an-unexpected-visit-76428",
+    76442: "https://www.lego.com/en-us/product/hogwarts-castle-charms-class-76442",
+    76431: "https://www.lego.com/en-us/product/hogwarts-castle-potions-class-76431",
+    76441: "https://www.lego.com/en-us/product/hogwarts-castle-dueling-club-76441",
+  };
+
+  const hwOwned = new Set();
+  const HW_TOTAL_COST = HW_SETS.reduce((a, s) => a + s.price, 0);
+
+  function hwStatusBadge(s) {
+    if (s === 'retired')   return '<span class="hw-key-badge hw-badge-retired">Retired</span>';
+    if (s === 'retiring')  return '<span class="hw-key-badge hw-badge-retiring">Retiring Jul 2026</span>';
+    if (s === 'available') return '<span class="hw-key-badge hw-badge-available">Available</span>';
+    return '';
+  }
+
+  function hwBuildKey() {
+    const grid = document.getElementById('hwKeyGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    HW_SETS.forEach(set => {
+      const isOwned = hwOwned.has(set.id);
+      const div = document.createElement('div');
+      div.className = 'hw-key-item ' + (isOwned ? 'owned' : 'missing');
+      div.onclick = () => hwToggleSet(set.id);
+      div.innerHTML = `
+        <div class="hw-key-num">${set.num}</div>
+        <div class="hw-key-info">
+          <div class="hw-key-name">${set.name}</div>
+          <div class="hw-key-meta">
+            <span class="hw-key-pieces">${set.pieces.toLocaleString()} pcs</span>
+            <span class="hw-key-price">${isOwned ? '\u2713 Owned' : '$' + set.price.toFixed(2)}</span>
+            ${isOwned ? '<span class="hw-key-badge hw-badge-owned">Owned</span>' : hwStatusBadge(set.status)}
+          </div>
+        </div>
+        <div class="hw-key-toggle">${isOwned ? '\u2713' : ''}</div>
+      `;
+      grid.appendChild(div);
+    });
+  }
+
+  function hwUpdateStats() {
+    const oc = hwOwned.size;
+    const spent = HW_SETS.filter(s => hwOwned.has(s.id)).reduce((a, s) => a + s.price, 0);
+    const rem = HW_TOTAL_COST - spent;
+    const pctVal = (oc / HW_SETS.length) * 100;
+
+    const fillEl = document.getElementById('hwProgressFill');
+    const countEl = document.getElementById('hwProgressCount');
+    const costEl = document.getElementById('hwProgressCost');
+    if (fillEl) fillEl.style.width = pctVal + '%';
+    if (countEl) countEl.textContent = oc + ' / ' + HW_SETS.length;
+    if (costEl) costEl.textContent = '$' + spent.toFixed(2) + ' spent \u00B7 $' + rem.toFixed(2) + ' remaining';
+
+    const ownedEl = document.getElementById('hwTotalOwned');
+    const spentEl = document.getElementById('hwTotalSpent');
+    const neededEl = document.getElementById('hwTotalNeeded');
+    const remEl = document.getElementById('hwTotalRemaining');
+    if (ownedEl) ownedEl.textContent = oc;
+    if (spentEl) spentEl.textContent = '$' + spent.toFixed(2);
+    if (neededEl) neededEl.textContent = HW_SETS.length - oc;
+    if (remEl) remEl.textContent = '$' + rem.toFixed(2);
+  }
+
+  function hwUpdateZone(zoneId) {
+    const zone = document.getElementById('hw-zone-' + zoneId);
+    if (!zone) return;
+    const set = HW_SETS.find(s => s.zone === zoneId);
+    if (!set) return;
+    const isOwned = hwOwned.has(set.id);
+    zone.className = 'hw-zone ' + (isOwned ? 'owned' : 'missing');
+    zone.querySelectorAll('.main-fill').forEach(el => el.style.fill = isOwned ? '#2a5c1a' : '#3d3530');
+    zone.querySelectorAll('.zone-stroke').forEach(el => el.style.stroke = isOwned ? '#5db83a' : '#6b5e50');
+    zone.querySelectorAll('.zone-label').forEach(el => el.style.fill = isOwned ? '#a8e88a' : '#9a8f80');
+  }
+
+  function hwBuildPhotoGrid() {
+    const grid = document.getElementById('hwPhotoGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    HW_SETS.forEach(set => {
+      const sn = parseInt(set.set);
+      const isOwned = hwOwned.has(set.id);
+      const imgSrc = HW_IMGS[sn] || '';
+      const legoUrl = HW_URLS[sn] || '#';
+      const shortName = set.name.replace('Hogwarts Castle: ', '').replace("Hagrid's Hut: An Unexpected Visit", "Hagrid's Hut");
+
+      const card = document.createElement('div');
+      card.className = 'hw-photo-card' + (isOwned ? ' owned' : '');
+
+      card.innerHTML = `
+        <div class="hw-photo-num-badge">${set.num}</div>
+        ${isOwned ? '<div class="hw-photo-owned-badge">\u2713 Owned</div>' : ''}
+        <a class="hw-photo-link" href="${legoUrl}" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none;color:inherit;display:block;">
+          <div class="hw-photo-img-wrap">
+            <img src="${imgSrc}" alt="${set.name}" class="${isOwned ? '' : 'greyed'}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="hw-photo-placeholder" style="display:none;">
+              <div style="font-size:2.5rem;">🏰</div>
+              <div style="color:rgba(201,168,76,0.5); font-family:'Cinzel',serif; font-size:0.7rem; text-align:center;">${set.set}</div>
+              <div style="color:rgba(201,168,76,0.35); font-size:0.68rem; font-style:italic;">View on LEGO.com</div>
+            </div>
+          </div>
+        </a>
+        <div class="hw-photo-info">
+          <div class="hw-photo-name">${shortName}</div>
+          <div class="hw-photo-meta">
+            <span class="hw-photo-pieces">${set.pieces.toLocaleString()} pcs</span>
+            <span class="hw-photo-price">${isOwned ? '\u2713 Owned' : '$' + set.price.toFixed(2)}</span>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => hwToggleSet(set.id));
+      grid.appendChild(card);
+    });
+  }
+
+  function hwToggleSet(id) {
+    if (hwOwned.has(id)) { hwOwned.delete(id); } else { hwOwned.add(id); }
+    hwBuildKey();
+    hwUpdateStats();
+    const set = HW_SETS.find(s => s.id === id);
+    if (set) hwUpdateZone(set.zone);
+    hwBuildPhotoGrid();
+  }
+
+  // Expose to global scope for SVG onclick
+  window.hwToggleZone = function(zoneId) {
+    const set = HW_SETS.find(s => s.zone === zoneId);
+    if (set) hwToggleSet(set.id);
+  };
+
+  function hwRender() {
+    hwBuildKey();
+    hwUpdateStats();
+    HW_SETS.forEach(s => hwUpdateZone(s.zone));
+    hwBuildPhotoGrid();
+  }
 
   // --- Init ---
   renderCollection();
