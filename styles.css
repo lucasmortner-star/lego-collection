@@ -1708,9 +1708,7 @@ body {
   object-fit: cover;
   transition: filter 0.3s ease;
 }
-.hw-photo-img-wrap img.greyed {
-  filter: grayscale(80%) brightness(0.55);
-}
+/* Images show full color — owned badges indicate ownership */
 .hw-photo-placeholder {
   width: 100%; height: 100%;
   display: flex; flex-direction: column;

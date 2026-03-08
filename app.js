@@ -704,18 +704,20 @@
       const div = document.createElement('div');
       div.className = 'hw-key-item ' + (isOwned ? 'owned' : 'missing');
       div.onclick = () => hwToggleSet(set.id);
-      div.innerHTML = `
-        <div class="hw-key-num">${set.num}</div>
-        <div class="hw-key-info">
-          <div class="hw-key-name">${set.name}</div>
-          <div class="hw-key-meta">
-            <span class="hw-key-pieces">${set.pieces.toLocaleString()} pcs</span>
-            <span class="hw-key-price">${isOwned ? '\u2713 Owned' : '$' + set.price.toFixed(2)}</span>
-            ${isOwned ? '<span class="hw-key-badge hw-badge-owned">Owned</span>' : hwStatusBadge(set.status)}
-          </div>
-        </div>
-        <div class="hw-key-toggle">${isOwned ? '\u2713' : ''}</div>
-      `;
+      var priceOrOwned = isOwned ? '&#10003; Owned' : '$' + set.price.toFixed(2);
+      var badge = isOwned ? '<span class="hw-key-badge hw-badge-owned">Owned</span>' : hwStatusBadge(set.status);
+      var toggle = isOwned ? '&#10003;' : '';
+      div.innerHTML =
+        '<div class="hw-key-num">' + set.num + '</div>' +
+        '<div class="hw-key-info">' +
+          '<div class="hw-key-name">' + set.name + '</div>' +
+          '<div class="hw-key-meta">' +
+            '<span class="hw-key-pieces">' + set.pieces.toLocaleString() + ' pcs</span>' +
+            '<span class="hw-key-price">' + priceOrOwned + '</span>' +
+            badge +
+          '</div>' +
+        '</div>' +
+        '<div class="hw-key-toggle">' + toggle + '</div>';
       grid.appendChild(div);
     });
   }
@@ -769,27 +771,29 @@
       const card = document.createElement('div');
       card.className = 'hw-photo-card' + (isOwned ? ' owned' : '');
 
-      card.innerHTML = `
-        <div class="hw-photo-num-badge">${set.num}</div>
-        ${isOwned ? '<div class="hw-photo-owned-badge">\u2713 Owned</div>' : ''}
-        <a class="hw-photo-link" href="${legoUrl}" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none;color:inherit;display:block;">
-          <div class="hw-photo-img-wrap">
-            <img src="${imgSrc}" alt="${set.name}" class="${isOwned ? '' : 'greyed'}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div class="hw-photo-placeholder" style="display:none;">
-              <div style="font-size:2.5rem;">🏰</div>
-              <div style="color:rgba(201,168,76,0.5); font-family:'Cinzel',serif; font-size:0.7rem; text-align:center;">${set.set}</div>
-              <div style="color:rgba(201,168,76,0.35); font-size:0.68rem; font-style:italic;">View on LEGO.com</div>
-            </div>
-          </div>
-        </a>
-        <div class="hw-photo-info">
-          <div class="hw-photo-name">${shortName}</div>
-          <div class="hw-photo-meta">
-            <span class="hw-photo-pieces">${set.pieces.toLocaleString()} pcs</span>
-            <span class="hw-photo-price">${isOwned ? '\u2713 Owned' : '$' + set.price.toFixed(2)}</span>
-          </div>
-        </div>
-      `;
+      const numBadge = '<div class="hw-photo-num-badge">' + set.num + '</div>';
+      const ownedBadge = isOwned ? '<div class="hw-photo-owned-badge">&#10003; Owned</div>' : '';
+      const imgClass = isOwned ? '' : '';
+      const priceText = isOwned ? '&#10003; Owned' : '$' + set.price.toFixed(2);
+
+      card.innerHTML = numBadge + ownedBadge +
+        '<a href="' + legoUrl + '" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none;color:inherit;display:block;">' +
+          '<div class="hw-photo-img-wrap">' +
+            '<img src="' + imgSrc + '" alt="' + set.name.replace(/'/g, '&#39;') + '" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';" />' +
+            '<div class="hw-photo-placeholder" style="display:none;">' +
+              '<div style="font-size:2.5rem;">&#127984;</div>' +
+              '<div style="color:rgba(201,168,76,0.5); font-family:Cinzel,serif; font-size:0.7rem; text-align:center;">' + set.set + '</div>' +
+              '<div style="color:rgba(201,168,76,0.35); font-size:0.68rem; font-style:italic;">View on LEGO.com</div>' +
+            '</div>' +
+          '</div>' +
+        '</a>' +
+        '<div class="hw-photo-info">' +
+          '<div class="hw-photo-name">' + shortName + '</div>' +
+          '<div class="hw-photo-meta">' +
+            '<span class="hw-photo-pieces">' + set.pieces.toLocaleString() + ' pcs</span>' +
+            '<span class="hw-photo-price">' + priceText + '</span>' +
+          '</div>' +
+        '</div>';
       card.addEventListener('click', () => hwToggleSet(set.id));
       grid.appendChild(card);
     });
@@ -819,5 +823,7 @@
 
   // --- Init ---
   renderCollection();
+  // Pre-render hogwarts content so it's ready when tab is clicked
+  hwRender();
 
 })();
