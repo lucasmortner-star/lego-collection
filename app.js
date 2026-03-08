@@ -751,7 +751,7 @@
     const set = HW_SETS.find(s => s.zone === zoneId);
     if (!set) return;
     const isOwned = hwOwned.has(set.id);
-    zone.className = 'hw-zone ' + (isOwned ? 'owned' : 'missing');
+    zone.setAttribute('class', 'hw-zone ' + (isOwned ? 'owned' : 'missing'));
     zone.querySelectorAll('.main-fill').forEach(el => el.style.fill = isOwned ? '#2a5c1a' : '#3d3530');
     zone.querySelectorAll('.zone-stroke').forEach(el => el.style.stroke = isOwned ? '#5db83a' : '#6b5e50');
     zone.querySelectorAll('.zone-label').forEach(el => el.style.fill = isOwned ? '#a8e88a' : '#9a8f80');
