@@ -14,5 +14,10 @@ const WISHLIST_DATA = {
     { setNumber: "75328", name: "The Mandalorian Helmet", theme: "Star Wars", pieces: 584, retail: 69.99, priority: "Low", notes: "Retired - currently below MSRP on aftermarket" },
     { setNumber: "11377", name: "Minas Tirith", theme: "Lord of the Rings", pieces: 8278, retail: 599.99, priority: "High", notes: "Coming soon - expected June 2026, 8,278 pcs, all 7 tiers of the White City" },
     { setNumber: "75389", name: "The Dark Falcon", theme: "Star Wars", pieces: 1579, retail: 179.99, priority: "Medium", notes: "Available - Rebuild the Galaxy series, 6 minifigs incl. Darth Jar Jar" },
+    { setNumber: "76454", name: "Hogwarts Castle: The Main Tower", theme: "Harry Potter", pieces: 2135, retail: 259.99, priority: "High", notes: "Available - 12 minifigs, connects with 76435 Great Hall" },
+    { setNumber: "76435", name: "Hogwarts Castle: The Great Hall", theme: "Harry Potter", pieces: 1732, retail: 199.99, priority: "High", notes: "Available - retiring Dec 2026, 11 minifigs, modular Hogwarts core" },
+    { setNumber: "76405", name: "Hogwarts Express - Collectors' Edition", theme: "Harry Potter", pieces: 5129, retail: 499.99, priority: "High", notes: "Retired - aftermarket ~$595, 20 minifigs, 1:32 scale" },
+    { setNumber: "76417", name: "Gringotts Wizarding Bank - Collectors' Edition", theme: "Harry Potter", pieces: 4803, retail: 429.99, priority: "High", notes: "Available - retiring Jul 2026, 13 minifigs + dragon, 32 inches tall" },
+    { setNumber: "76453", name: "Malfoy Manor", theme: "Harry Potter", pieces: 1601, retail: 149.99, priority: "High", notes: "Available - retiring mid-2026, 9 minifigs, first-ever LEGO Malfoy Manor" },
   ]
 };
