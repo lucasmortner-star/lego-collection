@@ -197,12 +197,19 @@
     // Group by category if in default sort and no search
     const useGroups = currentSort.key === 'num' && currentSort.dir === 'asc' && !searchQuery;
 
+    // When grouping, sort by category so all sets in the same category are contiguous
+    if (useGroups) {
+      const catOrder = {};
+      sorted.forEach(s => { if (!(s.category in catOrder)) catOrder[s.category] = Object.keys(catOrder).length; });
+      sorted.sort((a, b) => catOrder[a.category] - catOrder[b.category] || a.num - b.num);
+    }
+
     let html = '';
-    const seenCats = new Set();
+    let lastCatTable = '';
 
     sorted.forEach(s => {
-      if (useGroups && !seenCats.has(s.category)) {
-        seenCats.add(s.category);
+      if (useGroups && s.category !== lastCatTable) {
+        lastCatTable = s.category;
         const catSets = sorted.filter(x => x.category === s.category);
         const catValue = catSets.reduce((a, x) => a + x.currentValue, 0);
         html += `<tr class="category-row"><td colspan="11">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
@@ -252,12 +259,18 @@
 
     const useGroups = currentSort.key === 'num' && currentSort.dir === 'asc' && !searchQuery;
 
+    if (useGroups) {
+      const catOrder = {};
+      sorted.forEach(s => { if (!(s.category in catOrder)) catOrder[s.category] = Object.keys(catOrder).length; });
+      sorted.sort((a, b) => catOrder[a.category] - catOrder[b.category] || a.num - b.num);
+    }
+
     let html = '';
-    const seenCatsCards = new Set();
+    let lastCatCards = '';
 
     sorted.forEach(s => {
-      if (useGroups && !seenCatsCards.has(s.category)) {
-        seenCatsCards.add(s.category);
+      if (useGroups && s.category !== lastCatCards) {
+        lastCatCards = s.category;
         const catSets = sorted.filter(x => x.category === s.category);
         html += `<div class="category-header">
           <h2>${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)}</h2>
