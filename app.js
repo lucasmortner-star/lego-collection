@@ -198,11 +198,11 @@
     const useGroups = currentSort.key === 'num' && currentSort.dir === 'asc' && !searchQuery;
 
     let html = '';
-    let lastCat = '';
+    const seenCats = new Set();
 
     sorted.forEach(s => {
-      if (useGroups && s.category !== lastCat) {
-        lastCat = s.category;
+      if (useGroups && !seenCats.has(s.category)) {
+        seenCats.add(s.category);
         const catSets = sorted.filter(x => x.category === s.category);
         const catValue = catSets.reduce((a, x) => a + x.currentValue, 0);
         html += `<tr class="category-row"><td colspan="11">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
@@ -253,11 +253,11 @@
     const useGroups = currentSort.key === 'num' && currentSort.dir === 'asc' && !searchQuery;
 
     let html = '';
-    let lastCat = '';
+    const seenCatsCards = new Set();
 
     sorted.forEach(s => {
-      if (useGroups && s.category !== lastCat) {
-        lastCat = s.category;
+      if (useGroups && !seenCatsCards.has(s.category)) {
+        seenCatsCards.add(s.category);
         const catSets = sorted.filter(x => x.category === s.category);
         html += `<div class="category-header">
           <h2>${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)}</h2>

@@ -2,7 +2,7 @@ const LEGO_DATA = {
   sets: [
     { num: 1, setNumber: "75192", name: "Millennium Falcon (UCS)", theme: "Star Wars", category: "STAR WARS", year: 2017, pieces: 7541, retail: 849.99, condition: "Built/Displayed", currentValue: 665, growth: 0.10 },
     { num: 2, setNumber: "75159", name: "Death Star", theme: "Star Wars", category: "STAR WARS", year: 2016, pieces: 4016, retail: 499.99, condition: "Built/Displayed", currentValue: 1445, growth: 0.08 },
-    { num: 3, setNumber: "75290", name: "Mos Eisley Cantina", theme: "Star Wars", category: "STAR WARS", year: 2020, pieces: 3187, retail: 349.99, condition: "Building", currentValue: 400, growth: 0.08 },
+    { num: 3, setNumber: "75290", name: "Mos Eisley Cantina", theme: "Star Wars", category: "STAR WARS", year: 2020, pieces: 3187, retail: 349.99, condition: "Built/Displayed", currentValue: 400, growth: 0.08 },
     { num: 4, setNumber: "10236", name: "Ewok Village", theme: "Star Wars", category: "STAR WARS", year: 2013, pieces: 1990, retail: 249.99, condition: "Built/Displayed", currentValue: 550, growth: 0.06 },
     { num: 5, setNumber: "75054", name: "AT-AT", theme: "Star Wars", category: "STAR WARS", year: 2014, pieces: 1137, retail: 109.99, condition: "Built/Displayed", currentValue: 220, growth: 0.06 },
     { num: 6, setNumber: "75409", name: "Jango Fett's Firespray-Class Starship (UCS)", theme: "Star Wars", category: "STAR WARS", year: 2025, pieces: 2970, retail: 299.99, condition: "Built/Displayed", currentValue: 300, growth: 0.12 },
@@ -68,7 +68,7 @@ const LEGO_DATA = {
     { num: 66, setNumber: "76031", name: "The Hulk Buster Smash", theme: "Marvel", category: "MARVEL", year: 2015, pieces: 248, retail: 29.99, condition: "Built/Displayed", currentValue: 60, growth: 0.04 },
     { num: 67, setNumber: "76080", name: "Ayesha's Revenge (GotG)", theme: "Marvel", category: "MARVEL", year: 2017, pieces: 323, retail: 34.99, condition: "Built/Displayed", currentValue: 55, growth: 0.04 },
     { num: 68, setNumber: "76058", name: "Ghost Rider Team-Up", theme: "Marvel", category: "MARVEL", year: 2016, pieces: 217, retail: 19.99, condition: "Built/Displayed", currentValue: 40, growth: 0.04 },
-    { num: 69, setNumber: "76269", name: "Avengers Tower", theme: "Marvel", category: "MARVEL", year: 2024, pieces: 5201, retail: 499.99, condition: "Building", currentValue: 617, growth: 0.10 },
+    { num: 69, setNumber: "76269", name: "Avengers Tower", theme: "Marvel", category: "MARVEL", year: 2024, pieces: 5201, retail: 499.99, condition: "Built/Displayed", currentValue: 617, growth: 0.10 },
     { num: 70, setNumber: "76048", name: "Iron Skull Sub Attack", theme: "Marvel", category: "MARVEL", year: 2016, pieces: 329, retail: 29.99, condition: "Built/Displayed", currentValue: 37, growth: 0.02 },
     { num: 71, setNumber: "76049", name: "Avenjet Space Mission", theme: "Marvel", category: "MARVEL", year: 2016, pieces: 523, retail: 59.99, condition: "Built/Displayed", currentValue: 43, growth: 0.0 },
     { num: 72, setNumber: "76079", name: "Ravager Attack", theme: "Marvel", category: "MARVEL", year: 2017, pieces: 197, retail: 19.99, condition: "Built/Displayed", currentValue: 27, growth: 0.03 },
