@@ -427,6 +427,36 @@ body {
   font-weight: 500;
 }
 
+.condition-filter-group {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.condition-filter-btn {
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.condition-filter-btn:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+.condition-filter-btn.active {
+  background: var(--text-primary);
+  color: white;
+  border-color: var(--text-primary);
+}
+
 .sort-controls {
   display: flex;
   align-items: center;
@@ -1232,6 +1262,8 @@ body {
   /* Controls bar */
   .controls-bar { flex-wrap: wrap; margin-bottom: 10px; }
   .results-count { font-size: 12px; width: 100%; }
+  .condition-filter-group { width: 100%; justify-content: flex-start; }
+  .condition-filter-btn { padding: 4px 10px; font-size: 11px; }
   .sort-controls { width: 100%; }
   .sort-select { width: 100%; font-size: 16px; }
 

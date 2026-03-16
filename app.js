@@ -10,6 +10,7 @@
   let currentView = 'table';
   let currentSort = { key: 'num', dir: 'asc' };
   let activeThemeFilter = null;
+  let activeConditionFilter = null;
   let searchQuery = '';
 
   // Wishlist state
@@ -92,6 +93,9 @@
     let result = [...sets];
     if (activeThemeFilter) {
       result = result.filter(s => s.category === activeThemeFilter);
+    }
+    if (activeConditionFilter) {
+      result = result.filter(s => s.condition === activeConditionFilter);
     }
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -309,6 +313,7 @@
     document.getElementById('resultsCount').textContent =
       `Showing ${count} of ${sets.length} sets` +
       (activeThemeFilter ? ` in ${getCategoryLabel(activeThemeFilter)}` : '') +
+      (activeConditionFilter ? ` · ${activeConditionFilter}` : '') +
       (searchQuery ? ` matching "${searchQuery}"` : '');
   }
 
@@ -555,6 +560,17 @@
     if (!pill) return;
     const cat = pill.dataset.cat;
     activeThemeFilter = activeThemeFilter === cat ? null : cat;
+    renderCollection();
+  });
+
+  // Condition filter buttons
+  document.querySelector('.condition-filter-group').addEventListener('click', (e) => {
+    const btn = e.target.closest('.condition-filter-btn');
+    if (!btn) return;
+    const cond = btn.dataset.condition;
+    activeConditionFilter = cond === 'all' ? null : cond;
+    document.querySelectorAll('.condition-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
     renderCollection();
   });
 
