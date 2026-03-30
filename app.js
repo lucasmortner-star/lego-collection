@@ -714,7 +714,7 @@
     76441: "https://www.lego.com/en-us/product/hogwarts-castle-dueling-club-76441",
   };
 
-  const hwOwned = new Set();
+  const hwOwned = new Set(JSON.parse(localStorage.getItem('hwOwned') || '[]'));
   const HW_TOTAL_COST = HW_SETS.reduce((a, s) => a + s.price, 0);
 
   function hwStatusBadge(s) {
@@ -830,6 +830,7 @@
 
   function hwToggleSet(id) {
     if (hwOwned.has(id)) { hwOwned.delete(id); } else { hwOwned.add(id); }
+    localStorage.setItem('hwOwned', JSON.stringify([...hwOwned]));
     hwBuildKey();
     hwUpdateStats();
     const set = HW_SETS.find(s => s.id === id);
