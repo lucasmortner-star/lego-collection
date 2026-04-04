@@ -114,7 +114,7 @@ const LEGO_DATA = {
     { num: 112, setNumber: "31011", name: "Aviation Adventures", theme: "Creator", category: "IDEAS / CREATOR / ICONS", year: 2013, pieces: 618, retail: 59.99, condition: "Built/Displayed", currentValue: 21, growth: 0.0 },
     { num: 113, setNumber: "11384", name: "Golden Retriever Puppy", theme: "Icons", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 2102, retail: 139.99, condition: "Built/Displayed", currentValue: 140, growth: 0.0 },
     { num: 114, setNumber: "43019", name: "Soccer Ball", theme: "LEGO Editions", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 1498, retail: 129.99, condition: "Built/Displayed", currentValue: 130, growth: 0.0 },
-    { num: 115, setNumber: "43020", name: "FIFA World Cup Official Trophy", theme: "LEGO Editions", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 2842, retail: 199.99, condition: "Building", currentValue: 200, growth: 0.0 },
+    { num: 115, setNumber: "43020", name: "FIFA World Cup Official Trophy", theme: "LEGO Editions", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 2842, retail: 199.99, condition: "Built/Displayed", currentValue: 200, growth: 0.0 },
     { num: 116, setNumber: "40886", name: "Penguins in Love", theme: "Seasonal", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 278, retail: 0, condition: "Built/Displayed", currentValue: 18, growth: 0.0 },
     { num: 117, setNumber: "77037", name: "Aloy & Varl vs. Shell-Walker & Sawtooth", theme: "Horizon Adventures", category: "IDEAS / CREATOR / ICONS", year: 2025, pieces: 768, retail: 44.99, condition: "Built/Displayed", currentValue: 45, growth: 0.0 },
     { num: 118, setNumber: "40906", name: "Restaurants of the World: Japan", theme: "Promotional", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 289, retail: 0, condition: "Built/Displayed", currentValue: 36, growth: 0.0 },
@@ -156,6 +156,9 @@ const LEGO_DATA = {
     { num: 154, setNumber: "76442", name: "Hogwarts Castle: Charms Class", theme: "Harry Potter", category: "HARRY POTTER", year: 2024, pieces: 204, retail: 19.99, condition: "Building", currentValue: 30, growth: 0.05 },
     { num: 155, setNumber: "76431", name: "Hogwarts Castle: Potions Class", theme: "Harry Potter", category: "HARRY POTTER", year: 2024, pieces: 397, retail: 44.99, condition: "Building", currentValue: 65, growth: 0.06 },
     { num: 156, setNumber: "76441", name: "Hogwarts Castle: Dueling Club", theme: "Harry Potter", category: "HARRY POTTER", year: 2024, pieces: 158, retail: 24.99, condition: "Building", currentValue: 35, growth: 0.05 },
+    { num: 157, setNumber: "75945", name: "Expecto Patronum", theme: "Harry Potter", category: "HARRY POTTER", year: 2019, pieces: 121, retail: 19.99, condition: "Built/Displayed", currentValue: 35, growth: 0.05 },
+    { num: 158, setNumber: "75945", name: "Expecto Patronum (Copy 2)", theme: "Harry Potter", category: "HARRY POTTER", year: 2019, pieces: 121, retail: 19.99, condition: "Sealed/New", currentValue: 45, growth: 0.06 },
+    { num: 159, setNumber: "10258", name: "London Bus", theme: "Creator Expert", category: "IDEAS / CREATOR / ICONS", year: 2017, pieces: 1686, retail: 139.99, condition: "Built/Displayed", currentValue: 250, growth: 0.06 },
   ],
 
   categories: [
