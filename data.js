@@ -83,7 +83,6 @@ const LEGO_DATA = {
     { num: 81, setNumber: "76313", name: "Brick-Built Marvel Logo", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 545, retail: 49.99, condition: "Built/Displayed", currentValue: 50, growth: 0.08 },
     { num: 82, setNumber: "76294", name: "X-Men: The X-Mansion", theme: "Marvel", category: "MARVEL", year: 2024, pieces: 3093, retail: 329.99, condition: "Built/Displayed", currentValue: 330, growth: 0.08 },
     { num: 83, setNumber: "75954", name: "Hogwarts Great Hall", theme: "Harry Potter", category: "HARRY POTTER", year: 2018, pieces: 878, retail: 99.99, condition: "Built/Displayed", currentValue: 160, growth: 0.06 },
-    { num: 84, setNumber: "75955", name: "Hogwarts Express", theme: "Harry Potter", category: "HARRY POTTER", year: 2018, pieces: 801, retail: 79.99, condition: "Built/Displayed", currentValue: 140, growth: 0.06 },
     { num: 85, setNumber: "75957", name: "The Knight Bus", theme: "Harry Potter", category: "HARRY POTTER", year: 2019, pieces: 403, retail: 39.99, condition: "Built/Displayed", currentValue: 65, growth: 0.05 },
     { num: 86, setNumber: "75956", name: "Quidditch Match", theme: "Harry Potter", category: "HARRY POTTER", year: 2018, pieces: 500, retail: 39.99, condition: "Built/Displayed", currentValue: 70, growth: 0.05 },
     { num: 87, setNumber: "75950", name: "Aragog's Lair", theme: "Harry Potter", category: "HARRY POTTER", year: 2018, pieces: 157, retail: 14.99, condition: "Built/Displayed", currentValue: 30, growth: 0.04 },
