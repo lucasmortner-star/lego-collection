@@ -158,7 +158,7 @@ const LEGO_DATA = {
     { num: 156, setNumber: "76441", name: "Hogwarts Castle: Dueling Club", theme: "Harry Potter", category: "HARRY POTTER", year: 2024, pieces: 158, retail: 24.99, condition: "Building", currentValue: 35, growth: 0.05 },
     { num: 157, setNumber: "75945", name: "Expecto Patronum", theme: "Harry Potter", category: "HARRY POTTER", year: 2019, pieces: 121, retail: 19.99, condition: "Built/Displayed", currentValue: 35, growth: 0.05 },
     { num: 158, setNumber: "75945", name: "Expecto Patronum (Copy 2)", theme: "Harry Potter", category: "HARRY POTTER", year: 2019, pieces: 121, retail: 19.99, condition: "Sealed/New", currentValue: 45, growth: 0.06 },
-    { num: 159, setNumber: "10258", name: "London Bus", theme: "Creator Expert", category: "IDEAS / CREATOR / ICONS", year: 2017, pieces: 1686, retail: 139.99, condition: "Built/Displayed", currentValue: 250, growth: 0.06 },
+    { num: 159, setNumber: "10258", name: "London Bus", theme: "Creator Expert", category: "IDEAS / CREATOR / ICONS", year: 2017, pieces: 1686, retail: 139.99, condition: "Building", currentValue: 250, growth: 0.06 },
   ],
 
   categories: [
