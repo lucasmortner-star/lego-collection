@@ -154,8 +154,9 @@
     const legend = document.getElementById('themeLegend');
 
     const total = summary.totalCurrent;
+    const sortedCats = [...LEGO_DATA.categories].sort((a, b) => themeStats[b.key].value - themeStats[a.key].value);
 
-    bar.innerHTML = LEGO_DATA.categories.map(cat => {
+    bar.innerHTML = sortedCats.map(cat => {
       const stats = themeStats[cat.key];
       const widthPct = (stats.value / total * 100);
       if (widthPct < 0.5) return '';
@@ -165,7 +166,7 @@
         title="${cat.label}: ${fmt(stats.value)} (${widthPct.toFixed(1)}%)">${widthPct > 8 ? fmt(stats.value) : ''}</div>`;
     }).join('');
 
-    legend.innerHTML = LEGO_DATA.categories.map(cat => {
+    legend.innerHTML = sortedCats.map(cat => {
       const stats = themeStats[cat.key];
       const isActive = activeThemeFilter === cat.key;
       return `<button class="theme-pill ${isActive ? 'active' : ''}" data-cat="${cat.key}">
