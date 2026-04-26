@@ -18,5 +18,6 @@ const WISHLIST_DATA = {
     { setNumber: "76417", name: "Gringotts Wizarding Bank - Collectors' Edition", theme: "Harry Potter", pieces: 4803, retail: 429.99, priority: "High", notes: "Available - retiring Jul 2026, 13 minifigs + dragon, 32 inches tall" },
     { setNumber: "76453", name: "Malfoy Manor", theme: "Harry Potter", pieces: 1601, retail: 149.99, priority: "High", notes: "Available - retiring mid-2026, 9 minifigs, first-ever LEGO Malfoy Manor" },
     { setNumber: "75331", name: "The Razor Crest (UCS)", theme: "Star Wars", pieces: 6187, retail: 599.99, priority: "High", notes: "Retired Dec 2025 - aftermarket ~$748 new sealed, Mandalorian's ship" },
+    { setNumber: "10237", name: "The Tower of Orthanc", theme: "Lord of the Rings", pieces: 2359, retail: 199.99, priority: "High", notes: "Retired since 2015 - 2013 release, Saruman's Isengard tower, very expensive on aftermarket" },
   ]
 };
