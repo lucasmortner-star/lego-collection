@@ -21,6 +21,7 @@ const WISHLIST_DATA = {
 
     // ===== MARVEL =====
     { setNumber: "76218", name: "Sanctum Sanctorum", theme: "Marvel", category: "MARVEL", pieces: 2708, retail: 249.99, priority: "High", notes: "Retired - 3-story modular with 9 minifigs" },
+    { setNumber: "76215", name: "Black Panther", theme: "Marvel", category: "MARVEL", pieces: 2961, retail: 349.99, priority: "High", notes: "Retired Oct 2022 - life-size T'Challa bust, famous for its alternate build 😂" },
 
     // ===== LORD OF THE RINGS / THE HOBBIT =====
     { setNumber: "11377", name: "Minas Tirith", theme: "Lord of the Rings", category: "LOTR", pieces: 8278, retail: 599.99, priority: "High", notes: "Coming soon - expected June 2026, 8,278 pcs, all 7 tiers of the White City" },
