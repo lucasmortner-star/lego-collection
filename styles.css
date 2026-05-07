@@ -997,6 +997,47 @@ body {
   gap: 12px;
 }
 
+/* Wishlist category section header */
+.wl-category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0 6px;
+  margin-top: 8px;
+}
+
+.wl-category-header:first-child {
+  margin-top: 0;
+  padding-top: 8px;
+}
+
+.wl-category-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.wl-category-header .wl-cat-icon {
+  font-size: 18px;
+}
+
+.wl-category-header .wl-cat-count {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.wl-category-header .wl-cat-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
 /* Individual wishlist card */
 .wl-card {
   background: var(--bg-secondary);

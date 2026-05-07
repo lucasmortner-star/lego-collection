@@ -419,39 +419,76 @@
     grid.style.display = '';
     empty.style.display = 'none';
 
-    // Sort: High priority first, then Medium, then Low
-    const priorityOrder = { 'High': 0, 'Medium': 1, 'Low': 2 };
-    const sorted = [...items].sort((a, b) => {
-      const pa = priorityOrder[a.priority] ?? 1;
-      const pb = priorityOrder[b.priority] ?? 1;
-      return pa - pb;
+    // Category metadata for the wishlist (grouping + display)
+    const WL_CATEGORIES = {
+      'STAR WARS':    { label: 'Star Wars',                      icon: '⭐',           color: '#FFE81F', order: 1 },
+      'HARRY POTTER': { label: 'Harry Potter',                   icon: '⚡',           color: '#7B3F00', order: 2 },
+      'MARVEL':       { label: 'Marvel',                         icon: '🛡️', color: '#ED1D24', order: 3 },
+      'LOTR':         { label: 'Lord of the Rings / The Hobbit', icon: '💍',     color: '#C9A84C', order: 4 },
+    };
+    const DEFAULT_CAT = { label: 'Other', icon: '', color: '#888', order: 99 };
+
+    // Group filtered items by category
+    const groups = {};
+    items.forEach(item => {
+      const cat = item.category || 'OTHER';
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(item);
     });
 
-    grid.innerHTML = sorted.map(item => {
-      const prioClass = (item.priority || 'Medium').toLowerCase();
-      const piecesStr = item.pieces ? `${item.pieces.toLocaleString()} pcs` : '';
-      const notesHtml = item.notes ? `<div class="wl-card-notes">${item.notes}</div>` : '';
+    // Order categories by their defined order
+    const catKeys = Object.keys(groups).sort((a, b) => {
+      const oa = (WL_CATEGORIES[a] || DEFAULT_CAT).order;
+      const ob = (WL_CATEGORIES[b] || DEFAULT_CAT).order;
+      return oa - ob;
+    });
 
-      return `<div class="wl-card">
-        <div class="wl-priority-bar ${prioClass}"></div>
-        <div class="wl-card-body">
-          <div class="wl-card-header">
-            <span class="wl-card-name">${item.name}</span>
-            <span class="wl-card-set-num">${item.setNumber}</span>
-          </div>
-          <div class="wl-card-meta">
-            <span>${item.theme}</span>
-            ${piecesStr ? `<span>&middot; ${piecesStr}</span>` : ''}
-            ${item.wantedBy ? `<span>&middot; Wanted by: <strong>${item.wantedBy}</strong></span>` : ''}
-          </div>
-          ${notesHtml}
-        </div>
-        <div class="wl-card-right">
-          <span class="wl-card-price">${item.retail > 0 ? fmt(item.retail) : 'TBD'}</span>
-          <span class="wl-priority-badge ${prioClass}">${item.priority || 'Medium'}</span>
-        </div>
+    // Within each category, sort by priority: High → Medium → Low
+    const priorityOrder = { 'High': 0, 'Medium': 1, 'Low': 2 };
+
+    let html = '';
+    catKeys.forEach(catKey => {
+      const meta = WL_CATEGORIES[catKey] || DEFAULT_CAT;
+      const sorted = [...groups[catKey]].sort((a, b) => {
+        const pa = priorityOrder[a.priority] ?? 1;
+        const pb = priorityOrder[b.priority] ?? 1;
+        return pa - pb;
+      });
+
+      html += `<div class="wl-category-header">
+        <h2><span class="wl-cat-icon" style="color:${meta.color}">${meta.icon}</span> ${meta.label}</h2>
+        <span class="wl-cat-count">${sorted.length} set${sorted.length === 1 ? '' : 's'}</span>
+        <div class="wl-cat-line"></div>
       </div>`;
-    }).join('');
+
+      html += sorted.map(item => {
+        const prioClass = (item.priority || 'Medium').toLowerCase();
+        const piecesStr = item.pieces ? `${item.pieces.toLocaleString()} pcs` : '';
+        const notesHtml = item.notes ? `<div class="wl-card-notes">${item.notes}</div>` : '';
+
+        return `<div class="wl-card">
+          <div class="wl-priority-bar ${prioClass}"></div>
+          <div class="wl-card-body">
+            <div class="wl-card-header">
+              <span class="wl-card-name">${item.name}</span>
+              <span class="wl-card-set-num">${item.setNumber}</span>
+            </div>
+            <div class="wl-card-meta">
+              <span>${item.theme}</span>
+              ${piecesStr ? `<span>&middot; ${piecesStr}</span>` : ''}
+              ${item.wantedBy ? `<span>&middot; Wanted by: <strong>${item.wantedBy}</strong></span>` : ''}
+            </div>
+            ${notesHtml}
+          </div>
+          <div class="wl-card-right">
+            <span class="wl-card-price">${item.retail > 0 ? fmt(item.retail) : 'TBD'}</span>
+            <span class="wl-priority-badge ${prioClass}">${item.priority || 'Medium'}</span>
+          </div>
+        </div>`;
+      }).join('');
+    });
+
+    grid.innerHTML = html;
   }
 
   function renderWishlist() {
