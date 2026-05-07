@@ -167,6 +167,10 @@ const LEGO_DATA = {
     { num: 166, setNumber: "76467", name: "Luna Lovegood's House", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 764, retail: 89.99, condition: "Building", currentValue: 90, growth: 0.0 },
     { num: 167, setNumber: "76321", name: "Spider-Man vs. Doc Ock Subway Train Scene", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 393, retail: 54.99, condition: "Built/Displayed", currentValue: 55, growth: 0.0 },
     { num: 168, setNumber: "76924", name: "Mercedes-AMG G 63 & Mercedes-AMG SL 63", theme: "Speed Champions", category: "CASTLE / OTHER", year: 2024, pieces: 808, retail: 44.99, condition: "Building", currentValue: 45, growth: 0.0 },
+    { num: 169, setNumber: "10367", name: "The Lord of the Rings: Balrog Book Nook", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2025, pieces: 1201, retail: 129.99, condition: "Built/Displayed", currentValue: 130, growth: 0.06 },
+    { num: 170, setNumber: "9471", name: "Uruk-hai Army", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2012, pieces: 257, retail: 29.99, condition: "Built/Displayed", currentValue: 80, growth: 0.07 },
+    { num: 171, setNumber: "79004", name: "Barrel Escape", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 334, retail: 39.99, condition: "Built/Displayed", currentValue: 70, growth: 0.06 },
+    { num: 172, setNumber: "79016", name: "Attack on Lake-town", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2014, pieces: 313, retail: 29.99, condition: "Built/Displayed", currentValue: 60, growth: 0.06 },
   ],
 
   categories: [
