@@ -169,6 +169,8 @@ const LEGO_DATA = {
     { num: 168, setNumber: "9471", name: "Uruk-hai Army", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2012, pieces: 257, retail: 29.99, condition: "Built/Displayed", currentValue: 80, growth: 0.07 },
     { num: 169, setNumber: "79004", name: "Barrel Escape", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 334, retail: 39.99, condition: "Built/Displayed", currentValue: 70, growth: 0.06 },
     { num: 170, setNumber: "79016", name: "Attack on Lake-town", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2014, pieces: 313, retail: 29.99, condition: "Built/Displayed", currentValue: 60, growth: 0.06 },
+    { num: 171, setNumber: "10237", name: "The Tower of Orthanc", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 2359, retail: 199.99, condition: "Building", currentValue: 400, growth: 0.08 },
+    { num: 172, setNumber: "79012", name: "Mirkwood Elf Army", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 276, retail: 29.99, condition: "Building", currentValue: 60, growth: 0.07 },
   ],
 
   categories: [
