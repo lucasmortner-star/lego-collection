@@ -24,7 +24,7 @@ const WISHLIST_DATA = {
     { setNumber: "76215", name: "Black Panther", theme: "Marvel", category: "MARVEL", pieces: 2961, retail: 349.99, priority: "High", notes: "Retired Oct 2022 - life-size T'Challa bust, famous for its alternate build" },
 
     // ===== LORD OF THE RINGS / THE HOBBIT =====
-    { setNumber: "11377", name: "Minas Tirith", theme: "Lord of the Rings", category: "LOTR", pieces: 8278, retail: 599.99, priority: "High", notes: "Coming soon - expected June 2026, 8,278 pcs, all 7 tiers of the White City" },
+    { setNumber: "11377", name: "Minas Tirith", theme: "Lord of the Rings", category: "LOTR", pieces: 8278, retail: 649.99, priority: "High", notes: "Officially revealed May 12, 2026 - Insiders early access June 1, general release June 4. 8,278 pcs, 10 minifigs, all 7 tiers of the White City. Comes with FREE GWP set 40893 Grond (307 pcs, 2 Mordor Orcs incl. exclusive face print) if purchased June 1-7" },
     { setNumber: "79002", name: "Attack of the Wargs", theme: "The Hobbit", category: "LOTR", pieces: 400, retail: 49.99, priority: "Medium", notes: "Retired - 2013 release, An Unexpected Journey scene with Bilbo, Gandalf, Thorin and Wargs" },
     { setNumber: "9473", name: "The Mines of Moria", theme: "Lord of the Rings", category: "LOTR", pieces: 776, retail: 79.99, priority: "Medium", notes: "Retired 2013 - Fellowship in Balin's Tomb, includes Cave Troll" },
     { setNumber: "79018", name: "The Lonely Mountain", theme: "The Hobbit", category: "LOTR", pieces: 866, retail: 129.99, priority: "Medium", notes: "Retired 2014 - Smaug's lair, largest Hobbit set" },
