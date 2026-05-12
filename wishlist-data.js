@@ -39,7 +39,6 @@ const WISHLIST_DATA = {
     { setNumber: "79001", name: "Escape from Mirkwood Spiders", theme: "The Hobbit", category: "LOTR", pieces: 298, retail: 29.99, priority: "Low", notes: "Retired 2013 - Mirkwood spiders with Bilbo, Legolas, Tauriel" },
     { setNumber: "79011", name: "Dol Guldur Ambush", theme: "The Hobbit", category: "LOTR", pieces: 217, retail: 19.99, priority: "Low", notes: "Retired 2013 - Beorn, Yazneg orc, Warg ambush" },
     { setNumber: "79013", name: "Lake-town Chase", theme: "The Hobbit", category: "LOTR", pieces: 470, retail: 59.99, priority: "Low", notes: "Retired 2013 - Bard's house, Bilbo, dwarves, orcs" },
-    { setNumber: "79015", name: "Witch-king Battle", theme: "The Hobbit", category: "LOTR", pieces: 105, retail: 14.99, priority: "Low", notes: "Retired 2014 - Galadriel, Elrond vs Witch-king at Dol Guldur" },
     { setNumber: "79017", name: "The Battle of Five Armies", theme: "The Hobbit", category: "LOTR", pieces: 472, retail: 59.99, priority: "Low", notes: "Retired 2014 - Thorin, Dwalin, Azog the Defiler" },
   ]
 };

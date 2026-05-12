@@ -171,6 +171,9 @@ const LEGO_DATA = {
     { num: 170, setNumber: "79016", name: "Attack on Lake-town", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2014, pieces: 313, retail: 29.99, condition: "Built/Displayed", currentValue: 60, growth: 0.06 },
     { num: 171, setNumber: "10237", name: "The Tower of Orthanc", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 2359, retail: 199.99, condition: "Building", currentValue: 957, growth: 0.08 },
     { num: 172, setNumber: "79012", name: "Mirkwood Elf Army", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 276, retail: 29.99, condition: "Building", currentValue: 206, growth: 0.07 },
+    { num: 173, setNumber: "79015", name: "Witch-king Battle", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2014, pieces: 105, retail: 14.99, condition: "Building", currentValue: 165, growth: 0.08 },
+    { num: 174, setNumber: "76423", name: "Hogwarts Express & Hogsmeade Station", theme: "Harry Potter", category: "HARRY POTTER", year: 2023, pieces: 1074, retail: 129.99, condition: "Building", currentValue: 96, growth: 0.0 },
+    { num: 175, setNumber: "79002-partial", name: "Mirkwood Tree (partial of Attack of the Wargs, no minifigs)", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 50, retail: 0, condition: "Building", currentValue: 42, growth: 0.0 },
   ],
 
   categories: [
