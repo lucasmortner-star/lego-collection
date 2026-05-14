@@ -15,7 +15,6 @@ const WISHLIST_DATA = {
     { setNumber: "75331", name: "The Razor Crest (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 6187, retail: 599.99, priority: "High", notes: "Retired Dec 2025 - aftermarket ~$748 new sealed, Mandalorian's ship" },
 
     // ===== HARRY POTTER =====
-    { setNumber: "75955", name: "Hogwarts Express", theme: "Harry Potter", category: "HARRY POTTER", pieces: 801, retail: 79.99, priority: "Medium", notes: "Retired - 2018 set, 801 pieces" },
     { setNumber: "76417", name: "Gringotts Wizarding Bank - Collectors' Edition", theme: "Harry Potter", category: "HARRY POTTER", pieces: 4803, retail: 429.99, priority: "High", notes: "Available - retiring Jul 2026, 13 minifigs + dragon, 32 inches tall" },
     { setNumber: "76453", name: "Malfoy Manor", theme: "Harry Potter", category: "HARRY POTTER", pieces: 1601, retail: 149.99, priority: "High", notes: "Available - retiring mid-2026, 9 minifigs, first-ever LEGO Malfoy Manor" },
 
