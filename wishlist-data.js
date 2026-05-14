@@ -25,7 +25,6 @@ const WISHLIST_DATA = {
 
     // ===== LORD OF THE RINGS / THE HOBBIT =====
     { setNumber: "11377", name: "Minas Tirith", theme: "Lord of the Rings", category: "LOTR", pieces: 8278, retail: 649.99, priority: "High", notes: "Officially revealed May 12, 2026 - Insiders early access June 1, general release June 4. 8,278 pcs, 10 minifigs, all 7 tiers of the White City. Comes with FREE GWP set 40893 Grond (307 pcs, 2 Mordor Orcs incl. exclusive face print) if purchased June 1-7" },
-    { setNumber: "79002", name: "Attack of the Wargs", theme: "The Hobbit", category: "LOTR", pieces: 400, retail: 49.99, priority: "Medium", notes: "Retired - 2013 release, An Unexpected Journey scene with Bilbo, Gandalf, Thorin and Wargs" },
     { setNumber: "9473", name: "The Mines of Moria", theme: "Lord of the Rings", category: "LOTR", pieces: 776, retail: 79.99, priority: "Medium", notes: "Retired 2013 - Fellowship in Balin's Tomb, includes Cave Troll" },
     { setNumber: "79018", name: "The Lonely Mountain", theme: "The Hobbit", category: "LOTR", pieces: 866, retail: 129.99, priority: "Medium", notes: "Retired 2014 - Smaug's lair, largest Hobbit set" },
     { setNumber: "79008", name: "Pirate Ship Ambush", theme: "Lord of the Rings", category: "LOTR", pieces: 756, retail: 89.99, priority: "Medium", notes: "Retired 2013 - Aragorn vs Corsairs of Umbar with King of the Dead" },
@@ -38,7 +37,6 @@ const WISHLIST_DATA = {
     { setNumber: "79000", name: "Riddles for the Ring", theme: "The Hobbit", category: "LOTR", pieces: 105, retail: 9.99, priority: "Low", notes: "Retired 2012 - Bilbo vs Gollum riddle scene" },
     { setNumber: "79001", name: "Escape from Mirkwood Spiders", theme: "The Hobbit", category: "LOTR", pieces: 298, retail: 29.99, priority: "Low", notes: "Retired 2013 - Mirkwood spiders with Bilbo, Legolas, Tauriel" },
     { setNumber: "79011", name: "Dol Guldur Ambush", theme: "The Hobbit", category: "LOTR", pieces: 217, retail: 19.99, priority: "Low", notes: "Retired 2013 - Beorn, Yazneg orc, Warg ambush" },
-    { setNumber: "79013", name: "Lake-town Chase", theme: "The Hobbit", category: "LOTR", pieces: 470, retail: 59.99, priority: "Low", notes: "Retired 2013 - Bard's house, Bilbo, dwarves, orcs" },
     { setNumber: "79017", name: "The Battle of Five Armies", theme: "The Hobbit", category: "LOTR", pieces: 472, retail: 59.99, priority: "Low", notes: "Retired 2014 - Thorin, Dwalin, Azog the Defiler" },
   ]
 };
