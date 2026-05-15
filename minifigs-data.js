@@ -70,9 +70,9 @@ const MINIFIGS_DATA = {
     { id: "sw1220", name: "Obi-Wan Kenobi (Jedi Master, brown robes)", side: "Jedi", era: "Prequel", source: "BrickLink", year: 2022, rarity: "Uncommon", currentValue: 28, owned: true, qty: 1, notes: "Mature Obi-Wan, reddish-brown robe (originally 75333)" },
     { id: "sw0552", name: "Obi-Wan Kenobi (Old Ben, Ep. IV)",    side: "Jedi", era: "Original",    source: "BrickLink", year: 2017, rarity: "Common",     currentValue: 18, owned: true, qty: 1, notes: "Dark brown hooded coat (also in 75173)" },
     { id: "",       name: "Plo Koon",                            side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2016, rarity: "Rare",       currentValue: 65, owned: true, qty: 1, notes: "Kel Dor Jedi Master — image pending, newer print" },
-    { id: "sw1205", name: "Mace Windu",                          side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2022, rarity: "Ultra-Rare", currentValue: 110, owned: true, qty: 1, notes: "Newer variant — dark tan legs, open mouth, printed arms (75342)" },
-    { id: "",       name: "Ki-Adi-Mundi",                        side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2016, rarity: "Ultra-Rare", currentValue: 130, owned: true, qty: 1, notes: "Tall conical head, white hair — image pending, newer print" },
-    { id: "",       name: "Aayla Secura",                        side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2016, rarity: "Ultra-Rare", currentValue: 160, owned: true, qty: 1, notes: "Blue Twi'lek Jedi — image pending, newer print" },
+    { id: "sw1165", name: "Mace Windu",                          side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2021, rarity: "Ultra-Rare", currentValue: 110, owned: true, qty: 1, notes: "Dark tan legs, open mouth — from 75309 Republic Gunship UCS" },
+    { id: "sw0911", name: "Ki-Adi-Mundi",                        side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2018, rarity: "Ultra-Rare", currentValue: 130, owned: true, qty: 1, notes: "Printed legs, nougat eye shadow — from 75206 Jedi Battle Pack" },
+    { id: "sw0833", name: "Aayla Secura",                        side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2017, rarity: "Ultra-Rare", currentValue: 160, owned: true, qty: 1, notes: "Dark pink lips — from 75182 Republic Fighter Tank (newer print)" },
 
     // ============================================================
     // MANDALORIANS / BOUNTY HUNTERS (owned — main characters)
