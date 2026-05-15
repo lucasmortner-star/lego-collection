@@ -545,14 +545,11 @@
     const owned = all.filter(m => m.owned);
     const totalOwnedCopies = owned.reduce((a, m) => a + (m.qty || 1), 0);
     const totalValue = owned.reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0);
-    const jediCount    = owned.filter(m => m.side === 'Jedi').length;
-    const sithCount    = owned.filter(m => m.side === 'Sith').length;
-    const inqCount     = owned.filter(m => m.side === 'Inquisitor').length;
-    const heroCount    = owned.filter(m => m.side === 'Hero').length;
-    const trooperCount = owned.filter(m => m.side === 'Trooper').length;
-    const droidCount   = owned.filter(m => m.side === 'Droid').length;
-    const alienCount   = owned.filter(m => m.side === 'Alien').length;
-    const needCount    = all.filter(m => !m.owned).length;
+    const jediCount   = owned.filter(m => m.side === 'Jedi').length;
+    const sithCount   = owned.filter(m => m.side === 'Sith').length;
+    const inqCount    = owned.filter(m => m.side === 'Inquisitor').length;
+    const bhCount     = owned.filter(m => m.side === 'Bounty Hunter').length;
+    const needCount   = all.filter(m => !m.owned).length;
 
     el.innerHTML = `
       <div class="mf-stat-card">
@@ -566,22 +563,21 @@
         <div class="mf-stat-sub">BrickLink Used Avg estimate</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Jedi · Sith · Inq.</div>
-        <div class="mf-stat-value">${jediCount} · ${sithCount} · ${inqCount}</div>
-        <div class="mf-stat-sub">Force-users</div>
+        <div class="mf-stat-label">Jedi</div>
+        <div class="mf-stat-value">${jediCount}</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Heroes · Troopers</div>
-        <div class="mf-stat-value">${heroCount} · ${trooperCount}</div>
+        <div class="mf-stat-label">Sith · Inquisitors</div>
+        <div class="mf-stat-value">${sithCount} · ${inqCount}</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Droids · Aliens</div>
-        <div class="mf-stat-value">${droidCount} · ${alienCount}</div>
+        <div class="mf-stat-label">Bounty Hunters</div>
+        <div class="mf-stat-value">${bhCount}</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Need to Order</div>
         <div class="mf-stat-value">${needCount}</div>
-        <div class="mf-stat-sub">Force-users still on the want-list</div>
+        <div class="mf-stat-sub">Force-users on the want-list</div>
       </div>
     `;
   }
@@ -667,11 +663,15 @@
           : (m.sourceSetName ? `${m.source} · ${m.sourceSetName}` : m.source || 'Unknown');
         const notesHtml = m.notes ? `<div class="mf-card-notes">${m.notes}</div>` : '';
 
+        const imageBlock = imgUrl
+          ? `<img class="mf-card-image" src="${imgUrl}" alt="${m.name.replace(/"/g, '&quot;')}"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+             <div class="mf-card-image-placeholder" style="display:none;">⚔️</div>`
+          : `<div class="mf-card-image-placeholder" style="display:flex;">⚔️</div>`;
+
         return `<div class="mf-card ${ownedClass}">
           <div class="mf-card-image-wrap">
-            <img class="mf-card-image" src="${imgUrl}" alt="${m.name.replace(/"/g, '&quot;')}"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div class="mf-card-image-placeholder" style="display:none;">⚔️</div>
+            ${imageBlock}
             ${qtyBadge}
             ${ownedBadge}
           </div>
