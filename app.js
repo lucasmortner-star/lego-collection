@@ -17,6 +17,11 @@
   let wishlistFilter = 'all';
   let wishlistSearch = '';
 
+  // Minifigs state
+  let minifigsSideFilter = 'all';   // 'all' | 'Jedi' | 'Sith' | 'Inquisitor' | 'Other Dark'
+  let minifigsOwnedFilter = 'all';  // 'all' | 'owned' | 'need'
+  let minifigsSearch = '';
+
   // --- Computed data ---
   const sets = LEGO_DATA.sets.map(s => ({
     ...s,
@@ -497,6 +502,188 @@
   }
 
   // ===================================================================
+  // MINIFIGS (Force-users: Jedi, Sith, Inquisitors)
+  // ===================================================================
+
+  function minifigImageUrl(m) {
+    // BrickLink minifig image URL pattern; supports an explicit override via m.image
+    if (m.image) return m.image;
+    if (!m.id) return '';
+    return `https://img.bricklink.com/ItemImage/MN/0/${m.id}.png`;
+  }
+
+  function getFilteredMinifigs() {
+    let items = (MINIFIGS_DATA && MINIFIGS_DATA.minifigs) || [];
+
+    if (minifigsSideFilter !== 'all') {
+      items = items.filter(m => m.side === minifigsSideFilter);
+    }
+
+    if (minifigsOwnedFilter === 'owned') {
+      items = items.filter(m => m.owned);
+    } else if (minifigsOwnedFilter === 'need') {
+      items = items.filter(m => !m.owned);
+    }
+
+    if (minifigsSearch) {
+      const q = minifigsSearch.toLowerCase();
+      items = items.filter(m =>
+        m.name.toLowerCase().includes(q) ||
+        (m.era || '').toLowerCase().includes(q) ||
+        (m.source || '').toLowerCase().includes(q) ||
+        (m.sourceSetName || '').toLowerCase().includes(q) ||
+        (m.notes || '').toLowerCase().includes(q)
+      );
+    }
+
+    return items;
+  }
+
+  function renderMinifigsStats() {
+    const el = document.getElementById('mfStats');
+    const all = (MINIFIGS_DATA && MINIFIGS_DATA.minifigs) || [];
+    const owned = all.filter(m => m.owned);
+    const totalOwnedCopies = owned.reduce((a, m) => a + (m.qty || 1), 0);
+    const totalValue = owned.reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0);
+    const jediCount = owned.filter(m => m.side === 'Jedi').length;
+    const sithCount = owned.filter(m => m.side === 'Sith').length;
+    const inqCount = owned.filter(m => m.side === 'Inquisitor').length;
+
+    el.innerHTML = `
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Force-Users Owned</div>
+        <div class="mf-stat-value">${owned.length}</div>
+        <div class="mf-stat-sub">${totalOwnedCopies} total figs (incl. duplicates)</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Total Value</div>
+        <div class="mf-stat-value accent">${fmt(totalValue)}</div>
+        <div class="mf-stat-sub">BrickLink Used Avg estimate</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Jedi</div>
+        <div class="mf-stat-value">${jediCount}</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Sith</div>
+        <div class="mf-stat-value">${sithCount}</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Inquisitors</div>
+        <div class="mf-stat-value">${inqCount}</div>
+      </div>
+    `;
+  }
+
+  function renderMinifigsGrid() {
+    const grid = document.getElementById('minifigsGrid');
+    const empty = document.getElementById('minifigsEmpty');
+    const all = (MINIFIGS_DATA && MINIFIGS_DATA.minifigs) || [];
+
+    if (all.length === 0) {
+      grid.style.display = 'none';
+      empty.style.display = '';
+      return;
+    }
+
+    const items = getFilteredMinifigs();
+    if (items.length === 0) {
+      grid.style.display = 'none';
+      empty.style.display = '';
+      return;
+    }
+
+    grid.style.display = '';
+    empty.style.display = 'none';
+
+    // Side metadata for grouping/display
+    const SIDE_META = {
+      'Jedi':         { label: 'Jedi',         icon: '🟦', color: '#3D7BC9', order: 1 },
+      'Sith':         { label: 'Sith',         icon: '🟥', color: '#C92F2F', order: 2 },
+      'Inquisitor':   { label: 'Inquisitors',  icon: '🔻', color: '#7A1F1F', order: 3 },
+      'Other Dark':   { label: 'Other Dark',   icon: '⚫', color: '#555',    order: 4 },
+      'Other':        { label: 'Other',        icon: '⚪', color: '#888',    order: 5 },
+    };
+
+    // Group by side
+    const groups = {};
+    items.forEach(m => {
+      const s = m.side || 'Other';
+      if (!groups[s]) groups[s] = [];
+      groups[s].push(m);
+    });
+    const sideKeys = Object.keys(groups).sort((a, b) => {
+      return ((SIDE_META[a] || {}).order || 99) - ((SIDE_META[b] || {}).order || 99);
+    });
+
+    // Within a group, sort by: owned first, then rarity desc, then value desc
+    const rarityWeight = { 'Ultra-Rare': 4, 'Rare': 3, 'Uncommon': 2, 'Common': 1 };
+
+    let html = '';
+    sideKeys.forEach(sideKey => {
+      const meta = SIDE_META[sideKey] || SIDE_META['Other'];
+      const sorted = [...groups[sideKey]].sort((a, b) => {
+        if (a.owned !== b.owned) return a.owned ? -1 : 1;
+        const ra = rarityWeight[a.rarity] || 0;
+        const rb = rarityWeight[b.rarity] || 0;
+        if (ra !== rb) return rb - ra;
+        return (b.currentValue || 0) - (a.currentValue || 0);
+      });
+
+      html += `<div class="mf-section-header">
+        <h2><span class="mf-section-icon">${meta.icon}</span> ${meta.label}</h2>
+        <span class="mf-section-count">${sorted.length} fig${sorted.length === 1 ? '' : 's'}</span>
+        <div class="mf-section-line"></div>
+      </div>`;
+
+      html += '<div class="mf-grid-inner">';
+      html += sorted.map(m => {
+        const imgUrl = minifigImageUrl(m);
+        const rarityClass = (m.rarity || 'Common').toLowerCase().replace(/[^a-z]/g, '');
+        const ownedClass = m.owned ? 'owned' : 'need';
+        const qtyBadge = (m.qty && m.qty > 1) ? `<span class="mf-qty-badge">×${m.qty}</span>` : '';
+        const ownedBadge = m.owned
+          ? `<span class="mf-owned-badge">✓ Owned</span>`
+          : `<span class="mf-need-badge">Need</span>`;
+        const sourceLabel = m.source === 'BrickLink'
+          ? 'BrickLink'
+          : (m.sourceSetName ? `${m.source} · ${m.sourceSetName}` : m.source || 'Unknown');
+        const notesHtml = m.notes ? `<div class="mf-card-notes">${m.notes}</div>` : '';
+
+        return `<div class="mf-card ${ownedClass}">
+          <div class="mf-card-image-wrap">
+            <img class="mf-card-image" src="${imgUrl}" alt="${m.name.replace(/"/g, '&quot;')}"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="mf-card-image-placeholder" style="display:none;">⚔️</div>
+            ${qtyBadge}
+            ${ownedBadge}
+          </div>
+          <div class="mf-card-body">
+            <div class="mf-card-name">${m.name}</div>
+            <div class="mf-card-meta">
+              <span class="mf-rarity ${rarityClass}">${m.rarity || 'Common'}</span>
+              <span class="mf-era">${m.era || ''}</span>
+            </div>
+            <div class="mf-card-source">From: ${sourceLabel}${m.year ? ` · ${m.year}` : ''}</div>
+            ${notesHtml}
+            <div class="mf-card-footer">
+              <span class="mf-value">${fmt(m.currentValue || 0)}</span>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+      html += '</div>';
+    });
+
+    grid.innerHTML = html;
+  }
+
+  function renderMinifigs() {
+    renderMinifigsStats();
+    renderMinifigsGrid();
+  }
+
+  // ===================================================================
   // PAGE SWITCHING
   // ===================================================================
 
@@ -511,10 +698,12 @@
     // Toggle page visibility
     document.getElementById('collectionPage').style.display = page === 'collection' ? '' : 'none';
     document.getElementById('wishlistPage').style.display = page === 'wishlist' ? '' : 'none';
+    document.getElementById('minifigsPage').style.display = page === 'minifigs' ? '' : 'none';
 
     // Toggle footer visibility
     document.getElementById('collectionFooter').style.display = page === 'collection' ? '' : 'none';
     document.getElementById('wishlistFooter').style.display = page === 'wishlist' ? '' : 'none';
+    document.getElementById('minifigsFooter').style.display = page === 'minifigs' ? '' : 'none';
 
     // Toggle header controls visibility (search/view toggle only for collection)
     document.querySelector('.header-controls').style.display = page === 'collection' ? '' : 'none';
@@ -524,6 +713,8 @@
       renderCollection();
     } else if (page === 'wishlist') {
       renderWishlist();
+    } else if (page === 'minifigs') {
+      renderMinifigs();
     }
 
     // Scroll to top
@@ -680,6 +871,47 @@
     btn.classList.add('active');
     renderWishlistGrid();
   });
+
+  // --- Minifigs Event Listeners ---
+
+  // Minifigs search
+  let mfSearchTimeout;
+  const mfSearchInput = document.getElementById('minifigsSearchInput');
+  if (mfSearchInput) {
+    mfSearchInput.addEventListener('input', (e) => {
+      clearTimeout(mfSearchTimeout);
+      mfSearchTimeout = setTimeout(() => {
+        minifigsSearch = e.target.value.trim();
+        renderMinifigsGrid();
+      }, 200);
+    });
+  }
+
+  // Side filter
+  const mfSideEl = document.getElementById('mfSideFilter');
+  if (mfSideEl) {
+    mfSideEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.mf-filter-btn');
+      if (!btn) return;
+      minifigsSideFilter = btn.dataset.side;
+      mfSideEl.querySelectorAll('.mf-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMinifigsGrid();
+    });
+  }
+
+  // Owned/Need filter
+  const mfOwnedEl = document.getElementById('mfOwnedFilter');
+  if (mfOwnedEl) {
+    mfOwnedEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.mf-filter-btn');
+      if (!btn) return;
+      minifigsOwnedFilter = btn.dataset.owned;
+      mfOwnedEl.querySelectorAll('.mf-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMinifigsGrid();
+    });
+  }
 
   // --- Mobile: force card view ---
   function checkMobile() {

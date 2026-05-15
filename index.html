@@ -27,6 +27,7 @@
       <div class="page-toggle">
         <button class="page-tab active" data-page="collection">Collection</button>
         <button class="page-tab" data-page="wishlist">Wishlist</button>
+        <button class="page-tab" data-page="minifigs">⚔️ Minifigs</button>
       </div>
 
       <div class="header-controls">
@@ -156,6 +157,55 @@
 
   </main>
 
+  <!-- ============================================ -->
+  <!-- MINIFIGS PAGE                                -->
+  <!-- ============================================ -->
+  <main class="minifigs-page" id="minifigsPage" style="display:none;">
+
+    <!-- Minifigs Hero -->
+    <div class="mf-hero">
+      <div class="mf-hero-content">
+        <div class="mf-hero-icon">⚔️</div>
+        <h2>Star Wars Minifigs</h2>
+        <p>Force-users: Jedi, Sith, Inquisitors &amp; more</p>
+      </div>
+    </div>
+
+    <!-- Minifigs Stats -->
+    <div class="mf-stats" id="mfStats"></div>
+
+    <!-- Minifigs Toolbar: search + side filters + owned toggle -->
+    <div class="mf-toolbar">
+      <div class="mf-search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="minifigsSearchInput" placeholder="Search minifigs by name, era, source set...">
+      </div>
+      <div class="mf-filter-group" id="mfSideFilter">
+        <button class="mf-filter-btn active" data-side="all">All</button>
+        <button class="mf-filter-btn" data-side="Jedi">🟦 Jedi</button>
+        <button class="mf-filter-btn" data-side="Sith">🟥 Sith</button>
+        <button class="mf-filter-btn" data-side="Inquisitor">🔻 Inquisitors</button>
+        <button class="mf-filter-btn" data-side="Other Dark">Other Dark</button>
+      </div>
+      <div class="mf-filter-group" id="mfOwnedFilter">
+        <button class="mf-filter-btn active" data-owned="all">All</button>
+        <button class="mf-filter-btn" data-owned="owned">✓ Owned</button>
+        <button class="mf-filter-btn" data-owned="need">Need</button>
+      </div>
+    </div>
+
+    <!-- Minifigs Grid -->
+    <div class="minifigs-grid" id="minifigsGrid"></div>
+
+    <!-- Empty State -->
+    <div class="mf-empty" id="minifigsEmpty" style="display:none;">
+      <div class="mf-empty-icon">⚔️</div>
+      <h3>No minifigs match</h3>
+      <p>Try a different filter or search term.</p>
+    </div>
+
+  </main>
+
   <!-- FOOTER -->
   <footer class="footer" id="collectionFooter">
     <p>Values are approximate for built/displayed condition (no box). Sealed/new values would be significantly higher.</p>
@@ -166,8 +216,15 @@
     <p>Retail prices are current MSRP or estimated based on available information.</p>
     <p>To add sets to the wishlist, update wishlist-data.js and re-deploy.</p>
   </footer>
+
+  <footer class="footer" id="minifigsFooter" style="display:none;">
+    <p>Minifig values are approximate BrickLink "Used Avg" prices. Images sourced from BrickLink.</p>
+    <p>To add minifigs, update minifigs-data.js and re-deploy.</p>
+  </footer>
+
   <script src="data.js"></script>
   <script src="wishlist-data.js"></script>
+  <script src="minifigs-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
