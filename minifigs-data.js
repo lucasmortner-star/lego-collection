@@ -63,7 +63,8 @@ const MINIFIGS_DATA = {
     // ============================================================
     // JEDI (owned — BrickLink purchases, bottom-row collection)
     // ============================================================
-    { id: "",       name: "Ahsoka Tano (Padawan, Clone Wars)",   side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2014, rarity: "Rare",       currentValue: 60,  owned: true, qty: 2, notes: "Two copies — orange dress, dual sabers. Image pending — newer print, not the 2010 tube top" },
+    { id: "sw1396", name: "Ahsoka Tano (Padawan, Clone Wars)",   side: "Jedi", era: "Clone Wars",  source: "75401", sourceSetName: "Ahsoka's Jedi Interceptor", year: 2025, rarity: "Rare", currentValue: 35, owned: true, qty: 2, notes: "Two copies — dark red backless vest with necklace and belt" },
+    { id: "sw1398", name: "Anakin Skywalker (Clone Wars, General)", side: "Jedi", era: "Clone Wars", source: "75401", sourceSetName: "Ahsoka's Jedi Interceptor", year: 2025, rarity: "Uncommon", currentValue: 22, owned: true, qty: 1, notes: "Dark brown and black robe, black hands" },
     { id: "sw1300", name: "Ahsoka Tano (older, Ahsoka show)",    side: "Jedi", era: "Mandalorian", source: "BrickLink", year: 2023, rarity: "Rare",       currentValue: 55, owned: true, qty: 1, notes: "Pearl dark grey robe, headtail stripes (originally 75362)" },
     { id: "",       name: "Obi-Wan Kenobi (Ep. II, hood)",       side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2019, rarity: "Uncommon",   currentValue: 22, owned: true, qty: 1, notes: "Image ID pending" },
     { id: "sw1220", name: "Obi-Wan Kenobi (Jedi Master, brown robes)", side: "Jedi", era: "Prequel", source: "BrickLink", year: 2022, rarity: "Uncommon", currentValue: 28, owned: true, qty: 1, notes: "Mature Obi-Wan, reddish-brown robe (originally 75333)" },
