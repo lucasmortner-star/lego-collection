@@ -545,13 +545,18 @@
     const owned = all.filter(m => m.owned);
     const totalOwnedCopies = owned.reduce((a, m) => a + (m.qty || 1), 0);
     const totalValue = owned.reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0);
-    const jediCount = owned.filter(m => m.side === 'Jedi').length;
-    const sithCount = owned.filter(m => m.side === 'Sith').length;
-    const inqCount = owned.filter(m => m.side === 'Inquisitor').length;
+    const jediCount    = owned.filter(m => m.side === 'Jedi').length;
+    const sithCount    = owned.filter(m => m.side === 'Sith').length;
+    const inqCount     = owned.filter(m => m.side === 'Inquisitor').length;
+    const heroCount    = owned.filter(m => m.side === 'Hero').length;
+    const trooperCount = owned.filter(m => m.side === 'Trooper').length;
+    const droidCount   = owned.filter(m => m.side === 'Droid').length;
+    const alienCount   = owned.filter(m => m.side === 'Alien').length;
+    const needCount    = all.filter(m => !m.owned).length;
 
     el.innerHTML = `
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Force-Users Owned</div>
+        <div class="mf-stat-label">Minifigs Owned</div>
         <div class="mf-stat-value">${owned.length}</div>
         <div class="mf-stat-sub">${totalOwnedCopies} total figs (incl. duplicates)</div>
       </div>
@@ -561,16 +566,22 @@
         <div class="mf-stat-sub">BrickLink Used Avg estimate</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Jedi</div>
-        <div class="mf-stat-value">${jediCount}</div>
+        <div class="mf-stat-label">Jedi · Sith · Inq.</div>
+        <div class="mf-stat-value">${jediCount} · ${sithCount} · ${inqCount}</div>
+        <div class="mf-stat-sub">Force-users</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Sith</div>
-        <div class="mf-stat-value">${sithCount}</div>
+        <div class="mf-stat-label">Heroes · Troopers</div>
+        <div class="mf-stat-value">${heroCount} · ${trooperCount}</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Inquisitors</div>
-        <div class="mf-stat-value">${inqCount}</div>
+        <div class="mf-stat-label">Droids · Aliens</div>
+        <div class="mf-stat-value">${droidCount} · ${alienCount}</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Need to Order</div>
+        <div class="mf-stat-value">${needCount}</div>
+        <div class="mf-stat-sub">Force-users still on the want-list</div>
       </div>
     `;
   }
@@ -598,11 +609,17 @@
 
     // Side metadata for grouping/display
     const SIDE_META = {
-      'Jedi':         { label: 'Jedi',         icon: '🟦', color: '#3D7BC9', order: 1 },
-      'Sith':         { label: 'Sith',         icon: '🟥', color: '#C92F2F', order: 2 },
-      'Inquisitor':   { label: 'Inquisitors',  icon: '🔻', color: '#7A1F1F', order: 3 },
-      'Other Dark':   { label: 'Other Dark',   icon: '⚫', color: '#555',    order: 4 },
-      'Other':        { label: 'Other',        icon: '⚪', color: '#888',    order: 5 },
+      'Jedi':          { label: 'Jedi',           icon: '🟦', color: '#3D7BC9', order: 1 },
+      'Sith':          { label: 'Sith',           icon: '🟥', color: '#C92F2F', order: 2 },
+      'Inquisitor':    { label: 'Inquisitors',    icon: '🔻', color: '#7A1F1F', order: 3 },
+      'Other Dark':    { label: 'Other Dark',     icon: '⚫', color: '#555',    order: 4 },
+      'Hero':          { label: 'Rebels & Heroes', icon: '🟧', color: '#E67E22', order: 5 },
+      'Bounty Hunter': { label: 'Bounty Hunters', icon: '🎯', color: '#A0522D', order: 6 },
+      'Imperial':      { label: 'Imperial Officers', icon: '🟩', color: '#4F6F4F', order: 7 },
+      'Trooper':       { label: 'Troopers & Clones', icon: '⬜', color: '#B0B0B0', order: 8 },
+      'Droid':         { label: 'Droids',         icon: '🤖', color: '#C0A45C', order: 9 },
+      'Alien':         { label: 'Aliens & Creatures', icon: '👽', color: '#6FA86F', order: 10 },
+      'Other':         { label: 'Other',          icon: '⚪', color: '#888',    order: 99 },
     };
 
     // Group by side
