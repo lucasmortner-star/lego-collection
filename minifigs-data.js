@@ -63,15 +63,15 @@ const MINIFIGS_DATA = {
     // ============================================================
     // JEDI (owned — BrickLink purchases, bottom-row collection)
     // ============================================================
-    { id: "sw0192", name: "Ahsoka Tano (Padawan, Clone Wars)",   side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2010, rarity: "Rare",       currentValue: 60,  owned: true, qty: 2, notes: "Two copies — tube top and belt (originally from 8098)" },
+    { id: "",       name: "Ahsoka Tano (Padawan, Clone Wars)",   side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2014, rarity: "Rare",       currentValue: 60,  owned: true, qty: 2, notes: "Two copies — orange dress, dual sabers. Image pending — newer print, not the 2010 tube top" },
     { id: "sw1300", name: "Ahsoka Tano (older, Ahsoka show)",    side: "Jedi", era: "Mandalorian", source: "BrickLink", year: 2023, rarity: "Rare",       currentValue: 55, owned: true, qty: 1, notes: "Pearl dark grey robe, headtail stripes (originally 75362)" },
     { id: "",       name: "Obi-Wan Kenobi (Ep. II, hood)",       side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2019, rarity: "Uncommon",   currentValue: 22, owned: true, qty: 1, notes: "Image ID pending" },
     { id: "sw1220", name: "Obi-Wan Kenobi (Jedi Master, brown robes)", side: "Jedi", era: "Prequel", source: "BrickLink", year: 2022, rarity: "Uncommon", currentValue: 28, owned: true, qty: 1, notes: "Mature Obi-Wan, reddish-brown robe (originally 75333)" },
     { id: "sw0552", name: "Obi-Wan Kenobi (Old Ben, Ep. IV)",    side: "Jedi", era: "Original",    source: "BrickLink", year: 2017, rarity: "Common",     currentValue: 18, owned: true, qty: 1, notes: "Dark brown hooded coat (also in 75173)" },
-    { id: "sw0538", name: "Plo Koon",                            side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2014, rarity: "Rare",       currentValue: 65, owned: true, qty: 1, notes: "Kel Dor Jedi Master, dark tan shirt (originally 75045)" },
-    { id: "sw0479", name: "Mace Windu",                          side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2013, rarity: "Ultra-Rare", currentValue: 110, owned: true, qty: 1, notes: "White legs, purple lightsaber (originally 75019)" },
-    { id: "sw0319", name: "Ki-Adi-Mundi",                        side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2011, rarity: "Ultra-Rare", currentValue: 130, owned: true, qty: 1, notes: "Tall conical head, white hair (originally 7959)" },
-    { id: "sw0284", name: "Aayla Secura",                        side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2010, rarity: "Ultra-Rare", currentValue: 160, owned: true, qty: 1, notes: "Blue Twi'lek Jedi — only ever in 8098 Clone Turbo Tank" },
+    { id: "",       name: "Plo Koon",                            side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2016, rarity: "Rare",       currentValue: 65, owned: true, qty: 1, notes: "Kel Dor Jedi Master — image pending, newer print" },
+    { id: "sw1205", name: "Mace Windu",                          side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2022, rarity: "Ultra-Rare", currentValue: 110, owned: true, qty: 1, notes: "Newer variant — dark tan legs, open mouth, printed arms (75342)" },
+    { id: "",       name: "Ki-Adi-Mundi",                        side: "Jedi", era: "Prequel",     source: "BrickLink", year: 2016, rarity: "Ultra-Rare", currentValue: 130, owned: true, qty: 1, notes: "Tall conical head, white hair — image pending, newer print" },
+    { id: "",       name: "Aayla Secura",                        side: "Jedi", era: "Clone Wars",  source: "BrickLink", year: 2016, rarity: "Ultra-Rare", currentValue: 160, owned: true, qty: 1, notes: "Blue Twi'lek Jedi — image pending, newer print" },
 
     // ============================================================
     // MANDALORIANS / BOUNTY HUNTERS (owned — main characters)
