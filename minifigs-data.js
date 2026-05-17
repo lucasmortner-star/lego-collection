@@ -58,19 +58,5 @@ const MINIFIGS_DATA = {
     // MANDALORIANS / BOUNTY HUNTERS (owned)
     // ============================================================
     { id: "sw1166", name: "The Mandalorian (Din Djarin)",             side: "Bounty Hunter", era: "Mandalorian", source: "BrickLink", year: 2021, rarity: "Common", currentValue: 5, owned: true, qty: 1, notes: "Silver beskar armor, jet pack, plain head" },
-
-    // ============================================================
-    // FORCE-USERS we still need to order (owned: false)
-    // ============================================================
-    { id: "sw0472", name: "Count Dooku",        side: "Sith",       era: "Clone Wars", source: "BrickLink", year: 2013, rarity: "Uncommon", currentValue: 20, owned: false, qty: 0, notes: "White combed hair, reddish brown cape" },
-    { id: "",       name: "Asajj Ventress",     side: "Sith",       era: "Clone Wars", source: "BrickLink", year: 2014, rarity: "Rare",     currentValue: 50, owned: false, qty: 0, notes: "Dual curved red sabers (est.)" },
-    { id: "",       name: "Savage Opress",      side: "Sith",       era: "Clone Wars", source: "BrickLink", year: 2015, rarity: "Rare",     currentValue: 60, owned: false, qty: 0, notes: "Maul's brother (est.)" },
-    { id: "sw0422", name: "Kit Fisto",          side: "Jedi",       era: "Prequel",    source: "BrickLink", year: 2012, rarity: "Rare",     currentValue: 50, owned: false, qty: 0, notes: "Nautolan green-skin Jedi (originally 9526)" },
-    { id: "",       name: "Shaak Ti",           side: "Jedi",       era: "Prequel",    source: "BrickLink", year: 2012, rarity: "Rare",     currentValue: 60, owned: false, qty: 0, notes: "Togruta Jedi Master (est.)" },
-    { id: "",       name: "Luminara Unduli",    side: "Jedi",       era: "Clone Wars", source: "BrickLink", year: 2013, rarity: "Rare",     currentValue: 45, owned: false, qty: 0, notes: "Mirialan Jedi (est.)" },
-    { id: "",       name: "Kanan Jarrus",       side: "Jedi",       era: "Rebels",     source: "BrickLink", year: 2016, rarity: "Uncommon", currentValue: 25, owned: false, qty: 0, notes: "From Rebels series (est.)" },
-    { id: "",       name: "Cal Kestis",         side: "Jedi",       era: "Imperial",   source: "BrickLink", year: 2023, rarity: "Uncommon", currentValue: 22, owned: false, qty: 0, notes: "Jedi: Survivor / Fallen Order (est.)" },
-    { id: "",       name: "Second Sister",      side: "Inquisitor", era: "Imperial",   source: "BrickLink", year: 2020, rarity: "Uncommon", currentValue: 25, owned: false, qty: 0, notes: "Jedi: Fallen Order (est.)" },
-    { id: "",       name: "Seventh Sister",     side: "Inquisitor", era: "Rebels",     source: "BrickLink", year: 2016, rarity: "Rare",     currentValue: 50, owned: false, qty: 0, notes: "Rebels series (est.)" },
   ]
 };

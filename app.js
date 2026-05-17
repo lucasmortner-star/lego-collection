@@ -549,18 +549,17 @@
     const sithCount   = owned.filter(m => m.side === 'Sith').length;
     const inqCount    = owned.filter(m => m.side === 'Inquisitor').length;
     const bhCount     = owned.filter(m => m.side === 'Bounty Hunter').length;
-    const needCount   = all.filter(m => !m.owned).length;
 
     el.innerHTML = `
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Minifigs Owned</div>
+        <div class="mf-stat-label">Minifigs in Collection</div>
         <div class="mf-stat-value">${owned.length}</div>
         <div class="mf-stat-sub">${totalOwnedCopies} total figs (incl. duplicates)</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Total Value</div>
         <div class="mf-stat-value accent">${fmt(totalValue)}</div>
-        <div class="mf-stat-sub">BrickLink Used Avg estimate</div>
+        <div class="mf-stat-sub">BrickLink Used Avg</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Jedi</div>
@@ -573,11 +572,6 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Bounty Hunters</div>
         <div class="mf-stat-value">${bhCount}</div>
-      </div>
-      <div class="mf-stat-card">
-        <div class="mf-stat-label">Need to Order</div>
-        <div class="mf-stat-value">${needCount}</div>
-        <div class="mf-stat-sub">Force-users on the want-list</div>
       </div>
     `;
   }
@@ -655,9 +649,7 @@
         const rarityClass = (m.rarity || 'Common').toLowerCase().replace(/[^a-z]/g, '');
         const ownedClass = m.owned ? 'owned' : 'need';
         const qtyBadge = (m.qty && m.qty > 1) ? `<span class="mf-qty-badge">×${m.qty}</span>` : '';
-        const ownedBadge = m.owned
-          ? `<span class="mf-owned-badge">✓ Owned</span>`
-          : `<span class="mf-need-badge">Need</span>`;
+        const ownedBadge = '';
         const sourceLabel = m.source === 'BrickLink'
           ? 'BrickLink'
           : (m.sourceSetName ? `${m.source} · ${m.sourceSetName}` : m.source || 'Unknown');
