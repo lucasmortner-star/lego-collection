@@ -58,5 +58,10 @@ const MINIFIGS_DATA = {
     // MANDALORIANS / BOUNTY HUNTERS (owned)
     // ============================================================
     { id: "sw1166", name: "The Mandalorian (Din Djarin)",             side: "Bounty Hunter", era: "Mandalorian", source: "BrickLink", year: 2021, rarity: "Common", currentValue: 5, owned: true, qty: 1, notes: "Silver beskar armor, jet pack, plain head" },
+
+    // ============================================================
+    // HARRY POTTER (owned)
+    // ============================================================
+    { id: "colhp09", name: "Lord Voldemort", side: "Dark Wizard", era: "Wizarding World", source: "BrickLink", year: 2020, rarity: "Common", currentValue: 3, owned: true, qty: 1, notes: "Harry Potter Collectible Minifig Series 1" },
   ]
 };

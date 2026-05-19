@@ -609,7 +609,9 @@
       'Trooper':       { label: 'Troopers & Clones', icon: '⬜', color: '#B0B0B0', order: 8 },
       'Droid':         { label: 'Droids',         icon: '🤖', color: '#C0A45C', order: 9 },
       'Alien':         { label: 'Aliens & Creatures', icon: '👽', color: '#6FA86F', order: 10 },
-      'Other':         { label: 'Other',          icon: '⚪', color: '#888',    order: 99 },
+      'Wizard':        { label: 'Wizards',         icon: '🪄', color: '#6B4E9B', order: 20 },
+      'Dark Wizard':   { label: 'Dark Wizards',    icon: '🐍', color: '#2E5934', order: 21 },
+      'Other':         { label: 'Other',           icon: '⚪', color: '#888',    order: 99 },
     };
 
     // Group by side
