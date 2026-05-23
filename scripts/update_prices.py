@@ -124,8 +124,14 @@ def fetch_bricklink_price(set_number, session):
                     listing_avgs.append(float(avg_match.group(1).replace(',', '')))
 
         # Priority: Used 6-month sold avg > Used current listing avg
-        # sold_avgs: [New 6mo, Used 6mo]
+        # sold_avgs:    [New 6mo, Used 6mo]
         # listing_avgs: [New current, Used current]
+        #
+        # IMPORTANT: We only ever return USED prices. We never fall back
+        # to the NEW (sealed) price — that would inflate the collection
+        # value 1.5-2× since the sets here are all built/displayed. If
+        # there's no used data at all, return None and keep the existing
+        # value rather than substituting a NEW price.
 
         if len(sold_avgs) >= 2 and sold_avgs[1] > 0:
             return round(sold_avgs[1], 2)
@@ -133,10 +139,6 @@ def fetch_bricklink_price(set_number, session):
         # Fallback: use current used listing average
         if len(listing_avgs) >= 2 and listing_avgs[1] > 0:
             return round(listing_avgs[1], 2)
-
-        # Last fallback: any sold average
-        if len(sold_avgs) >= 1 and sold_avgs[0] > 0:
-            return round(sold_avgs[0], 2)
 
         return None
 
