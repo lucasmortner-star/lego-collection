@@ -18,8 +18,8 @@
   let wishlistSearch = '';
 
   // Minifigs state
-  let minifigsSideFilter = 'all';   // 'all' | 'Jedi' | 'Sith' | 'Inquisitor' | 'Other Dark'
-  let minifigsOwnedFilter = 'all';  // 'all' | 'owned' | 'need'
+  let minifigsFranchiseFilter = 'all';  // 'all' | 'Star Wars' | 'Harry Potter' | 'Lord of the Rings'
+  let minifigsOwnedFilter = 'all';      // 'all' | 'owned' | 'need'
   let minifigsSearch = '';
 
   // --- Computed data ---
@@ -515,8 +515,8 @@
   function getFilteredMinifigs() {
     let items = (MINIFIGS_DATA && MINIFIGS_DATA.minifigs) || [];
 
-    if (minifigsSideFilter !== 'all') {
-      items = items.filter(m => m.side === minifigsSideFilter);
+    if (minifigsFranchiseFilter !== 'all') {
+      items = items.filter(m => m.franchise === minifigsFranchiseFilter);
     }
 
     if (minifigsOwnedFilter === 'owned') {
@@ -545,10 +545,9 @@
     const owned = all.filter(m => m.owned);
     const totalOwnedCopies = owned.reduce((a, m) => a + (m.qty || 1), 0);
     const totalValue = owned.reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0);
-    const jediCount   = owned.filter(m => m.side === 'Jedi').length;
-    const sithCount   = owned.filter(m => m.side === 'Sith').length;
-    const inqCount    = owned.filter(m => m.side === 'Inquisitor').length;
-    const bhCount     = owned.filter(m => m.side === 'Bounty Hunter').length;
+    const swCount   = owned.filter(m => m.franchise === 'Star Wars').length;
+    const hpCount   = owned.filter(m => m.franchise === 'Harry Potter').length;
+    const lotrCount = owned.filter(m => m.franchise === 'Lord of the Rings').length;
 
     el.innerHTML = `
       <div class="mf-stat-card">
@@ -559,19 +558,19 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Total Value</div>
         <div class="mf-stat-value accent">${fmt(totalValue)}</div>
-        <div class="mf-stat-sub">BrickLink Used Avg</div>
+        <div class="mf-stat-sub">Brickify market value</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Jedi</div>
-        <div class="mf-stat-value">${jediCount}</div>
+        <div class="mf-stat-label">⭐ Star Wars</div>
+        <div class="mf-stat-value">${swCount}</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Sith · Inquisitors</div>
-        <div class="mf-stat-value">${sithCount} · ${inqCount}</div>
+        <div class="mf-stat-label">⚡ Harry Potter</div>
+        <div class="mf-stat-value">${hpCount}</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Bounty Hunters</div>
-        <div class="mf-stat-value">${bhCount}</div>
+        <div class="mf-stat-label">💍 Lord of the Rings</div>
+        <div class="mf-stat-value">${lotrCount}</div>
       </div>
     `;
   }
@@ -597,51 +596,53 @@
     grid.style.display = '';
     empty.style.display = 'none';
 
-    // Side metadata for grouping/display
-    const SIDE_META = {
-      'Jedi':          { label: 'Jedi',           icon: '🟦', color: '#3D7BC9', order: 1 },
-      'Sith':          { label: 'Sith',           icon: '🟥', color: '#C92F2F', order: 2 },
-      'Inquisitor':    { label: 'Inquisitors',    icon: '🔻', color: '#7A1F1F', order: 3 },
-      'Other Dark':    { label: 'Other Dark',     icon: '⚫', color: '#555',    order: 4 },
-      'Hero':          { label: 'Rebels & Heroes', icon: '🟧', color: '#E67E22', order: 5 },
-      'Bounty Hunter': { label: 'Bounty Hunters', icon: '🎯', color: '#A0522D', order: 6 },
-      'Imperial':      { label: 'Imperial Officers', icon: '🟩', color: '#4F6F4F', order: 7 },
-      'Trooper':       { label: 'Troopers & Clones', icon: '⬜', color: '#B0B0B0', order: 8 },
-      'Droid':         { label: 'Droids',         icon: '🤖', color: '#C0A45C', order: 9 },
-      'Alien':         { label: 'Aliens & Creatures', icon: '👽', color: '#6FA86F', order: 10 },
-      'Wizard':        { label: 'Wizards',         icon: '🪄', color: '#6B4E9B', order: 20 },
-      'Dark Wizard':   { label: 'Dark Wizards',    icon: '🐍', color: '#2E5934', order: 21 },
-      'Other':         { label: 'Other',           icon: '⚪', color: '#888',    order: 99 },
+    // Franchise metadata for grouping/display
+    const FRANCHISE_META = {
+      'Star Wars':         { label: 'Star Wars',         icon: '⭐', color: '#FFE81F', order: 1 },
+      'Harry Potter':      { label: 'Harry Potter',      icon: '⚡', color: '#7B3F00', order: 2 },
+      'Lord of the Rings': { label: 'Lord of the Rings', icon: '💍', color: '#C9A84C', order: 3 },
+      'Other':             { label: 'Other',             icon: '⚪', color: '#888',    order: 99 },
     };
 
-    // Group by side
+    // Side ordering within a franchise (good guys first, then dark, then misc)
+    const sideOrder = {
+      'Jedi': 1, 'Wizard': 1,
+      'Bounty Hunter': 2,
+      'Droid': 3,
+      'Sith': 4, 'Dark Wizard': 4,
+      'Inquisitor': 5, 'Other Dark': 6,
+      'Hero': 7, 'Imperial': 8, 'Trooper': 9, 'Alien': 10,
+    };
+
+    // Group by franchise
     const groups = {};
     items.forEach(m => {
-      const s = m.side || 'Other';
-      if (!groups[s]) groups[s] = [];
-      groups[s].push(m);
+      const f = m.franchise || 'Other';
+      if (!groups[f]) groups[f] = [];
+      groups[f].push(m);
     });
-    const sideKeys = Object.keys(groups).sort((a, b) => {
-      return ((SIDE_META[a] || {}).order || 99) - ((SIDE_META[b] || {}).order || 99);
+    const franchiseKeys = Object.keys(groups).sort((a, b) => {
+      return ((FRANCHISE_META[a] || {}).order || 99) - ((FRANCHISE_META[b] || {}).order || 99);
     });
 
-    // Within a group, sort by: owned first, then rarity desc, then value desc
+    // Within a franchise, sort by: side (good→dark) then value desc
     const rarityWeight = { 'Ultra-Rare': 4, 'Rare': 3, 'Uncommon': 2, 'Common': 1 };
 
     let html = '';
-    sideKeys.forEach(sideKey => {
-      const meta = SIDE_META[sideKey] || SIDE_META['Other'];
-      const sorted = [...groups[sideKey]].sort((a, b) => {
-        if (a.owned !== b.owned) return a.owned ? -1 : 1;
-        const ra = rarityWeight[a.rarity] || 0;
-        const rb = rarityWeight[b.rarity] || 0;
-        if (ra !== rb) return rb - ra;
+    franchiseKeys.forEach(franchiseKey => {
+      const meta = FRANCHISE_META[franchiseKey] || FRANCHISE_META['Other'];
+      const sorted = [...groups[franchiseKey]].sort((a, b) => {
+        const sa = sideOrder[a.side] || 50;
+        const sb = sideOrder[b.side] || 50;
+        if (sa !== sb) return sa - sb;
         return (b.currentValue || 0) - (a.currentValue || 0);
       });
 
+      const groupValue = sorted.reduce((sum, m) => sum + (m.currentValue || 0) * (m.qty || 1), 0);
+
       html += `<div class="mf-section-header">
-        <h2><span class="mf-section-icon">${meta.icon}</span> ${meta.label}</h2>
-        <span class="mf-section-count">${sorted.length} fig${sorted.length === 1 ? '' : 's'}</span>
+        <h2><span class="mf-section-icon" style="color:${meta.color}">${meta.icon}</span> ${meta.label}</h2>
+        <span class="mf-section-count">${sorted.length} fig${sorted.length === 1 ? '' : 's'} · ${fmt(groupValue)}</span>
         <div class="mf-section-line"></div>
       </div>`;
 
@@ -898,13 +899,13 @@
     });
   }
 
-  // Side filter
+  // Franchise filter
   const mfSideEl = document.getElementById('mfSideFilter');
   if (mfSideEl) {
     mfSideEl.addEventListener('click', (e) => {
       const btn = e.target.closest('.mf-filter-btn');
       if (!btn) return;
-      minifigsSideFilter = btn.dataset.side;
+      minifigsFranchiseFilter = btn.dataset.franchise || 'all';
       mfSideEl.querySelectorAll('.mf-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderMinifigsGrid();
