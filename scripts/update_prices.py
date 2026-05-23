@@ -36,7 +36,7 @@ HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
 }
-REQUEST_DELAY = (2, 4)  # Seconds between requests (be polite to BrickLink)
+REQUEST_DELAY = (5, 8)  # Seconds between requests (avoids BrickLink 429s on long runs)
 
 BRICKLINK_PG_URL = "https://www.bricklink.com/catalogPG.asp?S={set_number}-1&ColorID=0"
 
