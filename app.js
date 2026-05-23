@@ -604,16 +604,6 @@
       'Other':             { label: 'Other',             icon: '⚪', color: '#888',    order: 99 },
     };
 
-    // Side ordering within a franchise (good guys first, then dark, then misc)
-    const sideOrder = {
-      'Jedi': 1, 'Wizard': 1,
-      'Bounty Hunter': 2,
-      'Droid': 3,
-      'Sith': 4, 'Dark Wizard': 4,
-      'Inquisitor': 5, 'Other Dark': 6,
-      'Hero': 7, 'Imperial': 8, 'Trooper': 9, 'Alien': 10,
-    };
-
     // Group by franchise
     const groups = {};
     items.forEach(m => {
@@ -625,16 +615,11 @@
       return ((FRANCHISE_META[a] || {}).order || 99) - ((FRANCHISE_META[b] || {}).order || 99);
     });
 
-    // Within a franchise, sort by: side (good→dark) then value desc
-    const rarityWeight = { 'Ultra-Rare': 4, 'Rare': 3, 'Uncommon': 2, 'Common': 1 };
-
     let html = '';
     franchiseKeys.forEach(franchiseKey => {
       const meta = FRANCHISE_META[franchiseKey] || FRANCHISE_META['Other'];
+      // Within a franchise: highest price first
       const sorted = [...groups[franchiseKey]].sort((a, b) => {
-        const sa = sideOrder[a.side] || 50;
-        const sb = sideOrder[b.side] || 50;
-        if (sa !== sb) return sa - sb;
         return (b.currentValue || 0) - (a.currentValue || 0);
       });
 
