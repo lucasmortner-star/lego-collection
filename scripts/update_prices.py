@@ -105,23 +105,26 @@ def fetch_bricklink_price(set_number, session):
         soup = BeautifulSoup(resp.text, "html.parser")
 
         # Find summary stat cells: "Times Sold:XX...Avg Price:US $XXX"
-        # These appear in order: [New 6mo, Used 6mo, New current, Used current]
-        sold_avgs = []
-        for td in soup.find_all('td'):
-            text = td.get_text().replace('\xa0', ' ').strip()
-            if text.startswith('Times Sold:') and 'Avg Price:' in text:
-                avg_match = re.search(r'Avg Price:\s*US\s*\$([\d,]+(?:\.\d{2})?)', text)
-                if avg_match:
-                    sold_avgs.append(float(avg_match.group(1).replace(',', '')))
+        # Order on page: [New 6mo, Used 6mo]. BUT each cell appears twice
+        # in the DOM (nested td structure), so we must dedupe consecutive
+        # duplicates. After dedupe: [0] = New, [1] = Used.
+        def collect_avgs(label_prefix):
+            raw = []
+            for td in soup.find_all('td'):
+                text = td.get_text().replace('\xa0', ' ').strip()
+                if text.startswith(label_prefix) and 'Avg Price:' in text:
+                    avg_match = re.search(r'Avg Price:\s*US\s*\$([\d,]+(?:\.\d{2})?)', text)
+                    if avg_match:
+                        raw.append(float(avg_match.group(1).replace(',', '')))
+            # Dedupe consecutive duplicates (nested-td artifact)
+            deduped = []
+            for v in raw:
+                if not deduped or deduped[-1] != v:
+                    deduped.append(v)
+            return deduped
 
-        # Also collect "Total Lots" cells (Current Items for Sale averages)
-        listing_avgs = []
-        for td in soup.find_all('td'):
-            text = td.get_text().replace('\xa0', ' ').strip()
-            if text.startswith('Total Lots:') and 'Avg Price:' in text:
-                avg_match = re.search(r'Avg Price:\s*US\s*\$([\d,]+(?:\.\d{2})?)', text)
-                if avg_match:
-                    listing_avgs.append(float(avg_match.group(1).replace(',', '')))
+        sold_avgs = collect_avgs('Times Sold:')      # [New 6mo, Used 6mo]
+        listing_avgs = collect_avgs('Total Lots:')   # [New current, Used current]
 
         # Priority: Used 6-month sold avg > Used current listing avg
         # sold_avgs:    [New 6mo, Used 6mo]
