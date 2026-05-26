@@ -36,8 +36,8 @@ const WISHLIST_DATA = {
     { setNumber: "79006", name: "The Council of Elrond", theme: "Lord of the Rings", category: "LOTR", pieces: 243, retail: 125, priority: "Low", notes: "Retired 2013 — BL New Avg ~$125 (was $19.99 MSRP), Rivendell council scene" },
     { setNumber: "79007", name: "Battle at the Black Gate", theme: "Lord of the Rings", category: "LOTR", pieces: 656, retail: 352, priority: "High", notes: "Retired 2013 — BL New Avg ~$352 (was $59.99 MSRP), Mordor gate, Aragorn, Mouth of Sauron" },
     { setNumber: "79000", name: "Riddles for the Ring", theme: "The Hobbit", category: "LOTR", pieces: 105, retail: 65, priority: "Low", notes: "Retired 2012 — BL New Avg ~$65 (was $9.99 MSRP), Bilbo vs Gollum riddle scene" },
-    { setNumber: "79001", name: "Escape from Mirkwood Spiders", theme: "The Hobbit", category: "LOTR", pieces: 298, retail: 29.99, priority: "Low", notes: "Retired 2013 — Mirkwood spiders with Bilbo, Legolas, Tauriel (price refresh pending)" },
-    { setNumber: "79011", name: "Dol Guldur Ambush", theme: "The Hobbit", category: "LOTR", pieces: 217, retail: 19.99, priority: "Low", notes: "Retired 2013 — Beorn, Yazneg orc, Warg ambush (price refresh pending)" },
-    { setNumber: "79017", name: "The Battle of Five Armies", theme: "The Hobbit", category: "LOTR", pieces: 472, retail: 59.99, priority: "Low", notes: "Retired 2014 — Thorin, Dwalin, Azog the Defiler (price refresh pending)" },
+    { setNumber: "79001", name: "Escape from Mirkwood Spiders", theme: "The Hobbit", category: "LOTR", pieces: 298, retail: 104, priority: "Low", notes: "Retired 2013 — BL New Avg ~$104 (was $29.99 MSRP), Mirkwood spiders with Bilbo, Legolas, Tauriel" },
+    { setNumber: "79011", name: "Dol Guldur Ambush", theme: "The Hobbit", category: "LOTR", pieces: 217, retail: 80, priority: "Low", notes: "Retired 2013 — BL New Avg ~$80 (was $19.99 MSRP), Beorn, Yazneg orc, Warg ambush" },
+    { setNumber: "79017", name: "The Battle of Five Armies", theme: "The Hobbit", category: "LOTR", pieces: 472, retail: 325, priority: "Low", notes: "Retired 2014 — BL New Avg ~$325 (was $59.99 MSRP), Thorin, Dwalin, Azog the Defiler" },
   ]
 };
