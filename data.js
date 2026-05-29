@@ -159,7 +159,7 @@ const LEGO_DATA = {
     { num: 158, setNumber: "76324", name: "Spider-Man vs. Oscorp", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 808, retail: 139.99, condition: "Building", currentValue: 140, growth: 0.0 },
     { num: 159, setNumber: "77256", name: "Time Machine from Back to the Future", theme: "Back to the Future", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 357, retail: 27.99, condition: "Built/Displayed", currentValue: 28, growth: 0.0 },
     { num: 160, setNumber: "76317", name: "Peter Parker's Apartment", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 394, retail: 54.99, condition: "Built/Displayed", currentValue: 55, growth: 0.0 },
-    { num: 161, setNumber: "76341", name: "Ravager Jumpsuit Groot", theme: "Marvel", category: "MARVEL", year: 2026, pieces: 604, retail: 59.99, condition: "Building", currentValue: 60, growth: 0.0 },
+    { num: 161, setNumber: "76341", name: "Ravager Jumpsuit Groot", theme: "Marvel", category: "MARVEL", year: 2026, pieces: 604, retail: 59.99, condition: "Built/Displayed", currentValue: 60, growth: 0.0 },
     { num: 162, setNumber: "76316", name: "Fantastic Four vs. Galactus", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 427, retail: 59.99, condition: "Built/Displayed", currentValue: 60, growth: 0.0 },
     { num: 163, setNumber: "76461", name: "Cornish Pixie", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 320, retail: 29.99, condition: "Built/Displayed", currentValue: 30, growth: 0.0 },
     { num: 164, setNumber: "76467", name: "Luna Lovegood's House", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 764, retail: 89.99, condition: "Built/Displayed", currentValue: 90, growth: 0.0 },
