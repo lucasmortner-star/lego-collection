@@ -184,6 +184,7 @@ const LEGO_DATA = {
     { num: 183, setNumber: "75461", name: "Up-Scaled Darth Vader Minifigure", theme: "Star Wars", category: "STAR WARS", year: 2026, pieces: 1037, retail: 99.99, condition: "Built/Displayed", currentValue: 108, growth: 0.0 },
     { num: 184, setNumber: "76473", name: "Hogwarts Castle: East Wing", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 700, retail: 99.99, condition: "Building", currentValue: 99, growth: 0.0 },
     { num: 185, setNumber: "76478", name: "Book Nook: Dumbledore's Office", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 1000, retail: 179.99, condition: "Building", currentValue: 149, growth: 0.0 },
+    { num: 186, setNumber: "43018", name: "Lionel Messi - Celebration", theme: "Editions", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 800, retail: 99.99, condition: "Built/Displayed", currentValue: 184, growth: 0.0 },
   ],
 
   categories: [
