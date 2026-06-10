@@ -26,7 +26,6 @@ const WISHLIST_DATA = {
     { setNumber: "76215", name: "Black Panther", theme: "Marvel", category: "MARVEL", pieces: 2961, retail: 261, priority: "High", notes: "Retired Oct 2022 — BL New Avg ~$261 (below $349.99 MSRP), life-size T'Challa bust" },
 
     // ===== LORD OF THE RINGS / THE HOBBIT =====
-    { setNumber: "11377", name: "Minas Tirith", theme: "Lord of the Rings", category: "LOTR", pieces: 8278, retail: 649.99, priority: "High", notes: "Officially revealed May 12, 2026 — Insiders early access June 1, general release June 4. 8,278 pcs, 10 minifigs, all 7 tiers of the White City. Comes with FREE GWP set 40893 Grond (307 pcs, 2 Mordor Orcs) if purchased June 1-7" },
     { setNumber: "9473", name: "The Mines of Moria", theme: "Lord of the Rings", category: "LOTR", pieces: 776, retail: 394, priority: "Medium", notes: "Retired 2013 — BL New Avg ~$394 (was $79.99 MSRP), Fellowship in Balin's Tomb, includes Cave Troll" },
     { setNumber: "79008", name: "Pirate Ship Ambush", theme: "Lord of the Rings", category: "LOTR", pieces: 756, retail: 468, priority: "Medium", notes: "Retired 2013 — BL New Avg ~$468 (was $89.99 MSRP), Aragorn vs Corsairs with King of the Dead" },
     { setNumber: "9472", name: "Attack on Weathertop", theme: "Lord of the Rings", category: "LOTR", pieces: 430, retail: 254, priority: "Low", notes: "Retired 2012 — BL New Avg ~$254 (was $39.99 MSRP), Frodo, Aragorn vs 3 Ringwraiths" },

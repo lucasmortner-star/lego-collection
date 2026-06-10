@@ -179,6 +179,11 @@ const LEGO_DATA = {
     { num: 178, setNumber: "43011", name: "Lionel Messi - Soccer Highlights", theme: "Editions", category: "IDEAS / CREATOR / ICONS", year: 2025, pieces: 727, retail: 59.99, condition: "Built/Displayed", currentValue: 26, growth: 0.04 },
     { num: 179, setNumber: "43015", name: "Lionel Messi - Soccer Legend", theme: "Editions", category: "IDEAS / CREATOR / ICONS", year: 2025, pieces: 1500, retail: 99.99, condition: "Built/Displayed", currentValue: 60, growth: 0.04 },
     { num: 180, setNumber: "79018", name: "The Lonely Mountain", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2014, pieces: 866, retail: 129.99, condition: "Built/Displayed", currentValue: 551, growth: 0.13 },
+    { num: 181, setNumber: "11377", name: "Minas Tirith", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2026, pieces: 8278, retail: 649.99, condition: "Built/Displayed", currentValue: 649, growth: 0.0 },
+    { num: 182, setNumber: "40893", name: "Grond (Minas Tirith GWP)", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2026, pieces: 307, retail: 0, condition: "Built/Displayed", currentValue: 35, growth: 0.0 },
+    { num: 183, setNumber: "75461", name: "Up-Scaled Darth Vader Minifigure", theme: "Star Wars", category: "STAR WARS", year: 2026, pieces: 1037, retail: 99.99, condition: "Built/Displayed", currentValue: 108, growth: 0.0 },
+    { num: 184, setNumber: "76473", name: "Hogwarts Castle: East Wing", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 700, retail: 99.99, condition: "Building", currentValue: 99, growth: 0.0 },
+    { num: 185, setNumber: "76478", name: "Book Nook: Dumbledore's Office", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 1000, retail: 179.99, condition: "Building", currentValue: 149, growth: 0.0 },
   ],
 
   categories: [
