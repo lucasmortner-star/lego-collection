@@ -14,16 +14,12 @@ const WISHLIST_DATA = {
     { setNumber: "75304", name: "Darth Vader Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 834, retail: 63, priority: "Low", notes: "Retired — BL New Avg ~$63 (below MSRP of $79.99)" },
     { setNumber: "75349", name: "Captain Rex Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 854, retail: 69.99, priority: "Low", notes: "Available — retiring ~July 2026, MSRP" },
     { setNumber: "75328", name: "The Mandalorian Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 584, retail: 43, priority: "Low", notes: "Retired — BL New Avg ~$43 (below MSRP)" },
+    { setNumber: "75331", name: "The Razor Crest (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 6187, retail: 567, priority: "High", notes: "Retired Dec 2025 — BL New Avg ~$567. We own the smaller 75292 Razor Crest; still want the UCS" },
     { setNumber: "75389", name: "The Dark Falcon", theme: "Star Wars", category: "STAR WARS", pieces: 1579, retail: 179.99, priority: "Low", notes: "Available — Rebuild the Galaxy series, 6 minifigs incl. Darth Jar Jar" },
-    { setNumber: "75331", name: "The Razor Crest (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 6187, retail: 567, priority: "High", notes: "Retired Dec 2025 — BL New Avg ~$567 (below $599.99 MSRP, but rising)" },
 
     // ===== HARRY POTTER =====
-    { setNumber: "76417", name: "Gringotts Wizarding Bank - Collectors' Edition", theme: "Harry Potter", category: "HARRY POTTER", pieces: 4803, retail: 429.99, priority: "High", notes: "Available — retiring Jul 2026, 13 minifigs + dragon, 32 inches tall" },
-    { setNumber: "76453", name: "Malfoy Manor", theme: "Harry Potter", category: "HARRY POTTER", pieces: 1601, retail: 149.99, priority: "High", notes: "Available — retiring mid-2026, 9 minifigs, first-ever LEGO Malfoy Manor" },
 
     // ===== MARVEL =====
-    { setNumber: "76218", name: "Sanctum Sanctorum", theme: "Marvel", category: "MARVEL", pieces: 2708, retail: 312, priority: "High", notes: "Retired — BL New Avg ~$312 (was $249.99 MSRP), 3-story modular with 9 minifigs" },
-    { setNumber: "76215", name: "Black Panther", theme: "Marvel", category: "MARVEL", pieces: 2961, retail: 261, priority: "High", notes: "Retired Oct 2022 — BL New Avg ~$261 (below $349.99 MSRP), life-size T'Challa bust" },
 
     // ===== LORD OF THE RINGS / THE HOBBIT =====
     { setNumber: "9473", name: "The Mines of Moria", theme: "Lord of the Rings", category: "LOTR", pieces: 776, retail: 394, priority: "Medium", notes: "Retired 2013 — BL New Avg ~$394 (was $79.99 MSRP), Fellowship in Balin's Tomb, includes Cave Troll" },

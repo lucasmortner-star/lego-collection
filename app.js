@@ -548,6 +548,7 @@
     const swCount   = owned.filter(m => m.franchise === 'Star Wars').length;
     const hpCount   = owned.filter(m => m.franchise === 'Harry Potter').length;
     const lotrCount = owned.filter(m => m.franchise === 'Lord of the Rings').length;
+    const otherCount = owned.length - swCount - hpCount - lotrCount;
 
     el.innerHTML = `
       <div class="mf-stat-card">
@@ -558,7 +559,7 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Total Value</div>
         <div class="mf-stat-value accent">${fmt(totalValue)}</div>
-        <div class="mf-stat-sub">Brickify market value</div>
+        <div class="mf-stat-sub">Brickify / BrickLink used value</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">⭐ Star Wars</div>
@@ -571,6 +572,10 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">💍 Lord of the Rings</div>
         <div class="mf-stat-value">${lotrCount}</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">🥷 Ninjago · Minecraft · Movie</div>
+        <div class="mf-stat-value">${otherCount}</div>
       </div>
     `;
   }
@@ -601,6 +606,9 @@
       'Star Wars':         { label: 'Star Wars',         icon: '⭐', color: '#FFE81F', order: 1 },
       'Harry Potter':      { label: 'Harry Potter',      icon: '⚡', color: '#7B3F00', order: 2 },
       'Lord of the Rings': { label: 'Lord of the Rings', icon: '💍', color: '#C9A84C', order: 3 },
+      'Ninjago':           { label: 'Ninjago',           icon: '🥷', color: '#D7261E', order: 4 },
+      'Minecraft':         { label: 'Minecraft',         icon: '⛏️', color: '#5B8731', order: 5 },
+      'The LEGO Movie':    { label: 'The LEGO Movie',    icon: '🎬', color: '#F5C518', order: 6 },
       'Other':             { label: 'Other',             icon: '⚪', color: '#888',    order: 99 },
     };
 
