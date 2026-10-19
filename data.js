@@ -90,7 +90,7 @@ const LEGO_DATA = {
     { num: 77, setNumber: "76471", name: "Knockturn Alley Wizarding Shops", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 756, retail: 59.99, condition: "Built/Displayed", currentValue: 89, growth: 0.48 },
     { num: 78, setNumber: "76452", name: "Quality Quidditch Supplies & Ice Cream Parlour", theme: "Harry Potter", category: "HARRY POTTER", year: 2025, pieces: 768, retail: 79.99, condition: "Built/Displayed", currentValue: 77, growth: 0.0 },
     { num: 79, setNumber: "76477", name: "Norbert", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 482, retail: 39.99, condition: "Built/Displayed", currentValue: 85, growth: 1.13 },
-    { num: 80, setNumber: "76478", name: "Book Nook: Dumbledore's Office", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 1173, retail: 129.99, condition: "Building", currentValue: 177, growth: 0.36 },
+    { num: 80, setNumber: "76478", name: "Book Nook: Dumbledore's Office", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 1173, retail: 129.99, condition: "Built/Displayed", currentValue: 177, growth: 0.36 },
     { num: 81, setNumber: "76469", name: "Dobby the Free Elf", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 379, retail: 29.99, condition: "Built/Displayed", currentValue: 28, growth: 0.0 },
     { num: 82, setNumber: "76462", name: "Hogwarts House Crest", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 545, retail: 59.99, condition: "Built/Displayed", currentValue: 62, growth: 0.03 },
     { num: 83, setNumber: "76459", name: "Hagrid & Harry's Privet Drive Escape", theme: "Harry Potter", category: "HARRY POTTER", year: 2026, pieces: 106, retail: 12.99, condition: "Built/Displayed", currentValue: 16, growth: 0.23 },
@@ -123,7 +123,7 @@ const LEGO_DATA = {
     // MARVEL
     // ========================================
     { num: 108, setNumber: "76269", name: "Avengers Tower", theme: "Marvel", category: "MARVEL", year: 2024, pieces: 5201, retail: 499.99, condition: "Built/Displayed", currentValue: 528, growth: 0.03 },
-    { num: 109, setNumber: "76215", name: "Black Panther", theme: "Marvel", category: "MARVEL", year: 2022, pieces: 2961, retail: 349.99, condition: "Built/Displayed", currentValue: 281, growth: 0.0 },
+    { num: 109, setNumber: "76215", name: "Black Panther", theme: "Marvel", category: "MARVEL", year: 2022, pieces: 2961, retail: 349.99, condition: "Building", currentValue: 281, growth: 0.0 },
     { num: 110, setNumber: "76218", name: "Sanctum Sanctorum", theme: "Marvel", category: "MARVEL", year: 2022, pieces: 2708, retail: 249.99, condition: "Built/Displayed", currentValue: 339, growth: 0.08 },
     { num: 111, setNumber: "76354", name: "S.H.I.E.L.D. Helicarrier", theme: "Marvel", category: "MARVEL", year: 2026, pieces: 3033, retail: 299.99, condition: "Built/Displayed", currentValue: 311, growth: 0.04 },
     { num: 112, setNumber: "76178", name: "Daily Bugle", theme: "Marvel", category: "MARVEL", year: 2021, pieces: 3772, retail: 349.99, condition: "Built/Displayed", currentValue: 434, growth: 0.04 },
@@ -131,6 +131,8 @@ const LEGO_DATA = {
     { num: 114, setNumber: "76262", name: "Captain America's Shield", theme: "Marvel", category: "MARVEL", year: 2023, pieces: 3128, retail: 199.99, condition: "Built/Displayed", currentValue: 195, growth: 0.0 },
     { num: 115, setNumber: "76344", name: "Iron Man Mark 3 - Collectors' Edition", theme: "Marvel", category: "MARVEL", year: 2026, pieces: 1292, retail: 149.99, condition: "Built/Displayed", currentValue: 96, growth: 0.0 },
     { num: 116, setNumber: "76327", name: "Iron Man Mark IV Bust", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 431, retail: 49.99, condition: "Built/Displayed", currentValue: 39, growth: 0.0 },
+    { num: 202, setNumber: "76345", name: "Doctor Doom Bust", theme: "Marvel", category: "MARVEL", year: 2026, pieces: 373, retail: 49.99, condition: "Building", currentValue: 44, growth: 0.0 },
+    { num: 203, setNumber: "76356", name: "Venom Bust", theme: "Marvel", category: "MARVEL", year: 2026, pieces: 410, retail: 49.99, condition: "Building", currentValue: 52, growth: 0.0 },
     { num: 117, setNumber: "76209", name: "Thor's Hammer", theme: "Marvel", category: "MARVEL", year: 2022, pieces: 979, retail: 99.99, condition: "Built/Displayed", currentValue: 159, growth: 0.12 },
     { num: 118, setNumber: "76191", name: "Infinity Gauntlet", theme: "Marvel", category: "MARVEL", year: 2021, pieces: 590, retail: 69.99, condition: "Built/Displayed", currentValue: 61, growth: 0.0 },
     { num: 119, setNumber: "76313", name: "Brick-Built Marvel Logo", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 545, retail: 49.99, condition: "Built/Displayed", currentValue: 76, growth: 0.52 },
@@ -149,7 +151,7 @@ const LEGO_DATA = {
     { num: 132, setNumber: "76079", name: "Ravager Attack", theme: "Marvel", category: "MARVEL", year: 2017, pieces: 197, retail: 19.99, condition: "Built/Displayed", currentValue: 32, growth: 0.05 },
     { num: 133, setNumber: "76060", name: "Doctor Strange's Sanctum Sanctorum", theme: "Marvel", category: "MARVEL", year: 2016, pieces: 358, retail: 29.99, condition: "Built/Displayed", currentValue: 42, growth: 0.03 },
     { num: 134, setNumber: "76103", name: "Corvus Glaive Thresher Attack", theme: "Marvel", category: "MARVEL", year: 2018, pieces: 416, retail: 39.99, condition: "Built/Displayed", currentValue: 66, growth: 0.06 },
-    { num: 135, setNumber: "76324", name: "Spider-Man vs. Oscorp", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 808, retail: 139.99, condition: "Building", currentValue: 122, growth: 0.0 },
+    { num: 135, setNumber: "76324", name: "Spider-Man vs. Oscorp", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 808, retail: 139.99, condition: "Built/Displayed", currentValue: 122, growth: 0.0 },
     { num: 136, setNumber: "76317", name: "Peter Parker's Apartment", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 394, retail: 54.99, condition: "Built/Displayed", currentValue: 57, growth: 0.04 },
     { num: 137, setNumber: "76341", name: "Ravager Jumpsuit Groot", theme: "Marvel", category: "MARVEL", year: 2026, pieces: 604, retail: 59.99, condition: "Built/Displayed", currentValue: 29, growth: 0.0 },
     { num: 138, setNumber: "76316", name: "Fantastic Four vs. Galactus", theme: "Marvel", category: "MARVEL", year: 2025, pieces: 427, retail: 59.99, condition: "Built/Displayed", currentValue: 45, growth: 0.0 },
@@ -234,7 +236,7 @@ const LEGO_DATA = {
     // SUPER MARIO
     // ========================================
     { num: 191, setNumber: "72037", name: "Mario Kart - Mario & Standard Kart", theme: "Super Mario", category: "SUPER MARIO", year: 2025, pieces: 1972, retail: 169.99, condition: "Built/Displayed", currentValue: 133, growth: 0.0 },
-    { num: 192, setNumber: "72050", name: "Mario Kart - Luigi & Mach 8", theme: "Super Mario", category: "SUPER MARIO", year: 2026, pieces: 2234, retail: 199.99, condition: "Built/Displayed", currentValue: 147, growth: 0.0 },
+    { num: 192, setNumber: "72050", name: "Mario Kart - Luigi & Mach 8", theme: "Super Mario", category: "SUPER MARIO", year: 2026, pieces: 2234, retail: 199.99, condition: "Building", currentValue: 147, growth: 0.0 },
 
     // ========================================
     // CASTLE / PIRATES / OTHER
@@ -245,9 +247,9 @@ const LEGO_DATA = {
     { num: 196, setNumber: "6270", name: "Forbidden Island", theme: "Pirates", category: "CASTLE / OTHER", year: 1989, pieces: 182, retail: 34.99, condition: "Built/Displayed", currentValue: 109, growth: 0.03 },
     { num: 197, setNumber: "70403", name: "Dragon Mountain", theme: "Castle", category: "CASTLE / OTHER", year: 2013, pieces: 376, retail: 49.99, condition: "Built/Displayed", currentValue: 164, growth: 0.1 },
     { num: 198, setNumber: "70320", name: "Aaron Fox's Aero-Striker V2", theme: "Nexo Knights", category: "CASTLE / OTHER", year: 2016, pieces: 301, retail: 29.99, condition: "Built/Displayed", currentValue: 21, growth: 0.0 },
-    { num: 199, setNumber: "76786", name: "Morticia's Cottage", theme: "Wednesday", category: "CASTLE / OTHER", year: 2025, pieces: 985, retail: 89.99, condition: "Built/Displayed", currentValue: 86, growth: 0.0 },
+    { num: 199, setNumber: "76786", name: "Morticia's Cottage", theme: "Wednesday", category: "CASTLE / OTHER", year: 2025, pieces: 985, retail: 89.99, condition: "Sealed/New", currentValue: 86, growth: 0.0 },
     { num: 200, setNumber: "77241", name: "2 Fast 2 Furious Honda S2000", theme: "Speed Champions", category: "CASTLE / OTHER", year: 2025, pieces: 296, retail: 24.99, condition: "Built/Displayed", currentValue: 25, growth: 0.0 },
-    { num: 201, setNumber: "76924", name: "Mercedes-AMG G 63 & Mercedes-AMG SL 63", theme: "Speed Champions", category: "CASTLE / OTHER", year: 2024, pieces: 808, retail: 44.99, condition: "Building", currentValue: 36, growth: 0.0 },
+    { num: 201, setNumber: "76924", name: "Mercedes-AMG G 63 & Mercedes-AMG SL 63", theme: "Speed Champions", category: "CASTLE / OTHER", year: 2024, pieces: 808, retail: 44.99, condition: "Built/Displayed", currentValue: 36, growth: 0.0 },
   ],
 
   categories: [
