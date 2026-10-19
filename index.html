@@ -28,6 +28,7 @@
         <button class="page-tab active" data-page="collection">Collection</button>
         <button class="page-tab" data-page="wishlist">Wishlist</button>
         <button class="page-tab" data-page="minifigs">⚔️ Minifigs</button>
+        <button class="page-tab" data-page="builders">🏆 Builders</button>
       </div>
 
       <div class="header-controls">
@@ -203,6 +204,21 @@
 
   </main>
 
+  <!-- ============================================ -->
+  <!-- BUILDERS PAGE                                -->
+  <!-- ============================================ -->
+  <main class="minifigs-page" id="buildersPage" style="display:none;">
+    <div class="mf-hero">
+      <div class="mf-hero-content">
+        <div class="mf-hero-icon">🏆</div>
+        <h2>Builder Leaderboard</h2>
+        <p>Who has built the most pieces</p>
+      </div>
+    </div>
+    <div class="mf-stats" id="bdStats"></div>
+    <div id="bdBoard"></div>
+  </main>
+
   <!-- FOOTER -->
   <footer class="footer" id="collectionFooter">
     <p>Values are BrickLink's average sold price over the last 6 months, combining new and used complete-set sales (incomplete sets excluded) — the same basis Brickify uses. Brand-new sets with no sales yet are valued at retail.</p>
@@ -217,6 +233,11 @@
   <footer class="footer" id="minifigsFooter" style="display:none;">
     <p>Minifig values are approximate BrickLink "Used Avg" prices. Images sourced from BrickLink.</p>
     <p>To add minifigs, update minifigs-data.js and re-deploy.</p>
+  </footer>
+
+  <footer class="footer" id="buildersFooter" style="display:none;">
+    <p>Shared builds split the set's pieces evenly between builders (or by the share logged). Builders are logged for the 100 largest sets.</p>
+    <p>To log a builder, add <code>builtBy: ["Name"]</code> to the set in data.js and re-deploy.</p>
   </footer>
 
   <script src="data.js"></script>

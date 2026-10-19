@@ -689,6 +689,82 @@
   }
 
   // ===================================================================
+  // BUILDERS LEADERBOARD
+  // ===================================================================
+
+  function shareLabel(count, total) {
+    if (count === total) return '';
+    const f = { '1/2': '½', '1/3': '⅓', '2/3': '⅔', '1/4': '¼', '3/4': '¾' }[`${count}/${total}`];
+    return f || `${count}/${total}`;
+  }
+
+  function renderBuilders() {
+    const builders = {};
+    sets.forEach(s => {
+      const list = s.builtBy || [];
+      [...new Set(list)].forEach(name => {
+        const count = list.filter(n => n === name).length;
+        const credited = s.pieces * count / list.length;
+        if (!builders[name]) builders[name] = { name, pieces: 0, sets: [] };
+        builders[name].pieces += credited;
+        builders[name].sets.push({ set: s, credited, share: shareLabel(count, list.length) });
+      });
+    });
+    const ranked = Object.values(builders).sort((a, b) => b.pieces - a.pieces);
+    const loggedPieces = ranked.reduce((a, b) => a + b.pieces, 0);
+    const biggest = sets.filter(s => s.builtBy && s.builtBy.length).sort((a, b) => b.pieces - a.pieces)[0];
+    const unlogged = sets.filter(s => !s.builtBy && s.condition === 'Built/Displayed');
+    const unloggedPieces = unlogged.reduce((a, s) => a + s.pieces, 0);
+
+    document.getElementById('bdStats').innerHTML = `
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Pieces Logged</div>
+        <div class="mf-stat-value accent">${Math.round(loggedPieces).toLocaleString()}</div>
+        <div class="mf-stat-sub">across ${sets.filter(s => s.builtBy).length} sets</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Leader</div>
+        <div class="mf-stat-value">${ranked[0] ? ranked[0].name : '—'}</div>
+        <div class="mf-stat-sub">${ranked[1] ? 'ahead by ' + Math.round(ranked[0].pieces - ranked[1].pieces).toLocaleString() + ' pieces' : ''}</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Biggest Single Build</div>
+        <div class="mf-stat-value">${biggest ? biggest.pieces.toLocaleString() : '—'}</div>
+        <div class="mf-stat-sub">${biggest ? biggest.name + ' · ' + biggest.builtBy.join(' & ') : ''}</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Builder Not Logged</div>
+        <div class="mf-stat-value">${unlogged.length}</div>
+        <div class="mf-stat-sub">built sets · ${unloggedPieces.toLocaleString()} pieces</div>
+      </div>
+    `;
+
+    const medals = ['🥇', '🥈', '🥉'];
+    document.getElementById('bdBoard').innerHTML = ranked.map((b, i) => {
+      const pct = loggedPieces ? b.pieces / loggedPieces * 100 : 0;
+      const rows = b.sets.sort((x, y) => y.credited - x.credited).map(({ set, credited, share }) => `
+        <div class="bd-set">
+          <span class="bd-set-name">${set.name}${share ? ` <span class="bd-share">${share}</span>` : ''}${set.condition === 'Building' ? ' <span class="bd-wip">in progress</span>' : ''}</span>
+          <span class="bd-set-pieces">${Math.round(credited).toLocaleString()}</span>
+        </div>`).join('');
+      return `
+        <div class="bd-card">
+          <div class="bd-head">
+            <span class="bd-rank">${medals[i] || '#' + (i + 1)}</span>
+            <span class="bd-name">${b.name}</span>
+            <span class="bd-total">${Math.round(b.pieces).toLocaleString()} <small>pieces</small></span>
+          </div>
+          <div class="bd-bar"><div class="bd-bar-fill" style="width:${pct.toFixed(1)}%"></div></div>
+          <div class="bd-meta">${b.sets.length} builds · ${pct.toFixed(0)}% of logged pieces</div>
+          <details class="bd-sets">
+            <summary>Show builds</summary>
+            ${rows}
+          </details>
+        </div>`;
+    }).join('');
+  }
+
+  // ===================================================================
   // PAGE SWITCHING
   // ===================================================================
 
@@ -704,11 +780,13 @@
     document.getElementById('collectionPage').style.display = page === 'collection' ? '' : 'none';
     document.getElementById('wishlistPage').style.display = page === 'wishlist' ? '' : 'none';
     document.getElementById('minifigsPage').style.display = page === 'minifigs' ? '' : 'none';
+    document.getElementById('buildersPage').style.display = page === 'builders' ? '' : 'none';
 
     // Toggle footer visibility
     document.getElementById('collectionFooter').style.display = page === 'collection' ? '' : 'none';
     document.getElementById('wishlistFooter').style.display = page === 'wishlist' ? '' : 'none';
     document.getElementById('minifigsFooter').style.display = page === 'minifigs' ? '' : 'none';
+    document.getElementById('buildersFooter').style.display = page === 'builders' ? '' : 'none';
 
     // Toggle header controls visibility (search/view toggle only for collection)
     document.querySelector('.header-controls').style.display = page === 'collection' ? '' : 'none';
@@ -720,6 +798,8 @@
       renderWishlist();
     } else if (page === 'minifigs') {
       renderMinifigs();
+    } else if (page === 'builders') {
+      renderBuilders();
     }
 
     // Scroll to top

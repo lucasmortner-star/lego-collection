@@ -2295,3 +2295,117 @@ footer.hogwarts-page a {
   .mf-search-box { width: 100%; }
   .mf-filter-group { flex-wrap: wrap; }
 }
+
+/* ========================================
+   BUILDERS LEADERBOARD
+   ======================================== */
+#bdBoard {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.bd-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+}
+
+.bd-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bd-rank {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.bd-name {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.bd-total {
+  margin-left: auto;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.bd-total small {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.bd-bar {
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: 999px;
+  margin: 12px 0 6px;
+  overflow: hidden;
+}
+
+.bd-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.bd-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bd-sets {
+  margin-top: 10px;
+}
+
+.bd-sets summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 4px 0;
+}
+
+.bd-set {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.bd-set:last-child {
+  border-bottom: none;
+}
+
+.bd-set-pieces {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.bd-share,
+.bd-wip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 999px;
+  margin-left: 4px;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+}
+
+.bd-wip {
+  background: var(--accent-light);
+  color: var(--accent);
+}
