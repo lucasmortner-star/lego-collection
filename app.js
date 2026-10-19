@@ -713,7 +713,9 @@
     const ranked = Object.values(builders).sort((a, b) => b.pieces - a.pieces);
     const loggedPieces = ranked.reduce((a, b) => a + b.pieces, 0);
     const biggest = sets.filter(s => s.builtBy && s.builtBy.length).sort((a, b) => b.pieces - a.pieces)[0];
-    const unlogged = sets.filter(s => !s.builtBy && s.condition === 'Built/Displayed');
+    // Builders are only tracked for the 100 largest sets
+    const top100 = sets.slice().sort((a, b) => b.pieces - a.pieces).slice(0, 100);
+    const unlogged = top100.filter(s => !s.builtBy && s.condition === 'Built/Displayed');
     const unloggedPieces = unlogged.reduce((a, s) => a + s.pieces, 0);
 
     document.getElementById('bdStats').innerHTML = `
@@ -733,9 +735,9 @@
         <div class="mf-stat-sub">${biggest ? biggest.name + ' · ' + biggest.builtBy.join(' & ') : ''}</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Builder Not Logged</div>
+        <div class="mf-stat-label">Unknown Builder</div>
         <div class="mf-stat-value">${unlogged.length}</div>
-        <div class="mf-stat-sub">built sets · ${unloggedPieces.toLocaleString()} pieces</div>
+        <div class="mf-stat-sub">of the 100 largest sets · ${unloggedPieces.toLocaleString()} pieces</div>
       </div>
     `;
 
