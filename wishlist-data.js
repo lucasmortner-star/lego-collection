@@ -13,9 +13,7 @@ const WISHLIST_DATA = {
     { setNumber: "75252", name: "Imperial Star Destroyer (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 4784, retail: 1106, priority: "Medium", notes: "Retired — BL New Avg ~$1,106 (was $699.99 MSRP)" },
     { setNumber: "75304", name: "Darth Vader Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 834, retail: 63, priority: "Low", notes: "Retired — BL New Avg ~$63 (below MSRP of $79.99)" },
     { setNumber: "75349", name: "Captain Rex Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 854, retail: 69.99, priority: "Low", notes: "Available — retiring ~July 2026, MSRP" },
-    { setNumber: "75328", name: "The Mandalorian Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 584, retail: 43, priority: "Low", notes: "Retired — BL New Avg ~$43 (below MSRP)" },
     { setNumber: "75331", name: "The Razor Crest (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 6187, retail: 567, priority: "High", notes: "Retired Dec 2025 — BL New Avg ~$567. We own the smaller 75292 Razor Crest; still want the UCS" },
-    { setNumber: "75389", name: "The Dark Falcon", theme: "Star Wars", category: "STAR WARS", pieces: 1579, retail: 179.99, priority: "Low", notes: "Available — Rebuild the Galaxy series, 6 minifigs incl. Darth Jar Jar" },
 
     // ===== HARRY POTTER =====
 
