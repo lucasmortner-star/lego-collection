@@ -30,7 +30,10 @@
     appreciationPct: s.retail > 0 ? ((s.currentValue - s.retail) / s.retail * 100) : 0,
     // What we actually paid, when logged (paid: 0 means it was free, e.g. a gift with purchase)
     paid: typeof s.paid === 'number' ? s.paid : null,
-    gainVsPaid: typeof s.paid === 'number' ? s.currentValue - s.paid : null
+    gainVsPaid: typeof s.paid === 'number' ? s.currentValue - s.paid : null,
+    // BrickLink 6-month averages: new in a sealed box, and used
+    valueNew: s.valueNew > 0 ? s.valueNew : null,
+    valueUsed: s.valueUsed > 0 ? s.valueUsed : null
   }));
 
   const summary = {
@@ -148,6 +151,14 @@
       { label: '3-Year Projected', value: fmt(summary.totalProjected), sub: '+' + fmt(summary.projectedGrowth) + ' projected growth' },
       { label: 'Avg. Set Value', value: fmt(summary.totalCurrent / summary.totalSets), sub: 'per set average' },
     ];
+    const boxedSets = sets.filter(s => s.valueNew !== null && s.valueUsed !== null);
+    if (boxedSets.length) {
+      const priced = `${boxedSets.length} of ${summary.totalSets} sets priced`;
+      cards.push(
+        { label: 'Value Boxed', value: fmt(boxedSets.reduce((a, s) => a + s.valueNew, 0)), sub: `new, sealed &middot; ${priced}` },
+        { label: 'Value Used', value: fmt(boxedSets.reduce((a, s) => a + s.valueUsed, 0)), sub: `complete, used &middot; ${priced}` }
+      );
+    }
     if (summary.paidCount) {
       const gain = summary.paidSetsValue - summary.totalPaid;
       cards.push({
@@ -207,7 +218,7 @@
     const sorted = sortSets(filtered);
 
     if (sorted.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="12"><div class="empty-state">
+      tbody.innerHTML = `<tr><td colspan="14"><div class="empty-state">
         <div class="empty-icon">🔍</div>
         <h3>No sets found</h3>
         <p>Try adjusting your search or filter</p>
@@ -236,7 +247,7 @@
         lastCatTable = s.category;
         const catSets = sorted.filter(x => x.category === s.category);
         const catValue = catSets.reduce((a, x) => a + x.currentValue, 0);
-        html += `<tr class="category-row"><td colspan="12">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
+        html += `<tr class="category-row"><td colspan="14">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
       }
 
       const apprClass = s.appreciation >= 0 ? 'positive' : 'negative';
@@ -256,6 +267,8 @@
           <span class="value-cell">${fmt(s.currentValue)}</span>
           <br><span class="appreciation ${apprClass}">${apprSymbol} ${s.retail > 0 ? pct(s.appreciationPct) : '—'}</span>
         </td>
+        <td class="hide-mobile">${s.valueNew !== null ? fmt(s.valueNew) : '<span class="paid-missing">—</span>'}</td>
+        <td class="hide-mobile">${s.valueUsed !== null ? fmt(s.valueUsed) : '<span class="paid-missing">—</span>'}</td>
         <td class="hide-mobile"><span class="growth-badge ${getGrowthClass(s.growth)}">${(s.growth * 100).toFixed(0)}% / yr</span></td>
         <td class="hide-mobile value-cell">${fmt(s.projectedValue)}</td>
       </tr>`;
@@ -334,6 +347,10 @@
                 <label>Current Value</label>
                 <div class="val">${fmt(s.currentValue)}</div>
               </div>
+              ${s.valueNew !== null || s.valueUsed !== null ? `<div class="card-val-block">
+                <label>Boxed / Used</label>
+                <div class="val">${s.valueNew !== null ? fmt(s.valueNew) : '—'} / ${s.valueUsed !== null ? fmt(s.valueUsed) : '—'}</div>
+              </div>` : ''}
               <div class="card-val-block">
                 <label>3-Yr Projected</label>
                 <div class="val green">${fmt(s.projectedValue)}</div>
@@ -804,7 +821,7 @@
 
   const PRICE_SERIES = [
     { key: 'value', label: 'Collection value', color: '#dc2626' },
-    { key: 'new',   label: 'New (sealed)',     color: '#2563eb' },
+    { key: 'new',   label: 'Boxed (new)',      color: '#2563eb' },
     { key: 'used',  label: 'Used',             color: '#16a34a' },
   ];
 

@@ -73,6 +73,8 @@
           <option value="num-asc">Collection Order</option>
           <option value="currentValue-desc">Value (High to Low)</option>
           <option value="currentValue-asc">Value (Low to High)</option>
+          <option value="valueNew-desc">Value Boxed (High to Low)</option>
+          <option value="valueUsed-desc">Value Used (High to Low)</option>
           <option value="growth-desc">Growth Rate (High to Low)</option>
           <option value="pieces-desc">Pieces (Most First)</option>
           <option value="pieces-asc">Pieces (Fewest First)</option>
@@ -100,6 +102,8 @@
             <th data-sort="paid" class="hide-mobile">Paid <span class="sort-arrow">&#9650;</span></th>
             <th data-sort="condition" class="hide-mobile">Condition <span class="sort-arrow">&#9650;</span></th>
             <th data-sort="currentValue">Value <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="valueNew" class="hide-mobile" title="BrickLink avg, new in sealed box">Boxed <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="valueUsed" class="hide-mobile" title="BrickLink avg, complete used">Used <span class="sort-arrow">&#9650;</span></th>
             <th data-sort="growth" class="hide-mobile">Growth <span class="sort-arrow">&#9650;</span></th>
             <th class="hide-mobile">3-Yr Proj. <span class="sort-arrow">&#9650;</span></th>
           </tr>
@@ -224,6 +228,7 @@
   <!-- FOOTER -->
   <footer class="footer" id="collectionFooter">
     <p>Values are BrickLink's average sold price over the last 6 months, combining new and used complete-set sales (incomplete sets excluded) — the same basis Brickify uses. Brand-new sets with no sales yet are valued at retail.</p>
+    <p>"Boxed" and "Used" are BrickLink's average sold prices over the last 6 months for a new set in its sealed box and for a complete used set.</p>
     <p>"Paid" is what we actually paid for a set, including shipping. To log it, add <code>paid: 120</code> to the set in data.js (use <code>paid: 0</code> for free gifts with purchase) and re-deploy.</p>
     <p>Growth rates based on historical LEGO secondary market trends. Sources: <a href="https://www.brickeconomy.com" target="_blank" rel="noopener">BrickEconomy</a> &amp; <a href="https://www.bricklink.com" target="_blank" rel="noopener">BrickLink</a></p>
   </footer>
