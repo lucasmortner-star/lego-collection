@@ -34,13 +34,13 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          git diff --quiet data.js || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet data.js price-history.js || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push updated prices
         if: steps.changes.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.js index.html
+          git add data.js index.html price-history.js
           git commit -m "chore: update LEGO prices $(date +'%Y-%m-%d')"
           git push

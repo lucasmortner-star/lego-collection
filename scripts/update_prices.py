@@ -305,6 +305,11 @@ def main():
     # Update HTML date
     update_html_date()
 
+    # Record today's values for the per-set price charts
+    from record_prices import record
+    points = record({n: {"value": round(v)} for n, v in updated_prices.items() if v})
+    print(f"Recorded {points} price points in price-history.js")
+
     print("\nDone!")
 
 

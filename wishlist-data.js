@@ -32,5 +32,6 @@ const WISHLIST_DATA = {
     { setNumber: "79001", name: "Escape from Mirkwood Spiders", theme: "The Hobbit", category: "LOTR", pieces: 298, retail: 104, priority: "Low", notes: "Retired 2013 — BL New Avg ~$104 (was $29.99 MSRP), Mirkwood spiders with Bilbo, Legolas, Tauriel" },
     { setNumber: "79011", name: "Dol Guldur Ambush", theme: "The Hobbit", category: "LOTR", pieces: 217, retail: 80, priority: "Low", notes: "Retired 2013 — BL New Avg ~$80 (was $19.99 MSRP), Beorn, Yazneg orc, Warg ambush" },
     { setNumber: "79017", name: "The Battle of Five Armies", theme: "The Hobbit", category: "LOTR", pieces: 472, retail: 325, priority: "Low", notes: "Retired 2014 — BL New Avg ~$325 (was $59.99 MSRP), Thorin, Dwalin, Azog the Defiler" },
+    { setNumber: "40693", name: "The Fell Beast (Barad-dûr GWP)", theme: "Lord of the Rings", category: "LOTR", pieces: 269, retail: 320, priority: "Medium", used: 246, notes: "Retired June 2024 gift with purchase — BrickEconomy New ~$320, Used ~$246 (BL refresh pending). Nazgûl minifig, poseable wings, Osgiliath ruin base" },
   ]
 };

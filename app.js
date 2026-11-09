@@ -224,7 +224,7 @@
       const apprClass = s.appreciation >= 0 ? 'positive' : 'negative';
       const apprSymbol = s.appreciation >= 0 ? '↑' : '↓';
 
-      html += `<tr>
+      html += `<tr class="ph-clickable" data-set="${s.setNumber}" title="Show price history">
         <td>${s.num}</td>
         <td><span class="set-number">${s.setNumber}</span></td>
         <td><span class="set-name">${s.name}</span></td>
@@ -288,7 +288,7 @@
       const apprClass = s.appreciation >= 0 ? 'positive' : 'negative';
       const color = getCategoryColor(s.category);
 
-      html += `<div class="set-card">
+      html += `<div class="set-card ph-clickable" data-set="${s.setNumber}" title="Show price history">
         <div style="display:flex;gap:12px;">
           <div class="card-category-indicator" style="background:${color}"></div>
           <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
@@ -384,6 +384,8 @@
     const totalItems = items.length;
     const totalRetail = items.reduce((a, i) => a + (i.retail || 0), 0);
     const highPriority = items.filter(i => i.priority === 'High').length;
+    const pricedUsed = items.filter(i => i.used > 0);
+    const totalUsed = pricedUsed.reduce((a, i) => a + i.used, 0);
 
     statsEl.innerHTML = `
       <div class="wl-stat-card">
@@ -394,6 +396,11 @@
         <div class="wl-stat-label">Est. Total Cost</div>
         <div class="wl-stat-value accent">${fmt(totalRetail)}</div>
       </div>
+      ${pricedUsed.length ? `<div class="wl-stat-card">
+        <div class="wl-stat-label">Est. Total Used</div>
+        <div class="wl-stat-value">${fmt(totalUsed)}</div>
+        ${pricedUsed.length < items.length ? `<div class="wl-stat-sub">${pricedUsed.length} of ${items.length} sets priced</div>` : ''}
+      </div>` : ''}
       <div class="wl-stat-card">
         <div class="wl-stat-label">High Priority</div>
         <div class="wl-stat-value">${highPriority}</div>
@@ -471,7 +478,7 @@
         const piecesStr = item.pieces ? `${item.pieces.toLocaleString()} pcs` : '';
         const notesHtml = item.notes ? `<div class="wl-card-notes">${item.notes}</div>` : '';
 
-        return `<div class="wl-card">
+        return `<div class="wl-card ph-clickable" data-set="${item.setNumber}" title="Show price history">
           <div class="wl-priority-bar ${prioClass}"></div>
           <div class="wl-card-body">
             <div class="wl-card-header">
@@ -487,6 +494,8 @@
           </div>
           <div class="wl-card-right">
             <span class="wl-card-price">${item.retail > 0 ? fmt(item.retail) : 'TBD'}</span>
+            ${item.used > 0 ? `<span class="wl-card-used">Used ${fmt(item.used)}</span>` : ''}
+            <span class="ph-hint">Price history</span>
             <span class="wl-priority-badge ${prioClass}">${item.priority || 'Medium'}</span>
           </div>
         </div>`;
@@ -767,6 +776,150 @@
   }
 
   // ===================================================================
+  // PRICE HISTORY
+  // ===================================================================
+
+  const PRICE_SERIES = [
+    { key: 'value', label: 'Collection value', color: '#dc2626' },
+    { key: 'new',   label: 'New (sealed)',     color: '#2563eb' },
+    { key: 'used',  label: 'Used',             color: '#16a34a' },
+  ];
+
+  const HISTORY = (typeof PRICE_HISTORY !== 'undefined') ? PRICE_HISTORY : {};
+
+  function parseDay(d) {
+    const [y, m, day] = d.split('-').map(Number);
+    return new Date(y, m - 1, day);
+  }
+
+  function fmtDay(d) {
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function renderPriceChart(hist) {
+    const series = PRICE_SERIES
+      .filter(s => hist[s.key] && hist[s.key].length)
+      .map(s => ({ ...s, points: hist[s.key].map(p => ({ t: parseDay(p[0]), v: p[1], src: p[2] })) }));
+    if (!series.length) return '';
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const all = series.flatMap(s => s.points);
+    let tMin = Math.min(...all.map(p => p.t));
+    const tMax = Math.max(today, ...all.map(p => p.t));
+    if (tMax - tMin < 30 * 864e5) tMin = tMax - 30 * 864e5;
+    let vMin = Math.min(...all.map(p => p.v));
+    let vMax = Math.max(...all.map(p => p.v));
+    const padV = Math.max((vMax - vMin) * 0.15, vMax * 0.05, 5);
+    vMin = Math.max(0, vMin - padV);
+    vMax = vMax + padV;
+
+    const W = 640, H = 260, L = 56, R = 16, T = 14, B = 30;
+    const x = t => L + (t - tMin) / (tMax - tMin) * (W - L - R);
+    const y = v => T + (1 - (v - vMin) / (vMax - vMin)) * (H - T - B);
+
+    let svg = `<svg class="ph-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Price history chart">`;
+
+    // Price gridlines
+    for (let i = 0; i <= 4; i++) {
+      const v = vMin + (vMax - vMin) * i / 4;
+      svg += `<line class="ph-grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/>`;
+      svg += `<text class="ph-axis" x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`;
+    }
+
+    // Month labels
+    const m = new Date(tMin);
+    m.setDate(1);
+    m.setMonth(m.getMonth() + 1);
+    const months = [];
+    for (; m <= tMax; m.setMonth(m.getMonth() + 1)) months.push(new Date(m));
+    const step = Math.ceil(months.length / 8);
+    months.forEach((d, i) => {
+      if (i % step) return;
+      const label = d.toLocaleDateString('en-US', { month: 'short' }) + (d.getMonth() === 0 ? ` '${String(d.getFullYear()).slice(2)}` : '');
+      svg += `<text class="ph-axis" x="${x(d)}" y="${H - 8}" text-anchor="middle">${label}</text>`;
+    });
+
+    series.forEach(s => {
+      const pts = s.points.map(p => `${x(p.t)},${y(p.v)}`).join(' ');
+      const last = s.points[s.points.length - 1];
+      if (s.points.length > 1) {
+        svg += `<polyline class="ph-line" points="${pts}" stroke="${s.color}"/>`;
+      }
+      // Dashed carry-forward from the last known price to today
+      if (last.t < today) {
+        svg += `<line class="ph-carry" x1="${x(last.t)}" y1="${y(last.v)}" x2="${x(today)}" y2="${y(last.v)}" stroke="${s.color}"/>`;
+      }
+      s.points.forEach(p => {
+        const hollow = p.src ? ' ph-dot-est' : '';
+        svg += `<circle class="ph-dot${hollow}" cx="${x(p.t)}" cy="${y(p.v)}" r="3.5" stroke="${s.color}" fill="${p.src ? '#fff' : s.color}">` +
+          `<title>${s.label}: ${fmt(p.v)} on ${fmtDay(p.t)}${p.src ? ` (${p.src})` : ' (BrickLink)'}</title></circle>`;
+      });
+    });
+
+    return svg + '</svg>';
+  }
+
+  function openPriceModal(setNumber) {
+    const item = sets.find(s => s.setNumber === setNumber) ||
+      (WISHLIST_DATA.items || []).find(i => i.setNumber === setNumber);
+    if (!item) return;
+    const hist = HISTORY[setNumber] || {};
+
+    const stats = PRICE_SERIES.filter(s => hist[s.key] && hist[s.key].length).map(s => {
+      const pts = hist[s.key];
+      const first = pts[0][1], last = pts[pts.length - 1][1];
+      const change = last - first;
+      const changeHtml = pts.length > 1
+        ? `<span class="appreciation ${change >= 0 ? 'positive' : 'negative'}">${change >= 0 ? '↑' : '↓'} ${fmt(Math.abs(change))} (${pct(change / first * 100)}) since ${fmtDay(parseDay(pts[0][0]))}</span>`
+        : `<span class="ph-stat-sub">Tracked since ${fmtDay(parseDay(pts[0][0]))}</span>`;
+      return `<div class="ph-stat">
+        <div class="ph-stat-label"><span class="dot" style="background:${s.color}"></span>${s.label}</div>
+        <div class="ph-stat-value">${fmt(last)}</div>
+        ${changeHtml}
+      </div>`;
+    }).join('');
+
+    const hasEstimates = Object.values(hist).some(pts => pts.some(p => p[2]));
+    const chart = renderPriceChart(hist);
+
+    let modal = document.getElementById('priceModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'priceModal';
+      modal.className = 'ph-overlay';
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.closest('.ph-close')) closePriceModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closePriceModal();
+      });
+    }
+
+    modal.innerHTML = `<div class="ph-modal" role="dialog" aria-modal="true" aria-label="Price history for ${item.name}">
+      <div class="ph-header">
+        <div>
+          <div class="ph-title">${item.name}</div>
+          <div class="ph-subtitle">${item.setNumber} &middot; ${item.theme}${item.pieces ? ` &middot; ${item.pieces.toLocaleString()} pcs` : ''}</div>
+        </div>
+        <button class="ph-close" title="Close" aria-label="Close">&times;</button>
+      </div>
+      ${chart ? `<div class="ph-stats">${stats}</div>${chart}` : '<p class="ph-empty">No price history recorded for this set yet. It will start building the next time prices are checked.</p>'}
+      <p class="ph-footnote">Prices are BrickLink's average sold price over the last 6 months. The dashed line carries the last known price forward to today.${hasEstimates ? ' Hollow dots are BrickEconomy estimates, used while BrickLink data was unavailable.' : ''} Some jumps reflect changes in how values were calculated, such as the Oct 2026 Brickify refresh, rather than market moves.</p>
+    </div>`;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePriceModal() {
+    const modal = document.getElementById('priceModal');
+    if (!modal || modal.style.display === 'none') return;
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // ===================================================================
   // PAGE SWITCHING
   // ===================================================================
 
@@ -1018,6 +1171,12 @@
     if (currentPage === 'collection') renderCollection();
   });
 
+
+  // Price history popup: any table row or card with a set number
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('.ph-clickable');
+    if (el) openPriceModal(el.dataset.set);
+  });
 
   // --- Init ---
   renderCollection();
