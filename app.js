@@ -929,12 +929,13 @@
       }
       s.points.forEach(p => {
         const hollow = p.src ? ' ph-dot-est' : '';
-        svg += `<circle class="ph-dot${hollow}" cx="${x(p.t)}" cy="${y(p.v)}" r="3.5" stroke="${s.color}" fill="${p.src ? '#fff' : s.color}">` +
-          `<title>${s.label}: ${fmt(p.v)} on ${fmtDay(p.t)}${p.src ? ` (${p.src})` : ' (BrickLink)'}</title></circle>`;
+        svg += `<circle class="ph-dot${hollow}" cx="${x(p.t)}" cy="${y(p.v)}" r="3.5" stroke="${s.color}" fill="${p.src ? '#fff' : s.color}"` +
+          ` data-date="${fmtDay(p.t)}" data-label="${s.label}" data-value="${fmt(p.v)}" data-color="${s.color}"${p.src ? ` data-src="${p.src}"` : ''}/>`;
       });
     });
 
-    return svg + '</svg>';
+    svg += `<line class="ph-guide" x1="0" x2="0" y1="${T}" y2="${H - B}" visibility="hidden"/>`;
+    return `<div class="ph-chart-wrap">${svg}</svg><div class="ph-tip" hidden></div></div>`;
   }
 
   function openPriceModal(setNumber) {
@@ -1003,6 +1004,59 @@
     </div>`;
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    wireChartHover(modal.querySelector('.ph-chart-wrap'));
+  }
+
+  // Hover (or drag on touch) over the chart: snap to the nearest date and show every price on it
+  function wireChartHover(wrap) {
+    if (!wrap) return;
+    const svg = wrap.querySelector('svg');
+    const tip = wrap.querySelector('.ph-tip');
+    const guide = svg.querySelector('.ph-guide');
+    const dots = [...svg.querySelectorAll('.ph-dot')];
+    const SNAP = 40; // viewBox units
+
+    function hide() {
+      tip.hidden = true;
+      guide.setAttribute('visibility', 'hidden');
+      dots.forEach(d => d.classList.remove('active'));
+    }
+
+    function show(e) {
+      const rect = svg.getBoundingClientRect();
+      const scale = rect.width / svg.viewBox.baseVal.width;
+      const px = (e.clientX - rect.left) / scale;
+      let nearest = null, best = Infinity;
+      dots.forEach(d => {
+        const dist = Math.abs(+d.getAttribute('cx') - px);
+        if (dist < best) { best = dist; nearest = d; }
+      });
+      if (!nearest || best > SNAP) return hide();
+
+      const cx = +nearest.getAttribute('cx');
+      const group = dots.filter(d => Math.abs(+d.getAttribute('cx') - cx) < 0.5);
+      dots.forEach(d => d.classList.toggle('active', group.includes(d)));
+      guide.setAttribute('x1', cx);
+      guide.setAttribute('x2', cx);
+      guide.setAttribute('visibility', 'visible');
+
+      tip.innerHTML = `<div class="ph-tip-date">${nearest.dataset.date}</div>` + group.map(d =>
+        `<div class="ph-tip-row"><span class="dot" style="background:${d.dataset.color}"></span>${d.dataset.label}<strong>${d.dataset.value}</strong></div>` +
+        (d.dataset.src ? `<div class="ph-tip-src">${d.dataset.src} estimate</div>` : '')
+      ).join('');
+      tip.hidden = false;
+
+      // Place beside the point, flipping left near the right edge
+      const top = Math.min(...group.map(d => +d.getAttribute('cy'))) * scale;
+      const left = cx * scale;
+      const flip = left + tip.offsetWidth + 16 > rect.width;
+      tip.style.left = (flip ? left - tip.offsetWidth - 12 : left + 12) + 'px';
+      tip.style.top = Math.max(0, Math.min(top - tip.offsetHeight / 2, rect.height - tip.offsetHeight)) + 'px';
+    }
+
+    svg.addEventListener('pointermove', show);
+    svg.addEventListener('pointerdown', show);
+    svg.addEventListener('pointerleave', hide);
   }
 
   function closePriceModal() {
