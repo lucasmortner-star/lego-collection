@@ -27,7 +27,10 @@
     ...s,
     projectedValue: +(s.currentValue * Math.pow(1 + s.growth, 3)).toFixed(2),
     appreciation: s.currentValue - s.retail,
-    appreciationPct: s.retail > 0 ? ((s.currentValue - s.retail) / s.retail * 100) : 0
+    appreciationPct: s.retail > 0 ? ((s.currentValue - s.retail) / s.retail * 100) : 0,
+    // What we actually paid, when logged (paid: 0 means it was free, e.g. a gift with purchase)
+    paid: typeof s.paid === 'number' ? s.paid : null,
+    gainVsPaid: typeof s.paid === 'number' ? s.currentValue - s.paid : null
   }));
 
   const summary = {
@@ -40,6 +43,10 @@
   summary.appreciation = summary.totalCurrent - summary.totalRetail;
   summary.appreciationPct = (summary.appreciation / summary.totalRetail * 100);
   summary.projectedGrowth = summary.totalProjected - summary.totalCurrent;
+  const paidSets = sets.filter(s => s.paid !== null);
+  summary.paidCount = paidSets.length;
+  summary.totalPaid = paidSets.reduce((a, s) => a + s.paid, 0);
+  summary.paidSetsValue = paidSets.reduce((a, s) => a + s.currentValue, 0);
 
   // Theme stats
   const themeStats = {};
@@ -121,6 +128,8 @@
 
     return arr.sort((a, b) => {
       let va = a[key], vb = b[key];
+      // Sets without a value (e.g. no purchase price logged) always sort last
+      if (va === null || vb === null) return (va === null) - (vb === null);
       if (typeof va === 'string') {
         return mult * va.localeCompare(vb);
       }
@@ -139,6 +148,15 @@
       { label: '3-Year Projected', value: fmt(summary.totalProjected), sub: '+' + fmt(summary.projectedGrowth) + ' projected growth' },
       { label: 'Avg. Set Value', value: fmt(summary.totalCurrent / summary.totalSets), sub: 'per set average' },
     ];
+    if (summary.paidCount) {
+      const gain = summary.paidSetsValue - summary.totalPaid;
+      cards.push({
+        label: 'What We Paid',
+        value: fmt(summary.totalPaid),
+        cls: '',
+        sub: `${summary.paidCount} set${summary.paidCount === 1 ? '' : 's'} logged &middot; now worth ${fmt(summary.paidSetsValue)} (${gain >= 0 ? '+' : '-'}${fmt(Math.abs(gain))})`
+      });
+    }
 
     grid.innerHTML = cards.map(c => `
       <div class="stat-card">
@@ -189,7 +207,7 @@
     const sorted = sortSets(filtered);
 
     if (sorted.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="11"><div class="empty-state">
+      tbody.innerHTML = `<tr><td colspan="12"><div class="empty-state">
         <div class="empty-icon">🔍</div>
         <h3>No sets found</h3>
         <p>Try adjusting your search or filter</p>
@@ -218,7 +236,7 @@
         lastCatTable = s.category;
         const catSets = sorted.filter(x => x.category === s.category);
         const catValue = catSets.reduce((a, x) => a + x.currentValue, 0);
-        html += `<tr class="category-row"><td colspan="11">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
+        html += `<tr class="category-row"><td colspan="12">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
       }
 
       const apprClass = s.appreciation >= 0 ? 'positive' : 'negative';
@@ -232,6 +250,7 @@
         <td>${s.year}</td>
         <td class="hide-mobile">${s.pieces.toLocaleString()}</td>
         <td class="hide-mobile">${s.retail > 0 ? fmtFull(s.retail) : '—'}</td>
+        <td class="hide-mobile">${s.paid !== null ? fmtFull(s.paid) : '<span class="paid-missing">—</span>'}</td>
         <td class="hide-mobile"><span class="condition-badge ${getConditionClass(s.condition)}">${s.condition}</span></td>
         <td>
           <span class="value-cell">${fmt(s.currentValue)}</span>
@@ -304,9 +323,13 @@
             </div>
             <div class="card-values">
               <div class="card-val-block">
-                <label>Retail</label>
+                <label>Orig. Retail</label>
                 <div class="val">${s.retail > 0 ? fmt(s.retail) : '—'}</div>
               </div>
+              ${s.paid !== null ? `<div class="card-val-block">
+                <label>Paid</label>
+                <div class="val">${fmt(s.paid)}</div>
+              </div>` : ''}
               <div class="card-val-block">
                 <label>Current Value</label>
                 <div class="val">${fmt(s.currentValue)}</div>
@@ -317,7 +340,7 @@
               </div>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center">
-              <span class="appreciation ${apprClass}" style="font-size:13px">${s.appreciation >= 0 ? '↑' : '↓'} ${s.retail > 0 ? pct(s.appreciationPct) : '—'} from retail</span>
+              <span class="appreciation ${apprClass}" style="font-size:13px">${s.appreciation >= 0 ? '↑' : '↓'} ${s.retail > 0 ? pct(s.appreciationPct) : '—'} from original retail</span>
               <span class="growth-badge ${getGrowthClass(s.growth)}">${(s.growth * 100).toFixed(0)}% / yr</span>
             </div>
           </div>
@@ -808,7 +831,7 @@
     return (exit <= today ? 'Retired ' : 'Retiring ') + fmtMonth(exit);
   }
 
-  function renderPriceChart(hist, exitDate) {
+  function renderPriceChart(hist, exitDate, paid) {
     const series = PRICE_SERIES
       .filter(s => hist[s.key] && hist[s.key].length)
       .map(s => ({ ...s, points: hist[s.key].map(p => ({ t: parseDay(p[0]), v: p[1], src: p[2] })) }));
@@ -823,8 +846,9 @@
     if (exit && exit < tMin && tMin - exit <= RETIRE_REACH) tMin = +exit - 14 * 864e5;
     if (exit && exit > tMax && exit - tMax <= RETIRE_REACH) tMax = +exit + 14 * 864e5;
     if (tMax - tMin < 30 * 864e5) tMin = tMax - 30 * 864e5;
-    let vMin = Math.min(...all.map(p => p.v));
-    let vMax = Math.max(...all.map(p => p.v));
+    const vals = all.map(p => p.v).concat(paid > 0 ? [paid] : []);
+    let vMin = Math.min(...vals);
+    let vMax = Math.max(...vals);
     const padV = Math.max((vMax - vMin) * 0.15, vMax * 0.05, 5);
     vMin = Math.max(0, vMin - padV);
     vMax = vMax + padV;
@@ -854,6 +878,12 @@
       const label = d.toLocaleDateString('en-US', { month: 'short' }) + (d.getMonth() === 0 ? ` '${String(d.getFullYear()).slice(2)}` : '');
       svg += `<text class="ph-axis" x="${x(d)}" y="${H - 8}" text-anchor="middle">${label}</text>`;
     });
+
+    // What we paid, as a flat reference line
+    if (paid > 0) {
+      svg += `<line class="ph-paid" x1="${L}" x2="${W - R}" y1="${y(paid)}" y2="${y(paid)}"/>`;
+      svg += `<text class="ph-paid-label" x="${W - R - 4}" y="${y(paid) - 5}" text-anchor="end">Paid ${fmt(paid)}</text>`;
+    }
 
     // Retirement marker: a line when it falls inside the chart, else a label at the nearest edge
     if (exit) {
@@ -912,7 +942,8 @@
 
     const hasEstimates = Object.values(hist).some(pts => pts.some(p => p[2]));
     const exitDate = DATES[setNumber] && DATES[setNumber].exit;
-    const chart = renderPriceChart(hist, exitDate);
+    const paid = typeof item.paid === 'number' ? item.paid : null;
+    const chart = renderPriceChart(hist, exitDate, paid);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const retireHtml = exitDate ? ` &middot; <span class="ph-retire-tag">${retirementLabel(parseDay(exitDate), today)}</span>` : '';
@@ -931,6 +962,17 @@
       });
     }
 
+    let paidHtml = '';
+    if (paid !== null) {
+      const now = item.currentValue != null ? item.currentValue : null;
+      const gain = now !== null ? now - paid : null;
+      paidHtml = `<div class="ph-stat">
+        <div class="ph-stat-label"><span class="dot paid-dot"></span>What we paid</div>
+        <div class="ph-stat-value">${fmt(paid)}</div>
+        ${gain !== null ? `<span class="appreciation ${gain >= 0 ? 'positive' : 'negative'}">${gain >= 0 ? '↑' : '↓'} ${fmt(Math.abs(gain))}${paid > 0 ? ` (${pct(gain / paid * 100)})` : ''} vs. value now</span>` : ''}
+      </div>`;
+    }
+
     modal.innerHTML = `<div class="ph-modal" role="dialog" aria-modal="true" aria-label="Price history for ${item.name}">
       <div class="ph-header">
         <div>
@@ -939,7 +981,7 @@
         </div>
         <button class="ph-close" title="Close" aria-label="Close">&times;</button>
       </div>
-      ${chart ? `<div class="ph-stats">${stats}</div>${chart}` : '<p class="ph-empty">No price history recorded for this set yet. It will start building the next time prices are checked.</p>'}
+      ${chart ? `<div class="ph-stats">${stats}${paidHtml}</div>${chart}` : '<p class="ph-empty">No price history recorded for this set yet. It will start building the next time prices are checked.</p>'}
       <p class="ph-footnote">Prices are BrickLink's average sold price over the last 6 months. The dashed line carries the last known price forward to today.${exitDate ? ' Retirement is the date the set left LEGO.com in the US, per Brickset; future dates are LEGO\'s expected retirement.' : ''}${hasEstimates ? ' Hollow dots are BrickEconomy estimates, used while BrickLink data was unavailable.' : ''} Some jumps reflect changes in how values were calculated, such as the Oct 2026 Brickify refresh, rather than market moves.</p>
     </div>`;
     modal.style.display = 'flex';

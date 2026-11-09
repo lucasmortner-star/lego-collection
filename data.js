@@ -80,7 +80,7 @@ const LEGO_DATA = {
     { num: 68, setNumber: "79002-partial", name: "Mirkwood Tree (partial of Attack of the Wargs)", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 50, retail: 0, condition: "Built/Displayed", currentValue: 42, growth: 0.0 },
     { num: 69, setNumber: "11373", name: "Sauron's Helmet", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2026, pieces: 538, retail: 69.99, condition: "Built/Displayed", currentValue: 57, growth: 0.0, builtBy: ["Lucas"] },
     { num: 70, setNumber: "10367", name: "The Lord of the Rings: Balrog Book Nook", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2025, pieces: 1201, retail: 129.99, condition: "Built/Displayed", currentValue: 95, growth: 0.0, builtBy: ["Alex"] },
-    { num: 207, setNumber: "40761", name: "Sméagol & Déagol (The Shire GWP)", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2025, pieces: 181, retail: 0, condition: "On the Way", currentValue: 143, growth: 0.0 },
+    { num: 207, setNumber: "40761", name: "Sméagol & Déagol (The Shire GWP)", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2025, pieces: 181, retail: 0, condition: "On the Way", currentValue: 143, growth: 0.0, paid: 120 },
 
     // ========================================
     // HARRY POTTER
