@@ -786,6 +786,9 @@
   ];
 
   const HISTORY = (typeof PRICE_HISTORY !== 'undefined') ? PRICE_HISTORY : {};
+  const DATES = (typeof SET_DATES !== 'undefined') ? SET_DATES : {};
+  // Pull the chart window out to a retirement this close to the tracked prices
+  const RETIRE_REACH = 150 * 864e5;
 
   function parseDay(d) {
     const [y, m, day] = d.split('-').map(Number);
@@ -796,7 +799,16 @@
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   }
 
-  function renderPriceChart(hist) {
+  function fmtMonth(d) {
+    return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  }
+
+  // "Retired Dec 2022" / "Retiring Dec 2026" from Brickset's LEGO.com exit date
+  function retirementLabel(exit, today) {
+    return (exit <= today ? 'Retired ' : 'Retiring ') + fmtMonth(exit);
+  }
+
+  function renderPriceChart(hist, exitDate) {
     const series = PRICE_SERIES
       .filter(s => hist[s.key] && hist[s.key].length)
       .map(s => ({ ...s, points: hist[s.key].map(p => ({ t: parseDay(p[0]), v: p[1], src: p[2] })) }));
@@ -806,7 +818,10 @@
     today.setHours(0, 0, 0, 0);
     const all = series.flatMap(s => s.points);
     let tMin = Math.min(...all.map(p => p.t));
-    const tMax = Math.max(today, ...all.map(p => p.t));
+    let tMax = Math.max(today, ...all.map(p => p.t));
+    const exit = exitDate ? parseDay(exitDate) : null;
+    if (exit && exit < tMin && tMin - exit <= RETIRE_REACH) tMin = +exit - 14 * 864e5;
+    if (exit && exit > tMax && exit - tMax <= RETIRE_REACH) tMax = +exit + 14 * 864e5;
     if (tMax - tMin < 30 * 864e5) tMin = tMax - 30 * 864e5;
     let vMin = Math.min(...all.map(p => p.v));
     let vMax = Math.max(...all.map(p => p.v));
@@ -814,7 +829,7 @@
     vMin = Math.max(0, vMin - padV);
     vMax = vMax + padV;
 
-    const W = 640, H = 260, L = 56, R = 16, T = 14, B = 30;
+    const W = 640, H = 270, L = 56, R = 16, T = 26, B = 30;
     const x = t => L + (t - tMin) / (tMax - tMin) * (W - L - R);
     const y = v => T + (1 - (v - vMin) / (vMax - vMin)) * (H - T - B);
 
@@ -839,6 +854,21 @@
       const label = d.toLocaleDateString('en-US', { month: 'short' }) + (d.getMonth() === 0 ? ` '${String(d.getFullYear()).slice(2)}` : '');
       svg += `<text class="ph-axis" x="${x(d)}" y="${H - 8}" text-anchor="middle">${label}</text>`;
     });
+
+    // Retirement marker: a line when it falls inside the chart, else a label at the nearest edge
+    if (exit) {
+      const label = retirementLabel(exit, today);
+      if (exit >= tMin && exit <= tMax) {
+        const ex = x(exit);
+        const anchor = ex > W - R - 90 ? 'end' : ex < L + 90 ? 'start' : 'middle';
+        svg += `<line class="ph-retire" x1="${ex}" x2="${ex}" y1="${T - 4}" y2="${H - B}"/>`;
+        svg += `<text class="ph-retire-label" x="${ex}" y="${T - 10}" text-anchor="${anchor}">${label}</text>`;
+      } else if (exit < tMin) {
+        svg += `<text class="ph-retire-label" x="${L}" y="${T - 10}" text-anchor="start">← ${label}</text>`;
+      } else {
+        svg += `<text class="ph-retire-label" x="${W - R}" y="${T - 10}" text-anchor="end">${label} →</text>`;
+      }
+    }
 
     series.forEach(s => {
       const pts = s.points.map(p => `${x(p.t)},${y(p.v)}`).join(' ');
@@ -881,7 +911,11 @@
     }).join('');
 
     const hasEstimates = Object.values(hist).some(pts => pts.some(p => p[2]));
-    const chart = renderPriceChart(hist);
+    const exitDate = DATES[setNumber] && DATES[setNumber].exit;
+    const chart = renderPriceChart(hist, exitDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const retireHtml = exitDate ? ` &middot; <span class="ph-retire-tag">${retirementLabel(parseDay(exitDate), today)}</span>` : '';
 
     let modal = document.getElementById('priceModal');
     if (!modal) {
@@ -901,12 +935,12 @@
       <div class="ph-header">
         <div>
           <div class="ph-title">${item.name}</div>
-          <div class="ph-subtitle">${item.setNumber} &middot; ${item.theme}${item.pieces ? ` &middot; ${item.pieces.toLocaleString()} pcs` : ''}</div>
+          <div class="ph-subtitle">${item.setNumber} &middot; ${item.theme}${item.pieces ? ` &middot; ${item.pieces.toLocaleString()} pcs` : ''}${retireHtml}</div>
         </div>
         <button class="ph-close" title="Close" aria-label="Close">&times;</button>
       </div>
       ${chart ? `<div class="ph-stats">${stats}</div>${chart}` : '<p class="ph-empty">No price history recorded for this set yet. It will start building the next time prices are checked.</p>'}
-      <p class="ph-footnote">Prices are BrickLink's average sold price over the last 6 months. The dashed line carries the last known price forward to today.${hasEstimates ? ' Hollow dots are BrickEconomy estimates, used while BrickLink data was unavailable.' : ''} Some jumps reflect changes in how values were calculated, such as the Oct 2026 Brickify refresh, rather than market moves.</p>
+      <p class="ph-footnote">Prices are BrickLink's average sold price over the last 6 months. The dashed line carries the last known price forward to today.${exitDate ? ' Retirement is the date the set left LEGO.com in the US, per Brickset; future dates are LEGO\'s expected retirement.' : ''}${hasEstimates ? ' Hollow dots are BrickEconomy estimates, used while BrickLink data was unavailable.' : ''} Some jumps reflect changes in how values were calculated, such as the Oct 2026 Brickify refresh, rather than market moves.</p>
     </div>`;
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
