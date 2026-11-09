@@ -165,7 +165,7 @@
         label: 'What We Paid',
         value: fmt(summary.totalPaid),
         cls: '',
-        sub: `${summary.paidCount} set${summary.paidCount === 1 ? '' : 's'} logged &middot; now worth ${fmt(summary.paidSetsValue)} (${gain >= 0 ? '+' : '-'}${fmt(Math.abs(gain))})`
+        sub: `${summary.paidCount} of ${summary.totalSets} sets logged &middot; now worth ${fmt(summary.paidSetsValue)} (${gain >= 0 ? '+' : '-'}${fmt(Math.abs(gain))})`
       });
     }
 
