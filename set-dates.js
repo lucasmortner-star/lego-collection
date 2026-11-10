@@ -1,5 +1,6 @@
 // LEGO.com (US) launch and exit dates per set, from Brickset. Exit dates in the future are LEGO's expected retirement.
 const SET_DATES = {
+  "10188": {"launch":"2008-09-01","exit":"2010-12-31"},
   "10236": {"launch":"2013-09-01","exit":"2016-12-31"},
   "10237": {"launch":"2013-07-01","exit":"2015-07-31"},
   "10253": {"launch":"2016-07-01","exit":"2018-12-31"},
@@ -68,7 +69,6 @@ const SET_DATES = {
   "75137": {"launch":"2016-01-01","exit":"2017-12-31"},
   "75139": {"launch":"2016-01-01","exit":"2017-12-31"},
   "75149": {"launch":"2016-06-01","exit":"2017-12-31"},
-  "75159": {"launch":"2016-10-01","exit":"2020-12-31"},
   "75168": {"launch":"2017-01-01","exit":"2018-12-31"},
   "75169": {"launch":"2017-01-01","exit":"2018-12-31"},
   "75173": {"launch":"2017-01-01","exit":"2018-12-31"},
