@@ -51,8 +51,11 @@ const LEGO_DATA = {
     { num: 43, setNumber: "75136", name: "Droid Escape Pod", theme: "Star Wars", category: "STAR WARS", year: 2016, pieces: 197, retail: 24.99, condition: "Built/Displayed", currentValue: 33, growth: 0.03, valueNew: 71, valueUsed: 25 },
     { num: 44, setNumber: "75003", name: "A-wing Starfighter", theme: "Star Wars", category: "STAR WARS", year: 2013, pieces: 177, retail: 24.99, condition: "Built/Displayed", currentValue: 46, growth: 0.05, valueNew: 86, valueUsed: 27 },
     { num: 45, setNumber: "75091", name: "Flash Speeder", theme: "Star Wars", category: "STAR WARS", year: 2015, pieces: 312, retail: 29.99, condition: "Built/Displayed", currentValue: 64, growth: 0.07, valueNew: 80, valueUsed: 49 },
-    { num: 46, setNumber: "75238", name: "Action Battle Endor Assault", theme: "Star Wars", category: "STAR WARS", year: 2019, pieces: 193, retail: 29.99, condition: "Built/Displayed", currentValue: 25, growth: 0.0, valueNew: 32, valueUsed: 15, paid: 12.50, boughtFrom: "eBay" },
+    { num: 46, setNumber: "75238", name: "Action Battle Endor Assault", theme: "Star Wars", category: "STAR WARS", year: 2019, pieces: 193, retail: 29.99, condition: "Built/Displayed", currentValue: 25, growth: 0.0, valueNew: 32, valueUsed: 15, paid: 13.63, boughtFrom: "eBay" },
     { num: 47, setNumber: "75407", name: "Brick-Built Star Wars Logo", theme: "Star Wars", category: "STAR WARS", year: 2025, pieces: 700, retail: 59.99, condition: "Built/Displayed", currentValue: 38, growth: 0.0, builtBy: ["Lucas"], valueNew: 54, valueUsed: 50 },
+    { num: 212, setNumber: "8038", name: "The Battle of Endor", theme: "Star Wars", category: "STAR WARS", year: 2009, pieces: 890, retail: 99.99, condition: "Built/Displayed", currentValue: 250, growth: 0.0, paid: 207.56, boughtFrom: "eBay", valueNew: 420, valueUsed: 250 },
+    { num: 213, setNumber: "7657", name: "AT-ST", theme: "Star Wars", category: "STAR WARS", year: 2007, pieces: 244, retail: 19.99, condition: "Built/Displayed", currentValue: 30, growth: 0.0, paid: 41.50, boughtFrom: "eBay", valueNew: 130, valueUsed: 30 },
+    { num: 214, setNumber: "8092", name: "Luke's Landspeeder", theme: "Star Wars", category: "STAR WARS", year: 2010, pieces: 163, retail: 24.99, condition: "Built/Displayed", currentValue: 25, growth: 0.0, paid: 11.36, boughtFrom: "eBay", valueNew: 60, valueUsed: 25 },
 
     // ========================================
     // LORD OF THE RINGS / THE HOBBIT
@@ -221,6 +224,7 @@ const LEGO_DATA = {
     { num: 210, setNumber: "40875", name: "Up-Scaled Mrs. Claus Minifigure", theme: "Seasonal", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 904, retail: 59.99, condition: "Built/Displayed", currentValue: 60, growth: 0.0, paid: 63.80, valueNew: 65, valueUsed: 51, boughtFrom: "LEGO" },
     { num: 211, setNumber: "40899", name: "Astro Bot (GWP)", theme: "PlayStation", category: "IDEAS / CREATOR / ICONS", year: 2026, pieces: 276, retail: 0, condition: "Sealed/New", currentValue: 25, growth: 0.0, paid: 0, valueNew: 50, valueUsed: 42, boughtFrom: "LEGO" },
     { num: 180, setNumber: "31048", name: "Lakeside Lodge", theme: "Creator", category: "IDEAS / CREATOR / ICONS", year: 2016, pieces: 368, retail: 29.99, condition: "Built/Displayed", currentValue: 35, growth: 0.02, valueNew: 60, valueUsed: 27 },
+    { num: 215, setNumber: "40220", name: "London Bus (mini)", theme: "Creator", category: "IDEAS / CREATOR / ICONS", year: 2016, pieces: 118, retail: 9.99, condition: "Built/Displayed", currentValue: 5, growth: 0.0, paid: 12.60, boughtFrom: "eBay", valueNew: 15, valueUsed: 5 },
     { num: 181, setNumber: "75901", name: "Mystery Plane Adventures (Scooby-Doo)", theme: "Scooby-Doo", category: "IDEAS / CREATOR / ICONS", year: 2015, pieces: 128, retail: 19.99, condition: "Built/Displayed", currentValue: 84, growth: 0.14, valueNew: 140, valueUsed: 50 },
 
     // ========================================
