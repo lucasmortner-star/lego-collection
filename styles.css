@@ -2542,6 +2542,7 @@ footer.hogwarts-page a {
 .bought-from { font-size: 11px; font-weight: 600; color: var(--text-muted); }
 .ph-stat-label .paid-dot { background: #a16207; }
 .ph-paid { stroke: #a16207; stroke-width: 1.5; stroke-dasharray: 6 4; }
+.ph-bought { fill: #a16207; stroke: #fff; stroke-width: 1.5; }
 .ph-paid-label { font-size: 11px; font-weight: 600; fill: #a16207; font-family: inherit; }
 .ph-retire { stroke: #78716c; stroke-width: 1.5; stroke-dasharray: 2 3; }
 .ph-retire-label { font-size: 11px; font-weight: 600; fill: #57534e; font-family: inherit; }

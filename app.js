@@ -32,6 +32,7 @@
     paid: typeof s.paid === 'number' ? s.paid : null,
     gainVsPaid: typeof s.paid === 'number' ? s.currentValue - s.paid : null,
     // BrickLink 6-month averages: new in a sealed box, and used
+    bought: s.bought || null,
     valueNew: s.valueNew > 0 ? s.valueNew : null,
     valueUsed: s.valueUsed > 0 ? s.valueUsed : null
   }));
@@ -261,7 +262,7 @@
         <td>${s.year}</td>
         <td class="hide-mobile">${s.pieces.toLocaleString()}</td>
         <td class="hide-mobile">${s.retail > 0 ? fmtFull(s.retail) : '—'}</td>
-        <td class="hide-mobile">${s.paid !== null ? fmtFull(s.paid) : '<span class="paid-missing">—</span>'}${s.boughtFrom ? `<br><span class="bought-from">${s.boughtFrom}</span>` : ''}</td>
+        <td class="hide-mobile">${s.paid !== null ? fmtFull(s.paid) : '<span class="paid-missing">—</span>'}${s.boughtFrom || s.bought ? `<br><span class="bought-from">${[s.boughtFrom, s.bought && fmtDay(parseDay(s.bought))].filter(Boolean).join(' &middot; ')}</span>` : ''}</td>
         <td class="hide-mobile"><span class="condition-badge ${getConditionClass(s.condition)}">${s.condition}</span></td>
         <td>
           <span class="value-cell">${fmt(s.currentValue)}</span>
@@ -342,6 +343,7 @@
               ${s.paid !== null ? `<div class="card-val-block">
                 <label>Paid${s.boughtFrom ? ` &middot; ${s.boughtFrom}` : ''}</label>
                 <div class="val">${fmt(s.paid)}</div>
+                ${s.bought ? `<div class="bought-from">${fmtDay(parseDay(s.bought))}</div>` : ''}
               </div>` : ''}
               <div class="card-val-block">
                 <label>Current Value</label>
@@ -848,7 +850,7 @@
     return (exit <= today ? 'Retired ' : 'Retiring ') + fmtMonth(exit);
   }
 
-  function renderPriceChart(hist, exitDate, paid) {
+  function renderPriceChart(hist, exitDate, paid, boughtDate) {
     const series = PRICE_SERIES
       .filter(s => hist[s.key] && hist[s.key].length)
       .map(s => ({ ...s, points: hist[s.key].map(p => ({ t: parseDay(p[0]), v: p[1], src: p[2] })) }));
@@ -862,6 +864,8 @@
     const exit = exitDate ? parseDay(exitDate) : null;
     if (exit && exit < tMin && tMin - exit <= RETIRE_REACH) tMin = +exit - 14 * 864e5;
     if (exit && exit > tMax && exit - tMax <= RETIRE_REACH) tMax = +exit + 14 * 864e5;
+    const bought = boughtDate ? parseDay(boughtDate) : null;
+    if (bought && bought < tMin && tMin - bought <= RETIRE_REACH) tMin = +bought - 14 * 864e5;
     if (tMax - tMin < 30 * 864e5) tMin = tMax - 30 * 864e5;
     const vals = all.map(p => p.v).concat(paid > 0 ? [paid] : []);
     let vMin = Math.min(...vals);
@@ -900,6 +904,14 @@
     if (paid > 0) {
       svg += `<line class="ph-paid" x1="${L}" x2="${W - R}" y1="${y(paid)}" y2="${y(paid)}"/>`;
       svg += `<text class="ph-paid-label" x="${W - R - 4}" y="${y(paid) - 5}" text-anchor="end">Paid ${fmt(paid)}</text>`;
+    }
+
+    // Purchase marker: a diamond on the paid line (or the baseline) on the day we bought it
+    if (bought && bought >= tMin && bought <= tMax) {
+      const bx = x(bought), by = paid > 0 ? y(paid) : H - B;
+      const anchor = bx > W - R - 70 ? 'end' : bx < L + 70 ? 'start' : 'middle';
+      svg += `<path class="ph-bought" d="M${bx} ${by - 6} L${bx + 6} ${by} L${bx} ${by + 6} L${bx - 6} ${by} Z"><title>Bought ${fmtDay(bought)}</title></path>`;
+      svg += `<text class="ph-paid-label" x="${bx}" y="${by + 18}" text-anchor="${anchor}">Bought ${fmtDay(bought)}</text>`;
     }
 
     // Retirement marker: a line when it falls inside the chart, else a label at the nearest edge
@@ -961,7 +973,7 @@
     const hasEstimates = Object.values(hist).some(pts => pts.some(p => p[2]));
     const exitDate = DATES[setNumber] && DATES[setNumber].exit;
     const paid = typeof item.paid === 'number' ? item.paid : null;
-    const chart = renderPriceChart(hist, exitDate, paid);
+    const chart = renderPriceChart(hist, exitDate, paid, item.bought);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const retireHtml = exitDate ? ` &middot; <span class="ph-retire-tag">${retirementLabel(parseDay(exitDate), today)}</span>` : '';
@@ -987,6 +999,7 @@
       paidHtml = `<div class="ph-stat">
         <div class="ph-stat-label"><span class="dot paid-dot"></span>What we paid${item.boughtFrom ? ` at ${item.boughtFrom}` : ''}</div>
         <div class="ph-stat-value">${fmt(paid)}</div>
+        ${item.bought ? `<span class="ph-stat-sub">Bought ${fmtDay(parseDay(item.bought))}</span><br>` : ''}
         ${gain !== null ? `<span class="appreciation ${gain >= 0 ? 'positive' : 'negative'}">${gain >= 0 ? '↑' : '↓'} ${fmt(Math.abs(gain))}${paid > 0 ? ` (${pct(gain / paid * 100)})` : ''} vs. value now</span>` : ''}
       </div>`;
     }
