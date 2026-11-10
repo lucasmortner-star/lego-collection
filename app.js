@@ -1034,6 +1034,11 @@
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     wireChartHover(modal.querySelector('.ph-chart-wrap'));
+    const pickBtn = modal.querySelector('.ph-pick-btn');
+    if (pickBtn) pickBtn.addEventListener('click', () => {
+      pickBtn.remove();
+      openPicker(modal.querySelector('.ph-picker'), item);
+    });
   }
 
   // Links to LEGO's building instructions and the set's parts list
@@ -1050,19 +1055,139 @@
   // Missing pieces recorded in data.js as missing: [{ qty, part, color, name, note }]
   function missingPiecesHtml(missing) {
     const list = Array.isArray(missing) ? missing : [];
-    if (!list.length) return '<p class="ph-missing-none">No missing pieces recorded.</p>';
+    if (!list.length) return '<p class="ph-missing-none">No missing pieces recorded.</p><button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button><div class="ph-picker"></div>';
     const total = list.reduce((a, m) => a + (m.qty || 1), 0);
     const rows = list.map(m => {
-      const part = m.part
-        ? `<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=${encodeURIComponent(m.part)}" target="_blank" rel="noopener">${m.part}</a>`
-        : '';
+      const part = m.element
+        ? `<a href="https://brickset.com/parts/${encodeURIComponent(m.element)}" target="_blank" rel="noopener">${m.element}</a>`
+        : m.part
+          ? `<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=${encodeURIComponent(m.part)}" target="_blank" rel="noopener">${m.part}</a>`
+          : '';
       const desc = [m.name, m.color && `(${m.color})`].filter(Boolean).join(' ');
       return `<li><strong>${m.qty || 1}&times;</strong> ${desc}${part ? ` &middot; ${part}` : ''}${m.note ? `<span class="ph-missing-note"> &mdash; ${m.note}</span>` : ''}</li>`;
     }).join('');
     return `<div class="ph-missing">
       <div class="ph-missing-title">Missing pieces (${total})</div>
       <ul>${rows}</ul>
-    </div>`;
+    </div>
+    <button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button>
+    <div class="ph-picker"></div>`;
+  }
+
+  // ---- Missing-pieces picker: browse the set's parts list (inventories/<set>.json) and mark what's missing.
+  // Selections are kept in this browser until they're sent to Claude to save in data.js.
+  function draftKey(setNumber) { return 'missing-draft-' + setNumber; }
+
+  function loadDraft(setNumber, recorded) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(draftKey(setNumber)) || 'null');
+      if (saved) return saved;
+    } catch (e) { /* storage unavailable */ }
+    const draft = {};
+    (recorded || []).forEach(m => { if (m.element) draft[m.element] = m.qty || 1; });
+    return draft;
+  }
+
+  function saveDraft(setNumber, draft) {
+    try { localStorage.setItem(draftKey(setNumber), JSON.stringify(draft)); } catch (e) { /* storage unavailable */ }
+  }
+
+  async function openPicker(container, item) {
+    const base = (String(item.setNumber).match(/^\d+/) || [''])[0];
+    container.innerHTML = '<p class="ph-missing-none">Loading parts list…</p>';
+    let parts;
+    try {
+      const res = await fetch(`inventories/${base}.json`);
+      if (!res.ok) throw new Error(res.status);
+      parts = await res.json();
+    } catch (e) {
+      container.innerHTML = '<p class="ph-missing-none">The parts list for this set hasn\'t been added yet. Ask Claude to add it.</p>';
+      return;
+    }
+    const draft = loadDraft(item.setNumber, item.missing);
+    const cats = [...new Set(parts.map(p => p[3]).filter(Boolean))].sort();
+    const colors = [...new Set(parts.map(p => p[2]).filter(Boolean))].sort();
+    const total = parts.reduce((a, p) => a + p[1], 0);
+
+    container.innerHTML = `
+      <div class="pk-bar">
+        <input type="search" class="pk-search" placeholder="Search ${parts.length} parts (e.g. 1x2 plate)">
+        <select class="pk-cat"><option value="">All categories</option>${cats.map(c => `<option>${c}</option>`).join('')}</select>
+        <select class="pk-color"><option value="">All colors</option>${colors.map(c => `<option>${c}</option>`).join('')}</select>
+        <label class="pk-only"><input type="checkbox" class="pk-only-sel"> Marked only</label>
+      </div>
+      <div class="pk-summary"></div>
+      <div class="pk-grid"></div>
+      <p class="ph-missing-none">${parts.length} parts, ${total.toLocaleString()} pieces, from Brickset. Your selections stay in this browser until you send them to Claude to save.</p>`;
+
+    const grid = container.querySelector('.pk-grid');
+    const summary = container.querySelector('.pk-summary');
+    const search = container.querySelector('.pk-search');
+    const cat = container.querySelector('.pk-cat');
+    const color = container.querySelector('.pk-color');
+    const onlySel = container.querySelector('.pk-only-sel');
+
+    function listText() {
+      const picked = parts.filter(p => draft[p[0]] > 0);
+      return `Missing pieces for ${item.setNumber} ${item.name}:\n` +
+        picked.map(p => `${draft[p[0]]}x ${p[4]} (${p[2]}) [element ${p[0]}]`).join('\n');
+    }
+
+    function renderSummary() {
+      const n = Object.values(draft).reduce((a, q) => a + (q > 0 ? q : 0), 0);
+      summary.innerHTML = n
+        ? `<strong>${n} piece${n === 1 ? '' : 's'} marked missing</strong>
+           <button type="button" class="pk-copy">Copy list for Claude</button>
+           <button type="button" class="pk-clear">Clear</button>`
+        : 'Tap + on any part that\'s missing.';
+    }
+
+    function render() {
+      const q = search.value.trim().toLowerCase();
+      const shown = parts.filter(p =>
+        (!q || `${p[4]} ${p[2]} ${p[0]}`.toLowerCase().includes(q)) &&
+        (!cat.value || p[3] === cat.value) &&
+        (!color.value || p[2] === color.value) &&
+        (!onlySel.checked || draft[p[0]] > 0));
+      grid.innerHTML = shown.map(p => {
+        const n = draft[p[0]] || 0;
+        return `<div class="pk-part${n ? ' pk-marked' : ''}" data-el="${p[0]}">
+          <img src="https://images.brickset.com/parts/${p[0]}.jpg" alt="" loading="lazy">
+          <div class="pk-name">${p[4]}</div>
+          <div class="pk-meta">${p[2]} &middot; ${p[1]} in set</div>
+          <div class="pk-step">
+            <button type="button" data-d="-1" aria-label="One fewer missing">&minus;</button>
+            <span>${n}</span>
+            <button type="button" data-d="1" aria-label="One more missing">+</button>
+          </div>
+        </div>`;
+      }).join('') || '<p class="ph-missing-none">No parts match.</p>';
+      renderSummary();
+    }
+
+    [search, cat, color, onlySel].forEach(el => el.addEventListener('input', render));
+    grid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.pk-step button');
+      if (!btn) return;
+      const el = btn.closest('.pk-part').dataset.el;
+      const max = (parts.find(p => p[0] === el) || [0, 99])[1];
+      draft[el] = Math.max(0, Math.min(max, (draft[el] || 0) + Number(btn.dataset.d)));
+      if (!draft[el]) delete draft[el];
+      saveDraft(item.setNumber, draft);
+      render();
+    });
+    summary.addEventListener('click', async (e) => {
+      if (e.target.closest('.pk-clear')) {
+        Object.keys(draft).forEach(k => delete draft[k]);
+        saveDraft(item.setNumber, draft);
+        render();
+      } else if (e.target.closest('.pk-copy')) {
+        const text = listText();
+        try { await navigator.clipboard.writeText(text); e.target.textContent = 'Copied! Paste it to Claude'; }
+        catch (err) { window.prompt('Copy this list and paste it to Claude:', text); }
+      }
+    });
+    render();
   }
 
   function missingBadge(set) {
