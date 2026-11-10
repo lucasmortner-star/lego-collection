@@ -191,9 +191,9 @@ const LEGO_DATA = {
     { num: 153, setNumber: "60036", name: "Arctic Base Camp", theme: "City", category: "LEGO CITY", year: 2014, pieces: 735, retail: 89.99, condition: "Built/Displayed", currentValue: 126, growth: 0.03, builtBy: ["Alex"], valueNew: 183, valueUsed: 83 },
     { num: 154, setNumber: "60078", name: "Utility Shuttle", theme: "City", category: "LEGO CITY", year: 2015, pieces: 155, retail: 24.99, condition: "Built/Displayed", currentValue: 28, growth: 0.01, valueNew: 40, valueUsed: 12 },
     { num: 155, setNumber: "7894", name: "Airport", theme: "City", category: "LEGO CITY", year: 2006, pieces: 700, retail: 79.99, condition: "Built/Displayed", currentValue: 197, growth: 0.05, valueNew: 309, valueUsed: 92 },
-    { num: 156, setNumber: "6648", name: "Mag Racer", theme: "Classic Town", category: "LEGO CITY", year: 1992, pieces: 62, retail: 7.25, condition: "Built/Displayed", currentValue: 8, growth: 0.0, valueNew: 40, valueUsed: 10 },
-    { num: 157, setNumber: "6351", name: "Surf N' Sail Camper", theme: "Classic Town", category: "LEGO CITY", year: 1992, pieces: 188, retail: 19, condition: "Built/Displayed", currentValue: 43, growth: 0.02, valueNew: 177, valueUsed: 22 },
-    { num: 158, setNumber: "6345", name: "Aerial Acrobats", theme: "Classic Town", category: "LEGO CITY", year: 1993, pieces: 351, retail: 34, condition: "Built/Displayed", currentValue: 72, growth: 0.02, valueNew: 254, valueUsed: 54 },
+    { num: 156, setNumber: "6648", name: "Mag Racer", theme: "Classic Town", category: "LEGO CITY", year: 1992, pieces: 62, retail: 7.25, condition: "Built/Displayed", currentValue: 8, growth: 0.0, valueNew: 40, valueUsed: 10, paid: 7.25, boughtFrom: "Gift" },
+    { num: 157, setNumber: "6351", name: "Surf N' Sail Camper", theme: "Classic Town", category: "LEGO CITY", year: 1992, pieces: 188, retail: 19, condition: "Built/Displayed", currentValue: 43, growth: 0.02, valueNew: 177, valueUsed: 22, paid: 19.00, boughtFrom: "Gift" },
+    { num: 158, setNumber: "6345", name: "Aerial Acrobats", theme: "Classic Town", category: "LEGO CITY", year: 1993, pieces: 351, retail: 34, condition: "Built/Displayed", currentValue: 72, growth: 0.02, valueNew: 254, valueUsed: 54, paid: 34.00, boughtFrom: "Gift" },
 
     // ========================================
     // IDEAS / CREATOR / ICONS
@@ -253,10 +253,10 @@ const LEGO_DATA = {
     // ========================================
     // CASTLE / PIRATES / OTHER
     // ========================================
-    { num: 193, setNumber: "6085", name: "Black Monarch's Castle", theme: "Castle", category: "CASTLE / OTHER", year: 1988, pieces: 702, retail: 68, condition: "Built/Displayed", currentValue: 359, growth: 0.04, builtBy: ["Alex"], valueNew: 2336, valueUsed: 273 },
-    { num: 194, setNumber: "6277", name: "Imperial Trading Post", theme: "Pirates", category: "CASTLE / OTHER", year: 1992, pieces: 608, retail: 85, condition: "Built/Displayed", currentValue: 499, growth: 0.05, valueNew: 2145, valueUsed: 472 },
-    { num: 195, setNumber: "6274", name: "Caribbean Clipper", theme: "Pirates", category: "CASTLE / OTHER", year: 1989, pieces: 378, retail: 54, condition: "Built/Displayed", currentValue: 252, growth: 0.04, valueNew: 1918, valueUsed: 221 },
-    { num: 196, setNumber: "6270", name: "Forbidden Island", theme: "Pirates", category: "CASTLE / OTHER", year: 1989, pieces: 182, retail: 37.5, condition: "Built/Displayed", currentValue: 109, growth: 0.03, valueNew: 973, valueUsed: 98 },
+    { num: 193, setNumber: "6085", name: "Black Monarch's Castle", theme: "Castle", category: "CASTLE / OTHER", year: 1988, pieces: 702, retail: 68, condition: "Built/Displayed", currentValue: 359, growth: 0.04, builtBy: ["Alex"], valueNew: 2336, valueUsed: 273, paid: 68.00, boughtFrom: "Gift" },
+    { num: 194, setNumber: "6277", name: "Imperial Trading Post", theme: "Pirates", category: "CASTLE / OTHER", year: 1992, pieces: 608, retail: 85, condition: "Built/Displayed", currentValue: 499, growth: 0.05, valueNew: 2145, valueUsed: 472, paid: 85.00, boughtFrom: "Gift" },
+    { num: 195, setNumber: "6274", name: "Caribbean Clipper", theme: "Pirates", category: "CASTLE / OTHER", year: 1989, pieces: 378, retail: 54, condition: "Built/Displayed", currentValue: 252, growth: 0.04, valueNew: 1918, valueUsed: 221, paid: 54.00, boughtFrom: "Gift" },
+    { num: 196, setNumber: "6270", name: "Forbidden Island", theme: "Pirates", category: "CASTLE / OTHER", year: 1989, pieces: 182, retail: 37.5, condition: "Built/Displayed", currentValue: 109, growth: 0.03, valueNew: 973, valueUsed: 98, paid: 37.50, boughtFrom: "Gift" },
     { num: 197, setNumber: "70403", name: "Dragon Mountain", theme: "Castle", category: "CASTLE / OTHER", year: 2013, pieces: 376, retail: 49.99, condition: "Built/Displayed", currentValue: 164, growth: 0.1, valueNew: 249, valueUsed: 90 },
     { num: 198, setNumber: "70320", name: "Aaron Fox's Aero-Striker V2", theme: "Nexo Knights", category: "CASTLE / OTHER", year: 2016, pieces: 301, retail: 29.99, condition: "Built/Displayed", currentValue: 21, growth: 0.0, valueNew: 45, valueUsed: 22 },
     { num: 199, setNumber: "76786", name: "Morticia's Cottage", theme: "Wednesday", category: "CASTLE / OTHER", year: 2025, pieces: 1002, retail: 109.99, condition: "Sealed/New", currentValue: 86, growth: 0.0, valueNew: 105, valueUsed: 91 },
