@@ -56,6 +56,7 @@ const LEGO_DATA = {
     { num: 212, setNumber: "8038", name: "The Battle of Endor", theme: "Star Wars", category: "STAR WARS", year: 2009, pieces: 890, retail: 99.99, condition: "Built/Displayed", currentValue: 250, growth: 0.0, paid: 207.56, boughtFrom: "eBay", valueNew: 420, valueUsed: 250 },
     { num: 213, setNumber: "7657", name: "AT-ST", theme: "Star Wars", category: "STAR WARS", year: 2007, pieces: 244, retail: 19.99, condition: "Built/Displayed", currentValue: 30, growth: 0.0, paid: 41.50, boughtFrom: "eBay", valueNew: 130, valueUsed: 30 },
     { num: 214, setNumber: "8092", name: "Luke's Landspeeder", theme: "Star Wars", category: "STAR WARS", year: 2010, pieces: 163, retail: 24.99, condition: "Built/Displayed", currentValue: 25, growth: 0.0, paid: 11.36, boughtFrom: "eBay", valueNew: 60, valueUsed: 25 },
+    { num: 216, setNumber: "75447", name: "The Razor Crest (2026)", theme: "Star Wars", category: "STAR WARS", year: 2026, pieces: 930, retail: 149.99, condition: "Built/Displayed", currentValue: 124, growth: 0.0, paid: 141.43, boughtFrom: "Target", valueNew: 127, valueUsed: 124 },
 
     // ========================================
     // LORD OF THE RINGS / THE HOBBIT
@@ -125,6 +126,8 @@ const LEGO_DATA = {
     { num: 105, setNumber: "75953", name: "Hogwarts Whomping Willow", theme: "Harry Potter", category: "HARRY POTTER", year: 2018, pieces: 753, retail: 69.99, condition: "Built/Displayed", currentValue: 49, growth: 0.0, valueNew: 72, valueUsed: 38 },
     { num: 106, setNumber: "75945", name: "Expecto Patronum", theme: "Harry Potter", category: "HARRY POTTER", year: 2019, pieces: 121, retail: 19.99, condition: "Built/Displayed", currentValue: 25, growth: 0.03, valueNew: 33, valueUsed: 17, paid: 38.50, boughtFrom: "eBay" },
     { num: 107, setNumber: "75945", name: "Expecto Patronum (Copy 2)", theme: "Harry Potter", category: "HARRY POTTER", year: 2019, pieces: 121, retail: 19.99, condition: "Sealed/New", currentValue: 25, growth: 0.03, valueNew: 33, valueUsed: 17, paid: 42.52, boughtFrom: "eBay" },
+    { num: 217, setNumber: "76442", name: "Hogwarts Castle: Charms Class", theme: "Harry Potter", category: "HARRY POTTER", year: 2025, pieces: 204, retail: 19.99, condition: "Built/Displayed", currentValue: 17, growth: 0.0, paid: 19.19, boughtFrom: "Target", valueNew: 19, valueUsed: 17 },
+    { num: 218, setNumber: "76429", name: "Talking Sorting Hat", theme: "Harry Potter", category: "HARRY POTTER", year: 2024, pieces: 561, retail: 99.99, condition: "Built/Displayed", currentValue: 83, growth: 0.0, paid: 100.67, boughtFrom: "Target", valueNew: 100, valueUsed: 83 },
 
     // ========================================
     // MARVEL
