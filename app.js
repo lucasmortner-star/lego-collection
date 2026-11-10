@@ -257,7 +257,7 @@
       html += `<tr class="ph-clickable" data-set="${s.setNumber}" title="Show price history">
         <td>${s.num}</td>
         <td><span class="set-number">${s.setNumber}</span></td>
-        <td><span class="set-name">${s.name}</span></td>
+        <td><span class="set-name">${s.name}</span>${retiringBadge(s.setNumber)}</td>
         <td class="hide-mobile"><span class="theme-badge"><span class="dot" style="background:${getCategoryColor(s.category)};width:6px;height:6px;border-radius:50%;display:inline-block"></span> ${s.theme}</span></td>
         <td>${s.year}</td>
         <td class="hide-mobile">${s.pieces.toLocaleString()}</td>
@@ -326,7 +326,7 @@
           <div class="card-category-indicator" style="background:${color}"></div>
           <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
             <div class="card-top">
-              <span class="card-title">${s.name}</span>
+              <span class="card-title">${s.name}${retiringBadge(s.setNumber)}</span>
               <span class="card-set-num">${s.setNumber}</span>
             </div>
             <div class="card-meta">
@@ -524,7 +524,7 @@
           <div class="wl-priority-bar ${prioClass}"></div>
           <div class="wl-card-body">
             <div class="wl-card-header">
-              <span class="wl-card-name">${item.name}</span>
+              <span class="wl-card-name">${item.name}</span>${retiringBadge(item.setNumber)}
               <span class="wl-card-set-num">${item.setNumber}</span>
             </div>
             <div class="wl-card-meta">
@@ -846,6 +846,18 @@
   }
 
   // "Retired Dec 2022" / "Retiring Dec 2026" from Brickset's LEGO.com exit date
+  // "Retiring soon" badge for sets LEGO is expected to retire within the next 6 months
+  const RETIRING_SOON_DAYS = 183;
+  function retiringBadge(setNumber) {
+    const exit = DATES[setNumber] && DATES[setNumber].exit;
+    if (!exit) return '';
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const days = (parseDay(exit) - today) / 864e5;
+    if (days < 0 || days > RETIRING_SOON_DAYS) return '';
+    return ` <span class="retiring-badge" title="Expected to retire ${fmtMonth(parseDay(exit))}">Retiring soon</span>`;
+  }
+
   function retirementLabel(exit, today) {
     return (exit <= today ? 'Retired ' : 'Retiring ') + fmtMonth(exit);
   }

@@ -643,6 +643,21 @@ body {
 .appreciation.positive { color: var(--green); }
 .appreciation.negative { color: var(--red); }
 
+.retiring-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
 .growth-badge {
   display: inline-flex;
   align-items: center;
