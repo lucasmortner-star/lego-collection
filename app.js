@@ -261,7 +261,7 @@
         <td>${s.year}</td>
         <td class="hide-mobile">${s.pieces.toLocaleString()}</td>
         <td class="hide-mobile">${s.retail > 0 ? fmtFull(s.retail) : '—'}</td>
-        <td class="hide-mobile">${s.paid !== null ? fmtFull(s.paid) : '<span class="paid-missing">—</span>'}</td>
+        <td class="hide-mobile">${s.paid !== null ? fmtFull(s.paid) : '<span class="paid-missing">—</span>'}${s.boughtFrom ? `<br><span class="bought-from">${s.boughtFrom}</span>` : ''}</td>
         <td class="hide-mobile"><span class="condition-badge ${getConditionClass(s.condition)}">${s.condition}</span></td>
         <td>
           <span class="value-cell">${fmt(s.currentValue)}</span>
@@ -340,7 +340,7 @@
                 <div class="val">${s.retail > 0 ? fmt(s.retail) : '—'}</div>
               </div>
               ${s.paid !== null ? `<div class="card-val-block">
-                <label>Paid</label>
+                <label>Paid${s.boughtFrom ? ` &middot; ${s.boughtFrom}` : ''}</label>
                 <div class="val">${fmt(s.paid)}</div>
               </div>` : ''}
               <div class="card-val-block">
@@ -985,7 +985,7 @@
       const now = item.currentValue != null ? item.currentValue : null;
       const gain = now !== null ? now - paid : null;
       paidHtml = `<div class="ph-stat">
-        <div class="ph-stat-label"><span class="dot paid-dot"></span>What we paid</div>
+        <div class="ph-stat-label"><span class="dot paid-dot"></span>What we paid${item.boughtFrom ? ` at ${item.boughtFrom}` : ''}</div>
         <div class="ph-stat-value">${fmt(paid)}</div>
         ${gain !== null ? `<span class="appreciation ${gain >= 0 ? 'positive' : 'negative'}">${gain >= 0 ? '↑' : '↓'} ${fmt(Math.abs(gain))}${paid > 0 ? ` (${pct(gain / paid * 100)})` : ''} vs. value now</span>` : ''}
       </div>`;
