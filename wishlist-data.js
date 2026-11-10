@@ -14,7 +14,7 @@ const WISHLIST_DATA = {
     { setNumber: "75252", name: "Imperial Star Destroyer (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 4784, retail: 1450, used: 764, priority: "Medium", notes: "Retired — BrickEconomy New ~$1,450, Used ~$764 (Nov 9; BrickLink refresh pending) (was $699.99 MSRP)" },
     { setNumber: "75304", name: "Darth Vader Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 834, retail: 83, used: 69, priority: "Low", notes: "Retired — BrickEconomy New ~$83, Used ~$69 (Nov 9; BrickLink refresh pending) (below MSRP of $79.99)" },
     { setNumber: "75349", name: "Captain Rex Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 854, retail: 69, used: 57, priority: "Low", notes: "Retired Jul 2026 — BrickEconomy New ~$69, Used ~$57 (Nov 9; BrickLink refresh pending) (was $69.99 MSRP)" },
-    { setNumber: "75331", name: "The Razor Crest (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 6187, retail: 720, used: 572, priority: "High", notes: "Retired Dec 2025 — BrickEconomy New ~$720, Used ~$572 (Nov 9; BrickLink refresh pending). We own the smaller 75292 Razor Crest; still want the UCS" },
+    { setNumber: "75331", name: "The Razor Crest (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 6187, retail: 720, used: 572, priority: "High", notes: "Retired Dec 2025 — BrickEconomy New ~$720, Used ~$572 (Nov 9; BrickLink refresh pending). We own the smaller 75447 Razor Crest (2026); still want the UCS" },
 
     // ===== HARRY POTTER =====
 
