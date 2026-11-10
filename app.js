@@ -257,7 +257,7 @@
       html += `<tr class="ph-clickable" data-set="${s.setNumber}" title="Show price history">
         <td>${s.num}</td>
         <td><span class="set-number">${s.setNumber}</span></td>
-        <td><span class="set-name">${s.name}</span>${retiringBadge(s.setNumber)}</td>
+        <td><span class="set-name">${s.name}</span>${retiringBadge(s.setNumber)}${missingBadge(s)}</td>
         <td class="hide-mobile"><span class="theme-badge"><span class="dot" style="background:${getCategoryColor(s.category)};width:6px;height:6px;border-radius:50%;display:inline-block"></span> ${s.theme}</span></td>
         <td>${s.year}</td>
         <td class="hide-mobile">${s.pieces.toLocaleString()}</td>
@@ -326,7 +326,7 @@
           <div class="card-category-indicator" style="background:${color}"></div>
           <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
             <div class="card-top">
-              <span class="card-title">${s.name}${retiringBadge(s.setNumber)}</span>
+              <span class="card-title">${s.name}${retiringBadge(s.setNumber)}${missingBadge(s)}</span>
               <span class="card-set-num">${s.setNumber}</span>
             </div>
             <div class="card-meta">
@@ -1016,6 +1016,8 @@
       </div>`;
     }
 
+    const isOwned = sets.some(s => s.setNumber === setNumber);
+
     modal.innerHTML = `<div class="ph-modal" role="dialog" aria-modal="true" aria-label="Price history for ${item.name}">
       <div class="ph-header">
         <div>
@@ -1024,12 +1026,49 @@
         </div>
         <button class="ph-close" title="Close" aria-label="Close">&times;</button>
       </div>
+      ${setLinksHtml(item.setNumber)}
       ${chart ? `<div class="ph-stats">${stats}${paidHtml}</div>${chart}` : '<p class="ph-empty">No price history recorded for this set yet. It will start building the next time prices are checked.</p>'}
+      ${isOwned ? missingPiecesHtml(item.missing) : ''}
       <p class="ph-footnote">Prices are BrickLink's average sold price over the last 6 months. The dashed line carries the last known price forward to today.${exitDate ? ' Retirement is the date the set left LEGO.com in the US, per Brickset; future dates are LEGO\'s expected retirement.' : ''}${hasEstimates ? ' Hollow dots are BrickEconomy estimates, used while BrickLink data was unavailable.' : ''} Some jumps reflect changes in how values were calculated, such as the Oct 2026 Brickify refresh, rather than market moves.</p>
     </div>`;
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     wireChartHover(modal.querySelector('.ph-chart-wrap'));
+  }
+
+  // Links to LEGO's building instructions and the set's parts list
+  function setLinksHtml(setNumber) {
+    const base = String(setNumber).match(/^\d+/);
+    if (!base) return '';
+    const n = base[0];
+    return `<div class="ph-links">
+      <a href="https://www.lego.com/en-us/service/building-instructions/${n}" target="_blank" rel="noopener">Building instructions &#8599;</a>
+      <a href="https://rebrickable.com/sets/${n}-1/" target="_blank" rel="noopener">Parts list &#8599;</a>
+    </div>`;
+  }
+
+  // Missing pieces recorded in data.js as missing: [{ qty, part, color, name, note }]
+  function missingPiecesHtml(missing) {
+    const list = Array.isArray(missing) ? missing : [];
+    if (!list.length) return '<p class="ph-missing-none">No missing pieces recorded.</p>';
+    const total = list.reduce((a, m) => a + (m.qty || 1), 0);
+    const rows = list.map(m => {
+      const part = m.part
+        ? `<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=${encodeURIComponent(m.part)}" target="_blank" rel="noopener">${m.part}</a>`
+        : '';
+      const desc = [m.name, m.color && `(${m.color})`].filter(Boolean).join(' ');
+      return `<li><strong>${m.qty || 1}&times;</strong> ${desc}${part ? ` &middot; ${part}` : ''}${m.note ? `<span class="ph-missing-note"> &mdash; ${m.note}</span>` : ''}</li>`;
+    }).join('');
+    return `<div class="ph-missing">
+      <div class="ph-missing-title">Missing pieces (${total})</div>
+      <ul>${rows}</ul>
+    </div>`;
+  }
+
+  function missingBadge(set) {
+    return Array.isArray(set.missing) && set.missing.length
+      ? ' <span class="missing-badge" title="This set has missing pieces recorded">Missing pieces</span>'
+      : '';
   }
 
   // Hover (or drag on touch) over the chart: snap to the nearest date and show every price on it

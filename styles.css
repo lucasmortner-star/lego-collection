@@ -643,6 +643,21 @@ body {
 .appreciation.positive { color: var(--green); }
 .appreciation.negative { color: var(--red); }
 
+.missing-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
 .retiring-badge {
   display: inline-block;
   margin-left: 6px;
@@ -2606,3 +2621,38 @@ footer.hogwarts-page a {
   .ph-modal { padding: 16px; }
   .ph-stat-value { font-size: 17px; }
 }
+
+/* Set links and missing pieces in the price popup */
+.ph-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -6px 0 14px;
+}
+
+.ph-links a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-xs);
+  padding: 5px 10px;
+}
+
+.ph-links a:hover { background: var(--border); }
+
+.ph-missing {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #fef2f2;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.ph-missing-title { font-weight: 700; color: #991b1b; margin-bottom: 4px; }
+.ph-missing ul { margin: 0; padding-left: 18px; }
+.ph-missing li { margin: 2px 0; }
+.ph-missing a { color: #991b1b; }
+.ph-missing-note { color: var(--text-secondary); }
+.ph-missing-none { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
