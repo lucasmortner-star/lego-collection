@@ -814,7 +814,23 @@
             ${rows}
           </details>
         </div>`;
-    }).join('');
+    }).join('') + (unlogged.length ? `
+        <div class="bd-card bd-unknown">
+          <div class="bd-head">
+            <span class="bd-rank">?</span>
+            <span class="bd-name">Unknown builder</span>
+            <span class="bd-total">${unloggedPieces.toLocaleString()} <small>pieces</small></span>
+          </div>
+          <div class="bd-meta">${unlogged.length} built sets among the 100 largest with no builder logged yet</div>
+          <details class="bd-sets">
+            <summary>Show sets</summary>
+            ${unlogged.slice().sort((x, y) => y.pieces - x.pieces).map(set => `
+            <div class="bd-set">
+              <span class="bd-set-name">${set.name} <span class="bd-share">${set.setNumber}</span></span>
+              <span class="bd-set-pieces">${set.pieces.toLocaleString()}</span>
+            </div>`).join('')}
+          </details>
+        </div>` : '');
   }
 
   // ===================================================================

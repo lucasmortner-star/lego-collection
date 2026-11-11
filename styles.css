@@ -2810,3 +2810,7 @@ footer.hogwarts-page a {
   max-height: 260px;
   object-fit: contain;
 }
+
+/* Builders: card listing built sets with no builder logged */
+.bd-unknown { border-style: dashed; background: var(--bg-tertiary); }
+.bd-unknown .bd-rank { color: var(--text-muted); }
