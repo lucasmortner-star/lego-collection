@@ -251,7 +251,7 @@ const LEGO_DATA = {
     // SUPER MARIO
     // ========================================
     { num: 191, setNumber: "72037", name: "Mario Kart - Mario & Standard Kart", theme: "Super Mario", category: "SUPER MARIO", year: 2025, pieces: 1972, retail: 169.99, condition: "Built/Displayed", currentValue: 133, growth: 0.0, builtBy: ["Alex"], paid: 180.78, valueNew: 159, valueUsed: 141, boughtFrom: "LEGO", bought: "2026-10-06" },
-    { num: 192, setNumber: "72050", name: "Mario Kart - Luigi & Mach 8", theme: "Super Mario", category: "SUPER MARIO", year: 2026, pieces: 2234, retail: 179.99, condition: "Building", currentValue: 147, growth: 0.0, builtBy: ["Alex"], paid: 191.42, valueNew: 164, valueUsed: 149, boughtFrom: "LEGO", bought: "2026-10-06" },
+    { num: 192, setNumber: "72050", name: "Mario Kart - Luigi & Mach 8", theme: "Super Mario", category: "SUPER MARIO", year: 2026, pieces: 2234, retail: 179.99, condition: "Built/Displayed", currentValue: 147, growth: 0.0, builtBy: ["Alex"], paid: 191.42, valueNew: 164, valueUsed: 149, boughtFrom: "LEGO", bought: "2026-10-06" },
 
     // ========================================
     // CASTLE / PIRATES / OTHER
