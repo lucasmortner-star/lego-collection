@@ -1026,6 +1026,7 @@
         </div>
         <button class="ph-close" title="Close" aria-label="Close">&times;</button>
       </div>
+      ${setImageHtml(item.setNumber, item.name)}
       ${setLinksHtml(item.setNumber)}
       ${chart ? `<div class="ph-stats">${stats}${paidHtml}</div>${chart}` : '<p class="ph-empty">No price history recorded for this set yet. It will start building the next time prices are checked.</p>'}
       ${isOwned ? missingPiecesHtml(item.missing) : ''}
@@ -1039,6 +1040,13 @@
       pickBtn.remove();
       openPicker(modal.querySelector('.ph-picker'), item);
     });
+  }
+
+  // Official set picture from Brickset; hidden if there isn't one
+  function setImageHtml(setNumber, name) {
+    const base = String(setNumber).match(/^\d+/);
+    if (!base) return '';
+    return `<div class="ph-set-img"><img src="https://images.brickset.com/sets/images/${base[0]}-1.jpg" alt="${name}" onerror="this.parentNode.remove()"></div>`;
   }
 
   // Links to LEGO's building instructions and the set's parts list
