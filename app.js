@@ -1064,11 +1064,18 @@
           ? `<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=${encodeURIComponent(m.part)}" target="_blank" rel="noopener">${m.part}</a>`
           : '';
       const desc = [m.name, m.color && `(${m.color})`].filter(Boolean).join(' ');
-      return `<li><strong>${m.qty || 1}&times;</strong> ${desc}${part ? ` &middot; ${part}` : ''}${m.note ? `<span class="ph-missing-note"> &mdash; ${m.note}</span>` : ''}</li>`;
+      const img = m.element ? `<img src="https://images.brickset.com/parts/${encodeURIComponent(m.element)}.jpg" alt="" loading="lazy">` : '<div class="mp-noimg">?</div>';
+      return `<div class="mp-card">
+        <span class="mp-qty">${m.qty || 1}&times;</span>
+        ${img}
+        <div class="mp-name">${m.name || 'Part'}</div>
+        <div class="mp-meta">${m.color || ''}${part ? ` &middot; ${part}` : ''}</div>
+        ${m.note ? `<div class="mp-note">${m.note}</div>` : ''}
+      </div>`;
     }).join('');
     return `<div class="ph-missing">
       <div class="ph-missing-title">Missing pieces (${total})</div>
-      <ul>${rows}</ul>
+      <div class="mp-grid">${rows}</div>
     </div>
     <button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button>
     <div class="ph-picker"></div>`;

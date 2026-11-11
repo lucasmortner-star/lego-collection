@@ -2756,3 +2756,40 @@ footer.hogwarts-page a {
 }
 
 .pk-step span { min-width: 14px; font-weight: 700; font-size: 13px; }
+
+/* Missing pieces shown as a picture grid */
+.mp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.mp-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  padding: 8px 6px 6px;
+  text-align: center;
+}
+
+.mp-card img { width: 100%; height: 70px; object-fit: contain; }
+.mp-noimg { height: 70px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 24px; }
+
+.mp-qty {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: #991b1b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+
+.mp-name { font-size: 11px; font-weight: 600; line-height: 1.25; margin-top: 4px; }
+.mp-meta { font-size: 10px; color: var(--text-muted); }
+.mp-meta a { color: #991b1b; }
+.mp-note { font-size: 10px; color: var(--text-secondary); font-style: italic; margin-top: 2px; }
