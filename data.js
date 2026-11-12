@@ -85,6 +85,7 @@ const LEGO_DATA = {
     { num: 70, setNumber: "10367", name: "The Lord of the Rings: Balrog Book Nook", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2025, pieces: 1201, retail: 129.99, condition: "Built/Displayed", currentValue: 95, growth: 0.0, builtBy: ["Alex"], valueNew: 117, valueUsed: 108, paid: 138.20, boughtFrom: "Amazon", bought: "2025-12-13" },
     { num: 207, setNumber: "40761", name: "Sméagol & Déagol (The Shire GWP)", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2025, pieces: 181, retail: 0, condition: "On the Way", currentValue: 143, growth: 0.0, paid: 127.62, valueNew: 143, valueUsed: 119, boughtFrom: "eBay", bought: "2026-11-08" },
     { num: 221, setNumber: "9473", name: "The Mines of Moria", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2012, pieces: 776, retail: 79.99, condition: "On the Way", currentValue: 256, growth: 0.0, paid: 299.00, valueNew: 596, valueUsed: 256, boughtFrom: "BrickOwl", bought: "2026-11-12" },
+    { num: 222, setNumber: "79007", name: "Battle at the Black Gate", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 656, retail: 59.99, condition: "On the Way", currentValue: 300, growth: 0.0, paid: 300.00, valueNew: 478, valueUsed: 300, bought: "2026-11-12" },
 
     // ========================================
     // HARRY POTTER
