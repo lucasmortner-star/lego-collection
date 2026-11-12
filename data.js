@@ -249,7 +249,7 @@ const LEGO_DATA = {
     { num: 187, setNumber: "70608", name: "Master Falls", theme: "Ninjago", category: "NINJAGO", year: 2017, pieces: 312, retail: 29.99, condition: "Built/Displayed", currentValue: 36, growth: 0.02, valueNew: 72, valueUsed: 27, paid: 31.89 },
     { num: 188, setNumber: "70746", name: "Condrai Copter Attack", theme: "Ninjago", category: "NINJAGO", year: 2015, pieces: 311, retail: 29.99, condition: "Built/Displayed", currentValue: 52, growth: 0.05, valueNew: 197, valueUsed: 34, paid: 31.89 },
     { num: 189, setNumber: "70601", name: "Sky Shark", theme: "Ninjago", category: "NINJAGO", year: 2016, pieces: 221, retail: 19.99, condition: "Built/Displayed", currentValue: 33, growth: 0.05, valueNew: 103, valueUsed: 18, paid: 21.26 },
-    { num: 190, setNumber: "70733", name: "Blaster Bike", theme: "Ninjago", category: "NINJAGO", year: 2015, pieces: 212, retail: 19.99, condition: "To Build", currentValue: 29, growth: 0.03, valueNew: 103, valueUsed: 19, paid: 21.26, rebuild: true },
+    { num: 190, setNumber: "70733", name: "Blaster Bike", theme: "Ninjago", category: "NINJAGO", year: 2015, pieces: 212, retail: 19.99, condition: "To Build", currentValue: 29, growth: 0.03, valueNew: 103, valueUsed: 19, paid: 21.26, rebuild: true, instructionsPdf: "instructions/70733-blaster-bike.pdf" },
 
     // ========================================
     // SUPER MARIO
