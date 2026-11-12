@@ -234,4 +234,12 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "2447", colorId: 14, color: "Trans-Dark Blue", name: "Visor (goes on the helmet)" },
     { qty: 1, part: "522", colorId: 1, color: "White", name: "Cape, cloth" }
   ] },
+  { id: "sw0292", name: "Luke Skywalker (Jedi Knight, black)", missing: [
+    { qty: 1, part: "3626pb0408", colorId: 90, color: "Light Nougat", name: "Head, slight grin", note: "The head on him now is the wrong one" },
+    { qty: 1, part: "3901", colorId: 2, color: "Tan", name: "Hair, male smooth" }
+  ] },
+  { id: "sw0599", name: "Santa Darth Vader", missing: [
+    { qty: 1, part: "30368", colorId: 11, color: "Black", name: "Darth Vader helmet (one piece)" },
+    { qty: 1, part: "983", colorId: 1, color: "White", name: "Hand" }
+  ] },
 ];
