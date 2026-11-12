@@ -1093,7 +1093,8 @@
           ? `<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=${encodeURIComponent(m.part)}" target="_blank" rel="noopener">${m.part}</a>`
           : '';
       const desc = [m.name, m.color && `(${m.color})`].filter(Boolean).join(' ');
-      const img = m.element ? `<img src="https://images.brickset.com/parts/${encodeURIComponent(m.element)}.jpg" alt="" loading="lazy">` : '<div class="mp-noimg">?</div>';
+      const src = m.img || (m.element ? `https://images.brickset.com/parts/${encodeURIComponent(m.element)}.jpg` : '');
+      const img = src ? `<img src="${src}" alt="" loading="lazy">` : '<div class="mp-noimg">?</div>';
       return `<div class="mp-card">
         <span class="mp-qty">${m.qty || 1}&times;</span>
         ${img}
