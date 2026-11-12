@@ -2856,3 +2856,4 @@ footer.hogwarts-page a {
 .ms-table th { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 .ms-qty { font-weight: 700; color: var(--accent); }
 .ms-sets { color: var(--text-secondary); font-size: 13px; }
+.tb-tag-maybe { background: #e0f2fe; color: #0369a1; }

@@ -37,6 +37,9 @@
     valueUsed: s.valueUsed > 0 ? s.valueUsed : null
   }));
 
+  // Sets we might be able to build from the bins but aren't sure we own (To Build page only)
+  const possibleSets = (LEGO_DATA.possible || []).map(s => ({ ...s, paid: null, possible: true }));
+
   const summary = {
     totalSets: sets.length,
     totalRetail: sets.reduce((a, s) => a + s.retail, 0),
@@ -767,7 +770,7 @@
     const n = (String(s.setNumber).match(/^\d+/) || [''])[0];
     const missing = (s.missing || []).reduce((a, m) => a + (m.qty || 1), 0);
     const tags = [
-      s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
+      s.possible ? '<span class="tb-tag tb-tag-maybe">Not sure we have it</span>' : s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
       missing ? `<span class="tb-tag tb-tag-missing">${missing} missing</span>` : '',
       s.builtBy && s.builtBy.length ? `<span class="tb-tag">${s.builtBy.join(' & ')}</span>` : ''
     ].join('');
@@ -788,9 +791,10 @@
       { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building') },
       { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild) },
       { title: 'Old sets to rebuild', note: 'Taken apart and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild) },
-      { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') }
+      { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') },
+      { title: 'Possible builds', note: 'Sets we might have the pieces for. Not counted in the collection until we know.', list: possibleSets, extra: true }
     ];
-    const all = groups.reduce((a, g) => a.concat(g.list), []);
+    const all = groups.filter(g => !g.extra).reduce((a, g) => a.concat(g.list), []);
     const pieces = all.reduce((a, s) => a + (s.pieces || 0), 0);
     const missing = all.reduce((a, s) => a + (s.missing || []).reduce((b, m) => b + (m.qty || 1), 0), 0);
     document.getElementById('tbStats').innerHTML = `
@@ -1133,6 +1137,7 @@
 
   function openPriceModal(setNumber) {
     const item = sets.find(s => s.setNumber === setNumber) ||
+      possibleSets.find(s => s.setNumber === setNumber) ||
       (WISHLIST_DATA.items || []).find(i => i.setNumber === setNumber);
     if (!item) return;
     const hist = HISTORY[setNumber] || {};

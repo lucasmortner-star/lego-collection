@@ -273,6 +273,12 @@ const LEGO_DATA = {
     { num: 201, setNumber: "76924", name: "Mercedes-AMG G 63 & Mercedes-AMG SL 63", theme: "Speed Champions", category: "CASTLE / OTHER", year: 2024, pieces: 808, retail: 44.99, condition: "Built/Displayed", currentValue: 36, growth: 0.0, builtBy: ["Malakai"], valueNew: 39, valueUsed: 37, paid: 47.85 },
   ],
 
+  // Possible builds: sets we may have the pieces for but aren't sure we own.
+  // They show on the To Build page only and don't count in the collection's totals.
+  possible: [
+    { setNumber: "6060", name: "Knight's Challenge", theme: "Castle", category: "CASTLE / OTHER", year: 1989, pieces: 136, retail: 21.99, condition: "Possible", currentValue: 160, growth: 0.0, valueNew: 1470, valueUsed: 160, rebuild: true, instructionsPdf: "instructions/6060-knights-challenge.pdf", note: "Red & yellow lion horse cover, peasant, crossed-pikes and lion knights found in the bins" },
+  ],
+
   categories: [
     { key: "STAR WARS", label: "Star Wars", icon: "⭐", color: "#FFE81F" },
     { key: "LORD OF THE RINGS / THE HOBBIT", label: "Lord of the Rings / The Hobbit", icon: "💍", color: "#C9A84C" },
