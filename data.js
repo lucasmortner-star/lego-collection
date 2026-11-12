@@ -199,6 +199,7 @@ const LEGO_DATA = {
     { num: 156, setNumber: "6648", name: "Mag Racer", theme: "Classic Town", category: "LEGO CITY", year: 1992, pieces: 62, retail: 7.25, condition: "Built/Displayed", currentValue: 8, growth: 0.0, valueNew: 40, valueUsed: 10, paid: 7.25, boughtFrom: "Gift" },
     { num: 157, setNumber: "6351", name: "Surf N' Sail Camper", theme: "Classic Town", category: "LEGO CITY", year: 1992, pieces: 188, retail: 19, condition: "Built/Displayed", currentValue: 43, growth: 0.02, valueNew: 177, valueUsed: 22, paid: 19.00, boughtFrom: "Gift" },
     { num: 158, setNumber: "6345", name: "Aerial Acrobats", theme: "Classic Town", category: "LEGO CITY", year: 1993, pieces: 351, retail: 34, condition: "Built/Displayed", currentValue: 72, growth: 0.02, valueNew: 254, valueUsed: 54, paid: 34.00, boughtFrom: "Gift" },
+    { num: 224, setNumber: "6551", name: "Checkered Flag 500", theme: "Classic Town", category: "LEGO CITY", year: 1992, pieces: 193, retail: 26.5, condition: "Building", currentValue: 37, growth: 0.0, valueNew: 245, valueUsed: 37, paid: 26.50, boughtFrom: "Gift", instructionsPdf: "instructions/6551-checkered-flag-500.pdf" },
 
     // ========================================
     // IDEAS / CREATOR / ICONS
