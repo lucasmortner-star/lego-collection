@@ -21,6 +21,7 @@
   let minifigsFranchiseFilter = 'all';  // 'all' | 'Star Wars' | 'Harry Potter' | 'Lord of the Rings'
   let minifigsOwnedFilter = 'all';      // 'all' | 'owned' | 'need'
   let minifigsSearch = '';
+  let minifigsSort = 'franchise';        // 'franchise' | 'value-desc' | 'value-asc' | 'name'
 
   // --- Computed data ---
   const sets = LEGO_DATA.sets.map(s => ({
@@ -674,13 +675,14 @@
       'Other':             { label: 'Other',             icon: '⚪', color: '#888',    order: 99 },
     };
 
-    // Group by franchise
+    // Group by franchise, or one combined list when sorting across franchises
     const groups = {};
     items.forEach(m => {
-      const f = m.franchise || 'Other';
+      const f = minifigsSort === 'franchise' ? (m.franchise || 'Other') : 'All';
       if (!groups[f]) groups[f] = [];
       groups[f].push(m);
     });
+    FRANCHISE_META['All'] = { label: minifigsSort === 'name' ? 'All minifigs, A to Z' : minifigsSort === 'value-asc' ? 'All minifigs, lowest value first' : 'All minifigs, highest value first', icon: '💰', color: '#16a34a', order: 0 };
     const franchiseKeys = Object.keys(groups).sort((a, b) => {
       return ((FRANCHISE_META[a] || {}).order || 99) - ((FRANCHISE_META[b] || {}).order || 99);
     });
@@ -688,8 +690,10 @@
     let html = '';
     franchiseKeys.forEach(franchiseKey => {
       const meta = FRANCHISE_META[franchiseKey] || FRANCHISE_META['Other'];
-      // Within a franchise: highest price first
+      // Highest price first (within a franchise by default), or the chosen sort
       const sorted = [...groups[franchiseKey]].sort((a, b) => {
+        if (minifigsSort === 'name') return a.name.localeCompare(b.name);
+        if (minifigsSort === 'value-asc') return (a.currentValue || 0) - (b.currentValue || 0);
         return (b.currentValue || 0) - (a.currentValue || 0);
       });
 
@@ -1717,6 +1721,10 @@
 
   // Minifigs search
   let mfSearchTimeout;
+  document.getElementById('minifigsSortSelect').addEventListener('change', (e) => {
+    minifigsSort = e.target.value;
+    renderMinifigsGrid();
+  });
   const mfSearchInput = document.getElementById('minifigsSearchInput');
   if (mfSearchInput) {
     mfSearchInput.addEventListener('input', (e) => {
