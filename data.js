@@ -257,6 +257,7 @@ const LEGO_DATA = {
     // CASTLE / PIRATES / OTHER
     // ========================================
     { num: 193, setNumber: "6085", name: "Black Monarch's Castle", theme: "Castle", category: "CASTLE / OTHER", year: 1988, pieces: 702, retail: 68, condition: "Built/Displayed", currentValue: 359, growth: 0.04, builtBy: ["Alex"], valueNew: 2336, valueUsed: 273, paid: 68.00, boughtFrom: "Gift" },
+    { num: 220, setNumber: "6055", name: "Prisoner Convoy", theme: "Castle", category: "CASTLE / OTHER", year: 1985, pieces: 115, retail: 19.99, condition: "Building", currentValue: 52, growth: 0.0, valueNew: 765, valueUsed: 52, paid: 19.99, boughtFrom: "Gift" },
     { num: 194, setNumber: "6277", name: "Imperial Trading Post", theme: "Pirates", category: "CASTLE / OTHER", year: 1992, pieces: 608, retail: 85, condition: "Built/Displayed", currentValue: 499, growth: 0.05, valueNew: 2145, valueUsed: 472, paid: 85.00, boughtFrom: "Gift" },
     { num: 195, setNumber: "6274", name: "Caribbean Clipper", theme: "Pirates", category: "CASTLE / OTHER", year: 1989, pieces: 378, retail: 54, condition: "Built/Displayed", currentValue: 252, growth: 0.04, valueNew: 1918, valueUsed: 221, paid: 54.00, boughtFrom: "Gift" },
     { num: 196, setNumber: "6270", name: "Forbidden Island", theme: "Pirates", category: "CASTLE / OTHER", year: 1989, pieces: 182, retail: 37.5, condition: "Built/Displayed", currentValue: 109, growth: 0.03, valueNew: 973, valueUsed: 98, paid: 37.50, boughtFrom: "Gift" },

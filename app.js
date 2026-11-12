@@ -1043,7 +1043,7 @@
         <button class="ph-close" title="Close" aria-label="Close">&times;</button>
       </div>
       ${setImageHtml(item.setNumber, item.name)}
-      ${setLinksHtml(item.setNumber)}
+      ${setLinksHtml(item.setNumber, item.year)}
       ${chart ? `<div class="ph-stats">${stats}${paidHtml}</div>${chart}` : '<p class="ph-empty">No price history recorded for this set yet. It will start building the next time prices are checked.</p>'}
       ${isOwned ? missingPiecesHtml(item.missing) : ''}
       <p class="ph-footnote">Prices are BrickLink's average sold price over the last 6 months. The dashed line carries the last known price forward to today.${exitDate ? ' Retirement is the date the set left LEGO.com in the US, per Brickset; future dates are LEGO\'s expected retirement.' : ''}${hasEstimates ? ' Hollow dots are BrickEconomy estimates, used while BrickLink data was unavailable.' : ''} Some jumps reflect changes in how values were calculated, such as the Oct 2026 Brickify refresh, rather than market moves.</p>
@@ -1066,12 +1066,16 @@
   }
 
   // Links to LEGO's building instructions and the set's parts list
-  function setLinksHtml(setNumber) {
+  function setLinksHtml(setNumber, year) {
     const base = String(setNumber).match(/^\d+/);
     if (!base) return '';
     const n = base[0];
+    // LEGO.com only hosts instructions from about 2002 on; older sets use BrickInstructions' scans
+    const instr = year && year < 2002
+      ? `https://lego.brickinstructions.com/en/lego_instructions/set/${n}/Instructions`
+      : `https://www.lego.com/en-us/service/building-instructions/${n}`;
     return `<div class="ph-links">
-      <a href="https://www.lego.com/en-us/service/building-instructions/${n}" target="_blank" rel="noopener">Building instructions &#8599;</a>
+      <a href="${instr}" target="_blank" rel="noopener">Building instructions &#8599;</a>
       <a href="https://rebrickable.com/sets/${n}-1/" target="_blank" rel="noopener">Parts list &#8599;</a>
     </div>`;
   }
