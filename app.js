@@ -871,15 +871,15 @@
   // ===================================================================
 
   // Theme of a minifig from its BrickLink ID prefix (sh = Super Heroes, split into Marvel and DC)
-  const FIG_THEME_ORDER = ['Star Wars', 'Marvel', 'DC', 'Ninjago', 'Castle', 'Pirates', 'Space', 'Town & City', 'Collectible Minifigures', 'Jurassic World', 'Other'];
+  const FIG_THEME_ORDER = ['Star Wars', 'Marvel', 'DC', 'Lord of the Rings', 'Harry Potter', 'Ninjago', 'Castle', 'Pirates', 'Space', 'Town & City', 'Collectible Minifigures', 'Jurassic World', 'Other'];
   const DC_FIGS = ['sh0057', 'sh0109', 'sh0211', 'sh0219'];
   function figTheme(id) {
     const p = (String(id).match(/^[a-z]+/) || [''])[0];
     if (p === 'sh') return DC_FIGS.includes(id) ? 'DC' : 'Marvel';
     if (p === 'coltlnm' || p === 'njo') return 'Ninjago';
-    const map = { sw: 'Star Wars', bat: 'DC', cas: 'Castle', pi: 'Pirates', sp: 'Space', ac: 'Space', col: 'Collectible Minifigures', jw: 'Jurassic World',
+    const map = { sw: 'Star Wars', bat: 'DC', lor: 'Lord of the Rings', hp: 'Harry Potter', cas: 'Castle', pi: 'Pirates', sp: 'Space', ac: 'Space', col: 'Collectible Minifigures', jw: 'Jurassic World',
       cty: 'Town & City', twn: 'Town & City', cop: 'Town & City', air: 'Town & City', oct: 'Town & City', hor: 'Town & City', par: 'Town & City',
-      pln: 'Town & City', trn: 'Town & City', gen: 'Town & City', rac: 'Town & City', soc: 'Town & City', bdp: 'Town & City', idea: 'Town & City' };
+      pln: 'Town & City', trn: 'Town & City', wtr: 'Town & City', gen: 'Town & City', rac: 'Town & City', soc: 'Town & City', bdp: 'Town & City', idea: 'Town & City' };
     return map[p] || 'Other';
   }
 
@@ -961,15 +961,20 @@
     const figMatches = (f, q) => !q || [f.name, f.id, figTheme(f.id), f.from || '']
       .concat(f.missing.map(m => [m.name, m.color, m.part, m.note].join(' ')))
       .join(' ').toLowerCase().includes(q);
+    const openThemes = new Set();
     const figsHtml = (order, query) => {
       const q = (query || '').trim().toLowerCase();
       const figs = allFigs.filter(f => figMatches(f, q));
       if (!figs.length) return '<p class="tb-empty">No minifigs match that search.</p>';
       if (order === 'theme') {
+        // Theme sections start collapsed; while searching, sections with matches open up
         const groups = {};
         figs.forEach(f => { (groups[figTheme(f.id)] = groups[figTheme(f.id)] || []).push(f); });
         return Object.keys(groups).sort((a, b) => FIG_THEME_ORDER.indexOf(a) - FIG_THEME_ORDER.indexOf(b)).map(t =>
-          `<h3 class="ms-group">${t} <span>${groups[t].length} minifig${groups[t].length === 1 ? '' : 's'}</span></h3>` + groups[t].map(figCard).join('')).join('');
+          `<details class="ms-group-wrap" data-theme="${t}"${q || openThemes.has(t) ? ' open' : ''}>
+            <summary class="ms-group">${t} <span>${groups[t].length} minifig${groups[t].length === 1 ? '' : 's'} &middot; ${(n => `${n} part${n === 1 ? '' : 's'}`)(groups[t].reduce((a, f) => a + count(f.missing), 0))}</span></summary>
+            ${groups[t].map(figCard).join('')}
+          </details>`).join('');
       }
       const list = order === 'most' ? figs.slice().sort((a, b) => count(b.missing) - count(a.missing) || a.name.localeCompare(b.name)) : figs;
       return list.map(figCard).join('');
@@ -996,8 +1001,8 @@
       <div class="ms-pane" data-pane="sets">${bySet || '<p class="tb-empty">No missing pieces logged for sets.</p>'}</div>
       <div class="ms-pane" data-pane="figs" style="display:none">
         <p class="ms-intro">Every minifigure that's missing parts. Ones from a set we own are also listed under that set. Tap a part's number or "Buy on BrickLink" to see it for sale in the right colour.</p>
-        <div class="ms-sort">Sort: <button class="ms-sort-btn active" data-order="name">A to Z</button><button class="ms-sort-btn" data-order="theme">By theme</button><button class="ms-sort-btn" data-order="most">Most missing</button><input class="ms-search" type="search" placeholder="Search minifigs or parts…" aria-label="Search minifigs"></div>
-        <div class="ms-figs">${figsHtml('name')}</div>
+        <div class="ms-sort">Sort: <button class="ms-sort-btn active" data-order="theme">By theme</button><button class="ms-sort-btn" data-order="name">A to Z</button><button class="ms-sort-btn" data-order="most">Most missing</button><input class="ms-search" type="search" placeholder="Search minifigs or parts…" aria-label="Search minifigs"></div>
+        <div class="ms-figs">${figsHtml('theme')}</div>
       </div>
       <div class="ms-pane" data-pane="shop" style="display:none">
         <div class="ms-shop-head"><p>Every missing piece in one list. The same piece in the same colour is combined.</p>
@@ -1007,7 +1012,7 @@
         ${buyable.length ? '<p class="ms-intro">To buy everything at once: download the wanted list, then on BrickLink go to Want &rarr; Upload, open the file, and use "Buy All" to find shops that have the pieces.</p>' : ''}
       </div>`;
     const board = document.getElementById('msBoard');
-    let figOrder = 'name';
+    let figOrder = 'theme';
     const figSearch = board.querySelector('.ms-search');
     const redrawFigs = () => { board.querySelector('.ms-figs').innerHTML = figsHtml(figOrder, figSearch.value); };
     board.querySelectorAll('.ms-sort-btn').forEach(b => b.addEventListener('click', () => {
@@ -1016,6 +1021,12 @@
       redrawFigs();
     }));
     figSearch.addEventListener('input', redrawFigs);
+    // Remember which theme sections were opened by hand (not by a search) so they stay open
+    board.querySelector('.ms-figs').addEventListener('toggle', e => {
+      const d = e.target;
+      if (!d.classList || !d.classList.contains('ms-group-wrap') || figSearch.value.trim()) return;
+      if (d.open) openThemes.add(d.dataset.theme); else openThemes.delete(d.dataset.theme);
+    }, true);
     board.querySelectorAll('.ms-tab').forEach(b => b.addEventListener('click', () => {
       board.querySelectorAll('.ms-tab').forEach(x => x.classList.toggle('active', x === b));
       board.querySelectorAll('.ms-pane').forEach(p => { p.style.display = p.dataset.pane === b.dataset.ms ? '' : 'none'; });
