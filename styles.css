@@ -2891,3 +2891,4 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .mf-bought-badge { position: absolute; top: 8px; left: 8px; background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 20px; }
 .mf-sort { margin-left: auto; }
 @media (max-width: 700px) { .mf-sort { margin-left: 0; } }
+.mf-card-insets { font-size: 11px; color: #1d4ed8; background: #eff6ff; border-radius: 6px; padding: 3px 6px; margin-top: 4px; line-height: 1.35; }

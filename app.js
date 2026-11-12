@@ -21,7 +21,8 @@
   let minifigsFranchiseFilter = 'all';  // 'all' | 'Star Wars' | 'Harry Potter' | 'Lord of the Rings'
   let minifigsOwnedFilter = 'all';      // 'all' | 'owned' | 'need'
   let minifigsSearch = '';
-  let minifigsSort = 'franchise';        // 'franchise' | 'value-desc' | 'value-asc' | 'name'
+  let minifigsSort = 'franchise';
+  let minifigsSetFilter = 'all';         // 'all' | 'sets' (came with a set we own) | 'loose'        // 'franchise' | 'value-desc' | 'value-asc' | 'name'
 
   // --- Computed data ---
   const sets = LEGO_DATA.sets.map(s => ({
@@ -577,6 +578,12 @@
       items = items.filter(m => m.franchise === minifigsFranchiseFilter);
     }
 
+    if (minifigsSetFilter === 'sets') {
+      items = items.filter(m => (m.fromSets || []).length);
+    } else if (minifigsSetFilter === 'loose') {
+      items = items.filter(m => !(m.fromSets || []).length);
+    }
+
     if (minifigsOwnedFilter === 'owned') {
       items = items.filter(m => m.owned);
     } else if (minifigsOwnedFilter === 'need') {
@@ -618,6 +625,11 @@
         <div class="mf-stat-label">Total Value</div>
         <div class="mf-stat-value accent">${fmt(totalValue)}</div>
         <div class="mf-stat-sub">Brickify / BrickLink used value</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">📦 From Our Sets</div>
+        <div class="mf-stat-value">${owned.filter(m => (m.fromSets || []).length).length}</div>
+        <div class="mf-stat-sub">${fmt(owned.filter(m => (m.fromSets || []).length).reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0))} of the value · ${fmt(owned.filter(m => !(m.fromSets || []).length).reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0))} loose</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">🛒 Bought Separately</div>
@@ -717,7 +729,8 @@
           : m.source === 'BrickLink'
           ? 'BrickLink'
           : (m.sourceSetName ? `${m.source} · ${m.sourceSetName}` : m.source || 'Unknown');
-        const notesHtml = m.notes ? `<div class="mf-card-notes">${m.notes}</div>` : '';
+        const ourSets = (m.fromSets || []).map(n => { const st = sets.find(x => x.setNumber === n); return st ? `${n} ${st.name}` : n; });
+        const notesHtml = (ourSets.length ? `<div class="mf-card-insets">📦 Also in our set${ourSets.length > 1 ? 's' : ''}: ${ourSets.join(', ')}</div>` : '') + (m.notes ? `<div class="mf-card-notes">${m.notes}</div>` : '');
 
         const imageBlock = imgUrl
           ? `<img class="mf-card-image" src="${imgUrl}" alt="${m.name.replace(/"/g, '&quot;')}"
@@ -1721,6 +1734,13 @@
 
   // Minifigs search
   let mfSearchTimeout;
+  document.getElementById('mfSetFilter').addEventListener('click', (e) => {
+    const btn = e.target.closest('.mf-filter-btn');
+    if (!btn) return;
+    minifigsSetFilter = btn.dataset.fromsets;
+    document.querySelectorAll('#mfSetFilter .mf-filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+    renderMinifigsGrid();
+  });
   document.getElementById('minifigsSortSelect').addEventListener('change', (e) => {
     minifigsSort = e.target.value;
     renderMinifigsGrid();
