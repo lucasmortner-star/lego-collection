@@ -831,17 +831,24 @@
 
   function renderMissing() {
     const withMissing = sets.filter(s => (s.missing || []).length);
-    const total = withMissing.reduce((a, s) => a + s.missing.reduce((b, m) => b + (m.qty || 1), 0), 0);
-    // Shopping list: the same piece in the same colour across sets is merged
+    // Loose minifigures (not part of a set we own) with missing parts, from missing-minifigs-data.js
+    const looseFigs = (typeof MISSING_MINIFIGS !== 'undefined' ? MISSING_MINIFIGS : []).filter(f => (f.missing || []).length);
+    const count = list => list.reduce((b, m) => b + (m.qty || 1), 0);
+    const setPieces = withMissing.reduce((a, s) => a + count(s.missing), 0);
+    const figPieces = looseFigs.reduce((a, f) => a + count(f.missing), 0);
+    const total = setPieces + figPieces;
+    // Shopping list: the same piece in the same colour is merged across sets and minifigures
     const shop = {};
-    withMissing.forEach(s => s.missing.forEach(m => {
-      const id = m.element || m.part || m.name;
-      const key = id + '|' + (m.color || '');
+    const addToShop = (m, label) => {
+      const key = m.part && m.colorId != null ? m.part + '|' + m.colorId : (m.element || m.part || m.name) + '|' + (m.color || '');
       if (!shop[key]) shop[key] = { m, qty: 0, sets: [] };
       shop[key].qty += m.qty || 1;
-      if (!shop[key].sets.includes(s.name)) shop[key].sets.push(s.name);
-    }));
+      if (!shop[key].sets.includes(label)) shop[key].sets.push(label);
+    };
+    withMissing.forEach(s => s.missing.forEach(m => addToShop(m, s.name)));
+    looseFigs.forEach(f => f.missing.forEach(m => addToShop(m, f.name)));
     const shopList = Object.values(shop).sort((a, b) => (a.m.color || '').localeCompare(b.m.color || '') || (a.m.name || '').localeCompare(b.m.name || ''));
+    const buyable = shopList.filter(x => x.m.part && x.m.colorId != null);
     document.getElementById('msStats').innerHTML = `
       <div class="mf-stat-card">
         <div class="mf-stat-label">Pieces Missing</div>
@@ -851,19 +858,19 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Sets Affected</div>
         <div class="mf-stat-value">${withMissing.length}</div>
-        <div class="mf-stat-sub">of ${sets.length} sets</div>
+        <div class="mf-stat-sub">${setPieces} pieces, of ${sets.length} sets</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Most Missing</div>
-        <div class="mf-stat-value">${withMissing.length ? Math.max(...withMissing.map(s => s.missing.reduce((b, m) => b + (m.qty || 1), 0))) : 0}</div>
-        <div class="mf-stat-sub">${withMissing.length ? withMissing.slice().sort((a, b) => b.missing.reduce((c, m) => c + (m.qty || 1), 0) - a.missing.reduce((c, m) => c + (m.qty || 1), 0))[0].name : ''}</div>
+        <div class="mf-stat-label">Loose Minifigs</div>
+        <div class="mf-stat-value">${looseFigs.length}</div>
+        <div class="mf-stat-sub">${figPieces} parts missing</div>
       </div>`;
-    if (!withMissing.length) {
+    if (!withMissing.length && !looseFigs.length) {
       document.getElementById('msBoard').innerHTML = '<p class="tb-empty">No missing pieces logged. 🎉</p>';
       return;
     }
     const bySet = withMissing.slice().sort((a, b) => a.name.localeCompare(b.name)).map(s => {
-      const n = s.missing.reduce((b, m) => b + (m.qty || 1), 0);
+      const n = count(s.missing);
       const img = (String(s.setNumber).match(/^\d+/) || [''])[0];
       return `<section class="ms-set">
         <div class="ms-set-head ph-clickable" data-set="${s.setNumber}">
@@ -873,36 +880,66 @@
         <div class="mp-grid">${s.missing.map(missingCardHtml).join('')}</div>
       </section>`;
     }).join('');
+    const byFig = looseFigs.map(f => {
+      const n = count(f.missing);
+      const figUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?M=${encodeURIComponent(f.id)}`;
+      return `<section class="ms-set">
+        <div class="ms-set-head">
+          <img src="https://img.bricklink.com/ItemImage/MN/0/${encodeURIComponent(f.id)}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+          <div><div class="ms-set-name">${f.name}</div><div class="tb-meta"><a href="${figUrl}" target="_blank" rel="noopener">${f.id}</a>${f.copies > 1 ? ` &middot; ${f.copies} copies` : ''} &middot; ${n} missing${f.from ? ` &middot; ${f.from}` : ''}</div></div>
+        </div>
+        <div class="mp-grid">${f.missing.map(missingCardHtml).join('')}</div>
+      </section>`;
+    }).join('');
     const rows = shopList.map(x => {
-      const id = x.m.element || x.m.part || '';
-      const link = x.m.element
-        ? `https://brickset.com/parts/${encodeURIComponent(x.m.element)}`
-        : x.m.part ? `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${encodeURIComponent(x.m.part)}` : '';
+      const id = x.m.part || x.m.element || '';
+      const link = x.m.part ? bricklinkPartUrl(x.m)
+        : x.m.element ? `https://brickset.com/parts/${encodeURIComponent(x.m.element)}` : '';
       return `<tr><td class="ms-qty">${x.qty}</td><td>${x.m.name || 'Part'}</td><td>${x.m.color || ''}</td>
         <td>${link ? `<a href="${link}" target="_blank" rel="noopener">${id}</a>` : id}</td><td class="ms-sets">${x.sets.join(', ')}</td></tr>`;
     }).join('');
-    const text = shopList.map(x => `${x.qty}x ${x.m.color || ''} ${x.m.name || ''} (${x.m.element ? 'element ' + x.m.element : 'part ' + (x.m.part || '?')}) - ${x.sets.join(', ')}`).join('\n');
+    const text = shopList.map(x => `${x.qty}x ${x.m.color || ''} ${x.m.name || ''} (${x.m.part ? 'BrickLink ' + x.m.part : 'element ' + (x.m.element || '?')}) - ${x.sets.join(', ')}`).join('\n');
+    // BrickLink wanted list (Wanted > Upload) so everything can be bought in one go
+    const esc = v => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const wantedXml = '<INVENTORY>\n' + buyable.map(x =>
+      `<ITEM><ITEMTYPE>P</ITEMTYPE><ITEMID>${esc(x.m.part)}</ITEMID><COLOR>${x.m.colorId}</COLOR><MINQTY>${x.qty}</MINQTY><REMARKS>${esc(x.sets.join(', ').slice(0, 250))}</REMARKS><NOTIFY>N</NOTIFY></ITEM>`
+    ).join('\n') + '\n</INVENTORY>';
     document.getElementById('msBoard').innerHTML = `
       <div class="ms-tabs">
         <button class="ms-tab active" data-ms="sets">By set</button>
+        ${looseFigs.length ? '<button class="ms-tab" data-ms="figs">Loose minifigs</button>' : ''}
         <button class="ms-tab" data-ms="shop">Shopping list</button>
       </div>
-      <div class="ms-pane" data-pane="sets">${bySet}</div>
+      <div class="ms-pane" data-pane="sets">${bySet || '<p class="tb-empty">No missing pieces logged for sets.</p>'}</div>
+      <div class="ms-pane" data-pane="figs" style="display:none">
+        <p class="ms-intro">Minifigures we have on their own (not from a set we own) that are missing parts. Tap a part's number or "Buy on BrickLink" to see it for sale in the right colour.</p>
+        ${byFig}
+      </div>
       <div class="ms-pane" data-pane="shop" style="display:none">
-        <div class="ms-shop-head"><p>Every missing piece in one list. The same piece in the same colour is combined across sets.</p>
-          <button class="ms-copy" type="button">Copy list</button></div>
+        <div class="ms-shop-head"><p>Every missing piece in one list. The same piece in the same colour is combined.</p>
+          <div class="ms-actions"><button class="ms-copy" type="button">Copy list</button>
+          ${buyable.length ? `<button class="ms-copy ms-wanted" type="button" title="Upload on BrickLink: Want > Upload, then Buy All">BrickLink wanted list (${buyable.length})</button>` : ''}</div></div>
         <div class="table-container"><table class="ms-table"><thead><tr><th>Qty</th><th>Piece</th><th>Colour</th><th>Part / element</th><th>Needed for</th></tr></thead><tbody>${rows}</tbody></table></div>
+        ${buyable.length ? '<p class="ms-intro">To buy everything at once: download the wanted list, then on BrickLink go to Want &rarr; Upload, open the file, and use "Buy All" to find shops that have the pieces.</p>' : ''}
       </div>`;
     const board = document.getElementById('msBoard');
     board.querySelectorAll('.ms-tab').forEach(b => b.addEventListener('click', () => {
       board.querySelectorAll('.ms-tab').forEach(x => x.classList.toggle('active', x === b));
       board.querySelectorAll('.ms-pane').forEach(p => { p.style.display = p.dataset.pane === b.dataset.ms ? '' : 'none'; });
     }));
-    board.querySelector('.ms-copy').addEventListener('click', e => {
+    board.querySelector('.ms-copy:not(.ms-wanted)').addEventListener('click', e => {
       const btn = e.currentTarget;
       const done = () => { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy list'; }, 1500); };
       if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => window.prompt('Copy this list:', text));
       else window.prompt('Copy this list:', text);
+    });
+    const wantedBtn = board.querySelector('.ms-wanted');
+    if (wantedBtn) wantedBtn.addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([wantedXml], { type: 'text/xml' }));
+      a.download = 'missing-pieces-wanted-list.xml';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     });
   }
 
@@ -1253,14 +1290,27 @@
     <div class="ph-picker"></div>`;
   }
 
+  // BrickLink page for a part, opened on the "for sale" tab in the right colour when we know it
+  function bricklinkPartUrl(m) {
+    if (!m.part) return '';
+    const p = encodeURIComponent(m.part);
+    return m.colorId != null
+      ? `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${p}&idColor=${m.colorId}#T=S&C=${m.colorId}`
+      : `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${p}`;
+  }
+
   function missingCardHtml(m) {
-      const part = m.element
-        ? `<a href="https://brickset.com/parts/${encodeURIComponent(m.element)}" target="_blank" rel="noopener">${m.element}</a>`
-        : m.part
-          ? `<a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=${encodeURIComponent(m.part)}" target="_blank" rel="noopener">${m.part}</a>`
-          : '';
-      const desc = [m.name, m.color && `(${m.color})`].filter(Boolean).join(' ');
-      const src = m.img || (m.element ? `https://images.brickset.com/parts/${encodeURIComponent(m.element)}.jpg` : '');
+      const blUrl = bricklinkPartUrl(m);
+      const part = m.part && m.colorId != null
+        ? `<a href="${blUrl}" target="_blank" rel="noopener">${m.part}</a>`
+        : m.element
+          ? `<a href="https://brickset.com/parts/${encodeURIComponent(m.element)}" target="_blank" rel="noopener">${m.element}</a>`
+          : m.part
+            ? `<a href="${blUrl}" target="_blank" rel="noopener">${m.part}</a>`
+            : '';
+      const src = m.img
+        || (m.part && m.colorId != null ? `https://img.bricklink.com/ItemImage/PN/${m.colorId}/${encodeURIComponent(m.part)}.png` : '')
+        || (m.element ? `https://images.brickset.com/parts/${encodeURIComponent(m.element)}.jpg` : '');
       const img = src ? `<img src="${src}" alt="" loading="lazy">` : '<div class="mp-noimg">?</div>';
       return `<div class="mp-card">
         <span class="mp-qty">${m.qty || 1}&times;</span>
@@ -1268,6 +1318,7 @@
         <div class="mp-name">${m.name || 'Part'}</div>
         <div class="mp-meta">${m.color || ''}${part ? ` &middot; ${part}` : ''}</div>
         ${m.note ? `<div class="mp-note">${m.note}</div>` : ''}
+        ${m.part && m.colorId != null ? `<a class="mp-buy" href="${blUrl}" target="_blank" rel="noopener">Buy on BrickLink</a>` : ''}
       </div>`;
   }
 
