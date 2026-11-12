@@ -2888,3 +2888,4 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .ms-intro { color: var(--text-muted); font-size: 13px; margin: 0 0 12px; }
 .ms-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 .ms-wanted { background: #0057B8; border-color: #0057B8; }
+.mf-bought-badge { position: absolute; top: 8px; left: 8px; background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 20px; }

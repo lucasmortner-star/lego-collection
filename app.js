@@ -570,7 +570,9 @@
   function getFilteredMinifigs() {
     let items = (MINIFIGS_DATA && MINIFIGS_DATA.minifigs) || [];
 
-    if (minifigsFranchiseFilter !== 'all') {
+    if (minifigsFranchiseFilter === '__bought') {
+      items = items.filter(m => m.purchased);
+    } else if (minifigsFranchiseFilter !== 'all') {
       items = items.filter(m => m.franchise === minifigsFranchiseFilter);
     }
 
@@ -615,6 +617,11 @@
         <div class="mf-stat-label">Total Value</div>
         <div class="mf-stat-value accent">${fmt(totalValue)}</div>
         <div class="mf-stat-sub">Brickify / BrickLink used value</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">🛒 Bought Separately</div>
+        <div class="mf-stat-value">${owned.filter(m => m.purchased).length}</div>
+        <div class="mf-stat-sub">${fmt(owned.filter(m => m.purchased).reduce((a, m) => a + (m.purchased.paid || 0), 0))} paid, not from sets</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">⭐ Star Wars</div>
@@ -700,8 +707,10 @@
         const rarityClass = (m.rarity || 'Common').toLowerCase().replace(/[^a-z]/g, '');
         const ownedClass = m.owned ? 'owned' : 'need';
         const qtyBadge = (m.qty && m.qty > 1) ? `<span class="mf-qty-badge">×${m.qty}</span>` : '';
-        const ownedBadge = '';
-        const sourceLabel = m.source === 'BrickLink'
+        const ownedBadge = m.purchased ? '<span class="mf-bought-badge" title="Bought on its own, not from a set">🛒 Bought</span>' : '';
+        const sourceLabel = m.purchased
+          ? `Bought on ${m.purchased.from || 'BrickLink'}${m.purchased.bought ? ' · ' + fmtDay(parseDay(m.purchased.bought)) : ''}${typeof m.purchased.paid === 'number' ? ' · paid ' + fmtFull(m.purchased.paid) : ''}`
+          : m.source === 'BrickLink'
           ? 'BrickLink'
           : (m.sourceSetName ? `${m.source} · ${m.sourceSetName}` : m.source || 'Unknown');
         const notesHtml = m.notes ? `<div class="mf-card-notes">${m.notes}</div>` : '';
@@ -724,7 +733,7 @@
               <span class="mf-rarity ${rarityClass}">${m.rarity || 'Common'}</span>
               <span class="mf-era">${m.era || ''}</span>
             </div>
-            <div class="mf-card-source">From: ${sourceLabel}${m.year ? ` · ${m.year}` : ''}</div>
+            <div class="mf-card-source">${m.purchased ? '' : 'From: '}${sourceLabel}${!m.purchased && m.year ? ` · ${m.year}` : ''}</div>
             ${notesHtml}
             <div class="mf-card-footer">
               <span class="mf-value">${fmt(m.currentValue || 0)}</span>
