@@ -22,7 +22,10 @@
   let minifigsOwnedFilter = 'all';      // 'all' | 'owned' | 'need'
   let minifigsSearch = '';
   let minifigsSort = 'franchise';
-  let minifigsSetFilter = 'all';         // 'all' | 'sets' (came with a set we own) | 'loose'        // 'franchise' | 'value-desc' | 'value-asc' | 'name'
+  let minifigsSetFilter = 'all';         // 'all' | 'sets' (came with a set we own) | 'loose'
+  // The cabinet figs (minifigs-data.js) plus every fig that came in a set we own (set-minifigs-data.js)
+  const ALL_MINIFIGS = ((typeof MINIFIGS_DATA !== 'undefined' && MINIFIGS_DATA.minifigs) || [])
+    .concat(typeof SET_MINIFIGS !== 'undefined' ? SET_MINIFIGS : []);
 
   // --- Computed data ---
   const sets = LEGO_DATA.sets.map(s => ({
@@ -570,7 +573,7 @@
   }
 
   function getFilteredMinifigs() {
-    let items = (MINIFIGS_DATA && MINIFIGS_DATA.minifigs) || [];
+    let items = ALL_MINIFIGS;
 
     if (minifigsFranchiseFilter === '__bought') {
       items = items.filter(m => m.purchased);
@@ -606,10 +609,13 @@
 
   function renderMinifigsStats() {
     const el = document.getElementById('mfStats');
-    const all = (MINIFIGS_DATA && MINIFIGS_DATA.minifigs) || [];
+    const all = ALL_MINIFIGS;
     const owned = all.filter(m => m.owned);
     const totalOwnedCopies = owned.reduce((a, m) => a + (m.qty || 1), 0);
     const totalValue = owned.reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0);
+    // Figs that came in a set we own are already counted in that set's value
+    const inSetValue = owned.filter(m => (m.fromSets || []).length).reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0);
+    const looseValue = totalValue - inSetValue;
     const swCount   = owned.filter(m => m.franchise === 'Star Wars').length;
     const hpCount   = owned.filter(m => m.franchise === 'Harry Potter').length;
     const lotrCount = owned.filter(m => m.franchise === 'Lord of the Rings').length;
@@ -619,17 +625,17 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Minifigs in Collection</div>
         <div class="mf-stat-value">${owned.length}</div>
-        <div class="mf-stat-sub">${totalOwnedCopies} total figs (incl. duplicates)</div>
+        <div class="mf-stat-sub">${totalOwnedCopies} total figs, including the ones that came in our sets</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Total Value</div>
         <div class="mf-stat-value accent">${fmt(totalValue)}</div>
-        <div class="mf-stat-sub">Brickify / BrickLink used value</div>
+        <div class="mf-stat-sub">${fmt(inSetValue)} already in set values · ${fmt(looseValue)} loose figs</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">📦 From Our Sets</div>
         <div class="mf-stat-value">${owned.filter(m => (m.fromSets || []).length).length}</div>
-        <div class="mf-stat-sub">${fmt(owned.filter(m => (m.fromSets || []).length).reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0))} of the value · ${fmt(owned.filter(m => !(m.fromSets || []).length).reduce((a, m) => a + (m.currentValue || 0) * (m.qty || 1), 0))} loose</div>
+        <div class="mf-stat-sub">worth ${fmt(inSetValue)}, counted in the set values</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">🛒 Bought Separately</div>
@@ -649,7 +655,7 @@
         <div class="mf-stat-value">${lotrCount}</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">🥷 Ninjago · Minecraft · Movie</div>
+        <div class="mf-stat-label">🧩 Other Themes</div>
         <div class="mf-stat-value">${otherCount}</div>
       </div>
     `;
@@ -658,7 +664,7 @@
   function renderMinifigsGrid() {
     const grid = document.getElementById('minifigsGrid');
     const empty = document.getElementById('minifigsEmpty');
-    const all = (MINIFIGS_DATA && MINIFIGS_DATA.minifigs) || [];
+    const all = ALL_MINIFIGS;
 
     if (all.length === 0) {
       grid.style.display = 'none';
@@ -684,6 +690,10 @@
       'Ninjago':           { label: 'Ninjago',           icon: '🥷', color: '#D7261E', order: 4 },
       'Minecraft':         { label: 'Minecraft',         icon: '⛏️', color: '#5B8731', order: 5 },
       'The LEGO Movie':    { label: 'The LEGO Movie',    icon: '🎬', color: '#F5C518', order: 6 },
+      'Marvel':            { label: 'Marvel',            icon: '🦸', color: '#E23636', order: 7 },
+      'DC':                { label: 'DC',                icon: '🦇', color: '#0476F2', order: 8 },
+      'City':              { label: 'City & Town',       icon: '🏙️', color: '#1E88E5', order: 9 },
+      'Castle & Other':    { label: 'Castle, Pirates & Other', icon: '🏰', color: '#8B6914', order: 10 },
       'Other':             { label: 'Other',             icon: '⚪', color: '#888',    order: 99 },
     };
 
@@ -724,13 +734,16 @@
         const ownedClass = m.owned ? 'owned' : 'need';
         const qtyBadge = (m.qty && m.qty > 1) ? `<span class="mf-qty-badge">×${m.qty}</span>` : '';
         const ownedBadge = m.purchased ? '<span class="mf-bought-badge" title="Bought on its own, not from a set">🛒 Bought</span>' : '';
-        const sourceLabel = m.purchased
+        const setLabel = (m.fromSets || []).map(n => { const st = sets.find(x => x.setNumber === n); return st ? `${n} ${st.name}` : n; }).join(', ');
+        const sourceLabel = m.inSet
+          ? `Came in ${setLabel}`
+          : m.purchased
           ? `Bought on ${m.purchased.from || 'BrickLink'}${m.purchased.bought ? ' · ' + fmtDay(parseDay(m.purchased.bought)) : ''}${typeof m.purchased.paid === 'number' ? ' · paid ' + fmtFull(m.purchased.paid) : ''}`
           : m.source === 'BrickLink'
           ? 'BrickLink'
           : (m.sourceSetName ? `${m.source} · ${m.sourceSetName}` : m.source || 'Unknown');
         const ourSets = (m.fromSets || []).map(n => { const st = sets.find(x => x.setNumber === n); return st ? `${n} ${st.name}` : n; });
-        const notesHtml = (ourSets.length ? `<div class="mf-card-insets">📦 Also in our set${ourSets.length > 1 ? 's' : ''}: ${ourSets.join(', ')}</div>` : '') + (m.notes ? `<div class="mf-card-notes">${m.notes}</div>` : '');
+        const notesHtml = (ourSets.length && !m.inSet ? `<div class="mf-card-insets">📦 Also in our set${ourSets.length > 1 ? 's' : ''}: ${ourSets.join(', ')}</div>` : '') + (m.notes ? `<div class="mf-card-notes">${m.notes}</div>` : '');
 
         const imageBlock = imgUrl
           ? `<img class="mf-card-image" src="${imgUrl}" alt="${m.name.replace(/"/g, '&quot;')}"
@@ -747,10 +760,10 @@
           <div class="mf-card-body">
             <div class="mf-card-name">${m.name}</div>
             <div class="mf-card-meta">
-              <span class="mf-rarity ${rarityClass}">${m.rarity || 'Common'}</span>
+              ${m.rarity ? `<span class="mf-rarity ${rarityClass}">${m.rarity}</span>` : ''}
               <span class="mf-era">${m.era || ''}</span>
             </div>
-            <div class="mf-card-source">${m.purchased ? '' : 'From: '}${sourceLabel}${!m.purchased && m.year ? ` · ${m.year}` : ''}</div>
+            <div class="mf-card-source">${m.purchased || m.inSet ? '' : 'From: '}${sourceLabel}${!m.purchased && m.year ? ` · ${m.year}` : ''}</div>
             ${notesHtml}
             <div class="mf-card-footer">
               <span class="mf-value">${fmt(m.currentValue || 0)}</span>

@@ -178,7 +178,7 @@
       <div class="mf-hero-content">
         <div class="mf-hero-icon">⚔️</div>
         <h2>Minifig Collection</h2>
-        <p>Star Wars, Harry Potter &amp; Middle-earth — the cabinet display</p>
+        <p>The cabinet display plus every minifigure that came in a set we own</p>
       </div>
     </div>
 
@@ -199,6 +199,10 @@
         <button class="mf-filter-btn" data-franchise="Ninjago">🥷 Ninjago</button>
         <button class="mf-filter-btn" data-franchise="Minecraft">⛏️ Minecraft</button>
         <button class="mf-filter-btn" data-franchise="The LEGO Movie">🎬 LEGO Movie</button>
+        <button class="mf-filter-btn" data-franchise="Marvel">🦸 Marvel</button>
+        <button class="mf-filter-btn" data-franchise="DC">🦇 DC</button>
+        <button class="mf-filter-btn" data-franchise="City">🏙️ City</button>
+        <button class="mf-filter-btn" data-franchise="Castle & Other">🏰 Castle &amp; Other</button>
         <button class="mf-filter-btn" data-franchise="__bought">🛒 Bought separately</button>
       </div>
       <div class="mf-filter-group" id="mfSetFilter">
@@ -290,6 +294,7 @@
 
   <footer class="footer" id="minifigsFooter" style="display:none;">
     <p>Minifig values are approximate BrickLink "Used Avg" prices. Images sourced from BrickLink.</p>
+    <p>Minifigs that came in a set we own are listed for their value, but they're already part of that set's value, so they aren't added to the collection total a second time. A fig logged as missing on its set is left out. Rebuild the list with <code>scripts/build_set_minifigs.py</code>.</p>
     <p>To add minifigs, update minifigs-data.js and re-deploy.</p>
   </footer>
 
@@ -310,6 +315,7 @@
   <script src="data.js"></script>
   <script src="wishlist-data.js"></script>
   <script src="minifigs-data.js"></script>
+  <script src="set-minifigs-data.js"></script>
   <script src="missing-minifigs-data.js"></script>
   <script src="price-history.js"></script>
   <script src="set-dates.js"></script>
