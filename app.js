@@ -957,14 +957,21 @@
         <div class="mp-grid">${f.missing.map(missingCardHtml).join('')}</div>
       </section>`;
     };
-    const figsHtml = order => {
+    // Search matches the minifig's name, ID, theme, set, or any of its missing parts
+    const figMatches = (f, q) => !q || [f.name, f.id, figTheme(f.id), f.from || '']
+      .concat(f.missing.map(m => [m.name, m.color, m.part, m.note].join(' ')))
+      .join(' ').toLowerCase().includes(q);
+    const figsHtml = (order, query) => {
+      const q = (query || '').trim().toLowerCase();
+      const figs = allFigs.filter(f => figMatches(f, q));
+      if (!figs.length) return '<p class="tb-empty">No minifigs match that search.</p>';
       if (order === 'theme') {
         const groups = {};
-        allFigs.forEach(f => { (groups[figTheme(f.id)] = groups[figTheme(f.id)] || []).push(f); });
+        figs.forEach(f => { (groups[figTheme(f.id)] = groups[figTheme(f.id)] || []).push(f); });
         return Object.keys(groups).sort((a, b) => FIG_THEME_ORDER.indexOf(a) - FIG_THEME_ORDER.indexOf(b)).map(t =>
           `<h3 class="ms-group">${t} <span>${groups[t].length} minifig${groups[t].length === 1 ? '' : 's'}</span></h3>` + groups[t].map(figCard).join('')).join('');
       }
-      const list = order === 'most' ? allFigs.slice().sort((a, b) => count(b.missing) - count(a.missing) || a.name.localeCompare(b.name)) : allFigs;
+      const list = order === 'most' ? figs.slice().sort((a, b) => count(b.missing) - count(a.missing) || a.name.localeCompare(b.name)) : figs;
       return list.map(figCard).join('');
     };
     const rows = shopList.map(x => {
@@ -989,7 +996,7 @@
       <div class="ms-pane" data-pane="sets">${bySet || '<p class="tb-empty">No missing pieces logged for sets.</p>'}</div>
       <div class="ms-pane" data-pane="figs" style="display:none">
         <p class="ms-intro">Every minifigure that's missing parts. Ones from a set we own are also listed under that set. Tap a part's number or "Buy on BrickLink" to see it for sale in the right colour.</p>
-        <div class="ms-sort">Sort: <button class="ms-sort-btn active" data-order="name">A to Z</button><button class="ms-sort-btn" data-order="theme">By theme</button><button class="ms-sort-btn" data-order="most">Most missing</button></div>
+        <div class="ms-sort">Sort: <button class="ms-sort-btn active" data-order="name">A to Z</button><button class="ms-sort-btn" data-order="theme">By theme</button><button class="ms-sort-btn" data-order="most">Most missing</button><input class="ms-search" type="search" placeholder="Search minifigs or parts…" aria-label="Search minifigs"></div>
         <div class="ms-figs">${figsHtml('name')}</div>
       </div>
       <div class="ms-pane" data-pane="shop" style="display:none">
@@ -1000,10 +1007,15 @@
         ${buyable.length ? '<p class="ms-intro">To buy everything at once: download the wanted list, then on BrickLink go to Want &rarr; Upload, open the file, and use "Buy All" to find shops that have the pieces.</p>' : ''}
       </div>`;
     const board = document.getElementById('msBoard');
+    let figOrder = 'name';
+    const figSearch = board.querySelector('.ms-search');
+    const redrawFigs = () => { board.querySelector('.ms-figs').innerHTML = figsHtml(figOrder, figSearch.value); };
     board.querySelectorAll('.ms-sort-btn').forEach(b => b.addEventListener('click', () => {
       board.querySelectorAll('.ms-sort-btn').forEach(x => x.classList.toggle('active', x === b));
-      board.querySelector('.ms-figs').innerHTML = figsHtml(b.dataset.order);
+      figOrder = b.dataset.order;
+      redrawFigs();
     }));
+    figSearch.addEventListener('input', redrawFigs);
     board.querySelectorAll('.ms-tab').forEach(b => b.addEventListener('click', () => {
       board.querySelectorAll('.ms-tab').forEach(x => x.classList.toggle('active', x === b));
       board.querySelectorAll('.ms-pane').forEach(p => { p.style.display = p.dataset.pane === b.dataset.ms ? '' : 'none'; });

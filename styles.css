@@ -2898,3 +2898,5 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .ms-group { font-size: 18px; margin: 22px 0 10px; }
 .ms-group span { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-left: 6px; }
 .mf-missing-badge { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.ms-search { margin-left: auto; min-width: 0; width: 220px; max-width: 100%; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); padding: 5px 12px; border-radius: 20px; font-size: 13px; }
+@media (max-width: 600px) { .ms-search { margin-left: 0; width: 100%; } }
