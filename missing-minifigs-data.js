@@ -242,4 +242,8 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "30368", colorId: 11, color: "Black", name: "Darth Vader helmet (one piece)" },
     { qty: 1, part: "983", colorId: 1, color: "White", name: "Hand" }
   ] },
+  { id: "sh0187", name: "Carnage", missing: [
+    { qty: 1, part: "48724", colorId: 11, color: "Black", name: "Neck bracket with pin" },
+    { qty: 1, part: "90202", colorId: 11, color: "Black", name: "Technic pin connector, round with 4 clips", note: "Holds his tendrils on the back" }
+  ] },
 ];
