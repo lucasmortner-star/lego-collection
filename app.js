@@ -887,6 +887,18 @@
     withMissing.forEach(s => s.missing.forEach(m => addToShop(m, s.name)));
     looseFigs.forEach(f => f.missing.forEach(m => addToShop(m, f.name)));
     const shopList = Object.values(shop).sort((a, b) => (a.m.color || '').localeCompare(b.m.color || '') || (a.m.name || '').localeCompare(b.m.name || ''));
+    // Every minifig with missing parts: the loose ones, plus the ones logged under a set (parts tagged with fig: "<id>")
+    const figMap = {};
+    withMissing.forEach(s => s.missing.forEach(m => {
+      if (!m.fig) return;
+      if (!figMap[m.fig]) {
+        const name = (m.note || m.fig).replace(/ minifig \(\w+\)$/, '').replace(/ \(the nurse\)$/, '');
+        figMap[m.fig] = { id: m.fig, name, from: `from our set ${s.setNumber} ${s.name}`, missing: [] };
+      }
+      figMap[m.fig].missing.push(m);
+    }));
+    const allFigs = looseFigs.concat(Object.values(figMap)).sort((a, b) => a.name.localeCompare(b.name));
+    const allFigParts = allFigs.reduce((a, f) => a + count(f.missing), 0);
     const buyable = shopList.filter(x => x.m.part && x.m.colorId != null);
     document.getElementById('msStats').innerHTML = `
       <div class="mf-stat-card">
@@ -900,11 +912,11 @@
         <div class="mf-stat-sub">${setPieces} pieces, of ${sets.length} sets</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Loose Minifigs</div>
-        <div class="mf-stat-value">${looseFigs.length}</div>
-        <div class="mf-stat-sub">${figPieces} parts missing</div>
+        <div class="mf-stat-label">Minifigs</div>
+        <div class="mf-stat-value">${allFigs.length}</div>
+        <div class="mf-stat-sub">${allFigParts} parts missing</div>
       </div>`;
-    if (!withMissing.length && !looseFigs.length) {
+    if (!withMissing.length && !allFigs.length) {
       document.getElementById('msBoard').innerHTML = '<p class="tb-empty">No missing pieces logged. 🎉</p>';
       return;
     }
@@ -919,7 +931,7 @@
         <div class="mp-grid">${s.missing.map(missingCardHtml).join('')}</div>
       </section>`;
     }).join('');
-    const byFig = looseFigs.map(f => {
+    const byFig = allFigs.map(f => {
       const n = count(f.missing);
       const figUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?M=${encodeURIComponent(f.id)}`;
       return `<section class="ms-set">
@@ -946,12 +958,12 @@
     document.getElementById('msBoard').innerHTML = `
       <div class="ms-tabs">
         <button class="ms-tab active" data-ms="sets">By set</button>
-        ${looseFigs.length ? '<button class="ms-tab" data-ms="figs">Loose minifigs</button>' : ''}
+        ${allFigs.length ? `<button class="ms-tab" data-ms="figs">Minifigs (${allFigs.length})</button>` : ''}
         <button class="ms-tab" data-ms="shop">Shopping list</button>
       </div>
       <div class="ms-pane" data-pane="sets">${bySet || '<p class="tb-empty">No missing pieces logged for sets.</p>'}</div>
       <div class="ms-pane" data-pane="figs" style="display:none">
-        <p class="ms-intro">Minifigures we have on their own (not from a set we own) that are missing parts. Tap a part's number or "Buy on BrickLink" to see it for sale in the right colour.</p>
+        <p class="ms-intro">Every minifigure that's missing parts, A to Z. Ones from a set we own are also listed under that set. Tap a part's number or "Buy on BrickLink" to see it for sale in the right colour.</p>
         ${byFig}
       </div>
       <div class="ms-pane" data-pane="shop" style="display:none">
