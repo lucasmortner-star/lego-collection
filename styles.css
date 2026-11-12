@@ -2857,3 +2857,27 @@ footer.hogwarts-page a {
 .ms-qty { font-weight: 700; color: var(--accent); }
 .ms-sets { color: var(--text-secondary); font-size: 13px; }
 .tb-tag-maybe { background: #e0f2fe; color: #0369a1; }
+
+/* ---------- Header with six page tabs: keep it within the screen ---------- */
+/* Medium widths: logo + search on the first row, the tabs on their own row below */
+@media (min-width: 901px) and (max-width: 1700px) {
+  .header { padding: 16px 0 12px; }
+  .header-inner {
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "logo controls" "tabs tabs";
+    row-gap: 12px;
+  }
+  .header-inner > .logo-area { grid-area: logo; }
+  .header-inner > .header-controls { grid-area: controls; }
+  .header-inner > .page-toggle { grid-area: tabs; justify-self: center; }
+}
+/* Narrow screens: tabs wrap instead of pushing the page wider than the screen */
+@media (max-width: 900px) {
+  .page-toggle { flex-wrap: wrap; }
+  .page-tab { padding: 8px 14px; }
+}
+@media (max-width: 600px) {
+  .page-toggle { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .page-tab { padding: 8px 6px; font-size: 13px; }
+}
+html, body { max-width: 100%; overflow-x: hidden; }
