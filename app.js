@@ -868,6 +868,19 @@
   // MISSING PIECES PAGE: every set's missing pieces in one place, plus a combined shopping list
   // ===================================================================
 
+  // Theme of a minifig from its BrickLink ID prefix (sh = Super Heroes, split into Marvel and DC)
+  const FIG_THEME_ORDER = ['Star Wars', 'Marvel', 'DC', 'Ninjago', 'Castle', 'Pirates', 'Space', 'Town & City', 'Collectible Minifigures', 'Jurassic World', 'Other'];
+  const DC_FIGS = ['sh0057', 'sh0109', 'sh0211', 'sh0219'];
+  function figTheme(id) {
+    const p = (String(id).match(/^[a-z]+/) || [''])[0];
+    if (p === 'sh') return DC_FIGS.includes(id) ? 'DC' : 'Marvel';
+    if (p === 'coltlnm' || p === 'njo') return 'Ninjago';
+    const map = { sw: 'Star Wars', bat: 'DC', cas: 'Castle', pi: 'Pirates', sp: 'Space', ac: 'Space', col: 'Collectible Minifigures', jw: 'Jurassic World',
+      cty: 'Town & City', twn: 'Town & City', cop: 'Town & City', air: 'Town & City', oct: 'Town & City', hor: 'Town & City', par: 'Town & City',
+      pln: 'Town & City', trn: 'Town & City', gen: 'Town & City', rac: 'Town & City', soc: 'Town & City', bdp: 'Town & City', idea: 'Town & City' };
+    return map[p] || 'Other';
+  }
+
   function renderMissing() {
     const withMissing = sets.filter(s => (s.missing || []).length);
     // Loose minifigures (not part of a set we own) with missing parts, from missing-minifigs-data.js
@@ -931,17 +944,27 @@
         <div class="mp-grid">${s.missing.map(missingCardHtml).join('')}</div>
       </section>`;
     }).join('');
-    const byFig = allFigs.map(f => {
+    const figCard = f => {
       const n = count(f.missing);
       const figUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?M=${encodeURIComponent(f.id)}`;
       return `<section class="ms-set">
         <div class="ms-set-head">
           <img src="https://img.bricklink.com/ItemImage/MN/0/${encodeURIComponent(f.id)}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
-          <div><div class="ms-set-name">${f.name}</div><div class="tb-meta"><a href="${figUrl}" target="_blank" rel="noopener">${f.id}</a>${f.copies > 1 ? ` &middot; ${f.copies} copies` : ''} &middot; ${n} missing${f.from ? ` &middot; ${f.from}` : ''}</div></div>
+          <div><div class="ms-set-name">${f.name}</div><div class="tb-meta"><a href="${figUrl}" target="_blank" rel="noopener">${f.id}</a> &middot; ${figTheme(f.id)}${f.copies > 1 ? ` &middot; ${f.copies} copies` : ''} &middot; ${n} missing${f.from ? ` &middot; ${f.from}` : ''}</div></div>
         </div>
         <div class="mp-grid">${f.missing.map(missingCardHtml).join('')}</div>
       </section>`;
-    }).join('');
+    };
+    const figsHtml = order => {
+      if (order === 'theme') {
+        const groups = {};
+        allFigs.forEach(f => { (groups[figTheme(f.id)] = groups[figTheme(f.id)] || []).push(f); });
+        return Object.keys(groups).sort((a, b) => FIG_THEME_ORDER.indexOf(a) - FIG_THEME_ORDER.indexOf(b)).map(t =>
+          `<h3 class="ms-group">${t} <span>${groups[t].length} minifig${groups[t].length === 1 ? '' : 's'}</span></h3>` + groups[t].map(figCard).join('')).join('');
+      }
+      const list = order === 'most' ? allFigs.slice().sort((a, b) => count(b.missing) - count(a.missing) || a.name.localeCompare(b.name)) : allFigs;
+      return list.map(figCard).join('');
+    };
     const rows = shopList.map(x => {
       const id = x.m.part || x.m.element || '';
       const link = x.m.part ? bricklinkPartUrl(x.m)
@@ -963,8 +986,9 @@
       </div>
       <div class="ms-pane" data-pane="sets">${bySet || '<p class="tb-empty">No missing pieces logged for sets.</p>'}</div>
       <div class="ms-pane" data-pane="figs" style="display:none">
-        <p class="ms-intro">Every minifigure that's missing parts, A to Z. Ones from a set we own are also listed under that set. Tap a part's number or "Buy on BrickLink" to see it for sale in the right colour.</p>
-        ${byFig}
+        <p class="ms-intro">Every minifigure that's missing parts. Ones from a set we own are also listed under that set. Tap a part's number or "Buy on BrickLink" to see it for sale in the right colour.</p>
+        <div class="ms-sort">Sort: <button class="ms-sort-btn active" data-order="name">A to Z</button><button class="ms-sort-btn" data-order="theme">By theme</button><button class="ms-sort-btn" data-order="most">Most missing</button></div>
+        <div class="ms-figs">${figsHtml('name')}</div>
       </div>
       <div class="ms-pane" data-pane="shop" style="display:none">
         <div class="ms-shop-head"><p>Every missing piece in one list. The same piece in the same colour is combined.</p>
@@ -974,6 +998,10 @@
         ${buyable.length ? '<p class="ms-intro">To buy everything at once: download the wanted list, then on BrickLink go to Want &rarr; Upload, open the file, and use "Buy All" to find shops that have the pieces.</p>' : ''}
       </div>`;
     const board = document.getElementById('msBoard');
+    board.querySelectorAll('.ms-sort-btn').forEach(b => b.addEventListener('click', () => {
+      board.querySelectorAll('.ms-sort-btn').forEach(x => x.classList.toggle('active', x === b));
+      board.querySelector('.ms-figs').innerHTML = figsHtml(b.dataset.order);
+    }));
     board.querySelectorAll('.ms-tab').forEach(b => b.addEventListener('click', () => {
       board.querySelectorAll('.ms-tab').forEach(x => x.classList.toggle('active', x === b));
       board.querySelectorAll('.ms-pane').forEach(p => { p.style.display = p.dataset.pane === b.dataset.ms ? '' : 'none'; });

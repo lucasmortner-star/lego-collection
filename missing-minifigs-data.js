@@ -212,4 +212,26 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "3626ap01", colorId: 3, color: "Yellow", name: "Head, standard grin" },
     { qty: 1, part: "3624", colorId: 1, color: "White", name: "Police hat" }
   ] },
+  { id: "sh0033", name: "Loki (green cape)", missing: [
+    { qty: 1, part: "10909", colorId: 115, color: "Pearl Gold", name: "Helmet with large curved horns" }
+  ] },
+  { id: "sh0038", name: "Spider-Man (2 figures)", copies: 2, missing: [
+    { qty: 1, part: "981", colorId: 7, color: "Blue", name: "Arm, left", note: "First Spider-Man (missing both arms)" },
+    { qty: 1, part: "982", colorId: 7, color: "Blue", name: "Arm, right", note: "First Spider-Man (missing both arms)" },
+    { qty: 1, part: "981", colorId: 7, color: "Blue", name: "Arm (left 981, or right 982)", note: "Second Spider-Man, replaces the broken arm" },
+    { qty: 3, part: "983", colorId: 5, color: "Red", name: "Hand", note: "2 for the first Spider-Man, 1 for the second" }
+  ] },
+  { id: "sw0036b", name: "Stormtrooper (black head)", missing: [
+    { qty: 1, part: "3626", colorId: 11, color: "Black", name: "Head, plain" }
+  ] },
+  { id: "sw0541", name: "Clone Trooper (Phase 2)", missing: [
+    { qty: 1, part: "3626pb0817", colorId: 90, color: "Light Nougat", name: "Head, scowl" }
+  ] },
+  { id: "col103", name: "Daredevil (Series 7)", missing: [
+    { qty: 1, part: "3626pb0715", colorId: 3, color: "Yellow", name: "Head, moustache, happy / scared" },
+    { qty: 1, part: "98371", colorId: 150, color: "Medium Nougat", name: "Hair, swept back with forelock" },
+    { qty: 1, part: "2446pb37", colorId: 1, color: "White", name: "Helmet with red star in blue circle" },
+    { qty: 1, part: "2447", colorId: 14, color: "Trans-Dark Blue", name: "Visor (goes on the helmet)" },
+    { qty: 1, part: "522", colorId: 1, color: "White", name: "Cape, cloth" }
+  ] },
 ];

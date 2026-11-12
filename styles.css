@@ -2892,3 +2892,8 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .mf-sort { margin-left: auto; }
 @media (max-width: 700px) { .mf-sort { margin-left: 0; } }
 .mf-card-insets { font-size: 11px; color: #1d4ed8; background: #eff6ff; border-radius: 6px; padding: 3px 6px; margin-top: 4px; line-height: 1.35; }
+.ms-sort { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; color: var(--text-muted); margin: 0 0 14px; }
+.ms-sort-btn { border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary); padding: 4px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+.ms-sort-btn.active { background: var(--text-primary); color: #fff; border-color: var(--text-primary); }
+.ms-group { font-size: 18px; margin: 22px 0 10px; }
+.ms-group span { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-left: 6px; }
