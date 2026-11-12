@@ -246,4 +246,7 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "48724", colorId: 11, color: "Black", name: "Neck bracket with pin" },
     { qty: 1, part: "90202", colorId: 11, color: "Black", name: "Technic pin connector, round with 4 clips", note: "Holds his tendrils on the back" }
   ] },
+  { id: "coltlnm05", name: "Garmadon (Ninjago Movie series)", missing: [
+    { qty: 1, part: "26007", colorId: 11, color: "Black", name: "Conical hat with raised center" }
+  ] },
 ];
