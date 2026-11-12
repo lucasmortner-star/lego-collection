@@ -79,6 +79,7 @@
   function getConditionClass(c) {
     if (c.includes('Built')) return 'built';
     if (c.includes('Building')) return 'building';
+    if (c === 'To Build') return 'to-build';
     if (c.includes('Way')) return 'on-the-way';
     return 'used';
   }
@@ -749,6 +750,77 @@
     return f || `${count}/${total}`;
   }
 
+  // ===================================================================
+  // TO BUILD PAGE: sets in progress, new sets to build, old sets to rebuild, sets on the way
+  // ===================================================================
+
+  function instructionsUrl(s) {
+    if (s.instructionsPdf) return s.instructionsPdf;
+    const n = String(s.setNumber).match(/^\d+/);
+    if (!n) return '';
+    return s.year && s.year < 2002
+      ? `https://lego.brickinstructions.com/en/lego_instructions/set/${n[0]}/Instructions`
+      : `https://www.lego.com/en-us/service/building-instructions/${n[0]}`;
+  }
+
+  function toBuildCard(s) {
+    const n = (String(s.setNumber).match(/^\d+/) || [''])[0];
+    const missing = (s.missing || []).reduce((a, m) => a + (m.qty || 1), 0);
+    const tags = [
+      s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
+      missing ? `<span class="tb-tag tb-tag-missing">${missing} missing</span>` : '',
+      s.builtBy && s.builtBy.length ? `<span class="tb-tag">${s.builtBy.join(' & ')}</span>` : ''
+    ].join('');
+    const instr = instructionsUrl(s);
+    return `<div class="tb-card ph-clickable" data-set="${s.setNumber}">
+      <div class="tb-img"><img src="https://images.brickset.com/sets/images/${n}-1.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div>
+      <div class="tb-body">
+        <div class="tb-name">${s.name}</div>
+        <div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${(s.pieces || 0).toLocaleString()} pcs</div>
+        <div class="tb-tags">${tags}</div>
+        ${instr ? `<a class="tb-link" href="${instr}" target="_blank" rel="noopener">${s.instructionsPdf ? 'Instructions + parts (PDF)' : 'Instructions'} &#8599;</a>` : ''}
+      </div>
+    </div>`;
+  }
+
+  function renderToBuild() {
+    const groups = [
+      { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building') },
+      { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild) },
+      { title: 'Old sets to rebuild', note: 'Taken apart and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild) },
+      { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') }
+    ];
+    const all = groups.reduce((a, g) => a.concat(g.list), []);
+    const pieces = all.reduce((a, s) => a + (s.pieces || 0), 0);
+    const missing = all.reduce((a, s) => a + (s.missing || []).reduce((b, m) => b + (m.qty || 1), 0), 0);
+    document.getElementById('tbStats').innerHTML = `
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Sets To Build</div>
+        <div class="mf-stat-value accent">${all.length}</div>
+        <div class="mf-stat-sub">${groups[0].list.length} in progress</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Pieces Waiting</div>
+        <div class="mf-stat-value">${pieces.toLocaleString()}</div>
+        <div class="mf-stat-sub">across all of them</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Old Sets To Rebuild</div>
+        <div class="mf-stat-value">${all.filter(s => s.rebuild).length}</div>
+        <div class="mf-stat-sub">including ones in progress</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Missing Pieces</div>
+        <div class="mf-stat-value">${missing}</div>
+        <div class="mf-stat-sub">logged on these sets</div>
+      </div>`;
+    document.getElementById('tbBoard').innerHTML = groups.filter(g => g.list.length).map(g => `
+      <section class="tb-group">
+        <div class="tb-group-head"><h3>${g.title} <span>${g.list.length}</span></h3><p>${g.note}</p></div>
+        <div class="tb-grid">${g.list.slice().sort((a, b) => (b.pieces || 0) - (a.pieces || 0)).map(toBuildCard).join('')}</div>
+      </section>`).join('') || '<p class="tb-empty">Nothing to build right now.</p>';
+  }
+
   function renderBuilders() {
     const builders = {};
     sets.forEach(s => {
@@ -1309,12 +1381,14 @@
     document.getElementById('wishlistPage').style.display = page === 'wishlist' ? '' : 'none';
     document.getElementById('minifigsPage').style.display = page === 'minifigs' ? '' : 'none';
     document.getElementById('buildersPage').style.display = page === 'builders' ? '' : 'none';
+    document.getElementById('toBuildPage').style.display = page === 'tobuild' ? '' : 'none';
 
     // Toggle footer visibility
     document.getElementById('collectionFooter').style.display = page === 'collection' ? '' : 'none';
     document.getElementById('wishlistFooter').style.display = page === 'wishlist' ? '' : 'none';
     document.getElementById('minifigsFooter').style.display = page === 'minifigs' ? '' : 'none';
     document.getElementById('buildersFooter').style.display = page === 'builders' ? '' : 'none';
+    document.getElementById('tobuildFooter').style.display = page === 'tobuild' ? '' : 'none';
 
     // Toggle header controls visibility (search/view toggle only for collection)
     document.querySelector('.header-controls').style.display = page === 'collection' ? '' : 'none';
@@ -1328,6 +1402,8 @@
       renderMinifigs();
     } else if (page === 'builders') {
       renderBuilders();
+    } else if (page === 'tobuild') {
+      renderToBuild();
     }
 
     // Scroll to top
@@ -1547,6 +1623,7 @@
 
   // Price history popup: any table row or card with a set number
   document.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
     const el = e.target.closest('.ph-clickable');
     if (el) openPriceModal(el.dataset.set);
   });
