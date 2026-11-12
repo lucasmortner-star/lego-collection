@@ -30,6 +30,7 @@
         <button class="page-tab" data-page="minifigs">⚔️ Minifigs</button>
         <button class="page-tab" data-page="builders">🏆 Builders</button>
         <button class="page-tab" data-page="tobuild">🧱 To Build</button>
+        <button class="page-tab" data-page="missing">🧩 Missing</button>
       </div>
 
       <div class="header-controls">
@@ -243,6 +244,21 @@
     <div id="tbBoard"></div>
   </main>
 
+  <!-- ============================================ -->
+  <!-- MISSING PIECES PAGE                          -->
+  <!-- ============================================ -->
+  <main class="minifigs-page" id="missingPage" style="display:none;">
+    <div class="mf-hero">
+      <div class="mf-hero-content">
+        <div class="mf-hero-icon">🧩</div>
+        <h2>Missing Pieces</h2>
+        <p>Every missing piece across all our sets, in one place</p>
+      </div>
+    </div>
+    <div class="mf-stats" id="msStats"></div>
+    <div id="msBoard"></div>
+  </main>
+
   <!-- FOOTER -->
   <footer class="footer" id="collectionFooter">
     <p>Values are BrickLink's average sold price over the last 6 months, combining new and used complete-set sales (incomplete sets excluded) — the same basis Brickify uses. Brand-new sets with no sales yet are valued at retail.</p>
@@ -270,6 +286,10 @@
   <footer class="footer" id="tobuildFooter" style="display:none;">
     <p>A set shows here when its condition is "Building", "To Build" or "On the Way". Add <code>rebuild: true</code> for an old set that was taken apart and needs putting back together.</p>
     <p>To move a set here, set <code>condition: "To Build"</code> in data.js and re-deploy; set it to "Built/Displayed" when it's done.</p>
+  </footer>
+
+  <footer class="footer" id="missingFooter" style="display:none;">
+    <p>Pieces come from each set's <code>missing</code> list in data.js. Use "Choose missing pieces" in a set's popup to pick them from the parts list, then send the copied list to update the site.</p>
   </footer>
 
   <script src="data.js"></script>

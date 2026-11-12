@@ -821,6 +821,87 @@
       </section>`).join('') || '<p class="tb-empty">Nothing to build right now.</p>';
   }
 
+  // ===================================================================
+  // MISSING PIECES PAGE: every set's missing pieces in one place, plus a combined shopping list
+  // ===================================================================
+
+  function renderMissing() {
+    const withMissing = sets.filter(s => (s.missing || []).length);
+    const total = withMissing.reduce((a, s) => a + s.missing.reduce((b, m) => b + (m.qty || 1), 0), 0);
+    // Shopping list: the same piece in the same colour across sets is merged
+    const shop = {};
+    withMissing.forEach(s => s.missing.forEach(m => {
+      const id = m.element || m.part || m.name;
+      const key = id + '|' + (m.color || '');
+      if (!shop[key]) shop[key] = { m, qty: 0, sets: [] };
+      shop[key].qty += m.qty || 1;
+      if (!shop[key].sets.includes(s.name)) shop[key].sets.push(s.name);
+    }));
+    const shopList = Object.values(shop).sort((a, b) => (a.m.color || '').localeCompare(b.m.color || '') || (a.m.name || '').localeCompare(b.m.name || ''));
+    document.getElementById('msStats').innerHTML = `
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Pieces Missing</div>
+        <div class="mf-stat-value accent">${total}</div>
+        <div class="mf-stat-sub">${shopList.length} different pieces</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Sets Affected</div>
+        <div class="mf-stat-value">${withMissing.length}</div>
+        <div class="mf-stat-sub">of ${sets.length} sets</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Most Missing</div>
+        <div class="mf-stat-value">${withMissing.length ? Math.max(...withMissing.map(s => s.missing.reduce((b, m) => b + (m.qty || 1), 0))) : 0}</div>
+        <div class="mf-stat-sub">${withMissing.length ? withMissing.slice().sort((a, b) => b.missing.reduce((c, m) => c + (m.qty || 1), 0) - a.missing.reduce((c, m) => c + (m.qty || 1), 0))[0].name : ''}</div>
+      </div>`;
+    if (!withMissing.length) {
+      document.getElementById('msBoard').innerHTML = '<p class="tb-empty">No missing pieces logged. 🎉</p>';
+      return;
+    }
+    const bySet = withMissing.slice().sort((a, b) => a.name.localeCompare(b.name)).map(s => {
+      const n = s.missing.reduce((b, m) => b + (m.qty || 1), 0);
+      const img = (String(s.setNumber).match(/^\d+/) || [''])[0];
+      return `<section class="ms-set">
+        <div class="ms-set-head ph-clickable" data-set="${s.setNumber}">
+          <img src="https://images.brickset.com/sets/images/${img}-1.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+          <div><div class="ms-set-name">${s.name}</div><div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${n} missing &middot; ${s.condition}</div></div>
+        </div>
+        <div class="mp-grid">${s.missing.map(missingCardHtml).join('')}</div>
+      </section>`;
+    }).join('');
+    const rows = shopList.map(x => {
+      const id = x.m.element || x.m.part || '';
+      const link = x.m.element
+        ? `https://brickset.com/parts/${encodeURIComponent(x.m.element)}`
+        : x.m.part ? `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${encodeURIComponent(x.m.part)}` : '';
+      return `<tr><td class="ms-qty">${x.qty}</td><td>${x.m.name || 'Part'}</td><td>${x.m.color || ''}</td>
+        <td>${link ? `<a href="${link}" target="_blank" rel="noopener">${id}</a>` : id}</td><td class="ms-sets">${x.sets.join(', ')}</td></tr>`;
+    }).join('');
+    const text = shopList.map(x => `${x.qty}x ${x.m.color || ''} ${x.m.name || ''} (${x.m.element ? 'element ' + x.m.element : 'part ' + (x.m.part || '?')}) - ${x.sets.join(', ')}`).join('\n');
+    document.getElementById('msBoard').innerHTML = `
+      <div class="ms-tabs">
+        <button class="ms-tab active" data-ms="sets">By set</button>
+        <button class="ms-tab" data-ms="shop">Shopping list</button>
+      </div>
+      <div class="ms-pane" data-pane="sets">${bySet}</div>
+      <div class="ms-pane" data-pane="shop" style="display:none">
+        <div class="ms-shop-head"><p>Every missing piece in one list. The same piece in the same colour is combined across sets.</p>
+          <button class="ms-copy" type="button">Copy list</button></div>
+        <div class="table-container"><table class="ms-table"><thead><tr><th>Qty</th><th>Piece</th><th>Colour</th><th>Part / element</th><th>Needed for</th></tr></thead><tbody>${rows}</tbody></table></div>
+      </div>`;
+    const board = document.getElementById('msBoard');
+    board.querySelectorAll('.ms-tab').forEach(b => b.addEventListener('click', () => {
+      board.querySelectorAll('.ms-tab').forEach(x => x.classList.toggle('active', x === b));
+      board.querySelectorAll('.ms-pane').forEach(p => { p.style.display = p.dataset.pane === b.dataset.ms ? '' : 'none'; });
+    }));
+    board.querySelector('.ms-copy').addEventListener('click', e => {
+      const btn = e.currentTarget;
+      const done = () => { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy list'; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => window.prompt('Copy this list:', text));
+      else window.prompt('Copy this list:', text);
+    });
+  }
+
   function renderBuilders() {
     const builders = {};
     sets.forEach(s => {
@@ -1158,7 +1239,16 @@
     const list = Array.isArray(missing) ? missing : [];
     if (!list.length) return '<p class="ph-missing-none">No missing pieces recorded.</p><button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button><div class="ph-picker"></div>';
     const total = list.reduce((a, m) => a + (m.qty || 1), 0);
-    const rows = list.map(m => {
+    const rows = list.map(missingCardHtml).join('');
+    return `<div class="ph-missing">
+      <div class="ph-missing-title">Missing pieces (${total})</div>
+      <div class="mp-grid">${rows}</div>
+    </div>
+    <button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button>
+    <div class="ph-picker"></div>`;
+  }
+
+  function missingCardHtml(m) {
       const part = m.element
         ? `<a href="https://brickset.com/parts/${encodeURIComponent(m.element)}" target="_blank" rel="noopener">${m.element}</a>`
         : m.part
@@ -1174,13 +1264,6 @@
         <div class="mp-meta">${m.color || ''}${part ? ` &middot; ${part}` : ''}</div>
         ${m.note ? `<div class="mp-note">${m.note}</div>` : ''}
       </div>`;
-    }).join('');
-    return `<div class="ph-missing">
-      <div class="ph-missing-title">Missing pieces (${total})</div>
-      <div class="mp-grid">${rows}</div>
-    </div>
-    <button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button>
-    <div class="ph-picker"></div>`;
   }
 
   // ---- Missing-pieces picker: browse the set's parts list (inventories/<set>.json) and mark what's missing.
@@ -1382,6 +1465,7 @@
     document.getElementById('minifigsPage').style.display = page === 'minifigs' ? '' : 'none';
     document.getElementById('buildersPage').style.display = page === 'builders' ? '' : 'none';
     document.getElementById('toBuildPage').style.display = page === 'tobuild' ? '' : 'none';
+    document.getElementById('missingPage').style.display = page === 'missing' ? '' : 'none';
 
     // Toggle footer visibility
     document.getElementById('collectionFooter').style.display = page === 'collection' ? '' : 'none';
@@ -1389,6 +1473,7 @@
     document.getElementById('minifigsFooter').style.display = page === 'minifigs' ? '' : 'none';
     document.getElementById('buildersFooter').style.display = page === 'builders' ? '' : 'none';
     document.getElementById('tobuildFooter').style.display = page === 'tobuild' ? '' : 'none';
+    document.getElementById('missingFooter').style.display = page === 'missing' ? '' : 'none';
 
     // Toggle header controls visibility (search/view toggle only for collection)
     document.querySelector('.header-controls').style.display = page === 'collection' ? '' : 'none';
@@ -1404,6 +1489,8 @@
       renderBuilders();
     } else if (page === 'tobuild') {
       renderToBuild();
+    } else if (page === 'missing') {
+      renderMissing();
     }
 
     // Scroll to top

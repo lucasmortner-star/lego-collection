@@ -2838,3 +2838,21 @@ footer.hogwarts-page a {
 .tb-link:hover { text-decoration: underline; }
 .tb-empty { text-align: center; color: var(--text-muted); padding: 40px 16px; }
 @media (max-width: 480px) { .tb-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .tb-img { height: 110px; } .tb-name { font-size: 13px; } }
+
+/* ---------- Missing Pieces page ---------- */
+.ms-tabs { max-width: 1200px; margin: 0 auto 16px; padding: 0 16px; display: flex; gap: 6px; }
+.ms-tab { border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; }
+.ms-tab.active { background: var(--text-primary); color: #fff; border-color: var(--text-primary); }
+.ms-pane { max-width: 1200px; margin: 0 auto 32px; padding: 0 16px; }
+.ms-set { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 16px; }
+.ms-set-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; cursor: pointer; }
+.ms-set-head img { width: 64px; height: 48px; object-fit: contain; }
+.ms-set-name { font-weight: 600; font-size: 16px; }
+.ms-shop-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.ms-shop-head p { margin: 0; color: var(--text-muted); font-size: 13px; }
+.ms-copy { border: 1px solid var(--accent); background: var(--accent); color: #fff; padding: 6px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; }
+.ms-table { width: 100%; border-collapse: collapse; background: var(--bg-secondary); font-size: 14px; }
+.ms-table th, .ms-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+.ms-table th { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.ms-qty { font-weight: 700; color: var(--accent); }
+.ms-sets { color: var(--text-secondary); font-size: 13px; }
