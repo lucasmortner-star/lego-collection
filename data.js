@@ -277,6 +277,7 @@ const LEGO_DATA = {
   // They show on the To Build page only and don't count in the collection's totals.
   possible: [
     { setNumber: "6060", name: "Knight's Challenge", theme: "Castle", category: "CASTLE / OTHER", year: 1989, pieces: 136, retail: 21.99, condition: "Possible", currentValue: 160, growth: 0.0, valueNew: 1470, valueUsed: 160, rebuild: true, instructionsPdf: "instructions/6060-knights-challenge.pdf", note: "Red & yellow lion horse cover, peasant, crossed-pikes and lion knights found in the bins" },
+    { setNumber: "6856", name: "Planetary Decoder", theme: "Space", category: "CASTLE / OTHER", year: 1996, pieces: 77, retail: 7.99, condition: "Possible", currentValue: 22, growth: 0.0, valueNew: 100, valueUsed: 22, rebuild: true, instructionsPdf: "instructions/6856-planetary-decoder.pdf", note: "Two white 8x6 grille wings (30036) found in the bins" },
   ],
 
   categories: [
