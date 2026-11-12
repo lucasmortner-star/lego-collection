@@ -2897,3 +2897,4 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .ms-sort-btn.active { background: var(--text-primary); color: #fff; border-color: var(--text-primary); }
 .ms-group { font-size: 18px; margin: 22px 0 10px; }
 .ms-group span { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-left: 6px; }
+.mf-missing-badge { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }

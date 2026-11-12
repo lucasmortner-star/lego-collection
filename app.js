@@ -24,6 +24,8 @@
   let minifigsSort = 'franchise';
   let minifigsSetFilter = 'all';         // 'all' | 'sets' (came with a set we own) | 'loose'
   // The cabinet figs (minifigs-data.js) plus every fig that came in a set we own (set-minifigs-data.js)
+  // Minifigs logged with missing parts on a set (missing entries with fig: "<BrickLink id>")
+  const FIGS_MISSING_PARTS = new Set(LEGO_DATA.sets.flatMap(s => (s.missing || []).filter(m => m.fig).map(m => m.fig)));
   const ALL_MINIFIGS = ((typeof MINIFIGS_DATA !== 'undefined' && MINIFIGS_DATA.minifigs) || [])
     .concat(typeof SET_MINIFIGS !== 'undefined' ? SET_MINIFIGS : []);
 
@@ -733,7 +735,7 @@
         const rarityClass = (m.rarity || 'Common').toLowerCase().replace(/[^a-z]/g, '');
         const ownedClass = m.owned ? 'owned' : 'need';
         const qtyBadge = (m.qty && m.qty > 1) ? `<span class="mf-qty-badge">×${m.qty}</span>` : '';
-        const ownedBadge = m.purchased ? '<span class="mf-bought-badge" title="Bought on its own, not from a set">🛒 Bought</span>' : '';
+        const ownedBadge = FIGS_MISSING_PARTS.has(m.id) ? '<span class="mf-bought-badge mf-missing-badge" title="Missing parts, see the Missing page">⚠️ Missing parts</span>' : m.purchased ? '<span class="mf-bought-badge" title="Bought on its own, not from a set">🛒 Bought</span>' : '';
         const setLabel = (m.fromSets || []).map(n => { const st = sets.find(x => x.setNumber === n); return st ? `${n} ${st.name}` : n; }).join(', ');
         const sourceLabel = m.inSet
           ? `Came in ${setLabel}`
