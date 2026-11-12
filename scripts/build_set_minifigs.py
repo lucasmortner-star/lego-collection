@@ -11,8 +11,8 @@ Rules:
 - A fig is counted once per copy of the set we own.
 - Figs already in minifigs-data.js with fromSets (cabinet figs that came from that set)
   are not added again.
-- A fig logged as missing on a set (missing entry whose note mentions "minifigure")
-  is left out.
+- A fig logged as missing on a set is left out: a missing entry with fig: "<BrickLink id>",
+  or one whose note mentions "minifigure" (matched on the note's first word).
 - Value: BrickLink 6-month used average, else current used asking average, else new.
 
     python3 scripts/build_set_minifigs.py bricklink_set_minifigs.json
@@ -41,7 +41,9 @@ def main():
         copies[n] = copies.get(n, 0) + 1
         info.setdefault(n, s)
         for m in s.get("missing") or []:
-            if "minifigure" in (m.get("note") or "").lower():
+            if m.get("fig"):
+                missing_words.setdefault(n, set()).add(m["fig"].lower())
+            elif "minifigure" in (m.get("note") or "").lower():
                 missing_words.setdefault(n, set()).add(m["note"].split()[0].lower())
     # cabinet figs that physically came from one of our sets
     taken = {}
@@ -53,7 +55,7 @@ def main():
         if n not in copies or not isinstance(rows, list):
             continue
         for fid, qty, name, cat in rows:
-            if any(w in name.lower() for w in missing_words.get(n, ())):
+            if any(w in name.lower() or w == fid.lower() for w in missing_words.get(n, ())):
                 continue
             q = qty * copies[n] - taken.get((fid, n), 0)
             if q <= 0:
