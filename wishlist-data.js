@@ -21,7 +21,6 @@ const WISHLIST_DATA = {
     // ===== MARVEL =====
 
     // ===== LORD OF THE RINGS / THE HOBBIT =====
-    { setNumber: "9473", name: "The Mines of Moria", theme: "Lord of the Rings", category: "LOTR", pieces: 776, retail: 596, used: 256, priority: "Medium", notes: "Retired 2013 — BrickEconomy New ~$596, Used ~$256 (Nov 9; BrickLink refresh pending) (was $79.99 MSRP), Fellowship in Balin's Tomb, includes Cave Troll" },
     { setNumber: "79008", name: "Pirate Ship Ambush", theme: "Lord of the Rings", category: "LOTR", pieces: 756, retail: 761, used: 478, priority: "Medium", notes: "Retired 2013 — BrickEconomy New ~$761, Used ~$478 (Nov 9; BrickLink refresh pending) (was $89.99 MSRP), Aragorn vs Corsairs with King of the Dead" },
     { setNumber: "9472", name: "Attack on Weathertop", theme: "Lord of the Rings", category: "LOTR", pieces: 430, retail: 295, used: 211, priority: "Low", notes: "Retired 2012 — BrickEconomy New ~$295, Used ~$211 (Nov 9; BrickLink refresh pending) (was $39.99 MSRP), Frodo, Aragorn vs 3 Ringwraiths" },
     { setNumber: "9476", name: "The Orc Forge", theme: "Lord of the Rings", category: "LOTR", pieces: 363, retail: 355, used: 171, priority: "Low", notes: "Retired 2012 — BrickEconomy New ~$355, Used ~$171 (Nov 9; BrickLink refresh pending) (was $39.99 MSRP), Isengard forge with Saruman, Lurtz" },
