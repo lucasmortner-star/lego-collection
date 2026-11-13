@@ -2913,3 +2913,4 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .ms-table tfoot td { border-top: 2px solid var(--border); }
 /* The site hides tables on phones (the collection uses cards there); keep the shopping list table, scrolling sideways */
 .ms-pane .table-container { display: block !important; overflow-x: auto; }
+.ms-group { flex-wrap: wrap; }

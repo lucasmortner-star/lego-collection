@@ -956,7 +956,7 @@
       document.getElementById('msBoard').innerHTML = '<p class="tb-empty">No missing pieces logged. 🎉</p>';
       return;
     }
-    const bySet = withMissing.slice().sort((a, b) => a.name.localeCompare(b.name)).map(s => {
+    const setCard = s => {
       const n = count(s.missing);
       const img = (String(s.setNumber).match(/^\d+/) || [''])[0];
       return `<section class="ms-set">
@@ -966,7 +966,31 @@
         </div>
         <div class="mp-grid">${s.missing.map(missingCardHtml).join('')}</div>
       </section>`;
-    }).join('');
+    };
+    // By set: grouped by theme in collapsible sections (closed by default, opened by a search)
+    const openSetThemes = new Set();
+    const setMatches = (s, q) => !q || [s.name, s.setNumber, s.theme, s.category]
+      .concat(s.missing.map(m => [m.name, m.color, m.part, m.element, m.note].join(' ')))
+      .join(' ').toLowerCase().includes(q);
+    const setsHtml = query => {
+      const q = (query || '').trim().toLowerCase();
+      const list = withMissing.filter(s => setMatches(s, q));
+      if (!withMissing.length) return '<p class="tb-empty">No missing pieces logged for sets.</p>';
+      if (!list.length) return '<p class="tb-empty">No sets match that search.</p>';
+      const cats = LEGO_DATA.categories || [];
+      const groups = {};
+      list.forEach(s => { (groups[s.category] = groups[s.category] || []).push(s); });
+      const pos = k => { const i = cats.findIndex(c => c.key === k); return i < 0 ? 99 : i; };
+      return Object.keys(groups).sort((a, b) => pos(a) - pos(b)).map(k => {
+        const cat = cats.find(c => c.key === k) || { label: k, icon: '' };
+        const items = groups[k].sort((a, b) => a.name.localeCompare(b.name));
+        const parts = items.reduce((a, s) => a + count(s.missing), 0);
+        return `<details class="ms-group-wrap" data-theme="${k}"${q || openSetThemes.has(k) ? ' open' : ''}>
+          <summary class="ms-group">${cat.icon ? cat.icon + ' ' : ''}${cat.label} <span>${items.length} set${items.length === 1 ? '' : 's'} &middot; ${parts} part${parts === 1 ? '' : 's'}</span></summary>
+          ${items.map(setCard).join('')}
+        </details>`;
+      }).join('');
+    };
     const figCard = f => {
       const n = count(f.missing);
       const figUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?M=${encodeURIComponent(f.id)}`;
@@ -1021,7 +1045,10 @@
         ${allFigs.length ? `<button class="ms-tab" data-ms="figs">Minifigs (${allFigs.length})</button>` : ''}
         <button class="ms-tab" data-ms="shop">Shopping list</button>
       </div>
-      <div class="ms-pane" data-pane="sets">${bySet || '<p class="tb-empty">No missing pieces logged for sets.</p>'}</div>
+      <div class="ms-pane" data-pane="sets">
+        <div class="ms-sort"><input class="ms-search ms-set-search" type="search" placeholder="Search sets or parts…" aria-label="Search sets"></div>
+        <div class="ms-sets-list">${setsHtml('')}</div>
+      </div>
       <div class="ms-pane" data-pane="figs" style="display:none">
         <p class="ms-intro">Every minifigure that's missing parts. Ones from a set we own are also listed under that set. Tap a part's number or "Buy on BrickLink" to see it for sale in the right colour.</p>
         <div class="ms-sort">Sort: <button class="ms-sort-btn active" data-order="theme">By theme</button><button class="ms-sort-btn" data-order="name">A to Z</button><button class="ms-sort-btn" data-order="most">Most missing</button><input class="ms-search" type="search" placeholder="Search minifigs or parts…" aria-label="Search minifigs"></div>
@@ -1038,7 +1065,14 @@
       </div>`;
     const board = document.getElementById('msBoard');
     let figOrder = 'theme';
-    const figSearch = board.querySelector('.ms-search');
+    const figSearch = board.querySelector('[data-pane="figs"] .ms-search');
+    const setSearch = board.querySelector('.ms-set-search');
+    setSearch.addEventListener('input', () => { board.querySelector('.ms-sets-list').innerHTML = setsHtml(setSearch.value); });
+    board.querySelector('.ms-sets-list').addEventListener('toggle', e => {
+      const d = e.target;
+      if (!d.classList || !d.classList.contains('ms-group-wrap') || setSearch.value.trim()) return;
+      if (d.open) openSetThemes.add(d.dataset.theme); else openSetThemes.delete(d.dataset.theme);
+    }, true);
     const redrawFigs = () => { board.querySelector('.ms-figs').innerHTML = figsHtml(figOrder, figSearch.value); };
     board.querySelectorAll('.ms-sort-btn').forEach(b => b.addEventListener('click', () => {
       board.querySelectorAll('.ms-sort-btn').forEach(x => x.classList.toggle('active', x === b));
