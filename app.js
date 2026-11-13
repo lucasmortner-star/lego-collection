@@ -883,6 +883,17 @@
     return map[p] || 'Other';
   }
 
+  // BrickLink colour IDs for pieces logged with a colour name only
+  const BL_COLOR_IDS = { 'White': 1, 'Tan': 2, 'Yellow': 3, 'Orange': 4, 'Red': 5, 'Green': 6, 'Blue': 7, 'Brown': 8, 'Black': 11,
+    'Dark Red': 59, 'Dark Bluish Gray': 85, 'Light Bluish Gray': 86, 'Reddish Brown': 88, 'Light Nougat': 90 };
+  // Ballpark price of one piece (PART_PRICES in part-prices.js, keyed "part|colorId"), or null if unknown
+  function partPrice(m) {
+    if (typeof PART_PRICES === 'undefined' || !m.part) return null;
+    const c = m.colorId != null ? m.colorId : BL_COLOR_IDS[m.color];
+    const v = PART_PRICES[m.part + '|' + c];
+    return typeof v === 'number' ? v : null;
+  }
+
   function renderMissing() {
     const withMissing = sets.filter(s => (s.missing || []).length);
     // Loose minifigures (not part of a set we own) with missing parts, from missing-minifigs-data.js
@@ -915,6 +926,16 @@
     const allFigs = looseFigs.concat(Object.values(figMap)).sort((a, b) => a.name.localeCompare(b.name));
     const allFigParts = allFigs.reduce((a, f) => a + count(f.missing), 0);
     const buyable = shopList.filter(x => x.m.part && x.m.colorId != null);
+    // Ballpark cost from part-prices.js (BrickLink average sold price per piece)
+    const priced = shopList.map(x => ({ x, each: partPrice(x.m) }));
+    const costTotal = priced.reduce((a, p) => a + (p.each != null ? p.each * p.x.qty : 0), 0);
+    const unpricedPieces = priced.filter(p => p.each == null).reduce((a, p) => a + p.x.qty, 0);
+    const costRounded = '~$' + Math.round(costTotal).toLocaleString();
+    const costNote = `<div class="ms-cost">
+        <div><div class="ms-cost-label">Ballpark cost to replace everything</div>
+        <div class="ms-cost-value">${costRounded}</div></div>
+        <p>Based on what each piece has sold for on BrickLink recently${typeof PART_PRICES_DATE !== 'undefined' ? ` (prices checked ${PART_PRICES_DATE})` : ''}. Shipping is extra and adds up when pieces come from several shops.${unpricedPieces ? ` ${unpricedPieces} piece${unpricedPieces === 1 ? ' isn\'t' : 's aren\'t'} priced yet.` : ''}</p>
+      </div>`;
     document.getElementById('msStats').innerHTML = `
       <div class="mf-stat-card">
         <div class="mf-stat-label">Pieces Missing</div>
@@ -983,8 +1004,10 @@
       const id = x.m.part || x.m.element || '';
       const link = x.m.part ? bricklinkPartUrl(x.m)
         : x.m.element ? `https://brickset.com/parts/${encodeURIComponent(x.m.element)}` : '';
+      const each = partPrice(x.m);
       return `<tr><td class="ms-qty">${x.qty}</td><td>${x.m.name || 'Part'}</td><td>${x.m.color || ''}</td>
-        <td>${link ? `<a href="${link}" target="_blank" rel="noopener">${id}</a>` : id}</td><td class="ms-sets">${x.sets.join(', ')}</td></tr>`;
+        <td>${link ? `<a href="${link}" target="_blank" rel="noopener">${id}</a>` : id}</td>
+        <td class="ms-price">${each != null ? fmtFull(each * x.qty) : '<span class="paid-missing">—</span>'}</td><td class="ms-sets">${x.sets.join(', ')}</td></tr>`;
     }).join('');
     const text = shopList.map(x => `${x.qty}x ${x.m.color || ''} ${x.m.name || ''} (${x.m.part ? 'BrickLink ' + x.m.part : 'element ' + (x.m.element || '?')}) - ${x.sets.join(', ')}`).join('\n');
     // BrickLink wanted list (Wanted > Upload) so everything can be bought in one go
@@ -1008,7 +1031,9 @@
         <div class="ms-shop-head"><p>Every missing piece in one list. The same piece in the same colour is combined.</p>
           <div class="ms-actions"><button class="ms-copy" type="button">Copy list</button>
           ${buyable.length ? `<button class="ms-copy ms-wanted" type="button" title="Upload on BrickLink: Want > Upload, then Buy All">BrickLink wanted list (${buyable.length})</button>` : ''}</div></div>
-        <div class="table-container"><table class="ms-table"><thead><tr><th>Qty</th><th>Piece</th><th>Colour</th><th>Part / element</th><th>Needed for</th></tr></thead><tbody>${rows}</tbody></table></div>
+        ${costNote}
+        <div class="table-container"><table class="ms-table"><thead><tr><th>Qty</th><th>Piece</th><th>Colour</th><th>Part / element</th><th>Est. price</th><th>Needed for</th></tr></thead><tbody>${rows}</tbody>
+          <tfoot><tr><td></td><td colspan="3"><strong>Total</strong></td><td class="ms-price"><strong>${costRounded}</strong></td><td></td></tr></tfoot></table></div>
         ${buyable.length ? '<p class="ms-intro">To buy everything at once: download the wanted list, then on BrickLink go to Want &rarr; Upload, open the file, and use "Buy All" to find shops that have the pieces.</p>' : ''}
       </div>`;
     const board = document.getElementById('msBoard');

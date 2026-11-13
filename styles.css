@@ -2905,3 +2905,11 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .mf-missing-badge { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
 .ms-search { margin-left: auto; min-width: 0; width: 220px; max-width: 100%; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); padding: 5px 12px; border-radius: 20px; font-size: 13px; }
 @media (max-width: 600px) { .ms-search { margin-left: 0; width: 100%; } }
+.ms-cost { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px; }
+.ms-cost-label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.ms-cost-value { font-size: 28px; font-weight: 700; color: var(--accent); }
+.ms-cost p { flex: 1; min-width: 220px; margin: 0; font-size: 13px; color: var(--text-secondary); }
+.ms-price { white-space: nowrap; text-align: right; }
+.ms-table tfoot td { border-top: 2px solid var(--border); }
+/* The site hides tables on phones (the collection uses cards there); keep the shopping list table, scrolling sideways */
+.ms-pane .table-container { display: block !important; overflow-x: auto; }
