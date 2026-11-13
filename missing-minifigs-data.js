@@ -256,4 +256,7 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "3626pb1061", colorId: 3, color: "Yellow", name: "Head, female, lopsided grin / scared" },
     { qty: 1, part: "970c00", colorId: 63, color: "Dark Blue", name: "Legs" }
   ] },
+  { id: "air003", name: "Airport worker, classic", missing: [
+    { qty: 1, part: "970c00", colorId: 1, color: "White", name: "Legs", note: "Alex borrowed them for another minifig" }
+  ] },
 ];
