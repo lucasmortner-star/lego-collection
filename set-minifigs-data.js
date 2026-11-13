@@ -455,7 +455,6 @@ const SET_MINIFIGS = [
   {"id": "lor012", "name": "Peregrin Took (Pippin) - Dark Blue Jacket, Olive Green Cape", "franchise": "Lord of the Rings", "source": "Set", "currentValue": 23.78, "owned": true, "qty": 1, "fromSets": ["9473"], "inSet": true},
   {"id": "lor123", "name": "Peregrin Took (Pippin) - Dark Blue Jacket, Reddish Brown Cape", "franchise": "Lord of the Rings", "source": "Set", "currentValue": 23.65, "owned": true, "qty": 1, "fromSets": ["10316"], "inSet": true},
   {"id": "lor149", "name": "Peregrin Took (Pippin) - Dark Green Vest", "franchise": "Lord of the Rings", "source": "Set", "currentValue": 11.68, "owned": true, "qty": 1, "fromSets": ["10354"], "inSet": true},
-  {"id": "lor082", "name": "Radagast the Brown", "franchise": "Lord of the Rings", "source": "Set", "currentValue": 110.78, "owned": true, "qty": 1, "fromSets": ["79014"], "inSet": true},
   {"id": "lor018", "name": "Ringwraith (Nazgûl) - Robe with Buckle", "franchise": "Lord of the Rings", "source": "Set", "currentValue": 32.92, "owned": true, "qty": 2, "fromSets": ["9472"], "inSet": true},
   {"id": "lor120", "name": "Rivendell Elf - Female, Dark Bluish Gray Robe", "franchise": "Lord of the Rings", "source": "Set", "currentValue": 14.34, "owned": true, "qty": 1, "fromSets": ["10316"], "inSet": true},
   {"id": "lor122", "name": "Rivendell Elf - Male, Dark Bluish Gray Shirt and Legs", "franchise": "Lord of the Rings", "source": "Set", "currentValue": 12.73, "owned": true, "qty": 1, "fromSets": ["10316"], "inSet": true},
