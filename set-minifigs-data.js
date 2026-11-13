@@ -719,7 +719,6 @@ const SET_MINIFIGS = [
   {"id": "sw1526", "name": "Colonel Ward - Sand Green Jacket, Reddish Brown Legs", "franchise": "Star Wars", "source": "Set", "currentValue": 8.43, "owned": true, "qty": 1, "fromSets": ["75447"], "inSet": true},
   {"id": "sw1366", "name": "Darth Dev (Darth Devastator) - Cape", "franchise": "Star Wars", "source": "Set", "currentValue": 9.17, "owned": true, "qty": 1, "fromSets": ["75389"], "inSet": true},
   {"id": "sw0808", "name": "Darth Maul - Horns, Printed Legs, Open Mouth", "franchise": "Star Wars", "source": "Set", "currentValue": 7.26, "owned": true, "qty": 1, "fromSets": ["75169"], "inSet": true},
-  {"id": "sw0209", "name": "Darth Vader (Death Star Torso)", "franchise": "Star Wars", "source": "Set", "currentValue": 10.55, "owned": true, "qty": 1, "fromSets": ["10188"], "inSet": true},
   {"id": "sw1106", "name": "Darth Vader - Printed Arms, Spongy Cape, White Head with Smile", "franchise": "Star Wars", "source": "Set", "currentValue": 12.25, "owned": true, "qty": 1, "fromSets": ["75291"], "inSet": true},
   {"id": "sw1273", "name": "Darth Vader - Printed Arms, Traditional Starched Fabric Cape, White Head with Frown", "franchise": "Star Wars", "source": "Set", "currentValue": 6.41, "owned": true, "qty": 1, "fromSets": ["75439"], "inSet": true},
   {"id": "sw1411", "name": "Dedra Meero", "franchise": "Star Wars", "source": "Set", "currentValue": 10.64, "owned": true, "qty": 1, "fromSets": ["75399"], "inSet": true},

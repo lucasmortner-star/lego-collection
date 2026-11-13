@@ -1013,7 +1013,7 @@
     // BrickLink wanted list (Wanted > Upload) so everything can be bought in one go
     const esc = v => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     const wantedXml = '<INVENTORY>\n' + buyable.map(x =>
-      `<ITEM><ITEMTYPE>P</ITEMTYPE><ITEMID>${esc(x.m.part)}</ITEMID><COLOR>${x.m.colorId}</COLOR><MINQTY>${x.qty}</MINQTY><REMARKS>${esc(x.sets.join(', ').slice(0, 250))}</REMARKS><NOTIFY>N</NOTIFY></ITEM>`
+      `<ITEM><ITEMTYPE>${x.m.type === 'M' ? 'M' : 'P'}</ITEMTYPE><ITEMID>${esc(x.m.part)}</ITEMID>${x.m.type === 'M' ? '' : `<COLOR>${x.m.colorId}</COLOR>`}<MINQTY>${x.qty}</MINQTY><REMARKS>${esc(x.sets.join(', ').slice(0, 250))}</REMARKS><NOTIFY>N</NOTIFY></ITEM>`
     ).join('\n') + '\n</INVENTORY>';
     document.getElementById('msBoard').innerHTML = `
       <div class="ms-tabs">
@@ -1423,6 +1423,7 @@
   function bricklinkPartUrl(m) {
     if (!m.part) return '';
     const p = encodeURIComponent(m.part);
+    if (m.type === 'M') return `https://www.bricklink.com/v2/catalog/catalogitem.page?M=${p}#T=S`;  // a whole minifigure
     return m.colorId != null
       ? `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${p}&idColor=${m.colorId}#T=S&C=${m.colorId}`
       : `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${p}`;
@@ -1438,6 +1439,7 @@
             ? `<a href="${blUrl}" target="_blank" rel="noopener">${m.part}</a>`
             : '';
       const src = m.img
+        || (m.type === 'M' ? `https://img.bricklink.com/ItemImage/MN/0/${encodeURIComponent(m.part)}.png` : '')
         || (m.part && m.colorId != null ? `https://img.bricklink.com/ItemImage/PN/${m.colorId}/${encodeURIComponent(m.part)}.png` : '')
         || (m.element ? `https://images.brickset.com/parts/${encodeURIComponent(m.element)}.jpg` : '');
       const img = src ? `<img src="${src}" alt="" loading="lazy">` : '<div class="mp-noimg">?</div>';

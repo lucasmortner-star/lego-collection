@@ -238,9 +238,6 @@ const MISSING_MINIFIGS = [
   { id: "coltlnm05", name: "Garmadon (Ninjago Movie series)", missing: [
     { qty: 1, part: "26007", colorId: 11, color: "Black", name: "Conical hat with raised center" }
   ] },
-  { id: "sw0001c", name: "Battle Droid", missing: [
-    { qty: 1, part: "30378", colorId: 2, color: "Tan", name: "Battle droid head", note: "Same head on every basic battle droid" }
-  ] },
   { id: "cty0430", name: "Mechanic, overalls with tools", missing: [
     { qty: 2, part: "983", colorId: 3, color: "Yellow", name: "Hand" },
     { qty: 1, part: "3626px288", colorId: 3, color: "Yellow", name: "Head, beard and sideburns, open smile" },
