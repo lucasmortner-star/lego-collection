@@ -2914,3 +2914,9 @@ html, body { max-width: 100%; overflow-x: hidden; }
 /* The site hides tables on phones (the collection uses cards there); keep the shopping list table, scrolling sideways */
 .ms-pane .table-container { display: block !important; overflow-x: auto; }
 .ms-group { flex-wrap: wrap; }
+.ms-pieces-wrap { max-width: 1200px; margin: 0 auto 14px; padding: 0 16px; }
+.ms-pieces { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; color: var(--text-muted); }
+.ms-piece-btn { border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary); padding: 4px 11px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+.ms-piece-btn small { color: var(--text-muted); margin-left: 2px; }
+.ms-piece-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.ms-piece-btn.active small { color: rgba(255,255,255,.8); }

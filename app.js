@@ -894,6 +894,24 @@
     return typeof v === 'number' ? v : null;
   }
 
+  // What kind of piece a missing entry is, for the piece-type filter on the Missing Pieces page
+  const PIECE_TYPES = [
+    ['head', 'Heads'], ['hair', 'Hair'], ['headgear', 'Helmets & hats'], ['hand', 'Hands'], ['arm', 'Arms'],
+    ['legs', 'Legs'], ['torso', 'Torsos'], ['gear', 'Capes & accessories'], ['fig', 'Whole minifigs'], ['other', 'Other pieces']];
+  function pieceType(m) {
+    const n = (m.name || '').toLowerCase(), p = String(m.part || '');
+    if (m.type === 'M') return 'fig';
+    if (/\bhair\b/.test(n)) return 'hair';
+    if (/helmet|\bhat\b|\bcap\b|hood|bandana|beanie|kepi|cowl|bandage|visor|plume|crown|tiara|fedora|headgear/.test(n)) return 'headgear';
+    if (/^3626/.test(p) || /\bhead\b/.test(n)) return 'head';
+    if (p === '983' || /\bhands?\b/.test(n)) return 'hand';
+    if (p === '981' || p === '982' || /\barm\b/.test(n)) return 'arm';
+    if (/^97[01]c|^41879/.test(p) || /\blegs\b|skirt/.test(n)) return 'legs';
+    if (/^973/.test(p) || /torso/.test(n)) return 'torso';
+    if (/cape|neck|collar|epaulette|armor|air tanks|backpack|basket|kama|flipper|regulator|whip|mallet|spear|corsèque|sword|connector|minifig tool/.test(n)) return 'gear';
+    return 'other';
+  }
+
   function renderMissing() {
     const withMissing = sets.filter(s => (s.missing || []).length);
     // Loose minifigures (not part of a set we own) with missing parts, from missing-minifigs-data.js
@@ -956,50 +974,56 @@
       document.getElementById('msBoard').innerHTML = '<p class="tb-empty">No missing pieces logged. 🎉</p>';
       return;
     }
+    // Piece-type filter shared by the By set and Minifigs views ('all' = everything)
+    let pieceFilter = 'all';
+    const pick = list => pieceFilter === 'all' ? list : list.filter(m => pieceType(m) === pieceFilter);
     const setCard = s => {
-      const n = count(s.missing);
+      const shown = pick(s.missing);
+      const n = count(shown);
       const img = (String(s.setNumber).match(/^\d+/) || [''])[0];
       return `<section class="ms-set">
         <div class="ms-set-head ph-clickable" data-set="${s.setNumber}">
           <img src="https://images.brickset.com/sets/images/${img}-1.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
           <div><div class="ms-set-name">${s.name}</div><div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${n} missing &middot; ${s.condition}</div></div>
         </div>
-        <div class="mp-grid">${s.missing.map(missingCardHtml).join('')}</div>
+        <div class="mp-grid">${shown.map(missingCardHtml).join('')}</div>
       </section>`;
     };
-    // By set: grouped by theme in collapsible sections (closed by default, opened by a search)
+    // By set: grouped by theme in collapsible sections (closed by default, opened by a search or a piece filter)
     const openSetThemes = new Set();
     const setMatches = (s, q) => !q || [s.name, s.setNumber, s.theme, s.category]
       .concat(s.missing.map(m => [m.name, m.color, m.part, m.element, m.note].join(' ')))
       .join(' ').toLowerCase().includes(q);
     const setsHtml = query => {
       const q = (query || '').trim().toLowerCase();
-      const list = withMissing.filter(s => setMatches(s, q));
+      const list = withMissing.filter(s => setMatches(s, q) && pick(s.missing).length);
       if (!withMissing.length) return '<p class="tb-empty">No missing pieces logged for sets.</p>';
-      if (!list.length) return '<p class="tb-empty">No sets match that search.</p>';
+      if (!list.length) return `<p class="tb-empty">No sets match${q ? ' that search' : ''}${pieceFilter !== 'all' ? ' with that kind of piece missing' : ''}.</p>`;
       const cats = LEGO_DATA.categories || [];
       const groups = {};
       list.forEach(s => { (groups[s.category] = groups[s.category] || []).push(s); });
       const pos = k => { const i = cats.findIndex(c => c.key === k); return i < 0 ? 99 : i; };
+      const autoOpen = q || pieceFilter !== 'all';
       return Object.keys(groups).sort((a, b) => pos(a) - pos(b)).map(k => {
         const cat = cats.find(c => c.key === k) || { label: k, icon: '' };
         const items = groups[k].sort((a, b) => a.name.localeCompare(b.name));
-        const parts = items.reduce((a, s) => a + count(s.missing), 0);
-        return `<details class="ms-group-wrap" data-theme="${k}"${q || openSetThemes.has(k) ? ' open' : ''}>
+        const parts = items.reduce((a, s) => a + count(pick(s.missing)), 0);
+        return `<details class="ms-group-wrap" data-theme="${k}"${autoOpen || openSetThemes.has(k) ? ' open' : ''}>
           <summary class="ms-group">${cat.icon ? cat.icon + ' ' : ''}${cat.label} <span>${items.length} set${items.length === 1 ? '' : 's'} &middot; ${parts} part${parts === 1 ? '' : 's'}</span></summary>
           ${items.map(setCard).join('')}
         </details>`;
       }).join('');
     };
     const figCard = f => {
-      const n = count(f.missing);
+      const shown = pick(f.missing);
+      const n = count(shown);
       const figUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?M=${encodeURIComponent(f.id)}`;
       return `<section class="ms-set">
         <div class="ms-set-head">
           <img src="https://img.bricklink.com/ItemImage/MN/0/${encodeURIComponent(f.id)}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
           <div><div class="ms-set-name">${f.name}</div><div class="tb-meta"><a href="${figUrl}" target="_blank" rel="noopener">${f.id}</a> &middot; ${figTheme(f.id)}${f.copies > 1 ? ` &middot; ${f.copies} copies` : ''} &middot; ${n} missing${f.from ? ` &middot; ${f.from}` : ''}</div></div>
         </div>
-        <div class="mp-grid">${f.missing.map(missingCardHtml).join('')}</div>
+        <div class="mp-grid">${shown.map(missingCardHtml).join('')}</div>
       </section>`;
     };
     // Search matches the minifig's name, ID, theme, set, or any of its missing parts
@@ -1009,21 +1033,28 @@
     const openThemes = new Set();
     const figsHtml = (order, query) => {
       const q = (query || '').trim().toLowerCase();
-      const figs = allFigs.filter(f => figMatches(f, q));
-      if (!figs.length) return '<p class="tb-empty">No minifigs match that search.</p>';
+      const figs = allFigs.filter(f => figMatches(f, q) && pick(f.missing).length);
+      if (!figs.length) return `<p class="tb-empty">No minifigs match${q ? ' that search' : ''}${pieceFilter !== 'all' ? ' with that kind of piece missing' : ''}.</p>`;
       if (order === 'theme') {
-        // Theme sections start collapsed; while searching, sections with matches open up
+        // Theme sections start collapsed; a search or piece filter opens the sections with matches
         const groups = {};
         figs.forEach(f => { (groups[figTheme(f.id)] = groups[figTheme(f.id)] || []).push(f); });
+        const autoOpen = q || pieceFilter !== 'all';
         return Object.keys(groups).sort((a, b) => FIG_THEME_ORDER.indexOf(a) - FIG_THEME_ORDER.indexOf(b)).map(t =>
-          `<details class="ms-group-wrap" data-theme="${t}"${q || openThemes.has(t) ? ' open' : ''}>
-            <summary class="ms-group">${t} <span>${groups[t].length} minifig${groups[t].length === 1 ? '' : 's'} &middot; ${(n => `${n} part${n === 1 ? '' : 's'}`)(groups[t].reduce((a, f) => a + count(f.missing), 0))}</span></summary>
+          `<details class="ms-group-wrap" data-theme="${t}"${autoOpen || openThemes.has(t) ? ' open' : ''}>
+            <summary class="ms-group">${t} <span>${groups[t].length} minifig${groups[t].length === 1 ? '' : 's'} &middot; ${(n => `${n} part${n === 1 ? '' : 's'}`)(groups[t].reduce((a, f) => a + count(pick(f.missing)), 0))}</span></summary>
             ${groups[t].map(figCard).join('')}
           </details>`).join('');
       }
-      const list = order === 'most' ? figs.slice().sort((a, b) => count(b.missing) - count(a.missing) || a.name.localeCompare(b.name)) : figs;
+      const list = order === 'most' ? figs.slice().sort((a, b) => count(pick(b.missing)) - count(pick(a.missing)) || a.name.localeCompare(b.name)) : figs;
       return list.map(figCard).join('');
     };
+    // Piece-type chips, with how many pieces of each kind are missing (sets and loose minifigs, each counted once)
+    const allEntries = withMissing.flatMap(s => s.missing).concat(looseFigs.flatMap(f => f.missing));
+    const typeCount = t => allEntries.filter(m => pieceType(m) === t).reduce((a, m) => a + (m.qty || 1), 0);
+    const pieceChips = `<div class="ms-pieces"><span>Show:</span><button class="ms-piece-btn active" data-piece="all">All pieces</button>${
+      PIECE_TYPES.map(([k, label]) => [k, label, typeCount(k)]).filter(x => x[2]).map(([k, label, n]) =>
+        `<button class="ms-piece-btn" data-piece="${k}">${label} <small>${n}</small></button>`).join('')}</div>`;
     const rows = shopList.map(x => {
       const id = x.m.part || x.m.element || '';
       const link = x.m.part ? bricklinkPartUrl(x.m)
@@ -1045,6 +1076,7 @@
         ${allFigs.length ? `<button class="ms-tab" data-ms="figs">Minifigs (${allFigs.length})</button>` : ''}
         <button class="ms-tab" data-ms="shop">Shopping list</button>
       </div>
+      <div class="ms-pieces-wrap">${pieceChips}</div>
       <div class="ms-pane" data-pane="sets">
         <div class="ms-sort"><input class="ms-search ms-set-search" type="search" placeholder="Search sets or parts…" aria-label="Search sets"></div>
         <div class="ms-sets-list">${setsHtml('')}</div>
@@ -1086,7 +1118,14 @@
       if (!d.classList || !d.classList.contains('ms-group-wrap') || figSearch.value.trim()) return;
       if (d.open) openThemes.add(d.dataset.theme); else openThemes.delete(d.dataset.theme);
     }, true);
+    board.querySelectorAll('.ms-piece-btn').forEach(b => b.addEventListener('click', () => {
+      board.querySelectorAll('.ms-piece-btn').forEach(x => x.classList.toggle('active', x === b));
+      pieceFilter = b.dataset.piece;
+      board.querySelector('.ms-sets-list').innerHTML = setsHtml(setSearch.value);
+      redrawFigs();
+    }));
     board.querySelectorAll('.ms-tab').forEach(b => b.addEventListener('click', () => {
+      board.querySelector('.ms-pieces-wrap').style.display = b.dataset.ms === 'shop' ? 'none' : '';
       board.querySelectorAll('.ms-tab').forEach(x => x.classList.toggle('active', x === b));
       board.querySelectorAll('.ms-pane').forEach(p => { p.style.display = p.dataset.pane === b.dataset.ms ? '' : 'none'; });
     }));
