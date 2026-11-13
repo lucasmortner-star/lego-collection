@@ -615,7 +615,6 @@ const SET_MINIFIGS = [
   {"id": "sh0993", "name": "Storm - White Suit, Long Hair", "franchise": "Marvel", "source": "Set", "currentValue": 14.43, "owned": true, "qty": 1, "fromSets": ["76294"], "inSet": true},
   {"id": "sh1050", "name": "Sue Storm", "franchise": "Marvel", "source": "Set", "currentValue": 9.74, "owned": true, "qty": 1, "fromSets": ["76316"], "inSet": true},
   {"id": "sh0382", "name": "Taserface", "franchise": "Marvel", "source": "Set", "currentValue": 8.26, "owned": true, "qty": 1, "fromSets": ["76079"], "inSet": true},
-  {"id": "sh0504", "name": "Thanos - Large Figure, Dark Blue Outfit, Medium Lavender Arms, Pearl Gold Helmet", "franchise": "Marvel", "source": "Set", "currentValue": 17.72, "owned": true, "qty": 1, "fromSets": ["76107"], "inSet": true},
   {"id": "sh0230", "name": "Thanos - Large Figure, Dark Blue and Pearl Gold Outfit, Arms, and Helmet", "franchise": "Marvel", "source": "Set", "currentValue": 22.56, "owned": true, "qty": 1, "fromSets": ["76049"], "inSet": true},
   {"id": "sh0298", "name": "The Ancient One", "franchise": "Marvel", "source": "Set", "currentValue": 9.37, "owned": true, "qty": 1, "fromSets": ["76060"], "inSet": true},
   {"id": "sh0722", "name": "The Punisher", "franchise": "Marvel", "source": "Set", "currentValue": 42.9, "owned": true, "qty": 1, "fromSets": ["76178"], "inSet": true},
