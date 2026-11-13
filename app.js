@@ -879,7 +879,7 @@
     if (p === 'coltlnm' || p === 'njo') return 'Ninjago';
     const map = { sw: 'Star Wars', bat: 'DC', lor: 'Lord of the Rings', hp: 'Harry Potter', cas: 'Castle', pi: 'Pirates', sp: 'Space', ac: 'Space', col: 'Collectible Minifigures', jw: 'Jurassic World',
       cty: 'Town & City', twn: 'Town & City', cop: 'Town & City', air: 'Town & City', oct: 'Town & City', hor: 'Town & City', par: 'Town & City',
-      pln: 'Town & City', trn: 'Town & City', wtr: 'Town & City', gen: 'Town & City', rac: 'Town & City', soc: 'Town & City', bdp: 'Town & City', idea: 'Town & City' };
+      pln: 'Town & City', trn: 'Town & City', wtr: 'Town & City', hol: 'Town & City', gen: 'Town & City', rac: 'Town & City', soc: 'Town & City', bdp: 'Town & City', idea: 'Town & City' };
     return map[p] || 'Other';
   }
 

@@ -34,9 +34,6 @@ const MISSING_MINIFIGS = [
   { id: "jw101", name: "Dinosaur market stall owner", missing: [
     { qty: 1, part: "90541", colorId: 85, color: "Dark Bluish Gray", name: "Beanie" }
   ] },
-  { id: "air003", name: "Airport worker, classic", missing: [
-    { qty: 1, part: "3626p01", colorId: 3, color: "Yellow", name: "Head, standard grin" }
-  ] },
   { id: "cas553", name: "Peasant, black hood", missing: [
     { qty: 1, part: "4523", colorId: 8, color: "Brown", name: "D-basket" },
     { qty: 2, part: "4505", colorId: 11, color: "Black", name: "Hood, farmer's cowl" }
@@ -48,12 +45,8 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "3626pb0993", colorId: 3, color: "Yellow", name: "Head, female, blue glasses" },
     { qty: 1, part: "13785", colorId: 150, color: "Medium Nougat", name: "Hair, ponytail and fringe" }
   ] },
-  { id: "cty0220a", name: "City woman, gray jacket, magenta scarf", missing: [
-    { qty: 2, part: "983", colorId: 3, color: "Yellow", name: "Hand" }
-  ] },
   { id: "twn076", name: "Horse rider, black suit", missing: [
-    { qty: 1, part: "3626pb0205", colorId: 3, color: "Yellow", name: "Head, female, red lips, wide grin" },
-    { qty: 1, part: "3833", colorId: 11, color: "Black", name: "Construction helmet" }
+    { qty: 1, part: "3626pb0205", colorId: 3, color: "Yellow", name: "Head, female, red lips, wide grin" }
   ] },
   { id: "cas520", name: "King's Knight, broad brim helmet", missing: [
     { qty: 1, part: "30273", colorId: 67, color: "Metallic Silver", name: "Helmet, kettle hat with broad brim" }
@@ -62,7 +55,7 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "3896", colorId: 10, color: "Dark Gray", name: "Helmet with chin guard" }
   ] },
   { id: "cty0471", name: "Construction worker, safety goggles", missing: [
-    { qty: 2, part: "983", colorId: 3, color: "Yellow", name: "Hand" }
+    { qty: 1, part: "983", colorId: 3, color: "Yellow", name: "Hand" }
   ] },
   { id: "gen079", name: "Teen, orange hoodie", missing: [
     { qty: 1, part: "11303", colorId: 63, color: "Dark Blue", name: "Cap with hole on top" }
@@ -73,7 +66,8 @@ const MISSING_MINIFIGS = [
   ] },
   { id: "njo0372", name: "Patty Keys", missing: [
     { qty: 1, part: "3626pb2007", colorId: 3, color: "Yellow", name: "Head, female, scared" },
-    { qty: 1, part: "93217", colorId: 11, color: "Black", name: "Hair, top knot bun" }
+    { qty: 1, part: "93217", colorId: 11, color: "Black", name: "Hair, top knot bun" },
+    { qty: 1, part: "970c85pb19", colorId: 63, color: "Dark Blue", name: "Legs, dark bluish gray with dark blue robe pattern" }
   ] },
   { id: "cop011", name: "Sheriff, black suit", missing: [
     { qty: 1, part: "3626px11", colorId: 3, color: "Yellow", name: "Head, thick moustache" },
@@ -83,8 +77,7 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "99930", colorId: 11, color: "Black", name: "Hair, short combed sideways" }
   ] },
   { id: "col040", name: "Race Car Driver (Series 3)", missing: [
-    { qty: 1, part: "3626pb0510", colorId: 3, color: "Yellow", name: "Head, lopsided grin with teeth" },
-    { qty: 1, part: "62810", colorId: 2, color: "Tan", name: "Hair, short tousled side part" }
+    { qty: 1, part: "3626pb0510", colorId: 3, color: "Yellow", name: "Head, lopsided grin with teeth" }
   ] },
   { id: "cty1126", name: "Police officer, spiked hair", missing: [
     { qty: 1, part: "3626pb2385", colorId: 3, color: "Yellow", name: "Head, lopsided grin" },
@@ -94,11 +87,12 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "41334", colorId: 11, color: "Black", name: "Knit cap" }
   ] },
   { id: "col086", name: "Flamenco Dancer (Series 6)", missing: [
-    { qty: 1, part: "3678bpb040", colorId: 5, color: "Red", name: "Skirt (slope 2x2x2), flamenco ruffles" },
     { qty: 1, part: "3626pb0658", colorId: 3, color: "Yellow", name: "Head, female, red lips, beauty mark" }
   ] },
   { id: "twn259", name: "Press reporter", missing: [
-    { qty: 1, part: "87990", colorId: 103, color: "Bright Light Yellow", name: "Hair, ponytail with side fringe" }
+    { qty: 1, part: "87990", colorId: 103, color: "Bright Light Yellow", name: "Hair, ponytail with side fringe" },
+    { qty: 1, part: "981", colorId: 5, color: "Red", name: "Arm (left 981, or right 982)" },
+    { qty: 1, part: "983", colorId: 3, color: "Yellow", name: "Hand" }
   ] },
   { id: "sp036", name: "Space Police I officer", missing: [
     { qty: 1, part: "970c01", colorId: 11, color: "Black", name: "Legs, white with black hips" },
@@ -175,8 +169,7 @@ const MISSING_MINIFIGS = [
     { qty: 1, part: "3624", colorId: 11, color: "Black", name: "Police hat" }
   ] },
   { id: "hor008", name: "Townsperson, blue stripes", missing: [
-    { qty: 1, part: "970c00", colorId: 7, color: "Blue", name: "Legs" },
-    { qty: 1, part: "4485", colorId: 7, color: "Blue", name: "Cap, long flat bill" }
+    { qty: 1, part: "970c00", colorId: 7, color: "Blue", name: "Legs" }
   ] },
   { id: "par026", name: "Townsperson, blue/green stripes", missing: [
     { qty: 1, part: "970c00", colorId: 1, color: "White", name: "Legs" }
@@ -251,5 +244,16 @@ const MISSING_MINIFIGS = [
   ] },
   { id: "sw0001c", name: "Battle Droid", missing: [
     { qty: 1, part: "30378", colorId: 2, color: "Tan", name: "Battle droid head", note: "Same head on every basic battle droid" }
+  ] },
+  { id: "cty0430", name: "Mechanic, overalls with tools", missing: [
+    { qty: 2, part: "983", colorId: 3, color: "Yellow", name: "Hand" },
+    { qty: 1, part: "3626px288", colorId: 3, color: "Yellow", name: "Head, beard and sideburns, open smile" },
+    { qty: 1, part: "99930", colorId: 85, color: "Dark Bluish Gray", name: "Hair, short combed sideways" }
+  ] },
+  { id: "hol055", name: "Woman, shell pendant shirt, dark blue legs", missing: [
+    { qty: 1, part: "983", colorId: 3, color: "Yellow", name: "Hand" },
+    { qty: 1, part: "87990", colorId: 88, color: "Reddish Brown", name: "Hair, ponytail with side fringe" },
+    { qty: 1, part: "3626pb1061", colorId: 3, color: "Yellow", name: "Head, female, lopsided grin / scared" },
+    { qty: 1, part: "970c00", colorId: 63, color: "Dark Blue", name: "Legs" }
   ] },
 ];
