@@ -729,7 +729,6 @@ const SET_MINIFIGS = [
   {"id": "sw1530", "name": "Dr. Penn Pershing", "franchise": "Star Wars", "source": "Set", "currentValue": 45.86, "owned": true, "qty": 1, "fromSets": ["75459"], "inSet": true},
   {"id": "sw0642s", "name": "Droideka (Destroyer Droid) - Reddish Brown Triangles with Stickers", "franchise": "Star Wars", "source": "Set", "currentValue": 10.4, "owned": true, "qty": 2, "fromSets": ["75092"], "inSet": true},
   {"id": "sw0642", "name": "Droideka (Destroyer Droid) - Reddish Brown Triangles without Stickers", "franchise": "Star Wars", "source": "Set", "currentValue": 6.02, "owned": true, "qty": 2, "fromSets": ["75092"], "inSet": true},
-  {"id": "sw1107", "name": "Emperor Palpatine - Hood Basic, Orange Eyes", "franchise": "Star Wars", "source": "Set", "currentValue": 8.85, "owned": true, "qty": 1, "fromSets": ["75291"], "inSet": true},
   {"id": "sw0210", "name": "Emperor Palpatine - Light Bluish Gray Head, Black Hands", "franchise": "Star Wars", "source": "Set", "currentValue": 12.51, "owned": true, "qty": 1, "fromSets": ["10188"], "inSet": true},
   {"id": "sw0240", "name": "Endor Rebel Commando - Brown Beard, Backpack", "franchise": "Star Wars", "source": "Set", "currentValue": 7.47, "owned": true, "qty": 1, "fromSets": ["8038"], "inSet": true},
   {"id": "sw0367", "name": "Endor Rebel Commando - Dark Tan Vest", "franchise": "Star Wars", "source": "Set", "currentValue": 4.55, "owned": true, "qty": 1, "fromSets": ["10236"], "inSet": true},
