@@ -1193,7 +1193,7 @@
       const pct = loggedPieces ? b.pieces / loggedPieces * 100 : 0;
       const rows = b.sets.sort((x, y) => y.credited - x.credited).map(({ set, credited, share }) => `
         <div class="bd-set">
-          <span class="bd-set-name">${set.name}${share ? ` <span class="bd-share">${share}</span>` : ''}${set.condition === 'Building' ? ' <span class="bd-wip">in progress</span>' : set.condition === 'To Build' ? ' <span class="bd-wip">not started</span>' : ''}</span>
+          <span class="bd-set-name">${set.name}${share ? ` <span class="bd-share">${share}</span>` : ''}${set.condition === 'Building' ? ` <span class="bd-wip">${set.rebuild ? 'being rebuilt' : 'in progress'}</span>` : set.condition === 'To Build' ? ` <span class="bd-wip">${set.rebuild ? 'taken apart' : 'not started'}</span>` : ''}</span>
           <span class="bd-set-pieces">${Math.round(credited).toLocaleString()}</span>
         </div>`).join('');
       return `
