@@ -817,7 +817,7 @@
     ].join('');
     const instr = instructionsUrl(s);
     return `<div class="tb-card ph-clickable" data-set="${s.setNumber}">
-      <div class="tb-img"><img src="https://images.brickset.com/sets/images/${n}-1.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div>
+      <div class="tb-img"><img src="https://images.brickset.com/sets/images/${setCatalogId(s.setNumber) || n + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div>
       <div class="tb-body">
         <div class="tb-name">${s.name}</div>
         <div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${(s.pieces || 0).toLocaleString()} pcs</div>
@@ -983,7 +983,7 @@
       const img = (String(s.setNumber).match(/^\d+/) || [''])[0];
       return `<section class="ms-set">
         <div class="ms-set-head ph-clickable" data-set="${s.setNumber}">
-          <img src="https://images.brickset.com/sets/images/${img}-1.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+          <img src="https://images.brickset.com/sets/images/${setCatalogId(s.setNumber) || img + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
           <div><div class="ms-set-name">${s.name}</div><div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${n} missing &middot; ${s.condition}</div></div>
         </div>
         <div class="mp-grid">${shown.map(missingCardHtml).join('')}</div>
@@ -1455,11 +1455,20 @@
     });
   }
 
-  // Official set picture from Brickset; hidden if there isn't one
-  function setImageHtml(setNumber, name) {
+  // Catalog id for Brickset/Rebrickable/BrickLink, e.g. "6862-2". LEGO reused some set numbers,
+  // so a set can say variant: 2 in data.js to point at the right one (default -1).
+  function setCatalogId(setNumber) {
     const base = String(setNumber).match(/^\d+/);
     if (!base) return '';
-    return `<div class="ph-set-img"><img src="https://images.brickset.com/sets/images/${base[0]}-1.jpg" alt="${name}" onerror="this.parentNode.remove()"></div>`;
+    const s = LEGO_DATA.sets.find(x => x.setNumber === setNumber);
+    return `${base[0]}-${(s && s.variant) || 1}`;
+  }
+
+  // Official set picture from Brickset; hidden if there isn't one
+  function setImageHtml(setNumber, name) {
+    const id = setCatalogId(setNumber);
+    if (!id) return '';
+    return `<div class="ph-set-img"><img src="https://images.brickset.com/sets/images/${id}.jpg" alt="${name}" onerror="this.parentNode.remove()"></div>`;
   }
 
   // Links to LEGO's building instructions and the set's parts list
@@ -1474,7 +1483,7 @@
     return `<div class="ph-links">
       ${pdf ? `<a href="${pdf}" target="_blank" rel="noopener">Enhanced instructions + parts (PDF) &#8599;</a>` : ''}
       <a href="${instr}" target="_blank" rel="noopener">Building instructions &#8599;</a>
-      <a href="https://rebrickable.com/sets/${n}-1/" target="_blank" rel="noopener">Parts list &#8599;</a>
+      <a href="https://rebrickable.com/sets/${setCatalogId(setNumber) || n + '-1'}/" target="_blank" rel="noopener">Parts list &#8599;</a>
     </div>`;
   }
 
