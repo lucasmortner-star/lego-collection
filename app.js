@@ -740,7 +740,7 @@
         const sourceLabel = m.inSet
           ? `Came in ${setLabel}`
           : m.purchased
-          ? `Bought on ${m.purchased.from || 'BrickLink'}${m.purchased.bought ? ' · ' + fmtDay(parseDay(m.purchased.bought)) : ''}${typeof m.purchased.paid === 'number' ? ' · paid ' + fmtFull(m.purchased.paid) : ''}`
+          ? `${m.purchased.from ? 'Bought on ' + m.purchased.from : 'Bought separately'}${m.purchased.bought ? ' · ' + fmtDay(parseDay(m.purchased.bought)) : ''}${typeof m.purchased.paid === 'number' ? ' · paid ' + fmtFull(m.purchased.paid) : ''}`
           : m.source === 'BrickLink'
           ? 'BrickLink'
           : (m.sourceSetName ? `${m.source} · ${m.sourceSetName}` : m.source || 'Unknown');
