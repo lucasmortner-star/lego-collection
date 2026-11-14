@@ -179,7 +179,7 @@ const LEGO_DATA = {
     { num: 144, setNumber: "76000", name: "Arctic Batman vs. Mr. Freeze: Aquaman on Ice", theme: "DC Super Heroes", category: "DC", year: 2013, pieces: 198, retail: 19.99, condition: "To Build", rebuild: true, currentValue: 39, growth: 0.05, valueNew: 79, valueUsed: 14, paid: 21.26 },
     { num: 145, setNumber: "76045", name: "Kryptonite Interception", theme: "DC Super Heroes", category: "DC", year: 2016, pieces: 306, retail: 29.99, condition: "To Build", rebuild: true, currentValue: 51, growth: 0.05, valueNew: 75, valueUsed: 40, paid: 31.89 },
     { num: 146, setNumber: "76040", name: "Brainiac Attack", theme: "DC Super Heroes", category: "DC", year: 2015, pieces: 179, retail: 24.99, condition: "To Build", rebuild: true, currentValue: 194, growth: 0.2, valueNew: 300, valueUsed: 180, paid: 26.58, missing: [{ qty: 1, part: "20551", colorId: 7, color: "Blue", name: "Cape, high rounded collar (the small neck cape)", note: "Martian Manhunter minifig (sh0158)", fig: "sh0158" }] },
-    { num: 147, setNumber: "6862", variant: 2, name: "Superman vs. Power Armor Lex", theme: "DC Super Heroes", category: "DC", year: 2012, pieces: 207, retail: 19.99, condition: "Built/Displayed", currentValue: 41, growth: 0.03, valueNew: 46, valueUsed: 29, paid: 38.88, boughtFrom: "Amazon", bought: "2018-03-16" },
+    { num: 147, setNumber: "6862", variant: 2, name: "Superman vs. Power Armor Lex", theme: "DC Super Heroes", category: "DC", year: 2012, pieces: 207, retail: 19.99, condition: "To Build", rebuild: true, currentValue: 41, growth: 0.03, valueNew: 46, valueUsed: 29, paid: 38.88, boughtFrom: "Amazon", bought: "2018-03-16" },
 
     // ========================================
     // JURASSIC WORLD
