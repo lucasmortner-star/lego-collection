@@ -811,7 +811,7 @@
     const n = (String(s.setNumber).match(/^\d+/) || [''])[0];
     const missing = (s.missing || []).reduce((a, m) => a + (m.qty || 1), 0);
     const tags = [
-      s.possible ? '<span class="tb-tag tb-tag-maybe">Not sure we have it</span>' : s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
+      s.possible ? '<span class="tb-tag tb-tag-maybe">Not sure we have it</span>' : s.needsParts ? '<span class="tb-tag tb-tag-missing">Needs parts</span>' : s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
       missing ? `<span class="tb-tag tb-tag-missing">${missing} missing</span>` : '',
       s.builtBy && s.builtBy.length ? `<span class="tb-tag">${s.builtBy.join(' & ')}</span>` : ''
     ].join('');
@@ -829,9 +829,10 @@
 
   function renderToBuild() {
     const groups = [
-      { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building') },
-      { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild) },
-      { title: 'Old sets to rebuild', note: 'Taken apart and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild) },
+      { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building' && !s.needsParts) },
+      { title: 'Waiting on parts', note: 'Almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts) },
+      { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild && !s.needsParts) },
+      { title: 'Old sets to rebuild', note: 'Taken apart and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild && !s.needsParts) },
       { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') },
       { title: 'Possible builds', note: 'Sets we might have the pieces for. Not counted in the collection until we know.', list: possibleSets, extra: true }
     ];
@@ -842,7 +843,7 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Sets To Build</div>
         <div class="mf-stat-value accent">${all.length}</div>
-        <div class="mf-stat-sub">${groups[0].list.length} in progress</div>
+        <div class="mf-stat-sub">${groups[0].list.length} in progress &middot; ${groups[1].list.length} waiting on parts</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Pieces Waiting</div>
@@ -990,7 +991,7 @@
       </section>`;
     };
     // By set: grouped by theme in collapsible sections (closed by default, opened by a search or a piece filter)
-    const openSetThemes = new Set();
+    const openSetThemes = new Set(['finish']);
     const setMatches = (s, q) => !q || [s.name, s.setNumber, s.theme, s.category]
       .concat(s.missing.map(m => [m.name, m.color, m.part, m.element, m.note].join(' ')))
       .join(' ').toLowerCase().includes(q);
@@ -1004,7 +1005,15 @@
       list.forEach(s => { (groups[s.category] = groups[s.category] || []).push(s); });
       const pos = k => { const i = cats.findIndex(c => c.key === k); return i < 0 ? 99 : i; };
       const autoOpen = q || pieceFilter !== 'all';
-      return Object.keys(groups).sort((a, b) => pos(a) - pos(b)).map(k => {
+      // Sets that are basically done and only need their missing pieces bought get their own section at the top
+      const finish = list.filter(s => s.needsParts).sort((a, b) => a.name.localeCompare(b.name));
+      const finishParts = finish.reduce((a, s) => a + count(pick(s.missing)), 0);
+      const finishHtml = finish.length ? `<details class="ms-group-wrap ms-group-finish" data-theme="finish"${autoOpen || openSetThemes.has('finish') ? ' open' : ''}>
+          <summary class="ms-group">🛒 Buy parts to finish <span>${finish.length} set${finish.length === 1 ? '' : 's'} &middot; ${finishParts} part${finishParts === 1 ? '' : 's'} &middot; almost done, just need these pieces</span></summary>
+          ${finish.map(setCard).join('')}
+        </details>` : '';
+      Object.keys(groups).forEach(k => { groups[k] = groups[k].filter(s => !s.needsParts); if (!groups[k].length) delete groups[k]; });
+      return finishHtml + Object.keys(groups).sort((a, b) => pos(a) - pos(b)).map(k => {
         const cat = cats.find(c => c.key === k) || { label: k, icon: '' };
         const items = groups[k].sort((a, b) => a.name.localeCompare(b.name));
         const parts = items.reduce((a, s) => a + count(pick(s.missing)), 0);
