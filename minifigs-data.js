@@ -83,7 +83,7 @@ const MINIFIGS_DATA = {
     // HARRY POTTER
     // ============================================================
     { id: "colhp14", name: "Alastor 'Mad-Eye' Moody", franchise: "Harry Potter", side: "Wizard",      era: "Wizarding World", source: "BrickLink", year: 2020, rarity: "Uncommon", currentValue: 9.97, owned: true, qty: 1, notes: "Harry Potter CMF Series 1", purchased: { from: "BrickLink", seller: "RainmakerX", paid: 8.58, bought: "2026-03-02" } },
-    { id: "colhp09", name: "Lord Voldemort",          franchise: "Harry Potter", side: "Dark Wizard", era: "Wizarding World", source: "BrickLink", year: 2020, rarity: "Uncommon", currentValue: 7.40, owned: true, qty: 1, notes: "Harry Potter CMF Series 1" },
+    { id: "colhp09", name: "Lord Voldemort",          franchise: "Harry Potter", side: "Dark Wizard", era: "Wizarding World", source: "BrickLink", year: 2020, rarity: "Uncommon", currentValue: 7.40, owned: true, qty: 1, notes: "Harry Potter CMF Series 1", purchased: { from: "BrickLink" } },
 
     // ============================================================
     // LORD OF THE RINGS
