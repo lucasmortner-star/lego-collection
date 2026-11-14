@@ -1443,6 +1443,7 @@
       ${setLinksHtml(item.setNumber, item.year, item.instructionsPdf)}
       ${chart ? `<div class="ph-stats">${stats}${paidHtml}</div>${chart}` : '<p class="ph-empty">No price history recorded for this set yet. It will start building the next time prices are checked.</p>'}
       ${isOwned ? missingPiecesHtml(item.missing) : ''}
+      ${setMinifigsHtml(item)}
       <p class="ph-footnote">Prices are BrickLink's average sold price over the last 6 months. The dashed line carries the last known price forward to today.${exitDate ? ' Retirement is the date the set left LEGO.com in the US, per Brickset; future dates are LEGO\'s expected retirement.' : ''}${hasEstimates ? ' Hollow dots are BrickEconomy estimates, used while BrickLink data was unavailable.' : ''} Some jumps reflect changes in how values were calculated, such as the Oct 2026 Brickify refresh, rather than market moves.</p>
     </div>`;
     modal.style.display = 'flex';
@@ -1453,6 +1454,47 @@
       pickBtn.remove();
       openPicker(modal.querySelector('.ph-picker'), item);
     });
+  }
+
+  // Every minifig that came in the set (set-minifig-lists.js, from BrickLink), with picture, value
+  // and whether it's missing or missing parts according to the set's missing list
+  function setMinifigsHtml(item) {
+    const lists = typeof SET_MINIFIG_LISTS !== 'undefined' ? SET_MINIFIG_LISTS : {};
+    const figs = lists[item.setNumber];
+    if (!figs || !figs.length) return '';
+    const valueOf = id => {
+      const f = ALL_MINIFIGS.find(m => m.id === id);
+      if (f && f.currentValue) return f.currentValue;
+      // Figs we no longer have aren't in the minifig lists; use the missing-pieces price instead
+      const p = typeof PART_PRICES !== 'undefined' ? PART_PRICES[id + '|0'] : null;
+      return typeof p === 'number' ? p : null;
+    };
+    const missing = item.missing || [];
+    const total = figs.reduce((a, f) => a + f[1], 0);
+    const cards = figs.map(([id, qty, name]) => {
+      const whole = missing.filter(m => m.missingFig === id || (m.type === 'M' && m.part === id));
+      const parts = missing.filter(m => m.fig === id && !(m.missingFig === id || m.type === 'M'));
+      const status = whole.length
+        ? `<span class="sf-status sf-gone">Missing${qty > 1 && whole.reduce((a, m) => a + (m.qty || 1), 0) < qty ? ` ${whole.reduce((a, m) => a + (m.qty || 1), 0)} of ${qty}` : ''}</span>`
+        : parts.length
+          ? `<span class="sf-status sf-parts" title="${parts.map(m => `${m.qty || 1}x ${m.name} (${m.color || ''})`).join(', ').replace(/"/g, '&quot;')}">Missing parts</span>`
+          : '';
+      const [title, detail] = name.split(/ - (.+)/);
+      const val = valueOf(id);
+      return `<div class="sf-card${whole.length ? ' sf-card-gone' : ''}">
+        ${qty > 1 ? `<span class="mp-qty">${qty}&times;</span>` : ''}
+        <img src="https://img.bricklink.com/ItemImage/MN/0/${encodeURIComponent(id)}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+        <div class="sf-name">${title}</div>
+        ${detail ? `<div class="sf-detail">${detail}</div>` : ''}
+        <div class="sf-meta"><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?M=${encodeURIComponent(id)}" target="_blank" rel="noopener">${id}</a>${val ? ` &middot; ${fmtFull(val)}` : ''}</div>
+        ${status}
+      </div>`;
+    }).join('');
+    return `<div class="sf-wrap">
+      <div class="sf-title">Minifigures (${total})</div>
+      <div class="sf-grid">${cards}</div>
+      <p class="sf-note">From BrickLink's list for this set. Values are recent BrickLink used sales.</p>
+    </div>`;
   }
 
   // Catalog id for Brickset/Rebrickable/BrickLink, e.g. "6862-2". LEGO reused some set numbers,
