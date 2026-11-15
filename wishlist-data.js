@@ -35,7 +35,6 @@ const WISHLIST_DATA = {
     { setNumber: "30215", name: "Legolas Greenleaf (polybag)", theme: "The Hobbit", category: "LOTR", pieces: 29, retail: 25, used: 23, priority: "Low", notes: "2014 polybag. BrickLink 6-month sales (Nov 14): New ~$25, Used ~$23. Hobbit-style Legolas (lor035)" },
     { setNumber: "5000202", name: "Elrond (minifig polybag)", theme: "Lord of the Rings", category: "LOTR", retail: 44, used: 43, priority: "Low", notes: "2012 promo polybag. BrickLink 6-month sales (Nov 14): New ~$44, Used ~$43. Elrond with the very short cape (lor033)" },
     { setNumber: "5002130", name: "Good Morning Bilbo Baggins (minifig polybag)", theme: "The Hobbit", category: "LOTR", retail: 35, priority: "Low", notes: "2014 promo polybag. BrickLink 6-month sales (Nov 14): New ~$35, no recent used sales. Bilbo in his patchwork coat (lor091)" },
-    { setNumber: "comcon038", name: "Bard the Bowman (San Diego Comic-Con 2014)", theme: "The Hobbit", category: "LOTR", retail: 404, priority: "Low", notes: "Comic-Con 2014 exclusive blister pack. Rare: only one sale in 6 months on BrickLink (~$404 sealed, Nov 14). The same Bard minifig (lor092) also comes in The Battle of Five Armies (79017), already on this list" },
     { setNumber: "40693", name: "The Fell Beast (Barad-dûr GWP)", theme: "Lord of the Rings", category: "LOTR", pieces: 269, retail: 320, priority: "Medium", used: 246, notes: "Retired June 2024 gift with purchase — BrickEconomy New ~$320, Used ~$246 (Nov 9; BrickLink refresh pending). Nazgûl minifig, poseable wings, Osgiliath ruin base" },
   ]
 };

@@ -221,7 +221,6 @@ const SET_MINIFIG_LISTS = {
   "79017": [["lor109", 1, "Azog - Wide Open Mouth"], ["lor092", 1, "Bard the Bowman - Silver Buckle and Shirt Grommets"], ["lor107", 1, "Dain Ironfoot"], ["lor110", 2, "Gundabad Orc - Bald, White Forehead Paint"], ["lor035", 1, "Legolas - Reddish Brown and Gold Robe"], ["lor106", 1, "Thorin Oakenshield - Gold Armor and Crown"]],
   "5000202": [["lor033", 1, "Elrond - Very Short Cape"]],
   "5002130": [["lor091", 1, "Bilbo Baggins - Patchwork Coat"]],
-  "comcon038": [["lor092", 1, "Bard the Bowman - Silver Buckle and Shirt Grommets"]],
 };
 
 // Values for minifigs from wishlist sets that we don't own (owned figs get their value from the
