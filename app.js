@@ -832,7 +832,7 @@
       { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building' && !s.needsParts) },
       { title: 'Waiting on parts', note: 'Almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts) },
       { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild && !s.needsParts) },
-      { title: 'Old sets to rebuild', note: 'Taken apart and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild && !s.needsParts) },
+      { title: 'Old sets to rebuild', note: 'Currently broken and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild && !s.needsParts) },
       { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') },
       { title: 'Possible builds', note: 'Sets we might have the pieces for. Not counted in the collection until we know.', list: possibleSets, extra: true }
     ];
@@ -1202,7 +1202,7 @@
       const pct = loggedPieces ? b.pieces / loggedPieces * 100 : 0;
       const rows = b.sets.sort((x, y) => y.credited - x.credited).map(({ set, credited, share }) => `
         <div class="bd-set">
-          <span class="bd-set-name">${set.name}${share ? ` <span class="bd-share">${share}</span>` : ''}${set.needsParts ? ' <span class="bd-wip">waiting on parts</span>' : set.condition === 'Building' ? ` <span class="bd-wip">${set.rebuild ? 'being rebuilt' : 'in progress'}</span>` : set.condition === 'To Build' ? ` <span class="bd-wip">${set.rebuild ? 'taken apart' : 'not started'}</span>` : ''}</span>
+          <span class="bd-set-name">${set.name}${share ? ` <span class="bd-share">${share}</span>` : ''}${set.needsParts ? ' <span class="bd-wip">waiting on parts</span>' : set.condition === 'Building' ? ` <span class="bd-wip">${set.rebuild ? 'being rebuilt' : 'in progress'}</span>` : set.condition === 'To Build' ? ` <span class="bd-wip">${set.rebuild ? 'currently broken' : 'not started'}</span>` : ''}</span>
           <span class="bd-set-pieces">${Math.round(credited).toLocaleString()}</span>
         </div>`).join('');
       return `
