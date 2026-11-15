@@ -661,7 +661,6 @@ const SET_MINIFIGS = [
   {"id": "njo0310", "name": "Jungle Garmadon - The LEGO Ninjago Movie", "franchise": "Ninjago", "source": "Set", "currentValue": 5.8, "owned": true, "qty": 1, "fromSets": ["70608"], "inSet": true},
   {"id": "njo0360", "name": "Kai - The LEGO Ninjago Movie, Hair, Pearl Dark Gray Scabbard", "franchise": "Ninjago", "source": "Set", "currentValue": 1.92, "owned": true, "qty": 1, "fromSets": ["70608"], "inSet": true},
   {"id": "njo0316", "name": "Kai - The LEGO Ninjago Movie, Pearl Dark Gray Katana Holder", "franchise": "Ninjago", "source": "Set", "currentValue": 2.28, "owned": true, "qty": 1, "fromSets": ["70618"], "inSet": true},
-  {"id": "njo0127", "name": "Kapau'rai", "franchise": "Ninjago", "source": "Set", "currentValue": 10.86, "owned": true, "qty": 1, "fromSets": ["70749"], "inSet": true},
   {"id": "njo0129", "name": "Lloyd (Jungle Robe) - Tournament of Elements", "franchise": "Ninjago", "source": "Set", "currentValue": 32.01, "owned": true, "qty": 1, "fromSets": ["70749"], "inSet": true},
   {"id": "njo0209", "name": "Lloyd - Skybound", "franchise": "Ninjago", "source": "Set", "currentValue": 12.26, "owned": true, "qty": 1, "fromSets": ["70601"], "inSet": true},
   {"id": "njo0312", "name": "Lloyd - The LEGO Ninjago Movie, Wrap, Arm Printing", "franchise": "Ninjago", "source": "Set", "currentValue": 3.07, "owned": true, "qty": 1, "fromSets": ["70618"], "inSet": true},

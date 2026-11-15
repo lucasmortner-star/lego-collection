@@ -10,6 +10,7 @@
 const PART_PRICES_DATE = "Nov 12, 2026";
 
 const PART_PRICES = {
+  "njo0127|0": 10.86,
   "4589b|3": 0.02,
   "4865|85": 0.37,
   "2496|11": 0.03,
