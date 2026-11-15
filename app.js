@@ -1476,7 +1476,10 @@
       if (f && f.currentValue) return f.currentValue;
       // Figs we no longer have aren't in the minifig lists; use the missing-pieces price instead
       const p = typeof PART_PRICES !== 'undefined' ? PART_PRICES[id + '|0'] : null;
-      return typeof p === 'number' ? p : null;
+      if (typeof p === 'number') return p;
+      // Figs from wishlist sets we don't own
+      const w = typeof SET_MINIFIG_VALUES !== 'undefined' ? SET_MINIFIG_VALUES[id] : null;
+      return typeof w === 'number' ? w : null;
     };
     const missing = item.missing || [];
     const total = figs.reduce((a, f) => a + f[1], 0);
@@ -1502,7 +1505,7 @@
     return `<div class="sf-wrap">
       <div class="sf-title">Minifigures (${total})</div>
       <div class="sf-grid">${cards}</div>
-      <p class="sf-note">From BrickLink's list for this set. Values are recent BrickLink used sales.</p>
+      <p class="sf-note">From BrickLink's list for this set. Values are recent BrickLink sales (last 6 months).</p>
     </div>`;
   }
 
