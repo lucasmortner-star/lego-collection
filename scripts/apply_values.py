@@ -4,7 +4,9 @@ Apply BrickLink New (boxed) and Used values to data.js and record them in
 price-history.js.
 
 Input is a JSON file of {"<setNumber>": {"new": 352.5, "used": 241.0}, ...},
-e.g. read from BrickLink's Price Guide (Last 6 Months Sales, Avg Price).
+e.g. read from BrickLink's Price Guide (Last 6 Months Sales; for used, the
+complete-set price from scripts/pricing.py). Built sets also get the used
+value as their currentValue.
 Values are rounded to the dollar. Sets missing from the file are left alone.
 
     python scripts/apply_values.py values.json [--source BrickEconomy]
@@ -42,6 +44,9 @@ def apply(values, filepath=DATA_FILE):
             new_line = set_field(new_line, "valueNew", round(v["new"]))
         if v.get("used"):
             new_line = set_field(new_line, "valueUsed", round(v["used"]))
+            # Built sets are valued as complete used copies
+            if 'condition: "Built/Displayed"' in new_line:
+                new_line = set_field(new_line, "currentValue", round(v["used"]))
         if new_line != line:
             lines[i] = new_line
             updated += 1
