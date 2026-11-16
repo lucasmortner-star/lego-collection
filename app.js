@@ -908,9 +908,9 @@
   function renderToBuild() {
     const groups = [
       { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building' && !s.needsParts && !s.review) },
-      { title: 'Fully Reviewed - Waiting on Parts', note: 'Checked piece by piece and almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts && !s.review) },
       { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild && !s.needsParts) },
       { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') },
+      { title: 'Fully Reviewed - Waiting on Parts', note: 'Checked piece by piece and almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts && !s.review) },
       { title: 'Old sets to review', note: 'Older sets to go through piece by piece, so we know what is missing before rebuilding', list: sets.filter(s => s.review || (s.condition === 'To Build' && s.rebuild && !s.needsParts)) },
       { title: 'Possible builds', note: 'Sets we might have the pieces for. Not counted in the collection until we know.', list: possibleSets, extra: true }
     ];
@@ -921,7 +921,7 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Sets To Build</div>
         <div class="mf-stat-value accent">${all.length}</div>
-        <div class="mf-stat-sub">${groups[0].list.length} in progress &middot; ${groups[1].list.length} waiting on parts</div>
+        <div class="mf-stat-sub">${groups[0].list.length} in progress &middot; ${groups.find(g => g.title.startsWith('Fully Reviewed')).list.length} waiting on parts</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Pieces Waiting</div>
