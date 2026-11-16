@@ -3038,3 +3038,5 @@ html, body { max-width: 100%; overflow-x: hidden; }
 @media (max-width: 600px) {
   .theme-set-thumb { width: 42px; height: 42px; }
 }
+.era-gain.up b, .era-gain.up { color: var(--green); }
+.era-gain.down b, .era-gain.down { color: var(--red); }

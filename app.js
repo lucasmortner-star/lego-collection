@@ -255,6 +255,14 @@
           <span><b>${list.length}</b> sets</span>
           <span><b>${fmt(value)}</b> value</span>
           ${paidList.length ? `<span><b>${fmt(paid)}</b> paid${paidList.length < list.length ? ` <small>(${paidList.length} logged)</small>` : ''}</span>` : ''}
+          ${paidList.length ? (() => {
+            // Gain only compares sets with a purchase price logged
+            const worth = paidList.reduce((a, s) => a + s.currentValue, 0);
+            const gain = worth - paid;
+            const pctGain = paid > 0 ? gain / paid * 100 : 0;
+            const cls = gain >= 0 ? 'up' : 'down';
+            return `<span class="era-gain ${cls}" title="Those ${paidList.length} sets are worth ${fmt(worth)} now vs ${fmt(paid)} paid"><b>${gain >= 0 ? '+' : '−'}${fmt(Math.abs(gain))}</b> (${gain >= 0 ? '+' : '−'}${Math.abs(pctGain).toFixed(0)}%)</span>`;
+          })() : ''}
         </div>
         <div class="era-thumbs">${thumbs}${more}</div>
       </div>`;
