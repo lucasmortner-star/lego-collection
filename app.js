@@ -292,6 +292,26 @@
         <span class="count">${stats.count}</span>
       </button>`;
     }).join('');
+
+    // Small pictures of every set, one row per theme (most valuable first)
+    const setsBox = document.getElementById('themeSets');
+    if (setsBox) setsBox.innerHTML = sortedCats.map(cat => {
+      const list = sets.filter(s => s.category === cat.key).sort((a, b) => b.currentValue - a.currentValue);
+      if (!list.length) return '';
+      const dim = activeThemeFilter && activeThemeFilter !== cat.key ? ' dim' : '';
+      return `<div class="theme-sets-row${dim}">
+        <button class="theme-sets-label" data-cat="${cat.key}" title="Show only ${cat.label}">
+          <span class="dot" style="background:${cat.color}"></span>${cat.icon} ${cat.label}
+          <span class="theme-sets-meta">${list.length} &middot; ${fmt(themeStats[cat.key].value)}</span>
+        </button>
+        <div class="theme-sets-thumbs">${list.map(s => {
+          const img = setCatalogId(s.setNumber) || s.setNumber.replace(/-.*/, '') + '-1';
+          return `<div class="theme-set-thumb ph-clickable" data-set="${s.setNumber}" title="${s.name.replace(/"/g, '&quot;')} (${s.setNumber}) · ${fmt(s.currentValue)}" style="--cat:${cat.color}">
+            <img src="https://images.brickset.com/sets/images/${img}.jpg" alt="${s.name.replace(/"/g, '&quot;')}" loading="lazy" onerror="this.style.visibility='hidden'">
+          </div>`;
+        }).join('')}</div>
+      </div>`;
+    }).join('');
   }
 
   // --- Render Table ---
@@ -1973,6 +1993,14 @@
     if (!pill) return;
     const cat = pill.dataset.cat;
     activeThemeFilter = activeThemeFilter === cat ? null : cat;
+    renderCollection();
+  });
+
+  // Theme rows under the breakdown: clicking a theme name filters like the pills do
+  document.getElementById('themeSets').addEventListener('click', (e) => {
+    const lbl = e.target.closest('.theme-sets-label');
+    if (!lbl) return;
+    activeThemeFilter = activeThemeFilter === lbl.dataset.cat ? null : lbl.dataset.cat;
     renderCollection();
   });
 
