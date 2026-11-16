@@ -44,8 +44,8 @@ def apply(values, filepath=DATA_FILE):
             new_line = set_field(new_line, "valueNew", round(v["new"]))
         if v.get("used"):
             new_line = set_field(new_line, "valueUsed", round(v["used"]))
-            # Built sets are valued as complete used copies
-            if 'condition: "Built/Displayed"' in new_line:
+            # Every set is valued as a complete used copy unless it's being kept sealed
+            if 'condition: "Sealed/New"' not in new_line:
                 new_line = set_field(new_line, "currentValue", round(v["used"]))
         if new_line != line:
             lines[i] = new_line
