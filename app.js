@@ -344,7 +344,7 @@
         <td>${s.year}</td>
         <td class="hide-mobile">${s.pieces.toLocaleString()}</td>
         <td class="hide-mobile">${s.retail > 0 ? fmtFull(s.retail) : '—'}</td>
-        <td class="hide-mobile">${s.paid !== null ? fmtFull(s.paid) : '<span class="paid-missing">—</span>'}${s.boughtFrom || s.bought ? `<br><span class="bought-from">${[s.boughtFrom, s.bought && fmtDay(parseDay(s.bought))].filter(Boolean).join(' &middot; ')}</span>` : ''}</td>
+        <td class="hide-mobile">${s.paid !== null ? fmtFull(s.paid) : '<span class="paid-missing">—</span>'}${s.boughtFrom || s.bought ? `<br><span class="bought-from">${[s.boughtFrom, s.bought && fmtBought(s.bought)].filter(Boolean).join(' &middot; ')}</span>` : ''}</td>
         <td class="hide-mobile"><span class="condition-badge ${getConditionClass(s.condition)}">${s.condition}</span></td>
         <td>
           <span class="value-cell">${fmt(s.currentValue)}</span>
@@ -425,7 +425,7 @@
               ${s.paid !== null ? `<div class="card-val-block">
                 <label>Paid${s.boughtFrom ? ` &middot; ${s.boughtFrom}` : ''}</label>
                 <div class="val">${fmt(s.paid)}</div>
-                ${s.bought ? `<div class="bought-from">${fmtDay(parseDay(s.bought))}</div>` : ''}
+                ${s.bought ? `<div class="bought-from">${fmtBought(s.bought)}</div>` : ''}
               </div>` : ''}
               <div class="card-val-block">
                 <label>Current Value</label>
@@ -1327,8 +1327,14 @@
   const RETIRE_REACH = 150 * 864e5;
 
   function parseDay(d) {
-    const [y, m, day] = d.split('-').map(Number);
+    const [y, m = 1, day = 1] = d.split('-').map(Number);
     return new Date(y, m - 1, day);
+  }
+
+  // Purchase dates can be a full day ("2026-03-14"), a month ("2026-03") or just a year ("2026")
+  function fmtBought(d) {
+    const parts = d.split('-').length;
+    return parts === 1 ? d : parts === 2 ? fmtMonth(parseDay(d)) : fmtDay(parseDay(d));
   }
 
   function fmtDay(d) {
@@ -1480,7 +1486,7 @@
     const hasEstimates = Object.values(hist).some(pts => pts.some(p => p[2]));
     const exitDate = DATES[setNumber] && DATES[setNumber].exit;
     const paid = typeof item.paid === 'number' ? item.paid : null;
-    const chart = renderPriceChart(hist, exitDate, paid, item.bought);
+    const chart = renderPriceChart(hist, exitDate, paid, item.bought && item.bought.length === 10 ? item.bought : null);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const retireHtml = exitDate ? ` &middot; <span class="ph-retire-tag">${retirementLabel(parseDay(exitDate), today)}</span>` : '';
@@ -1506,7 +1512,7 @@
       paidHtml = `<div class="ph-stat">
         <div class="ph-stat-label"><span class="dot paid-dot"></span>What we paid${item.boughtFrom ? ` at ${item.boughtFrom}` : ''}</div>
         <div class="ph-stat-value">${fmt(paid)}</div>
-        ${item.bought ? `<span class="ph-stat-sub">Bought ${fmtDay(parseDay(item.bought))}</span><br>` : ''}
+        ${item.bought ? `<span class="ph-stat-sub">Bought ${fmtBought(item.bought)}</span><br>` : ''}
         ${gain !== null ? `<span class="appreciation ${gain >= 0 ? 'positive' : 'negative'}">${gain >= 0 ? '↑' : '↓'} ${fmt(Math.abs(gain))}${paid > 0 ? ` (${pct(gain / paid * 100)})` : ''} vs. value now</span>` : ''}
       </div>`;
     }
