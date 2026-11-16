@@ -873,7 +873,7 @@
   }
 
   // ===================================================================
-  // TO BUILD PAGE: sets in progress, new sets to build, old sets to rebuild, sets on the way
+  // TO BUILD PAGE: sets in progress, new sets to build, old sets to review, sets on the way
   // ===================================================================
 
   function instructionsUrl(s) {
@@ -889,7 +889,7 @@
     const n = (String(s.setNumber).match(/^\d+/) || [''])[0];
     const missing = (s.missing || []).reduce((a, m) => a + (m.qty || 1), 0);
     const tags = [
-      s.possible ? '<span class="tb-tag tb-tag-maybe">Not sure we have it</span>' : s.needsParts ? '<span class="tb-tag tb-tag-missing">Needs parts</span>' : s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
+      s.possible ? '<span class="tb-tag tb-tag-maybe">Not sure we have it</span>' : s.review ? '<span class="tb-tag tb-tag-old">Needs review</span>' : s.needsParts ? '<span class="tb-tag tb-tag-missing">Needs parts</span>' : s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
       missing ? `<span class="tb-tag tb-tag-missing">${missing} missing</span>` : '',
       s.builtBy && s.builtBy.length ? `<span class="tb-tag">${s.builtBy.join(' & ')}</span>` : ''
     ].join('');
@@ -907,11 +907,11 @@
 
   function renderToBuild() {
     const groups = [
-      { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building' && !s.needsParts) },
-      { title: 'Waiting on parts', note: 'Almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts) },
+      { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building' && !s.needsParts && !s.review) },
+      { title: 'Waiting on parts', note: 'Almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts && !s.review) },
       { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild && !s.needsParts) },
       { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') },
-      { title: 'Old sets to rebuild', note: 'Currently broken and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild && !s.needsParts) },
+      { title: 'Old sets to review', note: 'Older sets to go through piece by piece, so we know what is missing before rebuilding', list: sets.filter(s => s.review || (s.condition === 'To Build' && s.rebuild && !s.needsParts)) },
       { title: 'Possible builds', note: 'Sets we might have the pieces for. Not counted in the collection until we know.', list: possibleSets, extra: true }
     ];
     const all = groups.filter(g => !g.extra).reduce((a, g) => a.concat(g.list), []);
@@ -929,8 +929,8 @@
         <div class="mf-stat-sub">across all of them</div>
       </div>
       <div class="mf-stat-card">
-        <div class="mf-stat-label">Old Sets To Rebuild</div>
-        <div class="mf-stat-value">${all.filter(s => s.rebuild).length}</div>
+        <div class="mf-stat-label">Old Sets To Review</div>
+        <div class="mf-stat-value">${all.filter(s => s.rebuild || s.review).length}</div>
         <div class="mf-stat-sub">including ones in progress</div>
       </div>
       <div class="mf-stat-card">
