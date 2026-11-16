@@ -3048,3 +3048,4 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .thumb-preview-name { margin-top: 6px; font-size: 12px; font-weight: 600; color: var(--text-primary); text-align: center; }
 .gain-up { color: var(--green); font-weight: 600; }
 .gain-down { color: var(--red); font-weight: 600; }
+.era-icon { width: 1.15em; height: 1.15em; vertical-align: -0.2em; }

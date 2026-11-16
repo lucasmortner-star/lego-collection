@@ -196,7 +196,7 @@
     return s.year >= 2024 ? 'recent' : 'middle';
   }
   const ERAS = [
-    { key: 'childhood', title: "Alex's childhood", icon: '🧒' },
+    { key: 'childhood', title: "Alex's childhood", icon: '<svg class="era-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8" fill="#f2c9a0"/><circle cx="4.4" cy="13.5" r="1.6" fill="#e8b88d"/><circle cx="19.6" cy="13.5" r="1.6" fill="#e8b88d"/><path d="M4.2 12.2C3.8 7 7.4 3.8 12 3.8s8.4 3.1 7.8 8.4c-.9-1.6-2.3-2.7-4-3.2-1.1 1-3.4 1.6-5.6 1.4-1.9-.2-3.3-.8-4 0-.9.6-1.5 1-2 1.8z" fill="#7a4a24"/><circle cx="9.2" cy="13.6" r="1" fill="#3b2a1e"/><circle cx="14.8" cy="13.6" r="1" fill="#3b2a1e"/><path d="M9.4 16.9q2.6 2 5.2 0" stroke="#3b2a1e" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>' },
     { key: 'middle', title: 'The 2010s', icon: '📦' },
     { key: 'recent', title: 'Since late 2025', icon: '🆕' }
   ];
