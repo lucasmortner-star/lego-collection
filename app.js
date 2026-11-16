@@ -161,7 +161,6 @@
     const grid = document.getElementById('statsGrid');
     const cards = [
       { label: 'Total Sets', value: summary.totalSets, sub: summary.totalPieces.toLocaleString() + ' pieces combined' },
-      { label: 'Original Retail', value: fmt(summary.totalRetail), sub: 'total invested' },
       { label: 'Current Value', value: fmt(summary.totalCurrent), cls: 'accent', sub: 'avg recent BrickLink sale' },
       { label: 'Appreciation', value: fmt(summary.appreciation), cls: 'green', sub: pct(summary.appreciationPct) + ' overall return' },
       { label: '3-Year Projected', value: fmt(summary.totalProjected), sub: '+' + fmt(summary.projectedGrowth) + ' projected growth' },
