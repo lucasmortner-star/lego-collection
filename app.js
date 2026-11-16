@@ -157,32 +157,26 @@
   }
 
   // --- Render Stats ---
+  // What a set is worth as a complete used copy (falls back to its value when no used price yet)
+  function usedValue(s) {
+    return typeof s.valueUsed === 'number' ? s.valueUsed : s.currentValue;
+  }
+
   function renderStats() {
     const grid = document.getElementById('statsGrid');
+    const totalUsed = sets.reduce((a, s) => a + usedValue(s), 0);
+    const paidSets = sets.filter(s => typeof s.paid === 'number');
+    const paidTotal = paidSets.reduce((a, s) => a + s.paid, 0);
+    const paidWorth = paidSets.reduce((a, s) => a + usedValue(s), 0);
+    const gain = paidWorth - paidTotal;
+    const gainPct = paidTotal > 0 ? gain / paidTotal * 100 : 0;
+    const sign = gain >= 0 ? '+' : '−';
     const cards = [
       { label: 'Total Sets', value: summary.totalSets, sub: summary.totalPieces.toLocaleString() + ' pieces combined' },
-      { label: 'Current Value', value: fmt(summary.totalCurrent), cls: 'accent', sub: 'avg recent BrickLink sale' },
-      { label: 'Appreciation', value: fmt(summary.appreciation), cls: 'green', sub: pct(summary.appreciationPct) + ' overall return' },
-      { label: '3-Year Projected', value: fmt(summary.totalProjected), sub: '+' + fmt(summary.projectedGrowth) + ' projected growth' },
-      { label: 'Avg. Set Value', value: fmt(summary.totalCurrent / summary.totalSets), sub: 'per set average' },
+      { label: 'What We Paid', value: fmt(paidTotal), sub: `${paidSets.length} of ${summary.totalSets} sets logged` },
+      { label: 'Value (Used)', value: fmt(totalUsed), cls: 'accent',
+        sub: `complete, used &middot; <span class="${gain >= 0 ? 'gain-up' : 'gain-down'}">${sign}${fmt(Math.abs(gain))} (${sign}${Math.abs(gainPct).toFixed(0)}%)</span> vs what we paid` }
     ];
-    const boxedSets = sets.filter(s => s.valueNew !== null && s.valueUsed !== null);
-    if (boxedSets.length) {
-      const priced = `${boxedSets.length} of ${summary.totalSets} sets priced`;
-      cards.push(
-        { label: 'Value Boxed', value: fmt(boxedSets.reduce((a, s) => a + s.valueNew, 0)), sub: `new, sealed &middot; ${priced}` },
-        { label: 'Value Used', value: fmt(boxedSets.reduce((a, s) => a + s.valueUsed, 0)), sub: `complete, used &middot; ${priced}` }
-      );
-    }
-    if (summary.paidCount) {
-      const gain = summary.paidSetsValue - summary.totalPaid;
-      cards.push({
-        label: 'What We Paid',
-        value: fmt(summary.totalPaid),
-        cls: '',
-        sub: `${summary.paidCount} of ${summary.totalSets} sets logged &middot; now worth ${fmt(summary.paidSetsValue)} (${gain >= 0 ? '+' : '-'}${fmt(Math.abs(gain))})`
-      });
-    }
 
     grid.innerHTML = cards.map(c => `
       <div class="stat-card">
@@ -226,7 +220,7 @@
     const MAX_THUMBS = 12;
     el.innerHTML = ERAS.map(e => {
       const list = sets.filter(s => eraOf(s) === e.key);
-      const value = list.reduce((a, s) => a + s.currentValue, 0);
+      const value = list.reduce((a, s) => a + usedValue(s), 0);
       const paidList = list.filter(s => typeof s.paid === 'number');
       const paid = paidList.reduce((a, s) => a + s.paid, 0);
       // Newest purchases first for the recent era, most valuable first otherwise
@@ -256,7 +250,7 @@
           ${paidList.length ? `<span><b>${fmt(paid)}</b> paid${paidList.length < list.length ? ` <small>(${paidList.length} logged)</small>` : ''}</span>` : ''}
           ${paidList.length ? (() => {
             // Gain only compares sets with a purchase price logged
-            const worth = paidList.reduce((a, s) => a + s.currentValue, 0);
+            const worth = paidList.reduce((a, s) => a + usedValue(s), 0);
             const gain = worth - paid;
             const pctGain = paid > 0 ? gain / paid * 100 : 0;
             const cls = gain >= 0 ? 'up' : 'down';
