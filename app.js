@@ -915,7 +915,8 @@
       { title: 'Possible builds', note: 'Sets we might have the pieces for. Not counted in the collection until we know.', list: possibleSets, extra: true }
     ];
     const all = groups.filter(g => !g.extra).reduce((a, g) => a.concat(g.list), []);
-    const pieces = all.reduce((a, s) => a + (s.pieces || 0), 0);
+    // Pieces still to be built: only sets in progress, new sets to build and sets on the way
+    const pieces = groups.slice(0, 3).reduce((a, g) => a.concat(g.list), []).reduce((a, s) => a + (s.pieces || 0), 0);
     const missing = all.reduce((a, s) => a + (s.missing || []).reduce((b, m) => b + (m.qty || 1), 0), 0);
     document.getElementById('tbStats').innerHTML = `
       <div class="mf-stat-card">
@@ -926,7 +927,7 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Pieces Waiting</div>
         <div class="mf-stat-value">${pieces.toLocaleString()}</div>
-        <div class="mf-stat-sub">across all of them</div>
+        <div class="mf-stat-sub">in progress, new and on the way</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Old Sets To Review</div>
