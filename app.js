@@ -38,6 +38,8 @@
     appreciationPct: s.retail > 0 ? ((s.currentValue - s.retail) / s.retail * 100) : 0,
     // What we actually paid, when logged (paid: 0 means it was free, e.g. a gift with purchase)
     paid: typeof s.paid === 'number' ? s.paid : null,
+    // Gain vs. what we paid (null when no purchase price is logged, or it was free)
+    paidGainPct: typeof s.paid === 'number' && s.paid > 0 ? ((s.currentValue - s.paid) / s.paid * 100) : null,
     gainVsPaid: typeof s.paid === 'number' ? s.currentValue - s.paid : null,
     // BrickLink 6-month averages: new in a sealed box, and used
     bought: s.bought || null,
@@ -335,8 +337,8 @@
         html += `<tr class="category-row"><td colspan="15">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
       }
 
-      const apprClass = s.appreciation >= 0 ? 'positive' : 'negative';
-      const apprSymbol = s.appreciation >= 0 ? '↑' : '↓';
+      const apprClass = s.paidGainPct === null ? '' : s.paidGainPct >= 0 ? 'positive' : 'negative';
+      const apprSymbol = s.paidGainPct === null ? '' : s.paidGainPct >= 0 ? '↑' : '↓';
 
       html += `<tr class="ph-clickable" data-set="${s.setNumber}" title="Show price history">
         <td class="col-img"><div class="row-thumb"><img src="https://images.brickset.com/sets/images/${setCatalogId(s.setNumber) || s.setNumber.replace(/-.*/, '') + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div></td>
@@ -351,7 +353,7 @@
         <td class="hide-mobile"><span class="condition-badge ${getConditionClass(s.condition)}">${s.condition}</span></td>
         <td>
           <span class="value-cell">${fmt(s.currentValue)}</span>
-          <br><span class="appreciation ${apprClass}">${apprSymbol} ${s.retail > 0 ? pct(s.appreciationPct) : '—'}</span>
+          <br><span class="appreciation ${apprClass}" title="Change vs. what we paid">${s.paidGainPct !== null ? `${apprSymbol} ${pct(s.paidGainPct)}` : '—'}</span>
         </td>
         <td class="hide-mobile">${s.valueNew !== null ? fmt(s.valueNew) : '<span class="paid-missing">—</span>'}</td>
         <td class="hide-mobile">${s.valueUsed !== null ? fmt(s.valueUsed) : '<span class="paid-missing">—</span>'}</td>
@@ -403,7 +405,7 @@
         </div>`;
       }
 
-      const apprClass = s.appreciation >= 0 ? 'positive' : 'negative';
+      const apprClass = s.paidGainPct === null ? '' : s.paidGainPct >= 0 ? 'positive' : 'negative';
       const color = getCategoryColor(s.category);
 
       html += `<div class="set-card ph-clickable" data-set="${s.setNumber}" title="Show price history">
@@ -444,7 +446,7 @@
               </div>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center">
-              <span class="appreciation ${apprClass}" style="font-size:13px">${s.appreciation >= 0 ? '↑' : '↓'} ${s.retail > 0 ? pct(s.appreciationPct) : '—'} from original retail</span>
+              <span class="appreciation ${apprClass}" style="font-size:13px">${s.paidGainPct !== null ? `${s.paidGainPct >= 0 ? '↑' : '↓'} ${pct(s.paidGainPct)} vs. what we paid` : 'No purchase price logged'}</span>
               <span class="growth-badge ${getGrowthClass(s.growth)}">${(s.growth * 100).toFixed(0)}% / yr</span>
             </div>
           </div>
