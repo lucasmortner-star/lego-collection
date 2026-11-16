@@ -832,8 +832,8 @@
       { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building' && !s.needsParts) },
       { title: 'Waiting on parts', note: 'Almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts) },
       { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild && !s.needsParts) },
-      { title: 'Old sets to rebuild', note: 'Currently broken and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild && !s.needsParts) },
       { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') },
+      { title: 'Old sets to rebuild', note: 'Currently broken and waiting to be put back together', list: sets.filter(s => s.condition === 'To Build' && s.rebuild && !s.needsParts) },
       { title: 'Possible builds', note: 'Sets we might have the pieces for. Not counted in the collection until we know.', list: possibleSets, extra: true }
     ];
     const all = groups.filter(g => !g.extra).reduce((a, g) => a.concat(g.list), []);
