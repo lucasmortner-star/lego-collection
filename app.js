@@ -908,7 +908,7 @@
   function renderToBuild() {
     const groups = [
       { title: 'In progress', note: 'Being built right now', list: sets.filter(s => s.condition === 'Building' && !s.needsParts && !s.review) },
-      { title: 'Fully reviewed, waiting on parts', note: 'Checked piece by piece and almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts && !s.review) },
+      { title: 'Fully Reviewed - Waiting on Parts', note: 'Checked piece by piece and almost done. Buy the missing pieces (see the Missing page) and finish them.', list: sets.filter(s => s.needsParts && !s.review) },
       { title: 'New sets to build', note: 'Bought and waiting to be built', list: sets.filter(s => s.condition === 'To Build' && !s.rebuild && !s.needsParts) },
       { title: 'On the way', note: 'Ordered, ready to build when they arrive', list: sets.filter(s => s.condition === 'On the Way') },
       { title: 'Old sets to review', note: 'Older sets to go through piece by piece, so we know what is missing before rebuilding', list: sets.filter(s => s.review || (s.condition === 'To Build' && s.rebuild && !s.needsParts)) },
