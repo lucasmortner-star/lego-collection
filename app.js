@@ -301,25 +301,6 @@
       </button>`;
     }).join('');
 
-    // Small pictures of every set, one row per theme (most valuable first)
-    const setsBox = document.getElementById('themeSets');
-    if (setsBox) setsBox.innerHTML = sortedCats.map(cat => {
-      const list = sets.filter(s => s.category === cat.key).sort((a, b) => b.currentValue - a.currentValue);
-      if (!list.length) return '';
-      const dim = activeThemeFilter && activeThemeFilter !== cat.key ? ' dim' : '';
-      return `<div class="theme-sets-row${dim}">
-        <button class="theme-sets-label" data-cat="${cat.key}" title="Show only ${cat.label}">
-          <span class="dot" style="background:${cat.color}"></span>${cat.icon} ${cat.label}
-          <span class="theme-sets-meta">${list.length} &middot; ${fmt(themeStats[cat.key].value)}</span>
-        </button>
-        <div class="theme-sets-thumbs">${list.map(s => {
-          const img = setCatalogId(s.setNumber) || s.setNumber.replace(/-.*/, '') + '-1';
-          return `<div class="theme-set-thumb ph-clickable" data-set="${s.setNumber}" title="${s.name.replace(/"/g, '&quot;')} (${s.setNumber}) · ${fmt(s.currentValue)}" style="--cat:${cat.color}">
-            <img src="https://images.brickset.com/sets/images/${img}.jpg" alt="${s.name.replace(/"/g, '&quot;')}" loading="lazy" onerror="this.style.visibility='hidden'">
-          </div>`;
-        }).join('')}</div>
-      </div>`;
-    }).join('');
   }
 
   // --- Render Table ---
@@ -329,7 +310,7 @@
     const sorted = sortSets(filtered);
 
     if (sorted.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="14"><div class="empty-state">
+      tbody.innerHTML = `<tr><td colspan="15"><div class="empty-state">
         <div class="empty-icon">🔍</div>
         <h3>No sets found</h3>
         <p>Try adjusting your search or filter</p>
@@ -358,13 +339,14 @@
         lastCatTable = s.category;
         const catSets = sorted.filter(x => x.category === s.category);
         const catValue = catSets.reduce((a, x) => a + x.currentValue, 0);
-        html += `<tr class="category-row"><td colspan="14">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
+        html += `<tr class="category-row"><td colspan="15">${getCategoryIcon(s.category)} ${getCategoryLabel(s.category)} <span class="category-row-stats">${catSets.length} sets &middot; ${fmt(catValue)}</span></td></tr>`;
       }
 
       const apprClass = s.appreciation >= 0 ? 'positive' : 'negative';
       const apprSymbol = s.appreciation >= 0 ? '↑' : '↓';
 
       html += `<tr class="ph-clickable" data-set="${s.setNumber}" title="Show price history">
+        <td class="col-img"><div class="row-thumb"><img src="https://images.brickset.com/sets/images/${setCatalogId(s.setNumber) || s.setNumber.replace(/-.*/, '') + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div></td>
         <td>${s.num}</td>
         <td><span class="set-number">${s.setNumber}</span></td>
         <td><span class="set-name">${s.name}</span>${retiringBadge(s.setNumber)}${missingBadge(s)}</td>
@@ -2004,13 +1986,35 @@
     renderCollection();
   });
 
-  // Theme rows under the breakdown: clicking a theme name filters like the pills do
-  document.getElementById('themeSets').addEventListener('click', (e) => {
-    const lbl = e.target.closest('.theme-sets-label');
-    if (!lbl) return;
-    activeThemeFilter = activeThemeFilter === lbl.dataset.cat ? null : lbl.dataset.cat;
-    renderCollection();
+  // Hovering a small set picture (table rows, era cards) shows a bigger one next to it
+  const hoverPreview = document.createElement('div');
+  hoverPreview.className = 'thumb-preview';
+  hoverPreview.innerHTML = '<img alt=""><div class="thumb-preview-name"></div>';
+  document.body.appendChild(hoverPreview);
+  let hoverThumb = null;
+  document.addEventListener('mouseover', (e) => {
+    const thumb = e.target.closest('.row-thumb, .era-thumb-img');
+    if (thumb === hoverThumb) return;
+    hoverThumb = thumb;
+    const img = thumb && thumb.querySelector('img');
+    if (!img || img.style.visibility === 'hidden' || !matchMedia('(hover: hover)').matches) {
+      hoverPreview.classList.remove('show');
+      return;
+    }
+    const holder = thumb.closest('[data-set]');
+    const s = holder && sets.find(x => x.setNumber === holder.dataset.set);
+    hoverPreview.querySelector('img').src = img.src;
+    hoverPreview.querySelector('.thumb-preview-name').textContent = s ? `${s.name} (${s.setNumber})` : '';
+    const r = thumb.getBoundingClientRect();
+    const W = 280, H = 250, gap = 10;
+    let left = r.right + gap;
+    if (left + W > window.innerWidth - 8) left = Math.max(8, r.left - gap - W);
+    const top = Math.min(Math.max(8, r.top + r.height / 2 - H / 2), window.innerHeight - H - 8);
+    hoverPreview.style.left = left + 'px';
+    hoverPreview.style.top = top + 'px';
+    hoverPreview.classList.add('show');
   });
+  window.addEventListener('scroll', () => { hoverThumb = null; hoverPreview.classList.remove('show'); }, { passive: true });
 
   // Era cards: "Show in list" / "+N more" filter the list below to that era
   document.getElementById('erasGrid').addEventListener('click', (e) => {
