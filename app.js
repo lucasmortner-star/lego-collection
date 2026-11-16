@@ -11,6 +11,7 @@
   let currentSort = { key: 'num', dir: 'asc' };
   let activeThemeFilter = null;
   let activeConditionFilter = null;
+  let activeEraFilter = null;
   let searchQuery = '';
 
   // Wishlist state
@@ -124,6 +125,9 @@
     if (activeConditionFilter) {
       result = result.filter(s => s.condition === activeConditionFilter);
     }
+    if (activeEraFilter) {
+      result = result.filter(s => eraOf(s) === activeEraFilter);
+    }
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       result = result.filter(s =>
@@ -188,6 +192,73 @@
         <div class="stat-sub">${c.sub}</div>
       </div>
     `).join('');
+  }
+
+  // --- Eras: the three stretches when we bought sets ---
+  // Purchase date when we have one, otherwise the set's release year.
+  const RECENT_START = '2025-09-01';
+  function eraOf(s) {
+    if (s.year < 2000) return 'childhood';
+    if (s.bought) return s.bought >= RECENT_START ? 'recent' : 'middle';
+    return s.year >= 2024 ? 'recent' : 'middle';
+  }
+  const ERAS = [
+    { key: 'childhood', title: "Alex's childhood", icon: '🧒' },
+    { key: 'middle', title: 'The 2010s', icon: '📦' },
+    { key: 'recent', title: 'Since late 2025', icon: '🆕' }
+  ];
+
+  function eraSubtitle(key, list) {
+    const years = list.map(s => s.year);
+    const span = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : '';
+    if (key === 'childhood') return `Classic sets from ${span}`;
+    if (key === 'middle') {
+      const bought = list.filter(s => s.bought).map(s => +s.bought.slice(0, 4));
+      return bought.length
+        ? `Sets from ${span}, mostly bought ${Math.min(...bought)}–${Math.max(...bought)}`
+        : `Sets from ${span}`;
+    }
+    return 'Everything bought since fall 2025';
+  }
+
+  function renderEras() {
+    const el = document.getElementById('erasGrid');
+    if (!el) return;
+    const MAX_THUMBS = 12;
+    el.innerHTML = ERAS.map(e => {
+      const list = sets.filter(s => eraOf(s) === e.key);
+      const value = list.reduce((a, s) => a + s.currentValue, 0);
+      const paidList = list.filter(s => typeof s.paid === 'number');
+      const paid = paidList.reduce((a, s) => a + s.paid, 0);
+      // Newest purchases first for the recent era, most valuable first otherwise
+      const shown = [...list].sort(e.key === 'recent'
+        ? (a, b) => (b.bought || String(b.year)).localeCompare(a.bought || String(a.year)) || b.currentValue - a.currentValue
+        : (a, b) => b.currentValue - a.currentValue);
+      const thumbs = shown.slice(0, MAX_THUMBS).map(s => {
+        const img = setCatalogId(s.setNumber) || s.setNumber.replace(/-.*/, '') + '-1';
+        return `<div class="era-thumb ph-clickable" data-set="${s.setNumber}" title="${s.name.replace(/"/g, '&quot;')} (${s.setNumber})">
+          <div class="era-thumb-img"><img src="https://images.brickset.com/sets/images/${img}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div>
+          <div class="era-thumb-name">${s.name}</div>
+        </div>`;
+      }).join('');
+      const more = list.length > MAX_THUMBS
+        ? `<button class="era-more" data-era="${e.key}">+${list.length - MAX_THUMBS} more</button>` : '';
+      return `<div class="era-card${activeEraFilter === e.key ? ' active' : ''}" data-era="${e.key}">
+        <div class="era-head">
+          <div>
+            <div class="era-title">${e.icon} ${e.title}</div>
+            <div class="era-sub">${eraSubtitle(e.key, list)}</div>
+          </div>
+          <button class="era-filter" data-era="${e.key}">${activeEraFilter === e.key ? 'Showing ✓' : 'Show in list'}</button>
+        </div>
+        <div class="era-stats">
+          <span><b>${list.length}</b> sets</span>
+          <span><b>${fmt(value)}</b> value</span>
+          ${paidList.length ? `<span><b>${fmt(paid)}</b> paid${paidList.length < list.length ? ` <small>(${paidList.length} logged)</small>` : ''}</span>` : ''}
+        </div>
+        <div class="era-thumbs">${thumbs}${more}</div>
+      </div>`;
+    }).join('');
   }
 
   // --- Render Theme Breakdown ---
@@ -386,12 +457,14 @@
       `Showing ${count} of ${sets.length} sets` +
       (activeThemeFilter ? ` in ${getCategoryLabel(activeThemeFilter)}` : '') +
       (activeConditionFilter ? ` · ${activeConditionFilter}` : '') +
+      (activeEraFilter ? ` · ${ERAS.find(e => e.key === activeEraFilter).title}` : '') +
       (searchQuery ? ` matching "${searchQuery}"` : '');
   }
 
   // --- Render Collection Page ---
   function renderCollection() {
     renderStats();
+    renderEras();
     renderThemeBreakdown();
     if (currentView === 'table') {
       renderTable();
@@ -1895,6 +1968,16 @@
     const cat = pill.dataset.cat;
     activeThemeFilter = activeThemeFilter === cat ? null : cat;
     renderCollection();
+  });
+
+  // Era cards: "Show in list" / "+N more" filter the list below to that era
+  document.getElementById('erasGrid').addEventListener('click', (e) => {
+    const btn = e.target.closest('.era-filter, .era-more');
+    if (!btn) return;
+    const era = btn.dataset.era;
+    activeEraFilter = btn.classList.contains('era-more') || activeEraFilter !== era ? era : null;
+    renderCollection();
+    if (activeEraFilter) document.querySelector('.controls-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   // Condition filter buttons
