@@ -916,13 +916,14 @@
     ];
     const all = groups.filter(g => !g.extra).reduce((a, g) => a.concat(g.list), []);
     // Pieces still to be built: only sets in progress, new sets to build and sets on the way
-    const pieces = groups.slice(0, 3).reduce((a, g) => a.concat(g.list), []).reduce((a, s) => a + (s.pieces || 0), 0);
+    const active = groups.slice(0, 3).reduce((a, g) => a.concat(g.list), []);
+    const pieces = active.reduce((a, s) => a + (s.pieces || 0), 0);
     const missing = all.reduce((a, s) => a + (s.missing || []).reduce((b, m) => b + (m.qty || 1), 0), 0);
     document.getElementById('tbStats').innerHTML = `
       <div class="mf-stat-card">
         <div class="mf-stat-label">Sets To Build</div>
-        <div class="mf-stat-value accent">${all.length}</div>
-        <div class="mf-stat-sub">${groups[0].list.length} in progress &middot; ${groups.find(g => g.title.startsWith('Fully Reviewed')).list.length} waiting on parts</div>
+        <div class="mf-stat-value accent">${active.length}</div>
+        <div class="mf-stat-sub">${groups[0].list.length} in progress &middot; ${groups[1].list.length} new &middot; ${groups[2].list.length} on the way</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Pieces Waiting</div>
