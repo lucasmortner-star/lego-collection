@@ -611,7 +611,7 @@
 
         return `<div class="wl-card ph-clickable" data-set="${item.setNumber}" title="Show price history">
           <div class="wl-priority-bar ${prioClass}"></div>
-          <div class="row-thumb wl-thumb"><img src="https://images.brickset.com/sets/images/${setCatalogId(item.setNumber) || String(item.setNumber).replace(/-.*/, '') + '-1'}.jpg" alt="" loading="lazy" onerror="if(!this.dataset.bl){this.dataset.bl=1;this.src='https://img.bricklink.com/ItemImage/SN/0/${setCatalogId(item.setNumber) || String(item.setNumber).replace(/-.*/, '') + '-1'}.png'}else{this.style.visibility='hidden'}"></div>
+          <div class="row-thumb wl-thumb"><img src="${item.image || `https://images.brickset.com/sets/images/${setCatalogId(item.setNumber) || String(item.setNumber).replace(/-.*/, '') + '-1'}.jpg`}" alt="" loading="lazy" onerror="if(!this.dataset.bl){this.dataset.bl=1;this.src='https://img.bricklink.com/ItemImage/SN/0/${setCatalogId(item.setNumber) || String(item.setNumber).replace(/-.*/, '') + '-1'}.png'}else{this.style.visibility='hidden'}"></div>
           <div class="wl-card-body">
             <div class="wl-card-header">
               <span class="wl-card-name">${item.name}</span>${retiringBadge(item.setNumber)}
@@ -1605,10 +1605,19 @@
     return `${base[0]}-${(s && s.variant) || 1}`;
   }
 
+  // A set can name its own picture with image: "<url>" (for sets Brickset has no good photo of)
+  function customSetImage(setNumber) {
+    const s = LEGO_DATA.sets.find(x => x.setNumber === setNumber) ||
+      (typeof WISHLIST_DATA !== 'undefined' ? (WISHLIST_DATA.items || []).find(x => x.setNumber === setNumber) : null);
+    return (s && s.image) || '';
+  }
+
   // Official set picture from Brickset; hidden if there isn't one
   function setImageHtml(setNumber, name) {
     const id = setCatalogId(setNumber);
     if (!id) return '';
+    const own = customSetImage(setNumber);
+    if (own) return `<div class="ph-set-img"><img src="${own}" alt="${name}" onerror="this.parentNode.remove()"></div>`;
     return `<div class="ph-set-img"><img src="https://images.brickset.com/sets/images/${id}.jpg" alt="${name}" onerror="if(!this.dataset.bl){this.dataset.bl=1;this.src='https://img.bricklink.com/ItemImage/SN/0/${id}.png'}else{this.parentNode.remove()}"></div>`;
   }
 
