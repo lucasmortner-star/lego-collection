@@ -207,7 +207,6 @@ const SET_MINIFIG_LISTS = {
   "9469": [["lor002", 1, "Frodo Baggins - Sand Green Shirt"], ["lor001", 1, "Gandalf the Grey - Wizard / Witch Hat, Short Cheek Lines"]],
   "9470": [["lor003", 1, "Frodo Baggins - Reddish Brown Jacket, Dark Brown Legs, Dark Bluish Gray Cape"], ["lor005", 1, "Gollum - Wide Eyes"], ["lor004", 1, "Samwise Gamgee (Sam) - Dark Tan Shirt, Dark Bluish Gray Cape"]],
   "9476": [["lor025", 1, "Lurtz"], ["lor024", 1, "Mordor Orc - Bald"], ["lor023", 1, "Mordor Orc - Dark Tan"], ["lor022", 1, "Uruk-hai - Handprint Helmet"]],
-  "30210": [["lor002", 1, "Frodo Baggins - Sand Green Shirt"]],
   "30212": [["lor026", 1, "Mirkwood Elf Guard - Hood, Quiver"]],
   "30215": [["lor035", 1, "Legolas - Reddish Brown and Gold Robe"]],
   "40693": [["lor141", 1, "Ringwraith (Nazgûl) - Hood Basic"]],
