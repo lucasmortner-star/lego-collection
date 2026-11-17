@@ -611,7 +611,7 @@
 
         return `<div class="wl-card ph-clickable" data-set="${item.setNumber}" title="Show price history">
           <div class="wl-priority-bar ${prioClass}"></div>
-          <div class="row-thumb wl-thumb"><img src="https://images.brickset.com/sets/images/${setCatalogId(item.setNumber) || String(item.setNumber).replace(/-.*/, '') + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div>
+          <div class="row-thumb wl-thumb"><img src="https://images.brickset.com/sets/images/${setCatalogId(item.setNumber) || String(item.setNumber).replace(/-.*/, '') + '-1'}.jpg" alt="" loading="lazy" onerror="if(!this.dataset.bl){this.dataset.bl=1;this.src='https://img.bricklink.com/ItemImage/SN/0/${setCatalogId(item.setNumber) || String(item.setNumber).replace(/-.*/, '') + '-1'}.png'}else{this.style.visibility='hidden'}"></div>
           <div class="wl-card-body">
             <div class="wl-card-header">
               <span class="wl-card-name">${item.name}</span>${retiringBadge(item.setNumber)}
@@ -1609,7 +1609,7 @@
   function setImageHtml(setNumber, name) {
     const id = setCatalogId(setNumber);
     if (!id) return '';
-    return `<div class="ph-set-img"><img src="https://images.brickset.com/sets/images/${id}.jpg" alt="${name}" onerror="this.parentNode.remove()"></div>`;
+    return `<div class="ph-set-img"><img src="https://images.brickset.com/sets/images/${id}.jpg" alt="${name}" onerror="if(!this.dataset.bl){this.dataset.bl=1;this.src='https://img.bricklink.com/ItemImage/SN/0/${id}.png'}else{this.parentNode.remove()}"></div>`;
   }
 
   // Links to LEGO's building instructions and the set's parts list
