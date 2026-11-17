@@ -16,6 +16,11 @@ const WISHLIST_DATA = {
     { setNumber: "75349", name: "Captain Rex Helmet", theme: "Star Wars", category: "STAR WARS", pieces: 854, retail: 69, used: 57, priority: "Low", notes: "Retired Jul 2026 — BrickEconomy New ~$69, Used ~$57 (Nov 9; BrickLink refresh pending) (was $69.99 MSRP)" },
     { setNumber: "75331", name: "The Razor Crest (UCS)", theme: "Star Wars", category: "STAR WARS", pieces: 6187, retail: 720, used: 572, priority: "High", notes: "Retired Dec 2025 — BrickEconomy New ~$720, Used ~$572 (Nov 9; BrickLink refresh pending). We own the smaller 75447 Razor Crest (2026); still want the UCS" },
 
+    { setNumber: "40483", name: "Luke Skywalker's Lightsaber", theme: "Star Wars", category: "STAR WARS", pieces: 173, retail: 157, used: 81, priority: "Low", notes: "2021 gift with purchase (May the 4th). BrickLink 6-month sales (Nov 17): New ~$157, Used ~$81. Buildable hilt on a stand" },
+    { setNumber: "5006290", name: "Yoda's Lightsaber", theme: "Star Wars", category: "STAR WARS", pieces: 140, retail: 279, used: 127, priority: "Low", notes: "2020 promotional build. BrickLink 6-month sales (Nov 17): New ~$279, Used ~$127. The rarest of the lightsabers" },
+    { setNumber: "40730", name: "Luke Skywalker's Lightsaber (2024)", theme: "Star Wars", category: "STAR WARS", pieces: 145, retail: 138, used: 83, priority: "Low", notes: "2024 gift with purchase, a different design from the 2021 one. BrickLink 6-month sales (Nov 17): New ~$138, Used ~$83" },
+    { setNumber: "40897", name: "Darth Vader's Lightsaber", theme: "Star Wars", category: "STAR WARS", retail: 92, used: 60, priority: "Low", notes: "2026 gift with purchase. BrickLink 6-month sales (Nov 17): New ~$92, Used ~$60" },
+
     // ===== HARRY POTTER =====
 
     // ===== MARVEL =====
