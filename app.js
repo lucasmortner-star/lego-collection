@@ -611,6 +611,7 @@
 
         return `<div class="wl-card ph-clickable" data-set="${item.setNumber}" title="Show price history">
           <div class="wl-priority-bar ${prioClass}"></div>
+          <div class="row-thumb wl-thumb"><img src="https://images.brickset.com/sets/images/${setCatalogId(item.setNumber) || String(item.setNumber).replace(/-.*/, '') + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div>
           <div class="wl-card-body">
             <div class="wl-card-header">
               <span class="wl-card-name">${item.name}</span>${retiringBadge(item.setNumber)}
@@ -1999,7 +2000,8 @@
       return;
     }
     const holder = thumb.closest('[data-set]');
-    const s = holder && sets.find(x => x.setNumber === holder.dataset.set);
+    const s = holder && (sets.find(x => x.setNumber === holder.dataset.set) ||
+      (WISHLIST_DATA.items || []).find(x => x.setNumber === holder.dataset.set));
     hoverPreview.querySelector('img').src = img.src;
     hoverPreview.querySelector('.thumb-preview-name').textContent = s ? `${s.name} (${s.setNumber})` : '';
     const r = thumb.getBoundingClientRect();

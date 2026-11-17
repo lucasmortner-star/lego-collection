@@ -3023,9 +3023,11 @@ html, body { max-width: 100%; overflow-x: hidden; }
   display: flex; align-items: center; justify-content: center;
 }
 .row-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.wl-thumb { width: 64px; height: 64px; flex-shrink: 0; }
 @media (max-width: 600px) {
   .sets-table .col-img { width: 40px; }
   .row-thumb { width: 34px; height: 34px; padding: 2px; }
+  .wl-thumb { width: 56px; height: 56px; }
 }
 
 /* Bigger picture when hovering a small set picture */
