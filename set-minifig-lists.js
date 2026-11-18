@@ -208,6 +208,7 @@ const SET_MINIFIG_LISTS = {
   "79008": [["lor017", 1, "Aragorn - Dark Tan Legs"], ["lor013", 1, "Gimli - Eyelids"], ["lor071", 1, "King of the Dead"], ["lor015", 1, "Legolas - Olive Green Robe, Long Cheek Lines"], ["lor024", 1, "Mordor Orc - Bald"], ["lor068", 1, "Mordor Orc - Bald with Armor"], ["lor067", 1, "Pirate of Umbar"], ["lor069", 1, "Soldier of the Dead 1"], ["lor070", 1, "Soldier of the Dead 2"]],
   "79017": [["lor109", 1, "Azog - Wide Open Mouth"], ["lor092", 1, "Bard the Bowman - Silver Buckle and Shirt Grommets"], ["lor107", 1, "Dain Ironfoot"], ["lor110", 2, "Gundabad Orc - Bald, White Forehead Paint"], ["lor035", 1, "Legolas - Reddish Brown and Gold Robe"], ["lor106", 1, "Thorin Oakenshield - Gold Armor and Crown"]],
   "9476": [["lor025", 1, "Lurtz"], ["lor024", 1, "Mordor Orc - Bald"], ["lor023", 1, "Mordor Orc - Dark Tan"], ["lor022", 1, "Uruk-hai - Handprint Helmet"]],
+  "79011": [["lor075", 1, "Beorn"], ["lor076", 1, "Gundabad Orc - Hair"], ["lor077", 1, "Gundabad Orc - Hair and Shoulder Spikes"]],
   // ----- Wishlist sets (sets we don't own yet) -----
   "9470": [["lor003", 1, "Frodo Baggins - Reddish Brown Jacket, Dark Brown Legs, Dark Bluish Gray Cape"], ["lor005", 1, "Gollum - Wide Eyes"], ["lor004", 1, "Samwise Gamgee (Sam) - Dark Tan Shirt, Dark Bluish Gray Cape"]],
   "40693": [["lor141", 1, "Ringwraith (Nazgûl) - Hood Basic"]],
@@ -216,7 +217,6 @@ const SET_MINIFIG_LISTS = {
   "75367": [["sw1316", 1, "Admiral Wullf Yularen - Dark Bluish Gray Uniform, Dark Brown Hair"], ["sw1315", 1, "Clone Trooper Captain Rex, 501st Legion (Phase 2) - Blue Cloth Pauldron, Rangefinder, Printed White Arms"]],
   "79001": [["lor036", 1, "Fili the Dwarf"], ["lor037", 1, "Kili the Dwarf"], ["lor035", 1, "Legolas - Reddish Brown and Gold Robe"], ["lor034", 1, "Tauriel, Dark Green and Dark Brown Outfit"]],
   "79006": [["lor060", 1, "Arwen - Sand Blue Dress"], ["lor059", 1, "Elrond - Silver Crown, Dark Red Clothing"], ["lor062", 1, "Frodo Baggins - Reddish Brown Jacket, Dark Brown Legs"], ["lor013", 1, "Gimli - Eyelids"]],
-  "79011": [["lor075", 1, "Beorn"], ["lor076", 1, "Gundabad Orc - Hair"], ["lor077", 1, "Gundabad Orc - Hair and Shoulder Spikes"]],
 };
 
 // Values for minifigs from wishlist sets that we don't own (owned figs get their value from the
