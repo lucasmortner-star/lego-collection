@@ -207,9 +207,9 @@ const SET_MINIFIG_LISTS = {
   "79000": [["lor030", 1, "Bilbo Baggins - Dark Red Coat"], ["lor031", 1, "Gollum - Narrow Eyes"]],
   "79008": [["lor017", 1, "Aragorn - Dark Tan Legs"], ["lor013", 1, "Gimli - Eyelids"], ["lor071", 1, "King of the Dead"], ["lor015", 1, "Legolas - Olive Green Robe, Long Cheek Lines"], ["lor024", 1, "Mordor Orc - Bald"], ["lor068", 1, "Mordor Orc - Bald with Armor"], ["lor067", 1, "Pirate of Umbar"], ["lor069", 1, "Soldier of the Dead 1"], ["lor070", 1, "Soldier of the Dead 2"]],
   "79017": [["lor109", 1, "Azog - Wide Open Mouth"], ["lor092", 1, "Bard the Bowman - Silver Buckle and Shirt Grommets"], ["lor107", 1, "Dain Ironfoot"], ["lor110", 2, "Gundabad Orc - Bald, White Forehead Paint"], ["lor035", 1, "Legolas - Reddish Brown and Gold Robe"], ["lor106", 1, "Thorin Oakenshield - Gold Armor and Crown"]],
+  "9476": [["lor025", 1, "Lurtz"], ["lor024", 1, "Mordor Orc - Bald"], ["lor023", 1, "Mordor Orc - Dark Tan"], ["lor022", 1, "Uruk-hai - Handprint Helmet"]],
   // ----- Wishlist sets (sets we don't own yet) -----
   "9470": [["lor003", 1, "Frodo Baggins - Reddish Brown Jacket, Dark Brown Legs, Dark Bluish Gray Cape"], ["lor005", 1, "Gollum - Wide Eyes"], ["lor004", 1, "Samwise Gamgee (Sam) - Dark Tan Shirt, Dark Bluish Gray Cape"]],
-  "9476": [["lor025", 1, "Lurtz"], ["lor024", 1, "Mordor Orc - Bald"], ["lor023", 1, "Mordor Orc - Dark Tan"], ["lor022", 1, "Uruk-hai - Handprint Helmet"]],
   "40693": [["lor141", 1, "Ringwraith (Nazgûl) - Hood Basic"]],
   "75252": [["sw1044", 1, "Imperial Crew - Dark Bluish Gray Cap, Printed Arms"], ["sw1043", 1, "Imperial Officer (Junior Lieutenant / Lieutenant) - Dual Molded Legs"]],
   "75331": [["sw1113", 1, "Din Grogu / The Child / 'Baby Yoda'"], ["sw1244", 1, "Kuiil - Brick Built Backpack"], ["sw1242", 1, "The Mandalorian / Din Djarin / 'Mando' - Brown Durasteel Armor, Printed Arms"], ["sw1243", 1, "The Mythrol"]],

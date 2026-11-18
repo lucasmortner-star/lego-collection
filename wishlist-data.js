@@ -27,7 +27,6 @@ const WISHLIST_DATA = {
     // ===== MARVEL =====
 
     // ===== LORD OF THE RINGS / THE HOBBIT =====
-    { setNumber: "9476", name: "The Orc Forge", theme: "Lord of the Rings", category: "LOTR", pieces: 363, retail: 355, used: 171, priority: "Low", notes: "Retired 2012 — BrickEconomy New ~$355, Used ~$171 (Nov 9; BrickLink refresh pending) (was $39.99 MSRP), Isengard forge with Saruman, Lurtz" },
     { setNumber: "9470", name: "Shelob Attacks", theme: "Lord of the Rings", category: "LOTR", pieces: 227, retail: 194, used: 71, priority: "Low", notes: "Retired 2012 — BrickEconomy New ~$194, Used ~$71 (Nov 9; BrickLink refresh pending) (was $19.99 MSRP), Frodo, Sam, Gollum, Shelob spider" },
     { setNumber: "79006", name: "The Council of Elrond", theme: "Lord of the Rings", category: "LOTR", pieces: 243, retail: 191, used: 90, priority: "Low", notes: "Retired 2013 — BrickEconomy New ~$191, Used ~$90 (Nov 9; BrickLink refresh pending) (was $19.99 MSRP), Rivendell council scene" },
     { setNumber: "79001", name: "Escape from Mirkwood Spiders", theme: "The Hobbit", category: "LOTR", pieces: 298, retail: 150, used: 70, priority: "Low", notes: "Retired 2013 — BrickEconomy New ~$150, Used ~$70 (Nov 9; BrickLink refresh pending) (was $29.99 MSRP), Mirkwood spiders with Bilbo, Legolas, Tauriel" },
