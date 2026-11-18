@@ -203,20 +203,20 @@ const SET_MINIFIG_LISTS = {
   "6856": [["sp008", 1, "Exploriens - Dark Gray Helmet and Radio Torso"]],
   "6055": [["cas189a", 1, "Breastplate - Red with Blue Arms, Blue Legs with Black Hips, Dark Gray Grille Helmet, Red Plume, Blue Plastic Cape"], ["cas111a", 1, "Crusader Axe - Red Legs with Black Hips, Dark Gray Neck-Protector, Blue Plastic Cape"], ["cas222", 1, "Crusader Lion - Red Legs with Black Hips, Black Chin-Guard, Quiver"], ["cas093", 1, "Peasant - Red Legs, Black Hood"]],
   "6039": [["cas199", 1, "Breastplate - Red with Blue Arms, Blue Legs with Black Hips, Dark Gray Neck-Protector"], ["cas115", 1, "Crusader Lion - Blue Legs with Black Hips, Dark Gray Neck-Protector"]],
-  // ----- Wishlist sets (sets we don't own yet) -----
   "9469": [["lor002", 1, "Frodo Baggins - Sand Green Shirt"], ["lor001", 1, "Gandalf the Grey - Wizard / Witch Hat, Short Cheek Lines"]],
+  "79000": [["lor030", 1, "Bilbo Baggins - Dark Red Coat"], ["lor031", 1, "Gollum - Narrow Eyes"]],
+  "79008": [["lor017", 1, "Aragorn - Dark Tan Legs"], ["lor013", 1, "Gimli - Eyelids"], ["lor071", 1, "King of the Dead"], ["lor015", 1, "Legolas - Olive Green Robe, Long Cheek Lines"], ["lor024", 1, "Mordor Orc - Bald"], ["lor068", 1, "Mordor Orc - Bald with Armor"], ["lor067", 1, "Pirate of Umbar"], ["lor069", 1, "Soldier of the Dead 1"], ["lor070", 1, "Soldier of the Dead 2"]],
+  "79017": [["lor109", 1, "Azog - Wide Open Mouth"], ["lor092", 1, "Bard the Bowman - Silver Buckle and Shirt Grommets"], ["lor107", 1, "Dain Ironfoot"], ["lor110", 2, "Gundabad Orc - Bald, White Forehead Paint"], ["lor035", 1, "Legolas - Reddish Brown and Gold Robe"], ["lor106", 1, "Thorin Oakenshield - Gold Armor and Crown"]],
+  // ----- Wishlist sets (sets we don't own yet) -----
   "9470": [["lor003", 1, "Frodo Baggins - Reddish Brown Jacket, Dark Brown Legs, Dark Bluish Gray Cape"], ["lor005", 1, "Gollum - Wide Eyes"], ["lor004", 1, "Samwise Gamgee (Sam) - Dark Tan Shirt, Dark Bluish Gray Cape"]],
   "9476": [["lor025", 1, "Lurtz"], ["lor024", 1, "Mordor Orc - Bald"], ["lor023", 1, "Mordor Orc - Dark Tan"], ["lor022", 1, "Uruk-hai - Handprint Helmet"]],
   "40693": [["lor141", 1, "Ringwraith (Nazgûl) - Hood Basic"]],
   "75252": [["sw1044", 1, "Imperial Crew - Dark Bluish Gray Cap, Printed Arms"], ["sw1043", 1, "Imperial Officer (Junior Lieutenant / Lieutenant) - Dual Molded Legs"]],
   "75331": [["sw1113", 1, "Din Grogu / The Child / 'Baby Yoda'"], ["sw1244", 1, "Kuiil - Brick Built Backpack"], ["sw1242", 1, "The Mandalorian / Din Djarin / 'Mando' - Brown Durasteel Armor, Printed Arms"], ["sw1243", 1, "The Mythrol"]],
   "75367": [["sw1316", 1, "Admiral Wullf Yularen - Dark Bluish Gray Uniform, Dark Brown Hair"], ["sw1315", 1, "Clone Trooper Captain Rex, 501st Legion (Phase 2) - Blue Cloth Pauldron, Rangefinder, Printed White Arms"]],
-  "79000": [["lor030", 1, "Bilbo Baggins - Dark Red Coat"], ["lor031", 1, "Gollum - Narrow Eyes"]],
   "79001": [["lor036", 1, "Fili the Dwarf"], ["lor037", 1, "Kili the Dwarf"], ["lor035", 1, "Legolas - Reddish Brown and Gold Robe"], ["lor034", 1, "Tauriel, Dark Green and Dark Brown Outfit"]],
   "79006": [["lor060", 1, "Arwen - Sand Blue Dress"], ["lor059", 1, "Elrond - Silver Crown, Dark Red Clothing"], ["lor062", 1, "Frodo Baggins - Reddish Brown Jacket, Dark Brown Legs"], ["lor013", 1, "Gimli - Eyelids"]],
-  "79008": [["lor017", 1, "Aragorn - Dark Tan Legs"], ["lor013", 1, "Gimli - Eyelids"], ["lor071", 1, "King of the Dead"], ["lor015", 1, "Legolas - Olive Green Robe, Long Cheek Lines"], ["lor024", 1, "Mordor Orc - Bald"], ["lor068", 1, "Mordor Orc - Bald with Armor"], ["lor067", 1, "Pirate of Umbar"], ["lor069", 1, "Soldier of the Dead 1"], ["lor070", 1, "Soldier of the Dead 2"]],
   "79011": [["lor075", 1, "Beorn"], ["lor076", 1, "Gundabad Orc - Hair"], ["lor077", 1, "Gundabad Orc - Hair and Shoulder Spikes"]],
-  "79017": [["lor109", 1, "Azog - Wide Open Mouth"], ["lor092", 1, "Bard the Bowman - Silver Buckle and Shirt Grommets"], ["lor107", 1, "Dain Ironfoot"], ["lor110", 2, "Gundabad Orc - Bald, White Forehead Paint"], ["lor035", 1, "Legolas - Reddish Brown and Gold Robe"], ["lor106", 1, "Thorin Oakenshield - Gold Armor and Crown"]],
 };
 
 // Values for minifigs from wishlist sets that we don't own (owned figs get their value from the
