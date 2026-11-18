@@ -27,7 +27,6 @@ const WISHLIST_DATA = {
     // ===== MARVEL =====
 
     // ===== LORD OF THE RINGS / THE HOBBIT =====
-    { setNumber: "9470", name: "Shelob Attacks", theme: "Lord of the Rings", category: "LOTR", pieces: 227, retail: 194, used: 71, priority: "Low", notes: "Retired 2012 — BrickEconomy New ~$194, Used ~$71 (Nov 9; BrickLink refresh pending) (was $19.99 MSRP), Frodo, Sam, Gollum, Shelob spider" },
     { setNumber: "79006", name: "The Council of Elrond", theme: "Lord of the Rings", category: "LOTR", pieces: 243, retail: 191, used: 90, priority: "Low", notes: "Retired 2013 — BrickEconomy New ~$191, Used ~$90 (Nov 9; BrickLink refresh pending) (was $19.99 MSRP), Rivendell council scene" },
     { setNumber: "40693", name: "The Fell Beast (Barad-dûr GWP)", theme: "Lord of the Rings", category: "LOTR", pieces: 269, retail: 320, priority: "Medium", used: 246, notes: "Retired June 2024 gift with purchase — BrickEconomy New ~$320, Used ~$246 (Nov 9; BrickLink refresh pending). Nazgûl minifig, poseable wings, Osgiliath ruin base" },
   ]
