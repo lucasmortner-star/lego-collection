@@ -91,6 +91,7 @@ const LEGO_DATA = {
     { num: 232, setNumber: "79000", name: "Riddles for the Ring", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2012, pieces: 105, retail: 12.99, condition: "On the Way", currentValue: 30, growth: 0.0, paid: 44.16, valueNew: 74, valueUsed: 30, bought: "2026-11-18", note: "$35 before tax and shipping" },
     { num: 233, setNumber: "9476", name: "The Orc Forge", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2012, pieces: 363, retail: 39.99, condition: "On the Way", currentValue: 171, growth: 0.0, paid: 186.14, valueNew: 355, valueUsed: 171, boughtFrom: "eBay", bought: "2026-11-18", note: "Used, all 4 minifigs and manual, no box ($165 + $10.03 shipping)" },
     { num: 234, setNumber: "79011", name: "Dol Guldur Ambush", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 217, retail: 19.99, condition: "On the Way", currentValue: 58, growth: 0.0, paid: 114.20, valueNew: 114, valueUsed: 58, boughtFrom: "eBay", bought: "2026-11-18", note: "Bought new (sealed)" },
+    { num: 235, setNumber: "79001", name: "Escape from Mirkwood Spiders", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2012, pieces: 298, retail: 29.99, condition: "On the Way", currentValue: 70, growth: 0.0, paid: 74.48, valueNew: 150, valueUsed: 70, boughtFrom: "eBay", bought: "2026-11-18" },
 
     // ========================================
     // HARRY POTTER
