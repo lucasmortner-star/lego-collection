@@ -344,7 +344,7 @@
         <td class="col-img"><div class="row-thumb"><img src="https://images.brickset.com/sets/images/${setCatalogId(s.setNumber) || s.setNumber.replace(/-.*/, '') + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'"></div></td>
         <td>${s.num}</td>
         <td><span class="set-number">${s.setNumber}</span></td>
-        <td><span class="set-name">${s.name}</span>${retiringBadge(s.setNumber)}${missingBadge(s)}</td>
+        <td><span class="set-name">${s.name}</span>${retiringBadge(s.setNumber)}${missingBadge(s)}${checkedBadge(s)}</td>
         <td class="hide-mobile"><span class="theme-badge"><span class="dot" style="background:${getCategoryColor(s.category)};width:6px;height:6px;border-radius:50%;display:inline-block"></span> ${s.theme}</span></td>
         <td>${s.year}</td>
         <td class="hide-mobile">${s.pieces.toLocaleString()}</td>
@@ -413,7 +413,7 @@
           <div class="card-category-indicator" style="background:${color}"></div>
           <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
             <div class="card-top">
-              <span class="card-title">${s.name}${retiringBadge(s.setNumber)}${missingBadge(s)}</span>
+              <span class="card-title">${s.name}${retiringBadge(s.setNumber)}${missingBadge(s)}${checkedBadge(s)}</span>
               <span class="card-set-num">${s.setNumber}</span>
             </div>
             <div class="card-meta">
@@ -892,6 +892,7 @@
     const tags = [
       s.possible ? '<span class="tb-tag tb-tag-maybe">Not sure we have it</span>' : s.review ? '<span class="tb-tag tb-tag-old">Needs review</span>' : s.needsParts ? '<span class="tb-tag tb-tag-missing">Needs parts</span>' : s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
       missing ? `<span class="tb-tag tb-tag-missing">${missing} missing</span>` : '',
+      s.checked ? `<span class="tb-tag tb-tag-checked">${s.checkedFull ? '&#10003; ' : ''}${checkedLabel(s)}</span>` : '',
       s.builtBy && s.builtBy.length ? `<span class="tb-tag">${s.builtBy.join(' & ')}</span>` : ''
     ].join('');
     const instr = instructionsUrl(s);
@@ -1066,7 +1067,7 @@
       return `<section class="ms-set">
         <div class="ms-set-head ph-clickable" data-set="${s.setNumber}">
           <img src="https://images.brickset.com/sets/images/${setCatalogId(s.setNumber) || img + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
-          <div><div class="ms-set-name">${s.name}</div><div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${n} missing &middot; ${s.condition}</div></div>
+          <div><div class="ms-set-name">${s.name}</div><div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${n} missing &middot; ${s.condition}${s.checked ? ` &middot; ${checkedLabel(s)}` : ''}</div></div>
         </div>
         <div class="mp-grid">${shown.map(missingCardHtml).join('')}</div>
       </section>`;
@@ -1799,6 +1800,20 @@
       }
     });
     render();
+  }
+
+  // Piece check: checked: "YYYY-MM-DD" (or true if the date isn't known), checkedFull: true once every piece was checked
+  function checkedLabel(set) {
+    if (!set.checked) return '';
+    const when = typeof set.checked === 'string' ? ' ' + fmtBought(set.checked) : '';
+    return (set.checkedFull ? 'Fully checked' : 'Partly checked') + when;
+  }
+
+  function checkedBadge(set) {
+    const label = checkedLabel(set);
+    return label
+      ? ` <span class="checked-badge${set.checkedFull ? '' : ' checked-partial'}" title="Gone through piece by piece for missing parts">${set.checkedFull ? '&#10003; ' : ''}${label}</span>`
+      : '';
   }
 
   function missingBadge(set) {
