@@ -93,6 +93,7 @@ const LEGO_DATA = {
     { num: 234, setNumber: "79011", name: "Dol Guldur Ambush", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 217, retail: 19.99, condition: "On the Way", currentValue: 50, growth: 0.0, paid: 114.20, valueNew: 114, valueUsed: 50, boughtFrom: "eBay", bought: "2026-11-18", note: "Bought new (sealed)" },
     { num: 235, setNumber: "79001", name: "Escape from Mirkwood Spiders", theme: "The Hobbit", category: "LORD OF THE RINGS / THE HOBBIT", year: 2012, pieces: 298, retail: 29.99, condition: "On the Way", currentValue: 65, growth: 0.0, paid: 74.48, valueNew: 150, valueUsed: 65, boughtFrom: "eBay", bought: "2026-11-18" },
     { num: 236, setNumber: "9470", name: "Shelob Attacks", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2012, pieces: 227, retail: 19.99, condition: "On the Way", currentValue: 70, growth: 0.0, paid: 109.57, valueNew: 194, valueUsed: 70, boughtFrom: "eBay", bought: "2026-11-18", note: "Used" },
+    { num: 237, setNumber: "79007", name: "Battle at the Black Gate (Copy 2)", theme: "Lord of the Rings", category: "LORD OF THE RINGS / THE HOBBIT", year: 2013, pieces: 656, retail: 59.99, condition: "On the Way", currentValue: 300, growth: 0.0, paid: 319.99, valueNew: 478, valueUsed: 300, boughtFrom: "eBay", bought: "2026-11-20", note: "Used, all 5 minifigs, horse, eagle and both manuals ($290 + shipping and tax). Second copy to combine with the first into a bigger Black Gate" },
 
     // ========================================
     // HARRY POTTER
