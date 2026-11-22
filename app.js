@@ -89,6 +89,14 @@
     return (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
   }
 
+  // Status badge text and class; fully reviewed sets waiting on parts show that instead of their condition
+  function conditionBadge(s, style) {
+    const waiting = s.needsParts && !s.review;
+    const cls = waiting ? 'needs-parts' : getConditionClass(s.condition);
+    const label = waiting ? 'Waiting on Parts' : s.condition;
+    return `<span class="condition-badge ${cls}"${style ? ` style="${style}"` : ''}>${label}</span>`;
+  }
+
   function getConditionClass(c) {
     if (c.includes('Built')) return 'built';
     if (c.includes('Building')) return 'building';
@@ -350,7 +358,7 @@
         <td class="hide-mobile">${s.pieces.toLocaleString()}</td>
         <td class="hide-mobile">${s.retail > 0 ? fmtFull(s.retail) : '—'}</td>
         <td class="hide-mobile">${s.paid !== null ? fmtFull(s.paid) : '<span class="paid-missing">—</span>'}${s.boughtFrom || s.bought ? `<br><span class="bought-from">${[s.boughtFrom, s.bought && fmtBought(s.bought)].filter(Boolean).join(' &middot; ')}</span>` : ''}</td>
-        <td class="hide-mobile"><span class="condition-badge ${getConditionClass(s.condition)}">${s.condition}</span></td>
+        <td class="hide-mobile">${conditionBadge(s)}</td>
         <td>
           <span class="value-cell">${fmt(s.currentValue)}</span>
           <br><span class="appreciation ${apprClass}" title="Change vs. what we paid">${s.paidGainPct !== null ? `${apprSymbol} ${pct(s.paidGainPct)}` : '—'}</span>
@@ -420,7 +428,7 @@
               <span class="card-meta-item"><strong>${s.theme}</strong></span>
               <span class="card-meta-item">&middot; ${s.year}</span>
               <span class="card-meta-item">&middot; ${s.pieces.toLocaleString()} pcs</span>
-              <span class="card-meta-item">&middot; <span class="condition-badge ${getConditionClass(s.condition)}" style="padding:1px 6px;font-size:11px">${s.condition}</span></span>
+              <span class="card-meta-item">&middot; ${conditionBadge(s, 'padding:1px 6px;font-size:11px')}</span>
             </div>
             <div class="card-values">
               <div class="card-val-block">
