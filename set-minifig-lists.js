@@ -212,6 +212,7 @@ const SET_MINIFIG_LISTS = {
   "79001": [["lor036", 1, "Fili the Dwarf"], ["lor037", 1, "Kili the Dwarf"], ["lor035", 1, "Legolas - Reddish Brown and Gold Robe"], ["lor034", 1, "Tauriel, Dark Green and Dark Brown Outfit"]],
   "9470": [["lor003", 1, "Frodo Baggins - Reddish Brown Jacket, Dark Brown Legs, Dark Bluish Gray Cape"], ["lor005", 1, "Gollum - Wide Eyes"], ["lor004", 1, "Samwise Gamgee (Sam) - Dark Tan Shirt, Dark Bluish Gray Cape"]],
   "70606": [["njo0316", 1, "Kai - The LEGO Ninjago Movie"], ["njo0318", 1, "Zane - The LEGO Ninjago Movie"]],
+  "70339": [["nex054", 1, "Flama - Yellow Head and Torso, Backpack Hammer (Ultimate Flama)"]],
   // ----- Wishlist sets (sets we don't own yet) -----
   "40693": [["lor141", 1, "Ringwraith (Nazgûl) - Hood Basic"]],
   "75252": [["sw1044", 1, "Imperial Crew - Dark Bluish Gray Cap, Printed Arms"], ["sw1043", 1, "Imperial Officer (Junior Lieutenant / Lieutenant) - Dual Molded Legs"]],
