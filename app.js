@@ -835,8 +835,8 @@
         const notesHtml = (ourSets.length && !m.inSet ? `<div class="mf-card-insets">📦 Also in our set${ourSets.length > 1 ? 's' : ''}: ${ourSets.join(', ')}</div>` : '') + (m.notes ? `<div class="mf-card-notes">${m.notes}</div>` : '');
 
         const imageBlock = imgUrl
-          ? `<img class="mf-card-image" src="${imgUrl}" alt="${m.name.replace(/"/g, '&quot;')}"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          ? `<img class="mf-card-image" src="${imgUrl}" alt="${m.name.replace(/"/g, '&quot;')}" data-alt="${m.image ? '' : minifigImgUrls(m.id).slice(1).join('|')}"
+                 onerror="if(this.dataset.alt){nextImg(this)}else{this.style.display='none'; this.nextElementSibling.style.display='flex';}" />
              <div class="mf-card-image-placeholder" style="display:none;">⚔️</div>`
           : `<div class="mf-card-image-placeholder" style="display:flex;">⚔️</div>`;
 
@@ -1119,7 +1119,7 @@
       const figUrl = `https://www.bricklink.com/v2/catalog/catalogitem.page?M=${encodeURIComponent(f.id)}`;
       return `<section class="ms-set">
         <div class="ms-set-head">
-          <img src="https://img.bricklink.com/ItemImage/MN/0/${encodeURIComponent(f.id)}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+          ${imgTag(minifigImgUrls(f.id))}
           <div><div class="ms-set-name">${f.name}</div><div class="tb-meta"><a href="${figUrl}" target="_blank" rel="noopener">${f.id}</a> &middot; ${figTheme(f.id)}${f.copies > 1 ? ` &middot; ${f.copies} copies` : ''} &middot; ${n} missing${f.from ? ` &middot; ${f.from}` : ''}</div></div>
         </div>
         <div class="mp-grid">${shown.map(missingCardHtml).join('')}</div>
@@ -1591,7 +1591,7 @@
       const val = valueOf(id);
       return `<div class="sf-card${whole.length ? ' sf-card-gone' : ''}">
         ${qty > 1 ? `<span class="mp-qty">${qty}&times;</span>` : ''}
-        <img src="https://img.bricklink.com/ItemImage/MN/0/${encodeURIComponent(id)}.png" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+        ${imgTag(minifigImgUrls(id))}
         <div class="sf-name">${title}</div>
         ${detail ? `<div class="sf-detail">${detail}</div>` : ''}
         <div class="sf-meta"><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?M=${encodeURIComponent(id)}" target="_blank" rel="noopener">${id}</a>${val ? ` &middot; ${fmtFull(val)}` : ''}</div>
@@ -1670,6 +1670,35 @@
       : `https://www.bricklink.com/v2/catalog/catalogitem.page?P=${p}`;
   }
 
+  // ---- Image fallbacks: BrickLink images go down when BrickLink does, so every BrickLink
+  // image gets backups (Brickset part photos, BrickEconomy minifig thumbnails).
+  window.nextImg = function (img) {
+    const alts = (img.dataset.alt || '').split('|').filter(Boolean);
+    if (alts.length) { img.dataset.alt = alts.slice(1).join('|'); img.src = alts[0]; return; }
+    if (img.dataset.hide === 'remove') img.parentNode && img.parentNode.remove();
+    else img.style.visibility = 'hidden';
+  };
+  function minifigImgUrls(id) {
+    if (!id) return [];
+    const e = encodeURIComponent(id);
+    const unpadded = String(id).replace(/^([a-z]+)0(\d{3}[a-z]?)$/i, '$1$2');
+    const urls = [`https://img.bricklink.com/ItemImage/MN/0/${e}.png`,
+      `https://www.brickeconomy.com/resources/images/minifigs/${encodeURIComponent(unpadded)}_thumb.png`];
+    if (unpadded !== id) urls.push(`https://www.brickeconomy.com/resources/images/minifigs/${e}_thumb.png`);
+    return urls;
+  }
+  // BrickLink color name -> Rebrickable color id, for Rebrickable part images
+  const RB_COLOR = {"Black":0,"Blue":1,"Brown":6,"Dark Blue":272,"Dark Bluish Gray":72,"Dark Brown":308,"Dark Gray":8,"Dark Orange":484,"Dark Red":320,"Dark Tan":28,"Flat Silver":179,"Green":2,"Light Bluish Gray":71,"Light Gray":7,"Light Nougat":78,"Medium Nougat":84,"Olive Green":326,"Orange":25,"Pearl Dark Gray":148,"Pearl Gold":297,"Pearl Titanium":1103,"Red":4,"Reddish Brown":70,"Sand Blue":379,"Trans-Bright Green":35,"Trans-Light Blue":41,"Trans-Purple":52,"Trans-Red":36,"White":15,"Yellow":14,"Bright Light Yellow":226,"Trans-Dark Blue":33,"Trans-Neon Green":42,"Lime":27,"Tan":19,"Dark Purple":85,"Metallic Silver":80,"Medium Blue":73,"Dark Green":288,"Sand Green":378,"Medium Azure":322,"Dark Pink":5,"Bright Pink":29,"Magenta":26,"Trans-Clear":47,"Trans-Yellow":46,"Trans-Orange":182,"Pearl Light Gray":135,"Chrome Gold":334,"Dark Azure":321,"Nougat":92,"Bright Green":10,"Medium Lavender":30,"Light Aqua":323,"Dark Turquoise":3,"Bright Light Orange":191,"Trans-Neon Orange":57,"Chrome Silver":383,"Metallic Gold":82};
+  function rebrickablePartImg(m) {
+    const c = RB_COLOR[m.color];
+    return c != null && m.part ? `https://cdn.rebrickable.com/media/parts/ldraw/${c}/${encodeURIComponent(m.part)}.png` : '';
+  }
+  function imgTag(urls, extra) {
+    urls = urls.filter(Boolean);
+    if (!urls.length) return '';
+    return `<img src="${urls[0]}" data-alt="${urls.slice(1).join('|')}" alt="" loading="lazy" onerror="nextImg(this)"${extra || ''}>`;
+  }
+
   function missingCardHtml(m) {
       const blUrl = bricklinkPartUrl(m);
       const part = m.part && m.colorId != null
@@ -1679,11 +1708,11 @@
           : m.part
             ? `<a href="${blUrl}" target="_blank" rel="noopener">${m.part}</a>`
             : '';
-      const src = m.img
-        || (m.type === 'M' ? `https://img.bricklink.com/ItemImage/MN/0/${encodeURIComponent(m.part)}.png` : '')
-        || (m.part && m.colorId != null ? `https://img.bricklink.com/ItemImage/PN/${m.colorId}/${encodeURIComponent(m.part)}.png` : '')
-        || (m.element ? `https://images.brickset.com/parts/${encodeURIComponent(m.element)}.jpg` : '');
-      const img = src ? `<img src="${src}" alt="" loading="lazy">` : '<div class="mp-noimg">?</div>';
+      const urls = m.img ? [m.img] : m.type === 'M' ? minifigImgUrls(m.part) : [
+        m.element ? `https://images.brickset.com/parts/${encodeURIComponent(m.element)}.jpg` : '',
+        rebrickablePartImg(m),
+        m.part && m.colorId != null ? `https://img.bricklink.com/ItemImage/PN/${m.colorId}/${encodeURIComponent(m.part)}.png` : ''];
+      const img = imgTag(urls) || '<div class="mp-noimg">?</div>';
       return `<div class="mp-card">
         <span class="mp-qty">${m.qty || 1}&times;</span>
         ${img}
