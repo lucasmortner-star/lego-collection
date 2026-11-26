@@ -303,8 +303,17 @@ const LEGO_DATA = {
     { setNumber: "6856", name: "Planetary Decoder", theme: "Space", category: "CASTLE / OTHER", year: 1996, pieces: 77, retail: 7.99, condition: "Possible", currentValue: 22, growth: 0.0, valueNew: 100, valueUsed: 22, rebuild: true, instructionsPdf: "instructions/6856-planetary-decoder.pdf", note: "Two white 8x6 grille wings (30036) found in the bins" },
     { setNumber: "6055", name: "Prisoner Convoy", theme: "Castle", category: "CASTLE / OTHER", year: 1985, pieces: 115, retail: 19.99, condition: "Possible", currentValue: 52, growth: 0.0, valueNew: 765, valueUsed: 52, rebuild: true, instructionsPdf: "instructions/6055-prisoner-convoy.pdf", note: "Two old white horses, gray peasants and crossed-pikes knights found in the bins" },
     { setNumber: "6039", name: "Twin-Arm Launcher", theme: "Castle", category: "CASTLE / OTHER", year: 1988, pieces: 77, retail: 8.5, condition: "Possible", currentValue: 40, growth: 0.0, valueNew: 339, valueUsed: 40, rebuild: true, instructionsPdf: "instructions/6039-twin-arm-launcher.pdf", note: "Red & yellow lion horse cover and two knights found in the bins" },
+    { setNumber: "6817", name: "Beta Buzzer", theme: "Insectoids", category: "CASTLE / OTHER", year: 1998, pieces: 32, retail: 4, condition: "Possible", lot: "fb-2026-11-25", currentValue: 9, growth: 0, valueNew: 41, valueUsed: 9, rebuild: true, clue: "insectoids", fit: "1 pair of small wings (Lt. Maverick)" },
+    { setNumber: "2965", name: "Hornet Scout", theme: "Insectoids", category: "CASTLE / OTHER", year: 1998, pieces: 73, retail: 8, condition: "Possible", lot: "fb-2026-11-25", currentValue: 38, growth: 0, valueNew: 104, valueUsed: 38, rebuild: true, clue: "insectoids", fit: "1 pair of small wings (Gypsy Moth + Gigabot)" },
+    { setNumber: "6977", name: "Arachnoid Star Base", theme: "Insectoids", category: "CASTLE / OTHER", year: 1998, pieces: 437, retail: 80, condition: "Possible", lot: "fb-2026-11-25", currentValue: 149, growth: 0, valueNew: 435, valueUsed: 149, rebuild: true, clue: "insectoids", fit: "1 pair of small wings (Professor Webb, Danny Longlegs, 2 Gigabots)" },
+    { setNumber: "6905", name: "Bi-Wing Blaster", theme: "Insectoids", category: "CASTLE / OTHER", year: 1998, pieces: 112, retail: 15, condition: "Possible", lot: "fb-2026-11-25", currentValue: 39, growth: 0, valueNew: 113, valueUsed: 39, rebuild: true, clue: "insectoids", fit: "2 pairs of small wings, so we'd be missing 1 (Lt. Maverick + Gigabot)" },
+    { setNumber: "6969", name: "Celestial Stinger", theme: "Insectoids", category: "CASTLE / OTHER", year: 1998, pieces: 252, retail: 50, condition: "Possible", lot: "fb-2026-11-25", currentValue: 85, growth: 0, valueNew: 181, valueUsed: 85, rebuild: true, clue: "insectoids", fit: "2 pairs of small wings + big wings, so we'd be missing some (Captain Wizer + 2 Gigabots)" },
   ],
 
+  // Minifig and part clues: possible builds with clue: "<id>" are grouped into a folder per clue on the To Build page
+  possibleClues: [
+    { id: "insectoids", title: "Insectoids (1998): a pair of small circuit-print wings", have: "One left and one right small Insectoid wing (trans-dark blue with circuit print) from the Nov 25 bins. They came in all of these sets, so the minifigs or other pieces will tell which." }
+  ],
 
   // Bulk purchases (lots). Sets, possible builds and minifigs from a lot carry lot: "<id>"
   // and show a stamp on their cards.
