@@ -1,6 +1,8 @@
 // Possible purchases: listings we've looked at (Facebook Marketplace lots and so on).
 // Values are BrickLink average used sold prices (last 6 months) unless a note says otherwise.
 // status: "Considering", "Offered", "Bought" or "Passed".
+// A passed listing only needs: id, title, url (optional), source, location, asking, checked, status: "Passed",
+// photos (the first one is shown) and passReason.
 // Each set: figs lists the minifigs the set comes with; seen: true when we spotted it in the listing.
 const DEALS = [
   {
@@ -108,5 +110,32 @@ const DEALS = [
       "Ask whether the drawers under the table and the Ziploc bags come with the lot.",
       "Look for the Ostrich Race ostriches and the London Escape cart with the white horse."
     ]
+  }
+  ,
+  {
+    id: "fb-1919554739484319",
+    title: "50+ pounds Legos 100+ mini figs",
+    url: "https://www.facebook.com/marketplace/item/1919554739484319/",
+    source: "Facebook Marketplace",
+    location: "Fort Montgomery, NY",
+    asking: 400,
+    checked: "2026-11-26",
+    status: "Passed",
+    estimate: { low: 365, high: 590 },
+    photos: [{ src: "01-lot.jpg", caption: "The whole lot" }, { src: "02-minifigs.jpg", caption: "Minifig close-up" }],
+    passReason: "Loose bulk and common figures, with nothing pointing to a set we could rebuild. About 70 City/Town minifigs ($1–3 each; C-3PO, Leia, Batman and a TMNT Leonardo are the best at $4–8), about 25 Friends and Disney mini-dolls (Elsa, Anna, Kristoff, Ariel), animals, capes and 50+ lbs of loose bricks. Worth about $365–590, so $400 is fair, not a deal. Would need to be about $250."
+  },
+  {
+    id: "fb-city-lot-2026-11-26",
+    title: "City and Jurassic World bins with instructions",
+    url: "",
+    source: "Facebook Marketplace",
+    location: "",
+    asking: 200,
+    checked: "2026-11-26",
+    status: "Passed",
+    estimate: { low: 180, high: 280 },
+    photos: [{ src: "01-lot.jpg", caption: "The lot" }],
+    passReason: "Mostly common City and Jurassic World sets, partly taken apart: 60196 Arctic Supply Plane, 60228 Deep Space Rocket, 75928 Blue's Helicopter Pursuit, 60182 Pickup & Caravan and 10757 Raptor Rescue Truck (about $210 if complete), plus 30–40 common minifigs and some dinos. Several bags were Mega Construx and other brands. Worth about $180–280, so $200 is fair, not a deal. Would need to be about $120."
   }
 ];

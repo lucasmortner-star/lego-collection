@@ -1949,17 +1949,19 @@
   // ===================================================================
   // POSSIBLE BUYS (deals-data.js)
   // ===================================================================
+  let dealsTab = 'active';
   function renderDeals() {
     const deals = typeof DEALS !== 'undefined' ? DEALS : [];
     const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const range = r => r[0] === r[1] ? fmt(r[0]) : `${fmt(r[0])}–${fmt(r[1])}`;
     const open = deals.filter(d => d.status === 'Considering' || d.status === 'Offered');
     const bought = deals.filter(d => d.status === 'Bought');
+    const passedCount = deals.filter(d => d.status === 'Passed').length;
     document.getElementById('dlStats').innerHTML = `
       <div class="mf-stat-card">
         <div class="mf-stat-label">Listings Reviewed</div>
         <div class="mf-stat-value accent">${deals.length}</div>
-        <div class="mf-stat-sub">${open.length} still open &middot; ${bought.length} bought</div>
+        <div class="mf-stat-sub">${open.length} open &middot; ${bought.length} bought &middot; ${passedCount} passed</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Asking (open)</div>
@@ -2041,8 +2043,35 @@
         ${d.checklist ? `<details class="dl-section" open><summary>Check at pickup</summary><ul class="dl-list dl-checks">${d.checklist.map(c => `<li>${esc(c)}</li>`).join('')}</ul></details>` : ''}
       </article>`;
     };
-    const order = { Considering: 0, Offered: 1, Bought: 2, Passed: 3 };
-    document.getElementById('dlBoard').innerHTML = deals.slice().sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || b.checked.localeCompare(a.checked)).map(card).join('');
+    const passedCard = d => {
+      const base = `deals/${d.id}/`;
+      const ph = d.photos && d.photos[0];
+      return `<article class="dl-passed">
+        ${ph ? `<a href="${base}${ph.src}" target="_blank" rel="noopener"><img src="${base}${ph.src}" alt="${esc(ph.caption)}" loading="lazy"></a>` : ''}
+        <div class="dl-passed-body">
+          <div class="dl-passed-head">
+            <h3>${esc(d.title)}</h3>
+            <div class="dl-price">${fmt(d.asking)}</div>
+          </div>
+          <div class="dl-source">${esc(d.source)}${d.location ? ' &middot; ' + esc(d.location) : ''} &middot; looked at ${fmtDay(parseDay(d.checked))}${d.estimate ? ` &middot; worth about ${fmt(d.estimate.low)}–${fmt(d.estimate.high)}` : ''}</div>
+          <p>${esc(d.passReason || '')}</p>
+          ${d.url ? `<a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>` : ''}
+        </div>
+      </article>`;
+    };
+    const order = { Considering: 0, Offered: 1, Bought: 2 };
+    const active = deals.filter(d => d.status !== 'Passed').sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || b.checked.localeCompare(a.checked));
+    const passed = deals.filter(d => d.status === 'Passed').sort((a, b) => b.checked.localeCompare(a.checked));
+    const tab = dealsTab === 'passed' ? 'passed' : 'active';
+    document.getElementById('dlBoard').innerHTML = `
+      <div class="dl-tabs">
+        <button class="dl-tab${tab === 'active' ? ' active' : ''}" data-dltab="active">Considering &amp; bought (${active.length})</button>
+        <button class="dl-tab${tab === 'passed' ? ' active' : ''}" data-dltab="passed">Passed (${passed.length})</button>
+      </div>
+      ${tab === 'active'
+        ? (active.map(card).join('') || '<p class="dl-empty">Nothing we\'re considering right now.</p>')
+        : (passed.map(passedCard).join('') || '<p class="dl-empty">No passed listings yet.</p>')}`;
+    document.querySelectorAll('.dl-tab').forEach(b => b.addEventListener('click', () => { dealsTab = b.dataset.dltab; renderDeals(); }));
   }
 
   // ===================================================================

@@ -3160,3 +3160,15 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .dl-set-img { width: 100%; height: 140px; }
   .dl-set-val { text-align: left; }
 }
+.dl-tabs { display: flex; gap: 8px; }
+.dl-tab { font: inherit; font-size: 14px; font-weight: 700; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary); cursor: pointer; }
+.dl-tab.active { background: var(--text-primary); color: var(--bg-secondary); border-color: var(--text-primary); }
+.dl-passed { display: flex; gap: 18px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+.dl-passed img { width: 200px; height: 150px; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); display: block; }
+.dl-passed-body { flex: 1; min-width: 0; }
+.dl-passed-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.dl-passed-head h3 { font-size: 18px; font-weight: 800; margin: 0; }
+.dl-passed .dl-price { font-size: 22px; }
+.dl-passed p { font-size: 14px; color: var(--text-secondary); margin: 8px 0 12px; line-height: 1.5; }
+.dl-passed .dl-link { display: inline-block; font-size: 13px; padding: 5px 12px; }
+@media (max-width: 640px) { .dl-passed { flex-direction: column; } .dl-passed img { width: 100%; height: 200px; } }
