@@ -31,6 +31,7 @@
         <button class="page-tab" data-page="builders">🏆 Builders</button>
         <button class="page-tab" data-page="tobuild">🧱 To Build</button>
         <button class="page-tab" data-page="missing">🧩 Missing</button>
+        <button class="page-tab" data-page="deals">🛒 Possible Buys</button>
       </div>
 
       <div class="header-controls">
@@ -282,6 +283,21 @@
     <div id="msBoard"></div>
   </main>
 
+  <!-- ============================================ -->
+  <!-- POSSIBLE BUYS PAGE                           -->
+  <!-- ============================================ -->
+  <main class="minifigs-page" id="dealsPage" style="display:none;">
+    <div class="mf-hero">
+      <div class="mf-hero-content">
+        <div class="mf-hero-icon">🛒</div>
+        <h2>Possible Buys</h2>
+        <p>Listings we've looked at, what's in them and what they're worth</p>
+      </div>
+    </div>
+    <div class="mf-stats" id="dlStats"></div>
+    <div id="dlBoard"></div>
+  </main>
+
   <!-- FOOTER -->
   <footer class="footer" id="collectionFooter">
     <p>Values are BrickLink's average sold price over the last 6 months, combining new and used complete-set sales (incomplete sets excluded) — the same basis Brickify uses. Brand-new sets with no sales yet are valued at retail.</p>
@@ -316,6 +332,11 @@
     <p>Pieces come from each set's <code>missing</code> list in data.js. Use "Choose missing pieces" in a set's popup to pick them from the parts list, then send the copied list to update the site.</p>
   </footer>
 
+  <footer class="footer" id="dealsFooter" style="display:none;">
+    <p>Set values are BrickLink's average used sold price over the last 6 months for a complete set. "As shown" is our estimate for what's in the photos, mostly without the set's minifigs.</p>
+    <p>A deal is roughly 50–65% of the estimated value or less. To add a listing, add it to deals-data.js with its photos in deals/&lt;id&gt;/ and re-deploy.</p>
+  </footer>
+
   <script src="data.js"></script>
   <script src="wishlist-data.js"></script>
   <script src="minifigs-data.js"></script>
@@ -325,6 +346,7 @@
   <script src="part-prices.js"></script>
   <script src="price-history.js"></script>
   <script src="set-dates.js"></script>
+  <script src="deals-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

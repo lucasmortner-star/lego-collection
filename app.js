@@ -1945,6 +1945,106 @@
     document.body.style.overflow = '';
   }
 
+
+  // ===================================================================
+  // POSSIBLE BUYS (deals-data.js)
+  // ===================================================================
+  function renderDeals() {
+    const deals = typeof DEALS !== 'undefined' ? DEALS : [];
+    const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const range = r => r[0] === r[1] ? fmt(r[0]) : `${fmt(r[0])}–${fmt(r[1])}`;
+    const open = deals.filter(d => d.status === 'Considering' || d.status === 'Offered');
+    const bought = deals.filter(d => d.status === 'Bought');
+    document.getElementById('dlStats').innerHTML = `
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Listings Reviewed</div>
+        <div class="mf-stat-value accent">${deals.length}</div>
+        <div class="mf-stat-sub">${open.length} still open &middot; ${bought.length} bought</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Asking (open)</div>
+        <div class="mf-stat-value">${fmt(open.reduce((a, d) => a + d.asking, 0))}</div>
+        <div class="mf-stat-sub">for ${open.length} listing${open.length === 1 ? '' : 's'}</div>
+      </div>
+      <div class="mf-stat-card">
+        <div class="mf-stat-label">Estimated Value (open)</div>
+        <div class="mf-stat-value">${fmt(open.reduce((a, d) => a + d.estimate.low, 0))}–${fmt(open.reduce((a, d) => a + d.estimate.high, 0))}</div>
+        <div class="mf-stat-sub">as shown in the photos</div>
+      </div>`;
+    if (!deals.length) {
+      document.getElementById('dlBoard').innerHTML = '<p class="dl-empty">No listings yet.</p>';
+      return;
+    }
+    const figImg = id => `https://img.bricklink.com/ItemImage/MN/0/${id}.png`;
+    const setImg = n => `https://images.brickset.com/sets/images/${n}-1.jpg`;
+    const card = d => {
+      const base = `deals/${d.id}/`;
+      const pct = Math.round(d.asking / ((d.estimate.low + d.estimate.high) / 2) * 100);
+      const figsAll = d.sets.reduce((a, s) => a + s.figs.length, 0);
+      const figsSeen = d.sets.reduce((a, s) => a + s.figs.filter(f => f[2]).length, 0);
+      const setsTotal = d.sets.reduce((a, s) => a + s.used, 0);
+      const shownLow = d.sets.reduce((a, s) => a + s.asShown[0], 0);
+      const shownHigh = d.sets.reduce((a, s) => a + s.asShown[1], 0);
+      const unLow = d.unidentified.reduce((a, u) => a + u.value[0], 0);
+      const unHigh = d.unidentified.reduce((a, u) => a + u.value[1], 0);
+      const photos = d.photos.map(p => `<a class="dl-photo" href="${base}${p.src}" target="_blank" rel="noopener" title="${esc(p.caption)}"><img src="${base}${p.src}" alt="${esc(p.caption)}" loading="lazy"><span>${esc(p.caption)}</span></a>`).join('');
+      const setRows = d.sets.map(s => {
+        const seen = s.figs.filter(f => f[2]).length;
+        const figs = s.figs.map(f => `<div class="dl-fig${f[2] ? ' seen' : ''}" title="${esc(f[1])}${f[2] ? ' (seen in the listing)' : ' (not seen)'}"><img src="${figImg(f[0])}" alt="${esc(f[1])}" loading="lazy"><span>${esc(f[1])}</span></div>`).join('');
+        return `<div class="dl-set">
+          <img class="dl-set-img" src="${setImg(s.setNumber)}" alt="${esc(s.name)}" loading="lazy">
+          <div class="dl-set-body">
+            <div class="dl-set-head">
+              <div><span class="dl-set-num">${s.setNumber}</span> <strong>${esc(s.name)}</strong>${s.sure ? '' : ' <span class="dl-maybe">probably</span>'}
+                <div class="dl-set-meta">${esc(s.theme)} &middot; ${s.year}</div></div>
+              <div class="dl-set-val"><div>${fmt(s.used)} <small>used, complete${s.usedNote ? ` (${esc(s.usedNote)})` : ''}</small></div><div class="dl-asshown">${range(s.asShown)} <small>as shown</small></div></div>
+            </div>
+            <p class="dl-set-note">${esc(s.note)}</p>
+            ${s.figs.length ? `<div class="dl-figs-label">Minifigs: ${seen} of ${s.figs.length} seen</div><div class="dl-figs">${figs}</div>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      return `<article class="dl-card">
+        <div class="dl-head">
+          <div>
+            <div class="dl-source">${esc(d.source)} &middot; ${esc(d.location)} &middot; checked ${fmtDay(parseDay(d.checked))}</div>
+            <h3>${esc(d.title)}</h3>
+            <div class="dl-sub">${esc(d.condition)} &middot; ${esc(d.listed)}</div>
+          </div>
+          <div class="dl-head-right">
+            <div class="dl-price">${fmt(d.asking)}${d.askingWas ? ` <s>${fmt(d.askingWas)}</s>` : ''}</div>
+            <span class="dl-status dl-status-${d.status.toLowerCase()}">${esc(d.status)}</span>
+            <a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>
+          </div>
+        </div>
+        <div class="dl-verdict dl-verdict-${d.verdict.toLowerCase().replace(/[^a-z]/g, '')}">
+          <div class="dl-verdict-top"><strong>${esc(d.verdict)}</strong> &middot; asking is about ${pct}% of the estimated value</div>
+          <p>${esc(d.verdictNote)}</p>
+          <div class="dl-nums">
+            <div><span>Estimated value, as shown</span><b>${fmt(d.estimate.low)}–${fmt(d.estimate.high)}</b></div>
+            <div><span>If every set were complete</span><b>~${fmt(d.estimate.complete)}</b></div>
+            <div><span>Offer</span><b>${fmt(d.offer)}</b></div>
+            <div><span>Pay up to</span><b>${fmt(d.maxPay)}</b></div>
+          </div>
+          ${d.message ? `<div class="dl-message"><span>Message to send</span>“${esc(d.message)}”</div>` : ''}
+        </div>
+        <details class="dl-section" open><summary>Photos (${d.photos.length})</summary><div class="dl-photos">${photos}</div></details>
+        <details class="dl-section" open><summary>Sets identified (${d.sets.length}) &middot; ${fmt(setsTotal)} complete &middot; ${range([shownLow, shownHigh])} as shown &middot; ${figsSeen} of ${figsAll} set minifigs seen</summary><div class="dl-sets">${setRows}</div></details>
+        <details class="dl-section"><summary>Other minifigs in the lot (${d.otherFigs.length}) &middot; all minifigs worth about ${range(d.minifigValue)}</summary>
+          <ul class="dl-list">${d.otherFigs.map(f => `<li><strong>${esc(f.name)}</strong> <span>${esc(f.from)}</span></li>`).join('')}</ul>
+          ${d.checklistImage ? `<a class="dl-checklist" href="${base}${d.checklistImage}" target="_blank" rel="noopener"><img src="${base}${d.checklistImage}" alt="Minifig checklist" loading="lazy"><span>Minifig checklist (opens full size)</span></a>` : ''}
+        </details>
+        <details class="dl-section"><summary>Seen but not identified &middot; about ${range([unLow, unHigh])}</summary>
+          <ul class="dl-list">${d.unidentified.map(u => `<li><strong>${esc(u.what)}</strong>${u.value[1] ? ` <span>${range(u.value)}</span>` : ''}</li>`).join('')}</ul>
+        </details>
+        ${d.sellerSays ? `<details class="dl-section"><summary>What the seller says</summary><p class="dl-seller">${esc(d.sellerSays)}</p></details>` : ''}
+        ${d.checklist ? `<details class="dl-section" open><summary>Check at pickup</summary><ul class="dl-list dl-checks">${d.checklist.map(c => `<li>${esc(c)}</li>`).join('')}</ul></details>` : ''}
+      </article>`;
+    };
+    const order = { Considering: 0, Offered: 1, Bought: 2, Passed: 3 };
+    document.getElementById('dlBoard').innerHTML = deals.slice().sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || b.checked.localeCompare(a.checked)).map(card).join('');
+  }
+
   // ===================================================================
   // PAGE SWITCHING
   // ===================================================================
@@ -1964,6 +2064,7 @@
     document.getElementById('buildersPage').style.display = page === 'builders' ? '' : 'none';
     document.getElementById('toBuildPage').style.display = page === 'tobuild' ? '' : 'none';
     document.getElementById('missingPage').style.display = page === 'missing' ? '' : 'none';
+    document.getElementById('dealsPage').style.display = page === 'deals' ? '' : 'none';
 
     // Toggle footer visibility
     document.getElementById('collectionFooter').style.display = page === 'collection' ? '' : 'none';
@@ -1972,6 +2073,7 @@
     document.getElementById('buildersFooter').style.display = page === 'builders' ? '' : 'none';
     document.getElementById('tobuildFooter').style.display = page === 'tobuild' ? '' : 'none';
     document.getElementById('missingFooter').style.display = page === 'missing' ? '' : 'none';
+    document.getElementById('dealsFooter').style.display = page === 'deals' ? '' : 'none';
 
     // Toggle header controls visibility (search/view toggle only for collection)
     document.querySelector('.header-controls').style.display = page === 'collection' ? '' : 'none';
@@ -1989,6 +2091,8 @@
       renderToBuild();
     } else if (page === 'missing') {
       renderMissing();
+    } else if (page === 'deals') {
+      renderDeals();
     }
 
     // Scroll to top
