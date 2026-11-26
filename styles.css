@@ -2935,6 +2935,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .ms-group-wrap[open] > .ms-group::before { transform: rotate(90deg); }
 .ms-group span { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-left: 6px; }
 .mf-missing-badge { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.mf-noset-badge { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
 .ms-search { margin-left: auto; min-width: 0; width: 220px; max-width: 100%; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); padding: 5px 12px; border-radius: 20px; font-size: 13px; }
 @media (max-width: 600px) { .ms-search { margin-left: 0; width: 100%; } }
 .ms-cost { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px; }

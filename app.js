@@ -689,7 +689,8 @@
         (m.era || '').toLowerCase().includes(q) ||
         (m.source || '').toLowerCase().includes(q) ||
         (m.sourceSetName || '').toLowerCase().includes(q) ||
-        (m.notes || '').toLowerCase().includes(q)
+        (m.notes || '').toLowerCase().includes(q) ||
+        (m.origin || '').toLowerCase().includes(q)
       );
     }
 
@@ -822,12 +823,14 @@
         const rarityClass = (m.rarity || 'Common').toLowerCase().replace(/[^a-z]/g, '');
         const ownedClass = m.owned ? 'owned' : 'need';
         const qtyBadge = (m.qty && m.qty > 1) ? `<span class="mf-qty-badge">×${m.qty}</span>` : '';
-        const ownedBadge = FIGS_MISSING_PARTS.has(m.id) ? '<span class="mf-bought-badge mf-missing-badge" title="Missing parts, see the Missing page">⚠️ Missing parts</span>' : m.purchased ? '<span class="mf-bought-badge" title="Bought on its own, not from a set">🛒 Bought</span>' : '';
+        const ownedBadge = FIGS_MISSING_PARTS.has(m.id) ? '<span class="mf-bought-badge mf-missing-badge" title="Missing parts, see the Missing page">⚠️ Missing parts</span>' : m.purchased ? '<span class="mf-bought-badge" title="Bought on its own, not from a set">🛒 Bought</span>' : m.noSet ? '<span class="mf-bought-badge mf-noset-badge" title="Not from a set we own">📭 Not from our sets</span>' : '';
         const setLabel = (m.fromSets || []).map(n => { const st = sets.find(x => x.setNumber === n); return st ? `${n} ${st.name}` : n; }).join(', ');
         const sourceLabel = m.inSet
           ? `Came in ${setLabel}`
           : m.purchased
           ? `${m.purchased.from ? 'Bought on ' + m.purchased.from : 'Bought separately'}${m.purchased.bought ? ' · ' + fmtDay(parseDay(m.purchased.bought)) : ''}${typeof m.purchased.paid === 'number' ? ' · paid ' + fmtFull(m.purchased.paid) : ''}`
+          : m.origin
+          ? `Likely from ${m.origin}`
           : m.source === 'BrickLink'
           ? 'BrickLink'
           : (m.sourceSetName ? `${m.source} · ${m.sourceSetName}` : m.source || 'Unknown');
@@ -853,7 +856,7 @@
               ${m.rarity ? `<span class="mf-rarity ${rarityClass}">${m.rarity}</span>` : ''}
               <span class="mf-era">${m.era || ''}</span>
             </div>
-            <div class="mf-card-source">${m.purchased || m.inSet ? '' : 'From: '}${sourceLabel}${!m.purchased && m.year ? ` · ${m.year}` : ''}</div>
+            <div class="mf-card-source">${m.purchased || m.inSet || m.origin ? '' : 'From: '}${sourceLabel}${!m.purchased && m.year ? ` · ${m.year}` : ''}</div>
             ${notesHtml}
             <div class="mf-card-footer">
               <span class="mf-value">${fmt(m.currentValue || 0)}</span>
