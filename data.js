@@ -308,11 +308,14 @@ const LEGO_DATA = {
     { setNumber: "6977", name: "Arachnoid Star Base", theme: "Insectoids", category: "CASTLE / OTHER", year: 1998, pieces: 437, retail: 80, condition: "Possible", lot: "fb-2026-11-25", currentValue: 149, growth: 0, valueNew: 435, valueUsed: 149, rebuild: true, clue: "insectoids", fit: "1 pair of small wings (Professor Webb, Danny Longlegs, 2 Gigabots)" },
     { setNumber: "6905", name: "Bi-Wing Blaster", theme: "Insectoids", category: "CASTLE / OTHER", year: 1998, pieces: 112, retail: 15, condition: "Possible", lot: "fb-2026-11-25", currentValue: 39, growth: 0, valueNew: 113, valueUsed: 39, rebuild: true, clue: "insectoids", fit: "2 pairs of small wings, so we'd be missing 1 (Lt. Maverick + Gigabot)" },
     { setNumber: "6969", name: "Celestial Stinger", theme: "Insectoids", category: "CASTLE / OTHER", year: 1998, pieces: 252, retail: 50, condition: "Possible", lot: "fb-2026-11-25", currentValue: 85, growth: 0, valueNew: 181, valueUsed: 85, rebuild: true, clue: "insectoids", fit: "2 pairs of small wings + big wings, so we'd be missing some (Captain Wizer + 2 Gigabots)" },
+    { setNumber: "6107", name: "Recon Ray", theme: "Aquazone", category: "CASTLE / OTHER", year: 1998, pieces: 17, retail: 3, condition: "Possible", lot: "fb-2026-11-25", currentValue: 10, growth: 0, valueNew: 54, valueUsed: 10, rebuild: true, clue: "stingrays", fit: "The whole sub is built around this piece (Commander Manta Ray, red legs)" },
+    { setNumber: "6199", name: "Hydro Crystalization Station", theme: "Aquazone", category: "CASTLE / OTHER", year: 1998, pieces: 482, retail: 90, condition: "Possible", lot: "fb-2026-11-25", currentValue: 282, growth: 0, valueNew: 542, valueUsed: 282, rebuild: true, clue: "stingrays", fit: "1 of this piece (Raven Ray, Manta Ray + 3 Hydronauts)" },
   ],
 
   // Minifig and part clues: possible builds with clue: "<id>" are grouped into a folder per clue on the To Build page
   possibleClues: [
-    { id: "insectoids", title: "Insectoids (1998): a pair of small circuit-print wings", have: "One left and one right small Insectoid wing (trans-dark blue with circuit print) from the Nov 25 bins. They came in all of these sets, so the minifigs or other pieces will tell which." }
+    { id: "insectoids", title: "Insectoids (1998): a pair of small circuit-print wings", have: "One left and one right small Insectoid wing (trans-dark blue with circuit print) from the Nov 25 bins. They came in all of these sets, so the minifigs or other pieces will tell which." },
+    { id: "stingrays", title: "Aquazone Stingrays (1998): the half-saucer nose with the Stingray emblem", have: "One dark gray half-saucer with a 2 x 6 plate and the gold Stingray emblem from the Nov 25 bins. Only these two sets have just one of it (Stingray Stormer has 4)." }
   ],
 
   // Bulk purchases (lots). Sets, possible builds and minifigs from a lot carry lot: "<id>"
