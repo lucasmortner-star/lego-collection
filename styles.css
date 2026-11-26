@@ -2855,19 +2855,6 @@ footer.hogwarts-page a {
 .tb-link { margin-top: auto; font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 500; }
 .tb-link:hover { text-decoration: underline; }
 .tb-empty { text-align: center; color: var(--text-muted); padding: 40px 16px; }
-.tb-fit { font-size: 12px; color: var(--text-secondary); line-height: 1.35; }
-.tb-folders-title { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin: 22px 0 10px; }
-.tb-folder { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; }
-.tb-folder summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 12px 14px; font-weight: 600; }
-.tb-folder summary::-webkit-details-marker { display: none; }
-.tb-folder summary::after { content: '\25B8'; margin-left: auto; color: var(--text-muted); transition: transform .15s; }
-.tb-folder[open] summary::after { transform: rotate(90deg); }
-.tb-folder summary:hover { background: var(--bg-tertiary); border-radius: var(--radius); }
-.tb-folder-icon { font-size: 20px; }
-.tb-folder-title { flex: 1; min-width: 0; }
-.tb-folder-count { font-size: 12px; font-weight: 600; background: var(--bg-tertiary); color: var(--text-secondary); padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
-.tb-folder-have { margin: 0 14px 12px; color: var(--text-muted); font-size: 13px; }
-.tb-folder > .tb-grid { padding: 0 14px 14px; }
 @media (max-width: 480px) { .tb-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .tb-img { height: 110px; } .tb-name { font-size: 13px; } }
 
 /* ---------- Missing Pieces page ---------- */

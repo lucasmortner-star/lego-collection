@@ -921,7 +921,6 @@
         <div class="tb-name">${s.name}</div>
         <div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${(s.pieces || 0).toLocaleString()} pcs</div>
         <div class="tb-tags">${tags}</div>
-        ${s.fit ? `<div class="tb-fit">&#129513; ${s.fit}${s.valueUsed ? ` &middot; ~${fmt(s.valueUsed)} used` : ''}</div>` : ''}
         ${instr ? `<a class="tb-link" href="${instr}" target="_blank" rel="noopener">${s.instructionsPdf ? 'Instructions + parts (PDF)' : 'Instructions'} &#8599;</a>` : ''}
       </div>
     </div>`;
@@ -962,25 +961,10 @@
         <div class="mf-stat-value">${missing}</div>
         <div class="mf-stat-sub">logged on these sets</div>
       </div>`;
-    const bySize = list => list.slice().sort((a, b) => (b.pieces || 0) - (a.pieces || 0));
-    // Possible builds that came from a minifig clue (clue: "<id>") go in a folder per clue, closed until clicked
-    const clues = LEGO_DATA.possibleClues || [];
-    const groupBody = g => {
-      if (!g.extra) return `<div class="tb-grid">${bySize(g.list).map(toBuildCard).join('')}</div>`;
-      const loose = g.list.filter(s => !s.clue || !clues.some(c => c.id === s.clue));
-      const folders = clues.map(c => ({ c, list: g.list.filter(s => s.clue === c.id) })).filter(f => f.list.length);
-      return (loose.length ? `<div class="tb-grid">${bySize(loose).map(toBuildCard).join('')}</div>` : '') +
-        (folders.length ? `<h4 class="tb-folders-title">From minifigs we have</h4>` : '') +
-        folders.map(f => `<details class="tb-folder">
-          <summary><span class="tb-folder-icon">&#128193;</span><span class="tb-folder-title">${f.c.title}</span><span class="tb-folder-count">${f.list.length} sets</span></summary>
-          <p class="tb-folder-have">${f.c.have}</p>
-          <div class="tb-grid">${f.list.map(toBuildCard).join('')}</div>
-        </details>`).join('');
-    };
     document.getElementById('tbBoard').innerHTML = groups.filter(g => g.list.length).map(g => `
       <section class="tb-group">
         <div class="tb-group-head"><h3>${g.title} <span>${g.list.length}</span></h3><p>${g.note}</p></div>
-        ${groupBody(g)}
+        <div class="tb-grid">${g.list.slice().sort((a, b) => (b.pieces || 0) - (a.pieces || 0)).map(toBuildCard).join('')}</div>
       </section>`).join('') || '<p class="tb-empty">Nothing to build right now.</p>';
   }
 
