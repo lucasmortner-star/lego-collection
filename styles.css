@@ -3069,3 +3069,9 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .gain-up { color: var(--green); font-weight: 600; }
 .gain-down { color: var(--red); font-weight: 600; }
 .era-icon { width: 1.15em; height: 1.15em; vertical-align: -0.2em; }
+
+/* Stamp for items from a bulk purchase lot (LEGO_DATA.lots) */
+.lot-stamp { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; padding: 1px 8px; border: 1.5px dashed #7c3aed; border-radius: 6px; color: #6d28d9; background: #f5f3ff; transform: rotate(-2deg); white-space: nowrap; }
+.mf-card-body .lot-stamp { margin: 2px 0 4px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lot-stamp { background: rgba(124, 58, 237, 0.15); color: #c4b5fd; border-color: #a78bfa; } }
+:root[data-theme="dark"] .lot-stamp { background: rgba(124, 58, 237, 0.15); color: #c4b5fd; border-color: #a78bfa; }

@@ -848,6 +848,7 @@
           </div>
           <div class="mf-card-body">
             <div class="mf-card-name">${m.name}</div>
+            ${lotStamp(m)}
             <div class="mf-card-meta">
               ${m.rarity ? `<span class="mf-rarity ${rarityClass}">${m.rarity}</span>` : ''}
               <span class="mf-era">${m.era || ''}</span>
@@ -894,10 +895,20 @@
       : `https://www.lego.com/en-us/service/building-instructions/${n[0]}`;
   }
 
+  // Stamp for things that came from a bulk purchase (LEGO_DATA.lots)
+  function lotStamp(item) {
+    const lot = item && item.lot && (LEGO_DATA.lots || {})[item.lot];
+    if (!lot) return '';
+    const day = lot.bought ? fmtDay(parseDay(lot.bought)) : '';
+    const title = `${lot.name || lot.label}${day ? ' · ' + day : ''}${typeof lot.paid === 'number' ? ' · paid ' + fmtFull(lot.paid) + ' for the lot' : ''}${lot.note ? ' · ' + lot.note : ''}`;
+    return `<span class="lot-stamp" title="${title.replace(/"/g, '&quot;')}">📦 ${lot.label}</span>`;
+  }
+
   function toBuildCard(s) {
     const n = (String(s.setNumber).match(/^\d+/) || [''])[0];
     const missing = (s.missing || []).reduce((a, m) => a + (m.qty || 1), 0);
     const tags = [
+      lotStamp(s),
       s.possible ? '<span class="tb-tag tb-tag-maybe">Not sure we have it</span>' : s.review ? '<span class="tb-tag tb-tag-old">Needs review</span>' : s.needsParts ? '<span class="tb-tag tb-tag-missing">Needs parts</span>' : s.rebuild ? '<span class="tb-tag tb-tag-old">Rebuild</span>' : '',
       missing ? `<span class="tb-tag tb-tag-missing">${missing} missing</span>` : '',
       s.checked ? `<span class="tb-tag tb-tag-checked">${s.checkedFull ? '&#10003; ' : ''}${checkedLabel(s)}</span>` : '',
