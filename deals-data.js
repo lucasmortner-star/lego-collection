@@ -8,6 +8,181 @@
 // Each set: figs lists the minifigs the set comes with; seen: true when we spotted it in the listing.
 const DEALS = [
   {
+    id: "fb-1176325258141815",
+    title: "Lego Friends",
+    url: "https://www.facebook.com/marketplace/item/1176325258141815/",
+    source: "Facebook Marketplace",
+    location: "Milford, CT",
+    listed: "Listed 2 hours ago",
+    asking: 40,
+    checked: "2026-11-27",
+    status: "New",
+    photos: [
+      { src: "01.jpg", caption: "Everything laid out: builds, about 22 mini-dolls, horses, and a bin of bags and booklets" },
+      { src: "02.jpg", caption: "Instruction booklets (Andrea's Family House, Horse Training, Organic Café, Elsa's Jewelry Box and more)" }
+    ],
+    estimate: { low: 150, high: 220 },
+    verdict: "Deal",
+    offer: 40,
+    summary: "A whole Lego Friends collection from one family: about 10–12 sets with all the booklets, roughly 22 mini-dolls, four horses and a bin of extra pieces. Some sets are built and some half taken apart, but the seller says the pieces were kept together. Even with some parts missing it's worth well over $100 used, so $40 is about a quarter of its value. Pay the asking price and pick up fast; it was listed two hours ago and won't last.",
+    items: [
+      { what: "41449 Andrea's Family House (3 booklets, partly built)", value: [35, 47], note: "BrickLink used avg $47" },
+      { what: "41168 Elsa's Jewelry Box Creation (built, with Elsa)", value: [20, 28], note: "probably" },
+      { what: "41444 Heartlake City Organic Café", value: [15, 22], note: "booklet seen, build probably in the bin" },
+      { what: "41441 Horse Training and Trailer (built, with horse)", value: [12, 18], note: "probably" },
+      { what: "Vet ambulance, rescue helicopter, horse stable, camper and small sets", value: [40, 60], note: "set numbers not all readable" },
+      { what: "About 22 mini-dolls, 4 horses/foals, pets", value: [25, 45], note: "most belong to the sets above" }
+    ]
+  },
+  {
+    id: "fb-1921751735862942",
+    title: "Lego Boost Creative Toolbox #17101",
+    url: "https://www.facebook.com/marketplace/item/1921751735862942/",
+    source: "Facebook Marketplace",
+    location: "Westport, CT",
+    listed: "Listed 2 hours ago",
+    asking: 129,
+    checked: "2026-11-27",
+    status: "New",
+    photos: [
+      { src: "01.jpg", caption: "Box, booklet and the parts sorted into bags" }
+    ],
+    estimate: { low: 75, high: 100 },
+    verdict: "Pass",
+    summary: "Complete used Boost Creative Toolbox with its box, sorted into numbered bags. LEGO retired the Boost app (it now runs through Powered Up), and used ones have been selling on BrickLink for about $88. At $129 it's above what it's worth used.",
+    items: [
+      { what: "17101 Boost Creative Toolbox (complete, boxed)", value: [75, 100], note: "BrickLink used avg $88 (14 sales)" }
+    ]
+  },
+  {
+    id: "fb-2036447427048284",
+    title: "LEGO Spider-Man Far From Home Molten Man Battle 76128",
+    url: "https://www.facebook.com/marketplace/item/2036447427048284/",
+    source: "Facebook Marketplace",
+    location: "Bristol, CT",
+    listed: "Listed 13 hours ago",
+    asking: 20,
+    checked: "2026-11-27",
+    status: "New",
+    photos: [
+      { src: "01.jpg", caption: "Molten Man built, front and back" },
+      { src: "02.jpg", caption: "Instruction booklet" }
+    ],
+    estimate: { low: 15, high: 30 },
+    verdict: "Fair",
+    summary: "The big Molten Man figure is built and looks complete, with the booklet. The set's minifigures (Spider-Man and Mysterio) aren't in any photo, and they're a good part of its value. Worth about $15 without them and $30 with them; price is firm, so only worth it if the minifigs are included.",
+    items: [
+      { what: "76128 Molten Man Battle (built, minifigs not shown)", value: [15, 30], note: "ask if the minifigs are included" }
+    ]
+  },
+  {
+    id: "fb-1366000582177152",
+    title: "Mixed LEGO Bricks and Pieces",
+    url: "https://www.facebook.com/marketplace/item/1366000582177152/",
+    source: "Facebook Marketplace",
+    location: "Trumbull, CT",
+    listed: "Listed 18 hours ago",
+    asking: 60,
+    checked: "2026-11-27",
+    status: "New",
+    photos: [
+      { src: "01.jpg", caption: "Both bins" }
+    ],
+    estimate: { low: 30, high: 50 },
+    verdict: "Pass",
+    summary: "Two small bins of loose pieces, mostly gray, white and black, which looks like broken-up Star Wars ships. No minifigs or booklets. It's maybe 8–10 pounds, about $30–50 at bulk prices, so $60 is too much.",
+    items: [
+      { what: "Loose bulk, about 8–10 lb (mostly gray/white, Star Wars-looking parts)", value: [30, 50], note: "weight is a guess from photos" }
+    ]
+  },
+  {
+    id: "fb-2999239850455751",
+    title: "3 retired LEGO sets: Dobby, Bowser's Muscle Car, & Nutcracker, plus more!",
+    url: "https://www.facebook.com/marketplace/item/2999239850455751/",
+    source: "Facebook Marketplace",
+    location: "Ships (+$14 shipping)",
+    listed: "Listed recently",
+    asking: 150,
+    checked: "2026-11-27",
+    status: "New",
+    photos: [
+      { src: "01.jpg", caption: "All six sealed boxes" }
+    ],
+    estimate: { low: 170, high: 210 },
+    verdict: "Fair",
+    offer: 110,
+    summary: "Six sealed sets, and the biggest is the Grogu with Hover Pram (75403, $100 retail). The others are Dobby (76421), Bowser's Muscle Car (71431), the Toyota Supra Speed Champions car, the Turtle 3-in-1 (31377) and the Nutcracker (40640). Together they're about $200 at retail. $150 plus shipping is about 75% of that, which is a fair price, not a steal. Worth it at around $110.",
+    items: [
+      { what: "75403 Grogu with Hover Pram (sealed)", value: [80, 100], note: "" },
+      { what: "76421 Dobby the House-Elf (sealed, retired)", value: [30, 40], note: "" },
+      { what: "71431 Bowser's Muscle Car (sealed, retired)", value: [22, 30], note: "" },
+      { what: "Speed Champions Fast & Furious Toyota Supra (sealed)", value: [18, 25], note: "" },
+      { what: "40640 Nutcracker + 31377 Turtle with a Water Lily (sealed)", value: [18, 25], note: "" }
+    ]
+  },
+  {
+    id: "fb-1826825091897109",
+    title: "LEGO Monster Fighters 9468 Vampyre Castle - PARTIAL - Bags 4 5 6 7 Sealed + Box + Manual 2",
+    url: "https://www.facebook.com/marketplace/item/1826825091897109/",
+    source: "Facebook Marketplace",
+    location: "Bristol, CT",
+    listed: "Listed a day ago",
+    asking: 60,
+    checked: "2026-11-27",
+    status: "New",
+    photos: [
+      { src: "01.jpg", caption: "Box, sealed bags 4–7 and booklet 2" }
+    ],
+    estimate: { low: 40, high: 70 },
+    verdict: "Pass",
+    summary: "Only half of the Vampyre Castle: sealed bags 4–7, the worn box and booklet 2. Bags 1–3, booklet 1 and all the minifigures are missing, and the minifigures are what make this set valuable. It won't build the castle, and finishing it would cost more than buying a used complete one. Pass unless you already have bags 1–3.",
+    items: [
+      { what: "9468 Vampyre Castle bags 4–7 (sealed) + box + booklet 2", value: [40, 70], note: "parts value; no minifigs" }
+    ]
+  },
+  {
+    id: "fb-1783141066092548",
+    title: "Bulk bin Legos",
+    url: "https://www.facebook.com/marketplace/item/1783141066092548/",
+    source: "Facebook Marketplace",
+    location: "Watertown, CT",
+    listed: "Listed 2 days ago",
+    asking: 25,
+    checked: "2026-11-27",
+    status: "New",
+    photos: [
+      { src: "01.jpg", caption: "The bin" }
+    ],
+    estimate: { low: 20, high: 40 },
+    verdict: "Fair",
+    offer: 20,
+    summary: "One tote of mixed loose pieces in lots of colors (some Friends-style pinks and teals). No minifigs, and the seller says a few non-LEGO bricks are mixed in. It looks like 6–10 pounds, so about $20–40 at bulk prices. It's cheap but not clearly a deal; worth $20 if you want extra pieces.",
+    items: [
+      { what: "Loose mixed bulk, about 6–10 lb", value: [20, 40], note: "can't see how deep it goes" }
+    ]
+  },
+  {
+    id: "fb-1583135616981823",
+    title: "Lego Mech",
+    url: "https://www.facebook.com/marketplace/item/1583135616981823/",
+    source: "Facebook Marketplace",
+    location: "Derby, CT",
+    listed: "Listed 2 days ago",
+    asking: 65,
+    checked: "2026-11-27",
+    status: "New",
+    photos: [
+      { src: "01.jpg", caption: "The mech, built" }
+    ],
+    estimate: { low: 60, high: 80 },
+    verdict: "Fair",
+    offer: 45,
+    summary: "This is Ninjago 71821 Cole's Titan Dragon Mech (1,055 pieces), built. It matches the box picture: black, white and copper with the gold blades. Used complete ones sell for about $93 on BrickLink, but the seller says the minifig is missing. At $65 it's a fair price; worth it at around $45.",
+    items: [
+      { what: "71821 Cole's Titan Dragon Mech (built, no minifig)", value: [60, 80], note: "BrickLink used avg $93 complete" }
+    ]
+  },
+  {
     id: "fb-2581007512325511",
     title: "Lego set and minifigure lot",
     url: "https://www.facebook.com/marketplace/item/2581007512325511/",
