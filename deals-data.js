@@ -16,7 +16,9 @@ const DEALS = [
     listed: "Listed 2 hours ago",
     asking: 40,
     checked: "2026-11-27",
-    status: "New",
+    status: "Passed",
+    passReason: "A whole LEGO Friends collection (about 10–12 sets with booklets, ~22 mini-dolls, 4 horses) for $40, worth about $150–220 used. Cheap for what it is, but Friends isn't our theme and resells poorly, so we passed.",
+    wasStatus: "New",
     photos: [
       { src: "01.jpg", caption: "Everything laid out: builds, about 22 mini-dolls, horses, and a bin of bags and booklets" },
       { src: "02.jpg", caption: "Instruction booklets (Andrea's Family House, Horse Training, Organic Café, Elsa's Jewelry Box and more)" }
