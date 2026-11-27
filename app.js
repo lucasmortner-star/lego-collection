@@ -2107,8 +2107,8 @@
           </div>
           ${d.message ? `<div class="dl-message"><span>Message to send</span>“${esc(d.message)}”</div>` : ''}
         </div>
-        <details class="dl-section" open><summary>Photos (${d.photos.length})</summary><div class="dl-photos">${photos}</div></details>
-        <details class="dl-section" open><summary>Sets identified (${d.sets.length}) &middot; ${fmt(setsTotal)} complete &middot; ${range([shownLow, shownHigh])} as shown &middot; ${figsSeen} of ${figsAll} set minifigs seen</summary><div class="dl-sets">${setRows}</div></details>
+        <details class="dl-section"><summary>Photos (${d.photos.length})</summary><div class="dl-photos">${photos}</div></details>
+        <details class="dl-section"><summary>Sets identified (${d.sets.length}) &middot; ${fmt(setsTotal)} complete &middot; ${range([shownLow, shownHigh])} as shown &middot; ${figsSeen} of ${figsAll} set minifigs seen</summary><div class="dl-sets">${setRows}</div></details>
         <details class="dl-section"><summary>Other minifigs in the lot (${d.otherFigs.length}) &middot; all minifigs worth about ${range(d.minifigValue)}</summary>
           <ul class="dl-list">${d.otherFigs.map(f => `<li><strong>${esc(f.name)}</strong> <span>${esc(f.from)}</span></li>`).join('')}</ul>
           ${d.checklistImage ? `<a class="dl-checklist" href="${base}${d.checklistImage}" target="_blank" rel="noopener"><img src="${base}${d.checklistImage}" alt="Minifig checklist" loading="lazy"><span>Minifig checklist (opens full size)</span></a>` : ''}
@@ -2117,7 +2117,7 @@
           <ul class="dl-list">${d.unidentified.map(u => `<li><strong>${esc(u.what)}</strong>${u.value[1] ? ` <span>${range(u.value)}</span>` : ''}</li>`).join('')}</ul>
         </details>
         ${d.sellerSays ? `<details class="dl-section"><summary>What the seller says</summary><p class="dl-seller">${esc(d.sellerSays)}</p></details>` : ''}
-        ${d.checklist ? `<details class="dl-section" open><summary>Check at pickup</summary><ul class="dl-list dl-checks">${d.checklist.map(c => `<li>${esc(c)}</li>`).join('')}</ul></details>` : ''}
+        ${d.checklist ? `<details class="dl-section"><summary>Check at pickup</summary><ul class="dl-list dl-checks">${d.checklist.map(c => `<li>${esc(c)}</li>`).join('')}</ul></details>` : ''}
       </article>`;
     };
     const passedCard = d => {
@@ -2164,7 +2164,8 @@
       return b.checked.localeCompare(a.checked) || rank(a) - rank(b);
     });
     const order = { Considering: 0, Offered: 1, Bought: 2 };
-    const active = deals.filter(d => d.status !== 'Passed' && d.status !== 'New').sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || b.checked.localeCompare(a.checked));
+    const active = deals.filter(d => d.status === 'Considering' || d.status === 'Offered').sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || b.checked.localeCompare(a.checked));
+    const boughtList = deals.filter(d => d.status === 'Bought').sort((a, b) => (b.boughtOn || b.checked).localeCompare(a.boughtOn || a.checked));
     const passed = deals.filter(d => d.status === 'Passed').sort((a, b) => b.checked.localeCompare(a.checked));
     // Weekend estate/garage sales and local auctions that mention LEGO (sales-data.js)
     const today = new Date(); today.setHours(0, 0, 0, 0);
@@ -2192,7 +2193,8 @@
       <div class="dl-tabs">
         <button class="dl-tab${tab === 'new' ? ' active' : ''}" data-dltab="new">🆕 New finds (${fresh.length})</button>
         <button class="dl-tab${tab === 'sales' ? ' active' : ''}" data-dltab="sales">📍 Weekend sales (${sales.length})</button>
-        <button class="dl-tab${tab === 'active' ? ' active' : ''}" data-dltab="active">Considering &amp; bought (${active.length})</button>
+        <button class="dl-tab${tab === 'active' ? ' active' : ''}" data-dltab="active">Considering (${active.length})</button>
+        <button class="dl-tab${tab === 'bought' ? ' active' : ''}" data-dltab="bought">Bought (${boughtList.length})</button>
         <button class="dl-tab${tab === 'passed' ? ' active' : ''}" data-dltab="passed">Passed (${passed.length})</button>
       </div>
       ${tab === 'sales'
@@ -2201,6 +2203,8 @@
         ? `<p class="dl-intro">New LEGO listings within 20 miles, checked every morning. Deals are listed first.</p>` + (fresh.map(newCard).join('') || '<p class="dl-empty">No new listings yet. The daily check runs every morning.</p>')
         : tab === 'active'
         ? (active.map(card).join('') || '<p class="dl-empty">Nothing we\'re considering right now.</p>')
+        : tab === 'bought'
+        ? (boughtList.map(card).join('') || '<p class="dl-empty">Nothing bought from here yet.</p>')
         : (passed.map(passedCard).join('') || '<p class="dl-empty">No passed listings yet.</p>')}`;
     document.querySelectorAll('.dl-tab').forEach(b => b.addEventListener('click', () => { dealsTab = b.dataset.dltab; renderDeals(); }));
   }
