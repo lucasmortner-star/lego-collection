@@ -1008,6 +1008,18 @@
   const BL_COLOR_IDS = { 'White': 1, 'Tan': 2, 'Yellow': 3, 'Orange': 4, 'Red': 5, 'Green': 6, 'Blue': 7, 'Brown': 8, 'Black': 11,
     'Dark Red': 59, 'Dark Bluish Gray': 85, 'Light Bluish Gray': 86, 'Reddish Brown': 88, 'Light Nougat': 90 };
   // Ballpark price of one piece (PART_PRICES in part-prices.js, keyed "part|colorId"), or null if unknown
+  // Ballpark cost of a missing list from part-prices.js: { total, priced pieces, unpriced pieces }
+  function missingCost(list) {
+    let total = 0, unpriced = 0;
+    (list || []).forEach(m => { const each = partPrice(m); if (each != null) total += each * (m.qty || 1); else unpriced += m.qty || 1; });
+    return { total, unpriced };
+  }
+  function costLabel(c, short) {
+    if (!c.total && c.unpriced) return short ? '' : 'not priced yet';
+    const t = c.total >= 100 ? fmt(Math.round(c.total)) : fmtFull(c.total);
+    return `~${t}${c.unpriced ? (short ? '+' : ` + ${c.unpriced} piece${c.unpriced === 1 ? '' : 's'} not priced yet`) : ''}`;
+  }
+
   function partPrice(m) {
     if (typeof PART_PRICES === 'undefined' || !m.part) return null;
     const c = m.colorId != null ? m.colorId : BL_COLOR_IDS[m.color];
@@ -1106,6 +1118,7 @@
         <div class="ms-set-head ph-clickable" data-set="${s.setNumber}">
           <img src="https://images.brickset.com/sets/images/${setCatalogId(s.setNumber) || img + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
           <div><div class="ms-set-name">${s.name}</div><div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${n} missing &middot; ${s.condition}${s.checked ? ` &middot; ${checkedLabel(s)}` : ''}</div></div>
+          ${(c => c.total ? `<div class="ms-set-cost"><span>Cost to replace</span><b>${costLabel(c, true)}</b></div>` : '')(missingCost(shown))}
         </div>
         <div class="mp-grid">${shown.map(missingCardHtml).join('')}</div>
       </section>`;
@@ -1129,7 +1142,7 @@
       const finish = list.filter(s => s.needsParts).sort((a, b) => a.name.localeCompare(b.name));
       const finishParts = finish.reduce((a, s) => a + count(pick(s.missing)), 0);
       const finishHtml = finish.length ? `<details class="ms-group-wrap ms-group-finish" data-theme="finish"${autoOpen || openSetThemes.has('finish') ? ' open' : ''}>
-          <summary class="ms-group">🛒 Buy parts to finish <span>${finish.length} set${finish.length === 1 ? '' : 's'} &middot; ${finishParts} part${finishParts === 1 ? '' : 's'} &middot; almost done, just need these pieces</span></summary>
+          <summary class="ms-group">🛒 Buy parts to finish <span>${finish.length} set${finish.length === 1 ? '' : 's'} &middot; ${finishParts} part${finishParts === 1 ? '' : 's'}${(c => c.total ? ` &middot; ${costLabel(c, true)} to buy` : '')(missingCost(finish.flatMap(s => pick(s.missing))))} &middot; almost done, just need these pieces</span></summary>
           ${finish.map(setCard).join('')}
         </details>` : '';
       Object.keys(groups).forEach(k => { groups[k] = groups[k].filter(s => !s.needsParts); if (!groups[k].length) delete groups[k]; });
@@ -1684,6 +1697,7 @@
     const rows = list.map(missingCardHtml).join('');
     return `<div class="ph-missing">
       <div class="ph-missing-title">Missing pieces (${total})</div>
+      ${(c => `<div class="ph-missing-cost"><span>Cost to replace</span><b>${costLabel(c) || 'not priced yet'}</b><small>BrickLink average sold price per piece, shipping extra</small></div>`)(missingCost(list))}
       <div class="mp-grid">${rows}</div>
     </div>
     <button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button>
@@ -1749,6 +1763,7 @@
         <div class="mp-name">${m.name || 'Part'}</div>
         <div class="mp-meta">${m.color || ''}${part ? ` &middot; ${part}` : ''}</div>
         ${m.note ? `<div class="mp-note">${m.note}</div>` : ''}
+        ${(each => each != null ? `<div class="mp-price">${fmtFull(each)} each${(m.qty || 1) > 1 ? ` &middot; <b>${fmtFull(each * (m.qty || 1))}</b>` : ''}</div>` : '<div class="mp-price mp-price-none">Not priced yet</div>')(partPrice(m))}
         ${m.part && m.colorId != null ? `<a class="mp-buy" href="${blUrl}" target="_blank" rel="noopener">Buy on BrickLink</a>` : ''}
       </div>`;
   }
