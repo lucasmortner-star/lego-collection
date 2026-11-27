@@ -494,7 +494,10 @@ const DEALS = [
     "listed": "Listed 2 days before we looked",
     "asking": 60,
     "checked": "2026-11-27",
-    "status": "New",
+    "status": "Passed",
+    "passedBy": "Alex",
+    "passReason": "Minecraft isn't a theme Alex collects.",
+    "statusChanged": "2026-11-27",
     "photos": [
       {
         "src": "01.jpg",
@@ -689,7 +692,8 @@ const DEALS = [
     "listed": "Posted 8 days before we looked",
     "asking": 200,
     "checked": "2026-11-27",
-    "status": "New",
+    "status": "Considering",
+    "statusChanged": "2026-11-27",
     "photos": [
       {
         "src": "01.jpg",
@@ -1204,7 +1208,8 @@ const DEALS = [
     "listed": "Listed 4 days before we looked",
     "asking": 100,
     "checked": "2026-11-27",
-    "status": "New",
+    "status": "Considering",
+    "statusChanged": "2026-11-27",
     "photos": [
       {
         "src": "01.jpg",
