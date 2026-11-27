@@ -1,12 +1,18 @@
 // Possible purchases: listings we've looked at (Facebook Marketplace lots and so on).
 // Values are BrickLink average used sold prices (last 6 months) unless a note says otherwise.
 // miles: approximate driving miles from Newtown, CT (town centre to town centre).
+// passedBy: "Alex" (passed with the button or in chat) or "auto" (passed by the daily check), on Passed listings.
 // status: "New" (found by the daily Marketplace check, first look only), "Considering", "Offered", "Bought" or "Passed".
 // A "New" listing: id, title, url, source, location, listed, asking, checked, status: "New", photos,
 // estimate { low, high }, verdict ("Deal", "Fair", "Pass" or "Unsure"), offer (optional), summary, items: [{ what, value: [low, high], note }].
 // A passed listing only needs: id, title, url (optional), source, location, asking, checked, status: "Passed",
 // photos (the first one is shown) and passReason.
 // Each set: figs lists the minifigs the set comes with; seen: true when we spotted it in the listing.
+// Listings are passed automatically (passedBy: "auto") when the asking price is at least this
+// percent of the estimated used value (midpoint), when the check's verdict is "Pass", or when
+// they're shipped instead of local pickup. Change the number to make auto-passing stricter or looser.
+const AUTO_PASS_PCT = 85;
+
 const DEALS = [
   {
     id: "fb-1176325258141815",
@@ -18,6 +24,7 @@ const DEALS = [
     asking: 40,
     checked: "2026-11-27",
     status: "Passed",
+    passedBy: "Alex",
     passReason: "A whole LEGO Friends collection (about 10–12 sets with booklets, ~22 mini-dolls, 4 horses) for $40, worth about $150–220 used. Cheap for what it is, but Friends isn't our theme and resells poorly, so we passed.",
     wasStatus: "New",
     photos: [
@@ -46,7 +53,9 @@ const DEALS = [
     listed: "Listed 2 hours ago",
     asking: 129,
     checked: "2026-11-27",
-    status: "New",
+    status: "Passed",
+    passedBy: "auto",
+    passReason: "Asking is about 147% of the estimated value. Complete used Boost Creative Toolbox with its box, sorted into numbered bags. LEGO retired the Boost app (it now runs through Powered Up), and used ones have been selling on BrickLink for about $88. At $129 it's above what it's worth used.",
     photos: [
       { src: "01.jpg", caption: "Box, booklet and the parts sorted into bags" }
     ],
@@ -66,7 +75,9 @@ const DEALS = [
     listed: "Listed 13 hours ago",
     asking: 20,
     checked: "2026-11-27",
-    status: "New",
+    status: "Passed",
+    passedBy: "auto",
+    passReason: "Asking is about 89% of the estimated value. The big Molten Man figure is built and looks complete, with the booklet. The set's minifigures (Spider-Man and Mysterio) aren't in any photo, and they're a good part of its value. Worth about $15 without them and $30 with them; price is firm, so only worth it if the minifigs are included.",
     photos: [
       { src: "01.jpg", caption: "Molten Man built, front and back" },
       { src: "02.jpg", caption: "Instruction booklet" }
@@ -87,7 +98,9 @@ const DEALS = [
     listed: "Listed 18 hours ago",
     asking: 60,
     checked: "2026-11-27",
-    status: "New",
+    status: "Passed",
+    passedBy: "auto",
+    passReason: "Asking is about 150% of the estimated value. Two small bins of loose pieces, mostly gray, white and black, which looks like broken-up Star Wars ships. No minifigs or booklets. It's maybe 8–10 pounds, about $30–50 at bulk prices, so $60 is too much.",
     photos: [
       { src: "01.jpg", caption: "Both bins" }
     ],
@@ -107,7 +120,9 @@ const DEALS = [
     listed: "Listed recently",
     asking: 150,
     checked: "2026-11-27",
-    status: "New",
+    status: "Passed",
+    passedBy: "auto",
+    passReason: "Shipped, not local pickup. Asking is about 79% of the estimated value. Six sealed sets, and the biggest is the Grogu with Hover Pram (75403, $100 retail). The others are Dobby (76421), Bowser's Muscle Car (71431), the Toyota Supra Speed Champions car, the Turtle 3-in-1 (31377) and the Nutcracker (40640). Together they're about $200 at retail. $150 plus shipping is about 75% of that, which is a fair price, not a steal. Worth it at around $110.",
     photos: [
       { src: "01.jpg", caption: "All six sealed boxes" }
     ],
@@ -132,7 +147,9 @@ const DEALS = [
     listed: "Listed a day ago",
     asking: 60,
     checked: "2026-11-27",
-    status: "New",
+    status: "Passed",
+    passedBy: "auto",
+    passReason: "Asking is about 109% of the estimated value. Only half of the Vampyre Castle: sealed bags 4–7, the worn box and booklet 2. Bags 1–3, booklet 1 and all the minifigures are missing, and the minifigures are what make this set valuable. It won't build the castle, and finishing it would cost more than buying a used complete one. Pass unless you already have bags 1–3.",
     photos: [
       { src: "01.jpg", caption: "Box, sealed bags 4–7 and booklet 2" }
     ],
@@ -173,7 +190,9 @@ const DEALS = [
     listed: "Listed 2 days ago",
     asking: 65,
     checked: "2026-11-27",
-    status: "New",
+    status: "Passed",
+    passedBy: "auto",
+    passReason: "Asking is about 93% of the estimated value. This is Ninjago 71821 Cole's Titan Dragon Mech (1,055 pieces), built. It matches the box picture: black, white and copper with the gold blades. Used complete ones sell for about $93 on BrickLink, but the seller says the minifig is missing. At $65 it's a fair price; worth it at around $45.",
     photos: [
       { src: "01.jpg", caption: "The mech, built" }
     ],
@@ -301,6 +320,7 @@ const DEALS = [
     asking: 400,
     checked: "2026-11-26",
     status: "Passed",
+    passedBy: "Alex",
     estimate: { low: 365, high: 590 },
     photos: [{ src: "01-lot.jpg", caption: "The whole lot" }, { src: "02-minifigs.jpg", caption: "Minifig close-up" }],
     passReason: "Loose bulk and common figures, with nothing pointing to a set we could rebuild. About 70 City/Town minifigs ($1–3 each; C-3PO, Leia, Batman and a TMNT Leonardo are the best at $4–8), about 25 Friends and Disney mini-dolls (Elsa, Anna, Kristoff, Ariel), animals, capes and 50+ lbs of loose bricks. Worth about $365–590, so $400 is fair, not a deal. Would need to be about $250."
@@ -314,6 +334,7 @@ const DEALS = [
     asking: 200,
     checked: "2026-11-26",
     status: "Passed",
+    passedBy: "Alex",
     estimate: { low: 180, high: 280 },
     photos: [{ src: "01-lot.jpg", caption: "The lot" }],
     passReason: "Mostly common City and Jurassic World sets, partly taken apart: 60196 Arctic Supply Plane, 60228 Deep Space Rocket, 75928 Blue's Helicopter Pursuit, 60182 Pickup & Caravan and 10757 Raptor Rescue Truck (about $210 if complete), plus 30–40 common minifigs and some dinos. Several bags were Mega Construx and other brands. Worth about $180–280, so $200 is fair, not a deal. Would need to be about $120."

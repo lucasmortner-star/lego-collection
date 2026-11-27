@@ -44,6 +44,9 @@ export default async (req) => {
         ? updated.replace(/passReason: "(?:[^"\\]|\\.)*"/, `passReason: "${note}"`)
         : updated.replace(`status: "${status}"`, `status: "${status}",\n    passReason: "${note}"`);
     }
+    if (status === 'Passed') {
+      updated = /passedBy: "/.test(updated) ? updated.replace(/passedBy: "[^"]*"/, 'passedBy: "Alex"') : updated.replace(`status: "${status}"`, `status: "${status}",\n    passedBy: "Alex"`);
+    }
     if (!/statusChanged: "/.test(updated)) updated = updated.replace(`status: "${status}"`, `status: "${status}",\n    statusChanged: "${today}"`);
     else updated = updated.replace(/statusChanged: "[^"]*"/, `statusChanged: "${today}"`);
     text = text.slice(0, at) + updated + text.slice(end);

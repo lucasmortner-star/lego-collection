@@ -2097,13 +2097,23 @@
   });
 
   const milesTxt = d => typeof d.miles === 'number' ? ` &middot; <span class="dl-miles">📍 ~${d.miles} mi from Newtown</span>` : '';
+  const autoPassPct = typeof AUTO_PASS_PCT === 'number' ? AUTO_PASS_PCT : 85;
+  const dealPct = d => d.estimate && d.asking ? Math.round(d.asking / ((d.estimate.low + d.estimate.high) / 2) * 100) : null;
+  let passedFilter = 'all';
   function renderDeals() {
     const ovr = dealOverrides();
     const DAY = 864e5;
     const deals = (typeof DEALS !== 'undefined' ? DEALS : []).map(d => {
       const o = ovr[d.id];
       if (!o || o.status === d.status || Date.now() - o.at > DAY) return d;
-      return Object.assign({}, d, { status: o.status, passReason: o.status === 'Passed' ? (o.reason || d.passReason || 'Passed from the New finds tab.') : d.passReason });
+      return Object.assign({}, d, { status: o.status, passedBy: o.status === 'Passed' ? 'Alex' : d.passedBy, passReason: o.status === 'Passed' ? (o.reason || d.passReason || 'Passed from the New finds tab.') : d.passReason });
+    }).map(d => {
+      if (d.status !== 'New') return d;
+      const pctOf = dealPct(d);
+      if (d.verdict === 'Pass' || (pctOf != null && pctOf >= autoPassPct)) {
+        return Object.assign({}, d, { status: 'Passed', passedBy: 'auto', passReason: d.passReason || `Asking is about ${pctOf}% of the estimated value. ${d.summary || ''}` });
+      }
+      return d;
     });
     const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const range = r => r[0] === r[1] ? fmt(r[0]) : `${fmt(r[0])}–${fmt(r[1])}`;
@@ -2207,6 +2217,9 @@
             <h3>${esc(d.title)}</h3>
             <div class="dl-price">${fmt(d.asking)}</div>
           </div>
+          <div class="dl-passed-by">${d.passedBy === 'auto'
+            ? `<span class="dl-pill dl-pill-auto">🤖 Passed automatically</span>${dealPct(d) != null ? ` asking was ~${dealPct(d)}% of value` : ''}`
+            : '<span class="dl-pill dl-pill-alex">👤 Passed by Alex</span>'}</div>
           <div class="dl-source">${esc(d.source)}${d.location ? ' &middot; ' + esc(d.location) : ''}${milesTxt(d)} &middot; looked at ${fmtDay(parseDay(d.checked))}${d.estimate ? ` &middot; worth about ${fmt(d.estimate.low)}–${fmt(d.estimate.high)}` : ''}</div>
           <p>${esc(d.passReason || '')}</p>
           ${d.url ? `<a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>` : ''}
@@ -2284,7 +2297,11 @@
         ? (active.map(d => d.sets ? card(d) : newCard(d)).join('') || '<p class="dl-empty">Nothing we\'re considering right now.</p>')
         : tab === 'bought'
         ? (boughtList.map(d => d.sets ? card(d) : newCard(d)).join('') || '<p class="dl-empty">Nothing bought from here yet.</p>')
-        : (passed.map(passedCard).join('') || '<p class="dl-empty">No passed listings yet.</p>')}`;
+        : `<p class="dl-intro">Listings are passed automatically when the asking price is ${autoPassPct}% or more of the estimated value, when the daily check rates them a Pass, or when they're shipped instead of local pickup.</p>
+          <div class="dl-subtabs">${[['all', 'All', passed.length], ['Alex', '👤 Passed by Alex', passed.filter(d => d.passedBy !== 'auto').length], ['auto', '🤖 Passed automatically', passed.filter(d => d.passedBy === 'auto').length]]
+            .map(([k, l, n]) => `<button type="button" class="dl-subtab${passedFilter === k ? ' active' : ''}" data-pf="${k}">${l} (${n})</button>`).join('')}</div>` +
+          (passed.filter(d => passedFilter === 'all' || (passedFilter === 'auto' ? d.passedBy === 'auto' : d.passedBy !== 'auto')).map(passedCard).join('') || '<p class="dl-empty">No passed listings here.</p>')}`;
+    document.querySelectorAll('.dl-subtab').forEach(b => b.addEventListener('click', () => { passedFilter = b.dataset.pf; renderDeals(); }));
     document.querySelectorAll('.dl-tab').forEach(b => b.addEventListener('click', () => { dealsTab = b.dataset.dltab; renderDeals(); }));
   }
 
