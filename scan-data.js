@@ -32,6 +32,10 @@ const SCAN = {
   {
    "why": "Already on Possible Buys",
    "n": 9
+  },
+  {
+   "why": "Technic (not interested)",
+   "n": 2
   }
  ],
  "rows": [
@@ -84,16 +88,6 @@ const SCAN = {
    "url": "https://www.facebook.com/marketplace/item/1149231631189407/",
    "status": "Waiting for review",
    "note": "Built, best offer"
-  },
-  {
-   "id": "fb-1705535337592665",
-   "source": "Facebook Marketplace",
-   "price": 200,
-   "title": "LEGO Crane",
-   "town": "Naugatuck, CT",
-   "url": "https://www.facebook.com/marketplace/item/1705535337592665/",
-   "status": "Waiting for review",
-   "note": "Large Technic crane"
   },
   {
    "id": "fb-1674330497766731",
@@ -274,16 +268,6 @@ const SCAN = {
    "url": "https://www.ebay.com/itm/128204721579",
    "status": "Waiting for review",
    "note": "Auction, ends in about 2 days"
-  },
-  {
-   "id": "eb-298366286537",
-   "source": "eBay (local pickup)",
-   "price": 110,
-   "title": "LEGO Technic Mobile Crane (8053), used, complete",
-   "town": "~20 mi",
-   "url": "https://www.ebay.com/itm/298366286537",
-   "status": "Waiting for review",
-   "note": ""
   },
   {
    "id": "eb-407063992949",
