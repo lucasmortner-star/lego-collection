@@ -2027,8 +2027,84 @@
   // POSSIBLE BUYS (deals-data.js)
   // ===================================================================
   let dealsTab = null;
+  // Status changes made with the buttons show right away (saved in this browser) until the redeployed data catches up
+  const DEAL_OVR_KEY = 'dealStatusOverrides';
+  function dealOverrides() { try { return JSON.parse(localStorage.getItem(DEAL_OVR_KEY) || '{}'); } catch (e) { return {}; } }
+  function saveDealOverrides(o) { try { localStorage.setItem(DEAL_OVR_KEY, JSON.stringify(o)); } catch (e) {} }
+  function dealActions(d) {
+    const btns = d.status === 'New' ? [['Considering', '👀 Considering'], ['Passed', '👎 Pass']]
+      : d.status === 'Considering' || d.status === 'Offered' ? [['Bought', '✅ Bought'], ['Passed', '👎 Pass']]
+      : d.status === 'Passed' ? [['Considering', '↩︎ Back to Considering']] : [];
+    if (!btns.length) return '';
+    return `<div class="dl-actions" data-id="${d.id}">
+      ${btns.map(([st, label]) => `<button type="button" class="dl-act dl-act-${st.toLowerCase()}" data-status="${st}">${label}</button>`).join('')}
+      <div class="dl-act-form" hidden>
+        <input type="text" class="dl-act-reason" placeholder="Why are we passing? (optional)">
+        <input type="password" class="dl-act-pass" placeholder="Family passcode" autocomplete="off">
+        <button type="button" class="dl-act-go">Save</button><button type="button" class="dl-act-cancel">Cancel</button>
+      </div>
+      <div class="dl-act-msg"></div>
+    </div>`;
+  }
+  async function saveDealStatus(box, status) {
+    const id = box.dataset.id;
+    const msg = box.querySelector('.dl-act-msg');
+    const reason = (box.querySelector('.dl-act-reason') || {}).value || '';
+    let passcode = '';
+    try { passcode = localStorage.getItem('dealsPasscode') || ''; } catch (e) {}
+    const typed = (box.querySelector('.dl-act-pass') || {}).value || '';
+    if (typed) passcode = typed;
+    if (!passcode) { box.querySelector('.dl-act-form').hidden = false; box.querySelector('.dl-act-pass').focus(); msg.textContent = 'Enter the family passcode, then Save.'; return; }
+    msg.textContent = 'Saving…';
+    box.querySelectorAll('button').forEach(b => b.disabled = true);
+    try {
+      const r = await fetch('/.netlify/functions/deal-status', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id, status, reason, passcode }) });
+      const out = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        if (r.status === 401) { try { localStorage.removeItem('dealsPasscode'); } catch (e) {} box.querySelector('.dl-act-form').hidden = false; }
+        throw new Error(out.error || ('Error ' + r.status));
+      }
+      try { localStorage.setItem('dealsPasscode', passcode); } catch (e) {}
+      const o = dealOverrides(); o[id] = { status, reason, at: Date.now() }; saveDealOverrides(o);
+      renderDeals();
+      showDealToast(`Moved to ${status === 'Passed' ? 'Passed' : status}. The site updates for everyone in about a minute.`);
+    } catch (e) {
+      msg.textContent = "Couldn't save: " + e.message;
+      box.querySelectorAll('button').forEach(b => b.disabled = false);
+    }
+  }
+  function showDealToast(text) {
+    let t = document.getElementById('dlToast');
+    if (!t) { t = document.createElement('div'); t.id = 'dlToast'; t.className = 'dl-toast'; document.body.appendChild(t); }
+    t.textContent = text; t.classList.add('show');
+    clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 4000);
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('.dl-actions button');
+    if (!b) return;
+    const box = b.closest('.dl-actions');
+    const form = box.querySelector('.dl-act-form');
+    if (b.classList.contains('dl-act-cancel')) { form.hidden = true; box.dataset.pending = ''; box.querySelector('.dl-act-msg').textContent = ''; return; }
+    if (b.classList.contains('dl-act-go')) { saveDealStatus(box, box.dataset.pending); return; }
+    const st = b.dataset.status;
+    box.dataset.pending = st;
+    let havePass = false;
+    try { havePass = !!localStorage.getItem('dealsPasscode'); } catch (e) {}
+    box.querySelector('.dl-act-reason').hidden = st !== 'Passed';
+    box.querySelector('.dl-act-pass').hidden = havePass;
+    if (st === 'Passed' || !havePass) { form.hidden = false; (st === 'Passed' ? box.querySelector('.dl-act-reason') : box.querySelector('.dl-act-pass')).focus(); return; }
+    saveDealStatus(box, st);
+  });
+
+  const milesTxt = d => typeof d.miles === 'number' ? ` &middot; <span class="dl-miles">📍 ~${d.miles} mi from Newtown</span>` : '';
   function renderDeals() {
-    const deals = typeof DEALS !== 'undefined' ? DEALS : [];
+    const ovr = dealOverrides();
+    const DAY = 864e5;
+    const deals = (typeof DEALS !== 'undefined' ? DEALS : []).map(d => {
+      const o = ovr[d.id];
+      if (!o || o.status === d.status || Date.now() - o.at > DAY) return d;
+      return Object.assign({}, d, { status: o.status, passReason: o.status === 'Passed' ? (o.reason || d.passReason || 'Passed from the New finds tab.') : d.passReason });
+    });
     const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const range = r => r[0] === r[1] ? fmt(r[0]) : `${fmt(r[0])}–${fmt(r[1])}`;
     const open = deals.filter(d => d.status === 'Considering' || d.status === 'Offered');
@@ -2086,7 +2162,7 @@
       return `<article class="dl-card">
         <div class="dl-head">
           <div>
-            <div class="dl-source">${esc(d.source)} &middot; ${esc(d.location)} &middot; checked ${fmtDay(parseDay(d.checked))}</div>
+            <div class="dl-source">${esc(d.source)} &middot; ${esc(d.location)}${milesTxt(d)} &middot; checked ${fmtDay(parseDay(d.checked))}</div>
             <h3>${esc(d.title)}</h3>
             <div class="dl-sub">${esc(d.condition)} &middot; ${esc(d.listed)}</div>
           </div>
@@ -2096,6 +2172,7 @@
             <a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>
           </div>
         </div>
+        ${dealActions(d)}
         <div class="dl-verdict dl-verdict-${d.verdict.toLowerCase().replace(/[^a-z]/g, '')}">
           <div class="dl-verdict-top"><strong>${esc(d.verdict)}</strong> &middot; asking is about ${pct}% of the estimated value</div>
           <p>${esc(d.verdictNote)}</p>
@@ -2130,9 +2207,10 @@
             <h3>${esc(d.title)}</h3>
             <div class="dl-price">${fmt(d.asking)}</div>
           </div>
-          <div class="dl-source">${esc(d.source)}${d.location ? ' &middot; ' + esc(d.location) : ''} &middot; looked at ${fmtDay(parseDay(d.checked))}${d.estimate ? ` &middot; worth about ${fmt(d.estimate.low)}–${fmt(d.estimate.high)}` : ''}</div>
+          <div class="dl-source">${esc(d.source)}${d.location ? ' &middot; ' + esc(d.location) : ''}${milesTxt(d)} &middot; looked at ${fmtDay(parseDay(d.checked))}${d.estimate ? ` &middot; worth about ${fmt(d.estimate.low)}–${fmt(d.estimate.high)}` : ''}</div>
           <p>${esc(d.passReason || '')}</p>
           ${d.url ? `<a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>` : ''}
+          ${dealActions(d)}
         </div>
       </article>`;
     };
@@ -2149,13 +2227,14 @@
             <h3>${esc(d.title)}</h3>
             <div class="dl-price">${fmt(d.asking)}</div>
           </div>
-          <div class="dl-source">${esc(d.source || 'Facebook Marketplace')}${d.location ? ' &middot; ' + esc(d.location) : ''}${d.listed ? ' &middot; ' + esc(d.listed) : ''} &middot; found ${fmtDay(parseDay(d.checked))}</div>
+          <div class="dl-source">${esc(d.source || 'Facebook Marketplace')}${d.location ? ' &middot; ' + esc(d.location) : ''}${milesTxt(d)}${d.listed ? ' &middot; ' + esc(d.listed) : ''} &middot; found ${fmtDay(parseDay(d.checked))}</div>
           <div class="dl-new-verdict"><span class="dl-pill dl-pill-${v.toLowerCase().replace(/[^a-z]/g, '')}">${esc(v)}</span>
             ${d.estimate ? `worth about <b>${fmt(d.estimate.low)}–${fmt(d.estimate.high)}</b>${pct != null ? ` &middot; asking is ~${pct}% of value` : ''}` : ''}
             ${d.offer ? ` &middot; offer about <b>${fmt(d.offer)}</b>` : ''}</div>
           <p>${esc(d.summary || '')}</p>
           ${(d.items || []).length ? `<ul class="dl-list">${d.items.map(it => `<li><strong>${esc(it.what)}</strong>${it.value ? ` <span>${range(it.value)}</span>` : ''}${it.note ? ` <span>&middot; ${esc(it.note)}</span>` : ''}</li>`).join('')}</ul>` : ''}
-          <div class="dl-new-foot">${d.url ? `<a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>` : ''}<span>First look from the daily check. Ask Claude for a full review before buying.</span></div>
+          <div class="dl-new-foot">${d.url ? `<a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>` : ''}<span>${d.status === 'New' ? 'First look from the daily check. Ask Claude for a full review before buying.' : ''}</span></div>
+          ${dealActions(d)}
         </div>
       </article>`;
     };
@@ -2180,7 +2259,7 @@
         ${x.photo ? `<a href="${esc(x.photo)}" target="_blank" rel="noopener"><img src="${esc(x.photo)}" alt="" loading="lazy"></a>` : ''}
         <div class="dl-passed-body">
           <div class="dl-passed-head"><h3>${esc(x.name)}</h3>${x.worthTrip ? '<span class="dl-pill dl-pill-deal">Worth a trip</span>' : ''}</div>
-          <div class="dl-source">${esc(x.type || 'Sale')} &middot; ${esc(x.source || '')}${where ? ' &middot; ' + esc(where) : ''}</div>
+          <div class="dl-source">${esc(x.type || 'Sale')} &middot; ${esc(x.source || '')}${where ? ' &middot; ' + esc(where) : ''}${milesTxt(x)}</div>
           <ul class="dl-list dl-sale-days">${when}</ul>
           <p><strong>LEGO:</strong> ${esc(x.lego || '')}${x.note ? ' ' + esc(x.note) : ''}</p>
           <div class="dl-new-foot">${x.url ? `<a class="dl-link" href="${esc(x.url)}" target="_blank" rel="noopener">See the sale ↗</a>` : ''}${map ? `<a class="dl-link dl-map" href="${map}" target="_blank" rel="noopener">Map ↗</a>` : ''}</div>
@@ -2202,9 +2281,9 @@
         : tab === 'new'
         ? `<p class="dl-intro">New LEGO listings within 20 miles, checked every morning. Deals are listed first.</p>` + (fresh.map(newCard).join('') || '<p class="dl-empty">No new listings yet. The daily check runs every morning.</p>')
         : tab === 'active'
-        ? (active.map(card).join('') || '<p class="dl-empty">Nothing we\'re considering right now.</p>')
+        ? (active.map(d => d.sets ? card(d) : newCard(d)).join('') || '<p class="dl-empty">Nothing we\'re considering right now.</p>')
         : tab === 'bought'
-        ? (boughtList.map(card).join('') || '<p class="dl-empty">Nothing bought from here yet.</p>')
+        ? (boughtList.map(d => d.sets ? card(d) : newCard(d)).join('') || '<p class="dl-empty">Nothing bought from here yet.</p>')
         : (passed.map(passedCard).join('') || '<p class="dl-empty">No passed listings yet.</p>')}`;
     document.querySelectorAll('.dl-tab').forEach(b => b.addEventListener('click', () => { dealsTab = b.dataset.dltab; renderDeals(); }));
   }
