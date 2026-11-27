@@ -2077,6 +2077,24 @@
   const autoPassPct = typeof AUTO_PASS_PCT === 'number' ? AUTO_PASS_PCT : 85;
   const dealPct = d => d.estimate && d.asking ? Math.round(d.asking / ((d.estimate.low + d.estimate.high) / 2) * 100) : null;
   let passedFilter = 'all';
+  // Full sweep of every active listing (scan-data.js): rows still waiting for a full review, plus what was skipped
+  function scanHtml() {
+    if (typeof SCAN === 'undefined' || !SCAN) return '';
+    const reviewed = new Set((typeof DEALS !== 'undefined' ? DEALS : []).map(d => d.id));
+    const rows = (SCAN.rows || []).filter(r => !reviewed.has(r.id));
+    const esc2 = t => String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    const total = Object.values(SCAN.counts || {}).reduce((a, n) => a + n, 0);
+    return `<details class="dl-section dl-scan"><summary>🔎 Quick scan: ${rows.length} listing${rows.length === 1 ? '' : 's'} waiting for a full review &middot; ${total} active listings checked ${fmtDay(parseDay(SCAN.scanned))}</summary>
+      <p class="dl-intro">${Object.entries(SCAN.counts || {}).map(([k, n]) => `${esc2(k)}: ${n}`).join(' &middot; ')}</p>
+      <div class="dl-scan-table">${rows.map(r => `<a class="dl-scan-row" href="${esc2(r.url)}" target="_blank" rel="noopener">
+          <span class="dl-scan-src">${esc2(r.source.replace(' (local pickup)', ''))}</span>
+          <span class="dl-scan-price">${fmt(r.price)}</span>
+          <span class="dl-scan-title">${esc2(r.title)}${r.note ? `<small>${esc2(r.note)}</small>` : ''}</span>
+          <span class="dl-scan-town">${esc2(r.town)}</span>
+          <span class="dl-scan-status">${esc2(r.status)}</span></a>`).join('')}</div>
+      ${(SCAN.skipped || []).length ? `<div class="dl-scan-skip"><b>Skipped without a review:</b><ul class="dl-list">${SCAN.skipped.map(x => `<li>${x.n} &middot; ${esc2(x.why)}</li>`).join('')}</ul></div>` : ''}
+    </details>`;
+  }
   function renderDeals() {
     const ovr = dealOverrides();
     const DAY = 864e5;
@@ -2269,7 +2287,7 @@
       ${tab === 'sales'
         ? `<p class="dl-intro">Estate sales, garage sales and local auctions within 20 miles that mention LEGO. Checked every Thursday for the weekend ahead.</p>` + (sales.map(saleCard).join('') || '<p class="dl-empty">No sales with LEGO found yet. The check runs every Thursday morning.</p>')
         : tab === 'new'
-        ? `<p class="dl-intro">New LEGO listings within 20 miles, checked every morning. Deals are listed first.</p>` + (fresh.map(newCard).join('') || '<p class="dl-empty">No new listings yet. The daily check runs every morning.</p>')
+        ? `<p class="dl-intro">New LEGO listings within 20 miles, checked every morning. Deals are listed first.</p>` + (fresh.map(newCard).join('') || '<p class="dl-empty">No new listings yet. The daily check runs every morning.</p>') + scanHtml()
         : tab === 'active'
         ? (active.map(d => d.sets ? card(d) : newCard(d)).join('') || '<p class="dl-empty">Nothing we\'re considering right now.</p>')
         : tab === 'bought'
