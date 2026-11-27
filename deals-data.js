@@ -15,6 +15,476 @@ const AUTO_PASS_PCT = 85;
 
 const DEALS = [
   {
+    "id": "eb-327472960934",
+    "title": "Bionicle Phantoka (2008) lot of 12",
+    "url": "https://www.ebay.com/itm/327472960934",
+    "source": "eBay (local pickup)",
+    "location": "Sandy Hook, CT",
+    "miles": 2,
+    "listed": "Auction ends Mon Nov 30, 6:48 PM; opening bid $170, no bids yet",
+    "asking": 170,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 110% of the estimated value. The opening bid alone is above what these used Bionicle sets are worth, and Bionicle isn't one of our themes.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Toa Pohatu, Kopaka and Lewa Phantoka with canisters, plus three Av-Matoran"
+      }
+    ],
+    "estimate": {
+      "low": 120,
+      "high": 190
+    },
+    "verdict": "Pass",
+    "offer": 130,
+    "summary": "Twelve 2008 Bionicle Phantoka sets, built, with some canisters and booklets: the three Toa (Pohatu, Kopaka, Lewa), the three Makuta (Antroz, Vamprah, Chirox) and six small Matoran. It's less than a mile away, but the auction opens at $170, which is already above what they're worth used (about $15–25 per big canister set, $5–10 per small one). If no one bids, it would be worth no more than about $130.",
+    "items": [
+      {
+        "what": "3 Toa Phantoka canister sets (8685–8687)",
+        "value": [
+          45,
+          70
+        ],
+        "note": "built, with canisters"
+      },
+      {
+        "what": "3 Makuta Phantoka canister sets (8691–8693)",
+        "value": [
+          45,
+          70
+        ],
+        "note": "built, with canisters"
+      },
+      {
+        "what": "6 small Matoran sets",
+        "value": [
+          30,
+          50
+        ],
+        "note": "probably 8944–8949"
+      }
+    ]
+  },
+  {
+    "id": "eb-800397491174",
+    "title": "11 organized LEGO bins + bases (Friends, Disney, Star Wars pieces)",
+    "url": "https://www.ebay.com/itm/800397491174",
+    "source": "eBay (local pickup)",
+    "location": "Brookfield, CT",
+    "miles": 9,
+    "listed": "Buy It Now or best offer (listing last updated Oct 12)",
+    "asking": 130,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 113% of the estimated value. Lots of Friends-colour pieces, and a good part of the value is the storage cases rather than the LEGO.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "A sorted case: lots of lavender, magenta and light aqua"
+      }
+    ],
+    "estimate": {
+      "low": 90,
+      "high": 140
+    },
+    "verdict": "Pass",
+    "summary": "Eleven HDX-style organizer cases (7 large, 2 medium, 2 small) of LEGO sorted by part type, plus a bin of 8+ large baseplates. Lots of Friends-colour pieces (lavender, magenta, pink, light aqua), which we value lower. Maybe 10–15 lb of LEGO; the cases are worth about as much as the parts. $130 is above what it's worth to us.",
+    "items": [
+      {
+        "what": "Sorted loose LEGO, roughly 10–15 lb, Friends-colour heavy",
+        "value": [
+          35,
+          60
+        ],
+        "note": "guess from photos"
+      },
+      {
+        "what": "8+ large baseplates",
+        "value": [
+          15,
+          25
+        ],
+        "note": ""
+      },
+      {
+        "what": "11 organizer cases",
+        "value": [
+          40,
+          55
+        ],
+        "note": "about $15–20 new each"
+      }
+    ]
+  },
+  {
+    "id": "eb-840046394021",
+    "title": "Lot of 5 Ninjago sets, missing pieces",
+    "url": "https://www.ebay.com/itm/840046394021",
+    "source": "eBay (local pickup)",
+    "location": "Woodbury, CT",
+    "miles": 14,
+    "listed": "Buy It Now",
+    "asking": 60,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 115% of the estimated value. Small 2022 Ninjago sets in their boxes, but the seller says pieces are missing and only the boxes are shown, not the contents or minifigs.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "The five boxes (71783, 71759, 71761, 71782, 71760)"
+      }
+    ],
+    "estimate": {
+      "low": 40,
+      "high": 65
+    },
+    "verdict": "Pass",
+    "summary": "Five small 2022 Ninjago sets in their boxes: 71783 Kai's Mech Rider EVO, 71759 Ninja Dragon Temple, 71761 Zane's Power Up Mech EVO, 71782 Cole's Earth Dragon EVO and 71760 Jay's Thunder Dragon EVO. The seller says each box has most of its contents but some pieces are missing, and the photos only show the boxes, so we can't check the minifigs. Complete, they'd be worth about $70–80 used together; incomplete, $40–65. Ninjago is a theme we like, but $60 is too much for unknown contents.",
+    "items": [
+      {
+        "what": "71782 Cole's Earth Dragon EVO (incomplete)",
+        "value": [
+          12,
+          18
+        ],
+        "note": ""
+      },
+      {
+        "what": "71783 Kai's Mech Rider EVO (incomplete)",
+        "value": [
+          10,
+          15
+        ],
+        "note": ""
+      },
+      {
+        "what": "71759 Ninja Dragon Temple (incomplete)",
+        "value": [
+          8,
+          14
+        ],
+        "note": ""
+      },
+      {
+        "what": "71760 Jay's Thunder Dragon EVO (incomplete)",
+        "value": [
+          6,
+          10
+        ],
+        "note": ""
+      },
+      {
+        "what": "71761 Zane's Power Up Mech EVO (incomplete)",
+        "value": [
+          4,
+          8
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "id": "eb-335833957800",
+    "title": "Giant box of 13.5 lb assorted LEGO",
+    "url": "https://www.ebay.com/itm/335833957800",
+    "source": "eBay (local pickup)",
+    "location": "Bethlehem, CT",
+    "miles": 20,
+    "listed": "Buy It Now or best offer",
+    "asking": 99.95,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 174% of the estimated value. About $7.40 a pound for plain older bricks, about twice the going rate for bulk.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "The box: older basic bricks and plates in primary colours"
+      }
+    ],
+    "estimate": {
+      "low": 45,
+      "high": 70
+    },
+    "verdict": "Pass",
+    "summary": "A 13.5 lb box of older, mostly basic LEGO (primary-colour bricks, plates, some old gray, baseplates, a few wheels) from a big reseller ('The Vault'). No minifigs or sets visible. Bulk like this is worth about $3.50–5 a pound, so $100 is about double.",
+    "items": [
+      {
+        "what": "13.5 lb loose older LEGO",
+        "value": [
+          45,
+          70
+        ],
+        "note": "$3.50–5/lb"
+      }
+    ]
+  },
+  {
+    "id": "eb-128204721579",
+    "title": "Vintage LEGO set 190 box with about 850 mixed pieces",
+    "url": "https://www.ebay.com/itm/128204721579",
+    "source": "eBay (local pickup)",
+    "location": "Brewster, NY",
+    "miles": 22,
+    "listed": "Auction ends Sun Nov 29, 6:57 AM; opening bid $50, no bids yet",
+    "asking": 50,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 105% of the estimated value. A worn 1970s box filled with 800–875 mixed old pieces; the opening bid is already about what it's worth.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Set 190 box with its tray of mixed vintage bricks"
+      }
+    ],
+    "estimate": {
+      "low": 35,
+      "high": 60
+    },
+    "verdict": "Pass",
+    "offer": 35,
+    "summary": "A 1970s LEGO set 190 box (creased and taped) filled with 800–875 mixed vintage pieces from different sets, plus an accessory manual and the creased manual for set 585. It's a nice nostalgic item, but the pieces are worth about $20–30 and the box and manuals maybe $15–30 to a collector. The auction opens at $50; it's only worth bidding up to about $35.",
+    "items": [
+      {
+        "what": "800–875 mixed vintage pieces (about 4–5 lb)",
+        "value": [
+          20,
+          30
+        ],
+        "note": ""
+      },
+      {
+        "what": "Set 190 box (worn) and manuals for 585 and accessories",
+        "value": [
+          15,
+          30
+        ],
+        "note": "collector value only"
+      }
+    ]
+  },
+  {
+    "id": "eb-407063992949",
+    "title": "Mixed LEGO lot, pre-sorted bags, large yellow storage case",
+    "url": "https://www.ebay.com/itm/407063992949",
+    "source": "eBay (local pickup)",
+    "location": "Northfield, CT",
+    "miles": 25,
+    "listed": "Buy It Now or best offer",
+    "asking": 35,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 93% of the estimated value. A small amount of loose bricks; most of the value is the yellow storage brick.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "A few bags of colour-sorted bricks"
+      }
+    ],
+    "estimate": {
+      "low": 30,
+      "high": 45
+    },
+    "verdict": "Fair",
+    "summary": "A LEGO 8-stud yellow storage brick with a few zip bags of colour-sorted bricks, plus manuals for 10696 (Classic) and 43214 (Disney). Not inventoried and probably only 2–3 lb of LEGO. The storage brick is worth about $25–30 used, so $35 is about fair, not a deal.",
+    "items": [
+      {
+        "what": "Large yellow 8-stud LEGO storage brick",
+        "value": [
+          20,
+          30
+        ],
+        "note": ""
+      },
+      {
+        "what": "2–3 lb of sorted loose bricks and two manuals",
+        "value": [
+          10,
+          15
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "id": "eb-206368239386",
+    "title": "Ninjago minifigures villain lot of 14",
+    "url": "https://www.ebay.com/itm/206368239386",
+    "source": "eBay (local pickup)",
+    "location": "New Canaan, CT",
+    "miles": 25,
+    "listed": "Buy It Now or best offer",
+    "asking": 94.99,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 112% of the estimated value. Recent Ninjago villains are common figures worth about $4–8 each.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "The 14 villain minifigures"
+      }
+    ],
+    "estimate": {
+      "low": 70,
+      "high": 100
+    },
+    "verdict": "Fair",
+    "summary": "Fourteen recent Ninjago villain minifigures (the title says 13): Acid Monster, Loyalist Leader, Red Visor, Earth Monster, Spectral Draconian, two Vermillion warriors, two Anacondrai leaders, Soul Archer, Flintlocke, Nokt, a Draconian and Jordana. Ninjago is one of our themes, but these are mostly common figures from 2019–2024 sets worth about $4–8 each, so $95 is a bit over value. Could make sense at $60–65 if the seller takes offers.",
+    "items": [
+      {
+        "what": "14 Ninjago villain minifigures",
+        "value": [
+          70,
+          100
+        ],
+        "note": "about $4–8 each; can't price each one exactly"
+      }
+    ]
+  },
+  {
+    "id": "eb-137872334069",
+    "title": "Harry Potter LEGO sets: 11 built sets + collectible minifigures",
+    "url": "https://www.ebay.com/itm/137872334069",
+    "source": "eBay (local pickup)",
+    "location": "About 25 miles away (town not shown)",
+    "miles": 25,
+    "listed": "Buy It Now or best offer",
+    "asking": 800,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 167% of the estimated value. Good Harry Potter sets with manuals and lots of collectible minifigures, but used they're worth about $420–540 together.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Manuals for the 10 built sets"
+      }
+    ],
+    "estimate": {
+      "low": 420,
+      "high": 540
+    },
+    "verdict": "Pass",
+    "summary": "Eleven 2018–2020 Harry Potter sets, built, with minifigures and manuals: 75954 Great Hall, 75955 Hogwarts Express, 75948 Clock Tower, 75953 Whomping Willow, 75968 4 Privet Drive, 75957 Knight Bus, 75956 Quidditch Match, 75946 Hungarian Horntail, 75945 Expecto Patronum, 75967 Forbidden Forest, plus an unbuilt 30628 Monster Book of Monsters. Also a large group of Harry Potter collectible minifigures (Series 1 and 2, maybe 30–40). Exactly our theme, but used prices for these sets are low (Great Hall about $54, Hogwarts Express $38 on BrickLink), so it's worth about $420–540. $800 is far too high; worth a look only if the seller would come down to about $400.",
+    "items": [
+      {
+        "what": "75954 Hogwarts Great Hall (built)",
+        "value": [
+          50,
+          60
+        ],
+        "note": "BrickLink used avg $54 (22 sales)"
+      },
+      {
+        "what": "75948 Hogwarts Clock Tower (built)",
+        "value": [
+          40,
+          50
+        ],
+        "note": "BrickLink used avg $44"
+      },
+      {
+        "what": "75955 Hogwarts Express (built)",
+        "value": [
+          35,
+          42
+        ],
+        "note": "BrickLink used avg $38"
+      },
+      {
+        "what": "75953 Whomping Willow and 75968 4 Privet Drive (built)",
+        "value": [
+          55,
+          65
+        ],
+        "note": "BrickLink used avg $31 and $29"
+      },
+      {
+        "what": "75957 Knight Bus, 75956 Quidditch, 75946 Horntail, 75945 Expecto Patronum, 75967 Forbidden Forest (built)",
+        "value": [
+          75,
+          95
+        ],
+        "note": "Knight Bus BrickLink used avg $19; others estimated"
+      },
+      {
+        "what": "30628 Monster Book of Monsters (unbuilt, boxed)",
+        "value": [
+          35,
+          45
+        ],
+        "note": "estimate"
+      },
+      {
+        "what": "Harry Potter collectible minifigures (Series 1 and 2, roughly 30–40)",
+        "value": [
+          120,
+          180
+        ],
+        "note": "count is a guess from the photos"
+      }
+    ]
+  },
+  {
+    "id": "eb-235575152918",
+    "title": "Pink LEGO storage box, large, with LEGO",
+    "url": "https://www.ebay.com/itm/235575152918",
+    "source": "eBay (local pickup)",
+    "location": "Norwalk, CT",
+    "miles": 23,
+    "listed": "Buy It Now or best offer",
+    "asking": 70,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 112% of the estimated value. A small amount of loose LEGO with lots of Friends-colour pieces; the pink storage brick is most of the value.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Pink storage brick with loose LEGO, lots of Friends colours"
+      }
+    ],
+    "estimate": {
+      "low": 50,
+      "high": 75
+    },
+    "verdict": "Pass",
+    "summary": "A large pink 8-stud LEGO storage brick holding maybe 6–8 lb of loose LEGO, with three green baseplates. Lots of Friends-colour pieces (pink, magenta, lime, light aqua), which we value lower. The storage brick alone sells for about $25–35. $70 is above what it's worth to us.",
+    "items": [
+      {
+        "what": "Pink 8-stud LEGO storage brick",
+        "value": [
+          25,
+          35
+        ],
+        "note": ""
+      },
+      {
+        "what": "6–8 lb loose LEGO, Friends-colour heavy",
+        "value": [
+          15,
+          25
+        ],
+        "note": "guess from photos"
+      },
+      {
+        "what": "Three green baseplates",
+        "value": [
+          10,
+          15
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
     "id": "fb-1151358924197052",
     "title": "LEGO Minecraft The Red Barn 21187, sealed",
     "url": "https://www.facebook.com/marketplace/item/1151358924197052/",
