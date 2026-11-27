@@ -1114,13 +1114,14 @@
       const shown = pick(s.missing);
       const n = count(shown);
       const img = (String(s.setNumber).match(/^\d+/) || [''])[0];
-      return `<section class="ms-set">
+      return `<section class="ms-set mp-sortable">
         <div class="ms-set-head ph-clickable" data-set="${s.setNumber}">
           <img src="https://images.brickset.com/sets/images/${setCatalogId(s.setNumber) || img + '-1'}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
           <div><div class="ms-set-name">${s.name}</div><div class="tb-meta">${s.setNumber} &middot; ${s.year} &middot; ${n} missing &middot; ${s.condition}${s.checked ? ` &middot; ${checkedLabel(s)}` : ''}</div></div>
           ${(c => c.total ? `<div class="ms-set-cost"><span>Cost to replace</span><b>${costLabel(c, true)}</b></div>` : '')(missingCost(shown))}
         </div>
-        <div class="mp-grid">${shown.map(missingCardHtml).join('')}</div>
+        ${shown.length > 1 ? missingSortBar() : ''}
+        <div class="mp-grid">${shown.map((m, i) => missingCardHtml(m, i)).join('')}</div>
       </section>`;
     };
     // By set: grouped by theme in collapsible sections (closed by default, opened by a search or a piece filter)
@@ -1165,7 +1166,7 @@
           ${imgTag(minifigImgUrls(f.id))}
           <div><div class="ms-set-name">${f.name}</div><div class="tb-meta"><a href="${figUrl}" target="_blank" rel="noopener">${f.id}</a> &middot; ${figTheme(f.id)}${f.copies > 1 ? ` &middot; ${f.copies} copies` : ''} &middot; ${n} missing${f.from ? ` &middot; ${f.from}` : ''}</div></div>
         </div>
-        <div class="mp-grid">${shown.map(missingCardHtml).join('')}</div>
+        <div class="mp-grid">${shown.map((m, i) => missingCardHtml(m, i)).join('')}</div>
       </section>`;
     };
     // Search matches the minifig's name, ID, theme, set, or any of its missing parts
@@ -1694,10 +1695,11 @@
     const list = Array.isArray(missing) ? missing : [];
     if (!list.length) return '<p class="ph-missing-none">No missing pieces recorded.</p><button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button><div class="ph-picker"></div>';
     const total = list.reduce((a, m) => a + (m.qty || 1), 0);
-    const rows = list.map(missingCardHtml).join('');
-    return `<div class="ph-missing">
+    const rows = list.map((m, i) => missingCardHtml(m, i)).join('');
+    return `<div class="ph-missing mp-sortable">
       <div class="ph-missing-title">Missing pieces (${total})</div>
       ${(c => `<div class="ph-missing-cost"><span>Cost to replace</span><b>${costLabel(c) || 'not priced yet'}</b><small>BrickLink average sold price per piece, shipping extra</small></div>`)(missingCost(list))}
+      ${list.length > 1 ? missingSortBar() : ''}
       <div class="mp-grid">${rows}</div>
     </div>
     <button class="ph-pick-btn" type="button">Choose missing pieces from the parts list</button>
@@ -1743,7 +1745,62 @@
     return `<img src="${urls[0]}" data-alt="${urls.slice(1).join('|')}" alt="" loading="lazy" onerror="nextImg(this)"${extra || ''}>`;
   }
 
-  function missingCardHtml(m) {
+  // Broad kind of piece for sorting a missing list by type ("Brick", "Plate", "Minifig parts"...)
+  const PART_KINDS = ['Whole minifigs', 'Minifig parts', 'Brick', 'Plate', 'Tile', 'Slope', 'Wedge', 'Arch', 'Panel', 'Technic', 'Hinge', 'Support', 'Bar', 'Hose', 'Chain', 'Plant', 'Turntable', 'Seat', 'Antenna', 'Other'];
+  function partKind(m) {
+    const t = pieceType(m);
+    if (t === 'fig') return 'Whole minifigs';
+    const n = (m.name || '').toLowerCase();
+    if (t !== 'other' && !/technic|brick|plate|tile/.test(n)) return 'Minifig parts';
+    const k = PART_KINDS.slice(2, -1).find(x => n.includes(x.toLowerCase()));
+    return k || (t !== 'other' || /torso|cape/.test(n) ? 'Minifig parts' : 'Other');
+  }
+  // Sort bar for a list of missing-piece cards (sorting happens in the page, see the .mp-sort-btn handler)
+  function missingSortBar() {
+    return `<div class="mp-sortbar">Sort: ${[['', 'As logged'], ['price-desc', 'Price ↓'], ['price-asc', 'Price ↑'], ['type', 'Type'], ['color', 'Colour'], ['qty', 'Quantity']]
+      .map(([k, l]) => `<button type="button" class="mp-sort-btn${k ? '' : ' active'}" data-sort="${k}">${l}</button>`).join('')}</div>`;
+  }
+  document.addEventListener('click', e => {
+    const btn = e.target.closest && e.target.closest('.mp-sort-btn');
+    if (!btn) return;
+    const wrap = btn.closest('.mp-sortable');
+    const grid = wrap && wrap.querySelector('.mp-grid');
+    if (!grid) return;
+    wrap.querySelectorAll('.mp-sort-btn').forEach(b => b.classList.toggle('active', b === btn));
+    const how = btn.dataset.sort;
+    const num = (el, k) => parseFloat(el.dataset[k]);
+    const cards = [...grid.children];
+    const byPrice = (a, b) => num(b, 'total') - num(a, 'total');
+    const cmp = {
+      '': (a, b) => num(a, 'i') - num(b, 'i'),
+      'price-desc': byPrice,
+      'price-asc': (a, b) => { const x = num(a, 'total'), y = num(b, 'total'); return (x < 0) - (y < 0) || x - y; },
+      'type': (a, b) => num(a, 'kind') - num(b, 'kind') || byPrice(a, b),
+      'color': (a, b) => a.dataset.color.localeCompare(b.dataset.color) || byPrice(a, b),
+      'qty': (a, b) => num(b, 'qty') - num(a, 'qty') || byPrice(a, b)
+    }[how];
+    cards.sort(cmp).forEach(c => grid.appendChild(c));
+    // Group headings when sorted by type or colour
+    grid.querySelectorAll('.mp-group-label').forEach(x => x.remove());
+    if (how === 'type' || how === 'color') {
+      let last = null;
+      [...grid.children].forEach(c => {
+        const key = how === 'type' ? c.dataset.kindname : (c.dataset.color || 'Other');
+        if (key !== last) {
+          const sub = [...grid.children].filter(x => (how === 'type' ? x.dataset.kindname : (x.dataset.color || 'Other')) === key);
+          const pcs = sub.reduce((a, x) => a + num(x, 'qty'), 0);
+          const cost = sub.reduce((a, x) => a + Math.max(0, num(x, 'total')), 0);
+          const h = document.createElement('div');
+          h.className = 'mp-group-label';
+          h.innerHTML = `${key} <span>${pcs} piece${pcs === 1 ? '' : 's'}${cost ? ' &middot; ' + fmtFull(cost) : ''}</span>`;
+          grid.insertBefore(h, c);
+          last = key;
+        }
+      });
+    }
+  });
+
+  function missingCardHtml(m, i) {
       const blUrl = bricklinkPartUrl(m);
       const part = m.part && m.colorId != null
         ? `<a href="${blUrl}" target="_blank" rel="noopener">${m.part}</a>`
@@ -1757,7 +1814,9 @@
         rebrickablePartImg(m),
         m.part && m.colorId != null ? `https://img.bricklink.com/ItemImage/PN/${m.colorId}/${encodeURIComponent(m.part)}.png` : ''];
       const img = imgTag(urls) || '<div class="mp-noimg">?</div>';
-      return `<div class="mp-card">
+      const each = partPrice(m), qty = m.qty || 1, kindName = partKind(m);
+      const attrs = `data-i="${i || 0}" data-qty="${qty}" data-total="${each != null ? each * qty : -1}" data-kind="${PART_KINDS.indexOf(kindName)}" data-kindname="${kindName}" data-color="${(m.type === 'M' ? 'Whole minifigure' : m.color || '').replace(/"/g, '&quot;')}"`;
+      return `<div class="mp-card" ${attrs}>
         <span class="mp-qty">${m.qty || 1}&times;</span>
         ${img}
         <div class="mp-name">${m.name || 'Part'}</div>
