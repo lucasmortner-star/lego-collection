@@ -15,6 +15,437 @@ const AUTO_PASS_PCT = 85;
 
 const DEALS = [
   {
+    "id": "fb-2224595054842399",
+    "title": "LEGO Star Wars UCS Razor Crest (75331), sealed",
+    "url": "https://www.facebook.com/marketplace/item/2224595054842399/",
+    "source": "Facebook Marketplace",
+    "location": "Brookfield, CT",
+    "miles": 9,
+    "listed": "Listed about an hour before we looked",
+    "asking": 650,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 93% of the estimated value. A sealed, retired UCS Razor Crest at roughly the going sealed price (BrickEconomy about $710), so there's no discount here.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Sealed 75331 box, still in its shipping carton"
+      }
+    ],
+    "estimate": {
+      "low": 650,
+      "high": 750
+    },
+    "verdict": "Fair",
+    "summary": "New, sealed UCS Razor Crest (75331, 6,187 pieces), retired in 2024. Sealed copies are valued at about $710 on BrickEconomy. $650 is a normal market price, not a deal, and it's a display piece rather than something worth opening at that price.",
+    "items": [
+      {
+        "what": "75331 UCS The Razor Crest (sealed)",
+        "value": [
+          650,
+          750
+        ],
+        "note": "BrickEconomy sealed value $710; retail was $599.99"
+      }
+    ]
+  },
+  {
+    "id": "fb-1016006084877127",
+    "title": "Sealed Lord of the Rings 9473 Mines of Moria + 9471 Uruk-hai Army",
+    "url": "https://www.facebook.com/marketplace/item/1016006084877127/",
+    "source": "Facebook Marketplace",
+    "location": "Danbury, CT",
+    "miles": 11,
+    "listed": "Listed 2 days before we looked",
+    "asking": 950,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 106% of the estimated value. Two genuinely good retired LOTR sets, sealed, but $950 firm is above what they sell for sealed (about $600 + $330).",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Sealed 9473 The Mines of Moria box"
+      }
+    ],
+    "estimate": {
+      "low": 850,
+      "high": 950
+    },
+    "verdict": "Pass",
+    "summary": "Two sealed 2012 Lord of the Rings sets: 9473 The Mines of Moria and 9471 Uruk-hai Army. Both are retired and sought after; BrickEconomy values them sealed at about $596 and $330. The price is firm at $950 for both, which is at or above market, so there's no room for a deal.",
+    "items": [
+      {
+        "what": "9473 The Mines of Moria (sealed)",
+        "value": [
+          560,
+          620
+        ],
+        "note": "BrickEconomy sealed $596"
+      },
+      {
+        "what": "9471 Uruk-hai Army (sealed)",
+        "value": [
+          290,
+          330
+        ],
+        "note": "BrickEconomy sealed $330"
+      }
+    ]
+  },
+  {
+    "id": "fb-2422511871616077",
+    "title": "Star Wars LEGO lot: 6 sealed sets + free Speed Champions F1",
+    "url": "https://www.facebook.com/marketplace/item/2422511871616077/",
+    "source": "Facebook Marketplace",
+    "location": "Bristol, CT",
+    "miles": 32,
+    "listed": "Listed 2 days before we looked",
+    "asking": 650,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 85% of the estimated value. All sealed, but four of the six are still in stores, so they sell for around or below retail; only the Jedi Scout Fighter (damaged box) and Onyx Cinder are retired.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "All seven boxes: Razor Crest, V-19, Dark Falcon, Onyx Cinder, Millennium Falcon, Jedi Scout Fighter, Audi F1"
+      }
+    ],
+    "estimate": {
+      "low": 700,
+      "high": 830
+    },
+    "verdict": "Fair",
+    "summary": "Six sealed Star Wars sets (75447 Razor Crest, 75389 Dark Falcon, 75426 Millennium Falcon, 75432 V-19 Torrent, 75374 Onyx Cinder, 75051 Jedi Scout Fighter with a damaged box) plus a free 77259 Audi F1 car. The seller's '$905 market' uses full retail; four of these are still sold in stores and go for less on the secondary market. Worth roughly $700–830 as sealed sets, so $650 is only about 15% off: fair, not a deal. Seller takes offers.",
+    "items": [
+      {
+        "what": "75051 Jedi Scout Fighter (2014, sealed, damaged box)",
+        "value": [
+          180,
+          220
+        ],
+        "note": "BrickLink new avg $219 (6 sales); box damage lowers it"
+      },
+      {
+        "what": "75389 The Dark Falcon (sealed, retiring soon)",
+        "value": [
+          150,
+          170
+        ],
+        "note": "retail $179.99"
+      },
+      {
+        "what": "75447 The Razor Crest (2026, sealed)",
+        "value": [
+          120,
+          140
+        ],
+        "note": "retail $149.99, still in stores"
+      },
+      {
+        "what": "75374 The Onyx Cinder (sealed, retired)",
+        "value": [
+          100,
+          120
+        ],
+        "note": "BrickLink new avg $108"
+      },
+      {
+        "what": "75426 Millennium Falcon (SMART Play, sealed)",
+        "value": [
+          80,
+          90
+        ],
+        "note": "retail $99.99, still in stores"
+      },
+      {
+        "what": "75432 V-19 Torrent Starfighter (sealed)",
+        "value": [
+          50,
+          60
+        ],
+        "note": "retail $64.99"
+      },
+      {
+        "what": "77259 Audi Revolut F1 R26 (sealed, free)",
+        "value": [
+          20,
+          25
+        ],
+        "note": "retail $27.99"
+      }
+    ]
+  },
+  {
+    "id": "fb-3516760208503761",
+    "title": "Legos (bins of mixed, mostly taken-apart sets)",
+    "url": "https://www.facebook.com/marketplace/item/3516760208503761/",
+    "source": "Facebook Marketplace",
+    "location": "Bristol, CT",
+    "miles": 32,
+    "listed": "Listed 4 days before we looked",
+    "asking": 300,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 158% of the estimated value. Mostly loose, taken-apart sets with lots of Friends-colour pieces; $300 is well above what this kind of bulk is worth.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Three bins: bagged parts, a bag of about 40–50 minifigs, lots of pink, lavender and light aqua plates"
+      }
+    ],
+    "estimate": {
+      "low": 150,
+      "high": 230
+    },
+    "verdict": "Pass",
+    "summary": "Three or four bins of mixed, mostly taken-apart LEGO going in a garbage bag (bins not included). The seller mentions a Disney castle, a Frozen set, a tree house, Baby Yoda and Mandalorian, and lots of Friends sets and pets; the photos show lots of Friends-colour pieces (pink, lavender, light aqua) plus a bag of maybe 40–50 minifigures. Not our usual theme, low resale, and it would need hours of sorting. $300 is far over what it's worth.",
+    "items": [
+      {
+        "what": "Loose mixed parts, roughly 25–35 lb, Friends-colour heavy",
+        "value": [
+          90,
+          140
+        ],
+        "note": "guess from photos; Friends colours valued lower"
+      },
+      {
+        "what": "Bag of about 40–50 minifigures (mostly City/Friends/Disney)",
+        "value": [
+          40,
+          70
+        ],
+        "note": "can't identify individually"
+      },
+      {
+        "what": "Star Wars Mandalorian/Grogu pieces",
+        "value": [
+          20,
+          30
+        ],
+        "note": "mentioned, not clearly shown"
+      }
+    ]
+  },
+  {
+    "id": "fb-1149231631189407",
+    "title": "Yoda 2002 LEGO set #7194 (UCS), built",
+    "url": "https://www.facebook.com/marketplace/item/1149231631189407/",
+    "source": "Facebook Marketplace",
+    "location": "Ansonia, CT",
+    "miles": 20,
+    "listed": "Listed 3 days before we looked",
+    "asking": 200,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 98% of the estimated value. Built UCS Yoda at the normal used price (BrickLink used avg about $207). Also, the description says 'door pickup in Deltona Florida', which doesn't match the Ansonia location.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Built 7194 Yoda"
+      }
+    ],
+    "estimate": {
+      "low": 180,
+      "high": 230
+    },
+    "verdict": "Fair",
+    "summary": "The 2002 UCS Yoda (7194), built and looking complete, with no box or instructions shown. Used ones have sold for about $207 on BrickLink in the last six months, so $200 is market price. Be careful: the listing says Ansonia, CT but the description says door pickup in Deltona, Florida.",
+    "items": [
+      {
+        "what": "7194 UCS Yoda (built, no box shown)",
+        "value": [
+          180,
+          230
+        ],
+        "note": "BrickLink used avg $207 (8 sales)"
+      }
+    ]
+  },
+  {
+    "id": "fb-1674330497766731",
+    "title": "LEGO Wild West Limited Edition Gift Pack 6755 6712 6716 (vintage, used, incomplete)",
+    "url": "https://www.facebook.com/marketplace/item/1674330497766731/",
+    "source": "Facebook Marketplace",
+    "location": "Wolcott, CT",
+    "miles": 26,
+    "listed": "Listed 3 days before we looked",
+    "asking": 1200,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 706% of the estimated value. Used, partly incomplete 1996 Western sets are worth about $140–200 together, nowhere near $1,200.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Gift pack box, 6755 box and manuals, the covered wagon"
+      }
+    ],
+    "estimate": {
+      "low": 140,
+      "high": 200
+    },
+    "verdict": "Pass",
+    "summary": "A 1996 Wild West gift pack box with 6755 Sheriff's Lock-Up (seller says complete with manual), 6716 Covered Wagon (missing a few pieces) and only the box and manual for 6712. Used, 6755 sells for about $80 and 6716 about $49 on BrickLink. The seller is pricing it as if sealed ($1,200), which is several times what it's worth.",
+    "items": [
+      {
+        "what": "6755 Sheriff's Lock-Up (used, complete, manual, box)",
+        "value": [
+          75,
+          100
+        ],
+        "note": "BrickLink used avg $80 (19 sales)"
+      },
+      {
+        "what": "6716 Covered Wagon (used, missing a few pieces)",
+        "value": [
+          35,
+          50
+        ],
+        "note": "BrickLink used avg $49 (29 sales)"
+      },
+      {
+        "what": "6712 box and manual only, plus the gift pack outer box",
+        "value": [
+          30,
+          50
+        ],
+        "note": "collectors' value only"
+      }
+    ]
+  },
+  {
+    "id": "fb-1453984126801667",
+    "title": "Family Reunion Celebration 80113, retired, factory sealed",
+    "url": "https://www.facebook.com/marketplace/item/1453984126801667/",
+    "source": "Facebook Marketplace",
+    "location": "Pound Ridge, NY",
+    "miles": 30,
+    "listed": "Listed 2 days before we looked",
+    "asking": 179,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 94% of the estimated value. Sealed retired 80113 at around the going sealed price, and Chinese New Year isn't one of our themes.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Sealed 80113 box"
+      }
+    ],
+    "estimate": {
+      "low": 170,
+      "high": 210
+    },
+    "verdict": "Fair",
+    "summary": "Sealed 80113 Family Reunion Celebration (Chinese Traditional Festivals, 1,823 pieces), retired. Sealed copies sell for about $180 on BrickLink (BrickEconomy says $218). $179 (reduced from $199) is a market price, and it's not our usual theme.",
+    "items": [
+      {
+        "what": "80113 Family Reunion Celebration (sealed)",
+        "value": [
+          170,
+          210
+        ],
+        "note": "BrickLink new avg $181 (11 sales); BrickEconomy $218"
+      }
+    ]
+  },
+  {
+    "id": "fb-3052919625043692",
+    "title": "LEGO Harry Potter Hogwarts Chamber of Secrets 76389, sealed",
+    "url": "https://www.facebook.com/marketplace/item/3052919625043692/",
+    "source": "Facebook Marketplace",
+    "location": "Bridgeport, CT",
+    "miles": 20,
+    "listed": "Listed 4 days before we looked",
+    "asking": 100,
+    "checked": "2026-11-27",
+    "status": "New",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Front of the sealed 76389 box"
+      },
+      {
+        "src": "02.jpg",
+        "caption": "Back of the box, light shelf wear"
+      }
+    ],
+    "estimate": {
+      "low": 125,
+      "high": 155
+    },
+    "verdict": "Fair",
+    "offer": 85,
+    "summary": "Sealed Hogwarts Chamber of Secrets (76389, 1,176 pieces, 11 minifigures including the gold 20th-anniversary Voldemort), retired. Sealed copies sell for about $131 on BrickLink (43 sales in six months); BrickEconomy says $160. At $100 it's about 70% of value: fair and close to a deal. A good Harry Potter set to build; worth offering $85.",
+    "items": [
+      {
+        "what": "76389 Hogwarts Chamber of Secrets (sealed)",
+        "value": [
+          125,
+          155
+        ],
+        "note": "BrickLink new avg $131 (43 sales); used avg $93"
+      }
+    ]
+  },
+  {
+    "id": "fb-931748613239213",
+    "title": "LEGO Dinosaur, James Bond, Pokemon",
+    "url": "https://www.facebook.com/marketplace/item/931748613239213/",
+    "source": "Facebook Marketplace",
+    "location": "Waterbury, CT",
+    "miles": 22,
+    "listed": "Listed 3 days before we looked",
+    "asking": 65,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 96% of the estimated value. Two small built LEGO sets plus a Pokémon build that matches no LEGO Pokémon set (probably Mega), so $65 is about what it's worth.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "T. rex, Aston Martin DB5 and the Squirtle/Wartortle/Blastoise build"
+      }
+    ],
+    "estimate": {
+      "low": 55,
+      "high": 80
+    },
+    "verdict": "Fair",
+    "summary": "Built 31151 Terrifying T. rex (Creator 3-in-1), 76911 007 Aston Martin DB5 (Speed Champions) and a Squirtle/Wartortle/Blastoise build. LEGO doesn't make a Blastoise set like that, so it's probably Mega Pokémon, not LEGO. The two LEGO sets are worth about $50 used together; not our usual themes.",
+    "items": [
+      {
+        "what": "31151 Terrifying T. rex (built)",
+        "value": [
+          30,
+          40
+        ],
+        "note": "BrickLink used avg $33 (4 sales)"
+      },
+      {
+        "what": "76911 007 Aston Martin DB5 (built)",
+        "value": [
+          15,
+          20
+        ],
+        "note": "BrickLink used avg $18 (26 sales)"
+      },
+      {
+        "what": "Squirtle/Wartortle/Blastoise build",
+        "value": [
+          10,
+          20
+        ],
+        "note": "probably Mega, not LEGO"
+      }
+    ]
+  },
+  {
     id: "fb-1176325258141815",
     title: "Lego Friends",
     url: "https://www.facebook.com/marketplace/item/1176325258141815/",
