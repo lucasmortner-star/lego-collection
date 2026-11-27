@@ -2038,17 +2038,13 @@
     if (!btns.length) return '';
     return `<div class="dl-actions" data-id="${d.id}">
       ${btns.map(([st, label]) => `<button type="button" class="dl-act dl-act-${st.toLowerCase()}" data-status="${st}">${label}</button>`).join('')}
-      <div class="dl-act-form" hidden>
-        <input type="text" class="dl-act-reason" placeholder="Why are we passing? (optional)">
-        <button type="button" class="dl-act-go">Save</button><button type="button" class="dl-act-cancel">Cancel</button>
-      </div>
       <div class="dl-act-msg"></div>
     </div>`;
   }
   async function saveDealStatus(box, status) {
     const id = box.dataset.id;
     const msg = box.querySelector('.dl-act-msg');
-    const reason = (box.querySelector('.dl-act-reason') || {}).value || '';
+    const reason = '';
     msg.textContent = 'Saving…';
     box.querySelectorAll('button').forEach(b => b.disabled = true);
     try {
@@ -2073,12 +2069,7 @@
     const b = e.target.closest && e.target.closest('.dl-actions button');
     if (!b) return;
     const box = b.closest('.dl-actions');
-    const form = box.querySelector('.dl-act-form');
-    if (b.classList.contains('dl-act-cancel')) { form.hidden = true; box.dataset.pending = ''; box.querySelector('.dl-act-msg').textContent = ''; return; }
-    if (b.classList.contains('dl-act-go')) { saveDealStatus(box, box.dataset.pending); return; }
     const st = b.dataset.status;
-    box.dataset.pending = st;
-    if (st === 'Passed') { form.hidden = false; box.querySelector('.dl-act-reason').focus(); return; }
     saveDealStatus(box, st);
   });
 
