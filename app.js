@@ -2166,15 +2166,38 @@
     const order = { Considering: 0, Offered: 1, Bought: 2 };
     const active = deals.filter(d => d.status !== 'Passed' && d.status !== 'New').sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || b.checked.localeCompare(a.checked));
     const passed = deals.filter(d => d.status === 'Passed').sort((a, b) => b.checked.localeCompare(a.checked));
+    // Weekend estate/garage sales and local auctions that mention LEGO (sales-data.js)
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const sales = (typeof SALES !== 'undefined' ? SALES : [])
+      .filter(x => (x.days || []).some(d => parseDay(d.date) >= today))
+      .sort((a, b) => (b.worthTrip ? 1 : 0) - (a.worthTrip ? 1 : 0) || (a.days[0] || {}).date.localeCompare((b.days[0] || {}).date));
+    const saleCard = x => {
+      const where = [x.address, x.town].filter(Boolean).join(', ');
+      const map = where ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(where)}` : '';
+      const when = (x.days || []).map(d => `<li><b>${parseDay(d.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</b>${d.hours ? ' &middot; ' + esc(d.hours) : ''}</li>`).join('');
+      return `<article class="dl-passed dl-sale${x.worthTrip ? ' dl-sale-go' : ''}">
+        ${x.photo ? `<a href="${esc(x.photo)}" target="_blank" rel="noopener"><img src="${esc(x.photo)}" alt="" loading="lazy"></a>` : ''}
+        <div class="dl-passed-body">
+          <div class="dl-passed-head"><h3>${esc(x.name)}</h3>${x.worthTrip ? '<span class="dl-pill dl-pill-deal">Worth a trip</span>' : ''}</div>
+          <div class="dl-source">${esc(x.type || 'Sale')} &middot; ${esc(x.source || '')}${where ? ' &middot; ' + esc(where) : ''}</div>
+          <ul class="dl-list dl-sale-days">${when}</ul>
+          <p><strong>LEGO:</strong> ${esc(x.lego || '')}${x.note ? ' ' + esc(x.note) : ''}</p>
+          <div class="dl-new-foot">${x.url ? `<a class="dl-link" href="${esc(x.url)}" target="_blank" rel="noopener">See the sale ↗</a>` : ''}${map ? `<a class="dl-link dl-map" href="${map}" target="_blank" rel="noopener">Map ↗</a>` : ''}</div>
+        </div>
+      </article>`;
+    };
     if (!dealsTab) dealsTab = fresh.some(d => d.verdict === 'Deal') ? 'new' : 'active';
     const tab = dealsTab;
     document.getElementById('dlBoard').innerHTML = `
       <div class="dl-tabs">
         <button class="dl-tab${tab === 'new' ? ' active' : ''}" data-dltab="new">🆕 New finds (${fresh.length})</button>
+        <button class="dl-tab${tab === 'sales' ? ' active' : ''}" data-dltab="sales">📍 Weekend sales (${sales.length})</button>
         <button class="dl-tab${tab === 'active' ? ' active' : ''}" data-dltab="active">Considering &amp; bought (${active.length})</button>
         <button class="dl-tab${tab === 'passed' ? ' active' : ''}" data-dltab="passed">Passed (${passed.length})</button>
       </div>
-      ${tab === 'new'
+      ${tab === 'sales'
+        ? `<p class="dl-intro">Estate sales, garage sales and local auctions within 20 miles that mention LEGO. Checked every Thursday for the weekend ahead.</p>` + (sales.map(saleCard).join('') || '<p class="dl-empty">No sales with LEGO found yet. The check runs every Thursday morning.</p>')
+        : tab === 'new'
         ? `<p class="dl-intro">New LEGO listings within 20 miles, checked every morning. Deals are listed first.</p>` + (fresh.map(newCard).join('') || '<p class="dl-empty">No new listings yet. The daily check runs every morning.</p>')
         : tab === 'active'
         ? (active.map(card).join('') || '<p class="dl-empty">Nothing we\'re considering right now.</p>')

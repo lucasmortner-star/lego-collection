@@ -3204,3 +3204,8 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .dl-pill-pass { background: #fee2e2; color: #991b1b; }
 .dl-new-foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); }
 .dl-new-foot .dl-link { font-size: 13px; padding: 5px 12px; }
+.dl-sale { border-left: 5px solid var(--border); }
+.dl-sale-go { border-left-color: #16a34a; }
+.dl-sale-days { list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.dl-map { background: #475569; }
+.dl-map:hover { background: #334155; }
