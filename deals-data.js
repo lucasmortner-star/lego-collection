@@ -15,6 +15,376 @@ const AUTO_PASS_PCT = 85;
 
 const DEALS = [
   {
+    "id": "fb-1151358924197052",
+    "title": "LEGO Minecraft The Red Barn 21187, sealed",
+    "url": "https://www.facebook.com/marketplace/item/1151358924197052/",
+    "source": "Facebook Marketplace",
+    "location": "Brookfield, CT",
+    "miles": 9,
+    "listed": "Listed 2 days before we looked",
+    "asking": 60,
+    "checked": "2026-11-27",
+    "status": "New",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Sealed 21187 The Red Barn box"
+      }
+    ],
+    "estimate": {
+      "low": 90,
+      "high": 110
+    },
+    "verdict": "Deal",
+    "offer": 55,
+    "summary": "Sealed Minecraft 21187 The Red Barn (799 pieces), retired in 2024. Sealed copies sold for about $102 on BrickLink in the last six months (BrickEconomy says $120), and the cheapest one for sale there now is $81. At $60 (down from $100, best offer) it's about 60% of value. Minecraft isn't one of our usual themes, but a sealed retired set like this is easy to resell or a good gift. Offer $55, or just pay $60.",
+    "items": [
+      {
+        "what": "21187 The Red Barn (sealed)",
+        "value": [
+          90,
+          110
+        ],
+        "note": "BrickLink new avg $102 (5 sales); BrickEconomy $120"
+      }
+    ]
+  },
+  {
+    "id": "fb-1160829076812148",
+    "title": "Huge LEGO collection: 60-drawer storage + LEGO table (West Orange, NJ)",
+    "url": "https://www.facebook.com/marketplace/item/1160829076812148/",
+    "source": "Facebook Marketplace",
+    "location": "West Orange, NJ",
+    "miles": 75,
+    "listed": "Listed in West Orange, NJ (date not shown)",
+    "asking": 650,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 173% of the estimated value. Unsorted bulk plus storage carts, 75 miles away, and the display models on top aren't included.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Three rolling drawer carts; the display models on top are NOT included"
+      }
+    ],
+    "estimate": {
+      "low": 300,
+      "high": 450
+    },
+    "verdict": "Pass",
+    "summary": "A big unsorted collection (seller counted about 70 sets' worth, all broken up) in three rolling drawer carts, plus a building table with a pile of loose LEGO on it. The best things in the photos (the Chewbacca, dragon and mech displays) are not included. The loose LEGO looks like maybe 40–70 lb of mixed parts, worth about $4/lb, and the carts are worth about $40 each used. Facebook shows 'Message again', so Alex may have contacted this seller before. Too far and too expensive.",
+    "items": [
+      {
+        "what": "Loose mixed LEGO, roughly 40–70 lb, unsorted",
+        "value": [
+          180,
+          300
+        ],
+        "note": "guess from photos"
+      },
+      {
+        "what": "Three rolling drawer carts (15/15/20 drawers)",
+        "value": [
+          90,
+          120
+        ],
+        "note": "about $68 new each"
+      },
+      {
+        "what": "Building table with gray baseplates",
+        "value": [
+          30,
+          40
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-4jjnaZug98c21wRqnvbgnd",
+    "title": "LEGO Collection: 18 sealed sets from an ex-LEGO employee (priced individually, $2,400 for all)",
+    "url": "https://www.craigslist.org/view/d/fairfield-lego-collection/4jjnaZug98c21wRqnvbgnd",
+    "source": "Craigslist",
+    "location": "Fairfield, CT",
+    "miles": 22,
+    "listed": "Posted 24 days before we looked",
+    "asking": 2400,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 86% of the estimated value. Every set is sealed and priced at roughly 85–95% of market; the $25 in the title is just the cheapest item. Fine prices, but no real deals, and most aren't our themes.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "The sealed boxes"
+      }
+    ],
+    "estimate": {
+      "low": 2600,
+      "high": 2950
+    },
+    "verdict": "Fair",
+    "summary": "A former LEGO employee is selling 18 sealed sets individually (the $25 in the title is just the cheapest item) or all of them for $2,400. Highlights: 10316 Rivendell $499 (still $499.99 at LEGO), 10278 Police Station $330 (sealed value about $375), 21330 Home Alone $285, 4002023 and 4002024 employee gifts, 76423 Hogwarts Express $120, two 10321 Corvettes. Each price is roughly 85–95% of market, so nothing is a real deal; the closest are the 10281 Bonsai Tree at $30 and the Harry Potter 40496 at $27.",
+    "items": [
+      {
+        "what": "10316 Rivendell (sealed, plain shipping box)",
+        "value": [
+          450,
+          500
+        ],
+        "note": "still sold by LEGO at $499.99; asking $499"
+      },
+      {
+        "what": "10278 Police Station (sealed, box OK)",
+        "value": [
+          340,
+          375
+        ],
+        "note": "BrickEconomy $375; asking $330"
+      },
+      {
+        "what": "21330 Home Alone (sealed)",
+        "value": [
+          270,
+          300
+        ],
+        "note": "retail $299.99; asking $285"
+      },
+      {
+        "what": "4002023 Gingerbread House (employee gift, sealed)",
+        "value": [
+          200,
+          222
+        ],
+        "note": "BrickEconomy $222; asking $190"
+      },
+      {
+        "what": "10321 Corvette x2 (sealed)",
+        "value": [
+          360,
+          400
+        ],
+        "note": "BrickEconomy $200 each; asking $185 and $200"
+      },
+      {
+        "what": "4002024 Animals (employee gift, sealed)",
+        "value": [
+          140,
+          152
+        ],
+        "note": "BrickEconomy $152; asking $150"
+      },
+      {
+        "what": "21343 Viking Village, 21336 The Office, 21333 Starry Night (sealed)",
+        "value": [
+          440,
+          490
+        ],
+        "note": "asking $145 each"
+      },
+      {
+        "what": "76423 Hogwarts Express & Hogsmeade Station (sealed, dented)",
+        "value": [
+          115,
+          130
+        ],
+        "note": "asking $120"
+      },
+      {
+        "what": "76401, 76400, 40496 Harry Potter small sets (sealed)",
+        "value": [
+          110,
+          130
+        ],
+        "note": "asking $58, $25, $27"
+      },
+      {
+        "what": "60440 Delivery Truck, 2x 10281 Bonsai, 10311 Orchid (sealed)",
+        "value": [
+          180,
+          230
+        ],
+        "note": "asking $85, $30, $38, $40"
+      }
+    ]
+  },
+  {
+    "id": "cl-jzrSvqZPQzd7HTkwaMyWxP",
+    "title": "legos legos legos: 65 lb in two bins + bin of instruction books",
+    "url": "https://www.craigslist.org/view/d/trumbull-legos-legos-legos/jzrSvqZPQzd7HTkwaMyWxP",
+    "source": "Craigslist",
+    "location": "Trumbull, CT",
+    "miles": 14,
+    "listed": "Posted 8 days before we looked",
+    "asking": 200,
+    "checked": "2026-11-27",
+    "status": "New",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Bin 1, 28 lb: mixed plates, bricks, slopes, some City pieces"
+      },
+      {
+        "src": "02.jpg",
+        "caption": "Bin 2, 37 lb: lots of black, gray and tan, big plates"
+      },
+      {
+        "src": "03.jpg",
+        "caption": "Bin 3: binders of instruction books, including Star Wars 75234"
+      }
+    ],
+    "estimate": {
+      "low": 250,
+      "high": 375
+    },
+    "verdict": "Deal",
+    "offer": 170,
+    "summary": "Two bins of loose LEGO weighed at 28 lb and 37 lb (65 lb in all), plus a bin of instruction books in binders (a Star Wars 75234 AT-AP booklet is visible). The seller says off-brand pieces have been removed and it's clean. Mostly useful colours (black, gray, tan, white, green), not Friends-heavy, with only a few minifigs. At $200 for everything (about $3/lb, best offer) it's about 64% of value. Offer $170; the seller also sells the bins separately ($75 / $100 / $25).",
+    "items": [
+      {
+        "what": "Bin 1, 28 lb loose LEGO",
+        "value": [
+          95,
+          140
+        ],
+        "note": "$3.50–5/lb"
+      },
+      {
+        "what": "Bin 2, 37 lb loose LEGO",
+        "value": [
+          125,
+          185
+        ],
+        "note": "$3.50–5/lb"
+      },
+      {
+        "what": "Bin of instruction books in binders",
+        "value": [
+          30,
+          50
+        ],
+        "note": "can't see which sets beyond 75234"
+      }
+    ]
+  },
+  {
+    "id": "cl-2sLDGQ5XTEzqcKsnLWEMCi",
+    "title": "LEGO Star Trek Enterprise (10356) with shuttle, new in box",
+    "url": "https://www.craigslist.org/view/d/danbury-lego-star-trek-enterprise-with/2sLDGQ5XTEzqcKsnLWEMCi",
+    "source": "Craigslist",
+    "location": "Danbury, CT",
+    "miles": 11,
+    "listed": "Posted 4 months before we looked, renewed a day ago",
+    "asking": 485,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 133% of the estimated value. More than LEGO's own retail ($399.99) for a set that's still in stores, and Star Trek isn't one of our themes.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "10356 box (photo from the same seller's other Enterprise listing; this one has no photos)"
+      }
+    ],
+    "estimate": {
+      "low": 320,
+      "high": 410
+    },
+    "verdict": "Pass",
+    "summary": "New-in-box 10356 U.S.S. Enterprise NCC-1701-D plus a shuttle (probably the gift-with-purchase shuttle set), no photos. The Enterprise is still sold by LEGO for $399.99 and new copies have sold for about $289 on BrickLink; the shuttle adds maybe $20–40. $485 is well over value.",
+    "items": [
+      {
+        "what": "10356 U.S.S. Enterprise NCC-1701-D (sealed)",
+        "value": [
+          290,
+          380
+        ],
+        "note": "retail $399.99; BrickLink new avg $289 (9 sales)"
+      },
+      {
+        "what": "Shuttle (probably a gift-with-purchase set)",
+        "value": [
+          20,
+          40
+        ],
+        "note": "not shown"
+      }
+    ]
+  },
+  {
+    "id": "cl-3qhLUR5mdpa6PXsHa574vx",
+    "title": "LEGO Star Trek Enterprise (10356), brand new in box",
+    "url": "https://www.craigslist.org/view/d/danbury-lego-star-trek-enterprise/3qhLUR5mdpa6PXsHa574vx",
+    "source": "Craigslist",
+    "location": "Danbury, CT",
+    "miles": 11,
+    "listed": "Posted 4 months before we looked, renewed a day ago",
+    "asking": 400,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 119% of the estimated value. Full retail for a set LEGO still sells, and Star Trek isn't one of our themes.",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "10356 U.S.S. Enterprise NCC-1701-D box"
+      }
+    ],
+    "estimate": {
+      "low": 290,
+      "high": 380
+    },
+    "verdict": "Pass",
+    "summary": "Brand new in box 10356 U.S.S. Enterprise NCC-1701-D (3,600 pieces). LEGO still sells it for $399.99 and new copies have sold for about $289 on BrickLink, so $400 is full retail with no discount. Same seller as the $485 listing with a shuttle.",
+    "items": [
+      {
+        "what": "10356 U.S.S. Enterprise NCC-1701-D (sealed)",
+        "value": [
+          290,
+          380
+        ],
+        "note": "retail $399.99; BrickLink new avg $289 (9 sales)"
+      }
+    ]
+  },
+  {
+    "id": "cl-8TpHy97Ki2v1HS6rxM2AEP",
+    "title": "LEGO VW T1 Camper Van 10220, sealed",
+    "url": "https://www.craigslist.org/view/d/shelton-lego-vw-t1-camper-van/8TpHy97Ki2v1HS6rxM2AEP",
+    "source": "Craigslist",
+    "location": "Shelton, CT",
+    "miles": 15,
+    "listed": "Posted 6 months before we looked, renewed 2 days ago",
+    "asking": 200,
+    "checked": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 121% of the estimated value. Sealed 10220 sells for about $156 on BrickLink, so $200 is above market (the seller's price includes shipping).",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Sealed 10220 box"
+      }
+    ],
+    "estimate": {
+      "low": 150,
+      "high": 180
+    },
+    "verdict": "Pass",
+    "summary": "Sealed 10220 Volkswagen T1 Camper Van (2011, retired). Sealed copies have sold for about $156 on BrickLink in the last six months (35 sales; BrickEconomy says $175). $200, which the seller says includes shipping, is above market, and it's not one of our themes.",
+    "items": [
+      {
+        "what": "10220 Volkswagen T1 Camper Van (sealed)",
+        "value": [
+          150,
+          180
+        ],
+        "note": "BrickLink new avg $156 (35 sales); BrickEconomy $175"
+      }
+    ]
+  },
+  {
     "id": "fb-2224595054842399",
     "title": "LEGO Star Wars UCS Razor Crest (75331), sealed",
     "url": "https://www.facebook.com/marketplace/item/2224595054842399/",

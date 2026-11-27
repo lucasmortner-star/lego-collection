@@ -136,7 +136,7 @@ const SCAN = {
    "title": "Local pickup only, price firm, cash only",
    "town": "Bristol, CT",
    "url": "https://www.facebook.com/marketplace/item/1183909434098734/",
-   "status": "Waiting for review",
+   "status": "Not LEGO, skipped",
    "note": "Photo shows small gray Star Wars ships"
   },
   {
@@ -166,13 +166,13 @@ const SCAN = {
    "title": "Marvel legends",
    "town": "New Haven, CT",
    "url": "https://www.facebook.com/marketplace/item/4200818656886865/",
-   "status": "Waiting for review",
+   "status": "Not LEGO, skipped",
    "note": "Probably not LEGO"
   },
   {
    "id": "cl-4jjnaZug98c21wRqnvbgnd",
    "source": "Craigslist",
-   "price": 25.0,
+   "price": 25,
    "title": "LEGO Collection",
    "town": "Fairfield",
    "url": "https://www.craigslist.org/view/d/fairfield-lego-collection/4jjnaZug98c21wRqnvbgnd",
@@ -182,7 +182,7 @@ const SCAN = {
   {
    "id": "cl-jzrSvqZPQzd7HTkwaMyWxP",
    "source": "Craigslist",
-   "price": 200.0,
+   "price": 200,
    "title": "legos legos legos",
    "town": "Trumbull",
    "url": "https://www.craigslist.org/view/d/trumbull-legos-legos-legos/jzrSvqZPQzd7HTkwaMyWxP",
@@ -192,7 +192,7 @@ const SCAN = {
   {
    "id": "cl-2sLDGQ5XTEzqcKsnLWEMCi",
    "source": "Craigslist",
-   "price": 485.0,
+   "price": 485,
    "title": "Lego Star Trek Enterprise With Shuttle",
    "town": "Danbury",
    "url": "https://www.craigslist.org/view/d/danbury-lego-star-trek-enterprise-with/2sLDGQ5XTEzqcKsnLWEMCi",
@@ -202,7 +202,7 @@ const SCAN = {
   {
    "id": "cl-3qhLUR5mdpa6PXsHa574vx",
    "source": "Craigslist",
-   "price": 400.0,
+   "price": 400,
    "title": "Lego Star Trek Enterprise",
    "town": "Danbury",
    "url": "https://www.craigslist.org/view/d/danbury-lego-star-trek-enterprise/3qhLUR5mdpa6PXsHa574vx",
@@ -212,7 +212,7 @@ const SCAN = {
   {
    "id": "cl-8TpHy97Ki2v1HS6rxM2AEP",
    "source": "Craigslist",
-   "price": 200.0,
+   "price": 200,
    "title": "Lego VW T1 Camper Van",
    "town": "fairfield co, CT",
    "url": "https://www.craigslist.org/view/d/shelton-lego-vw-t1-camper-van/8TpHy97Ki2v1HS6rxM2AEP",
