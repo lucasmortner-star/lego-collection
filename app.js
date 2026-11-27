@@ -2198,7 +2198,7 @@
             ? `<span class="dl-pill dl-pill-auto">🤖 Passed automatically</span>${dealPct(d) != null ? ` asking was ~${dealPct(d)}% of value` : ''}`
             : '<span class="dl-pill dl-pill-alex">👤 Passed by Alex</span>'}</div>
           <div class="dl-source">${esc(d.source)}${d.location ? ' &middot; ' + esc(d.location) : ''}${milesTxt(d)} &middot; looked at ${fmtDay(parseDay(d.checked))}${d.estimate ? ` &middot; worth about ${fmt(d.estimate.low)}–${fmt(d.estimate.high)}` : ''}</div>
-          <p>${esc(d.passReason || '')}</p>
+          <p>${esc(d.passReason || d.summary || '')}</p>
           ${d.url ? `<a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>` : ''}
           ${dealActions(d)}
         </div>
