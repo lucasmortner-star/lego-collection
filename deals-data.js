@@ -1,6 +1,8 @@
 // Possible purchases: listings we've looked at (Facebook Marketplace lots and so on).
 // Values are BrickLink average used sold prices (last 6 months) unless a note says otherwise.
-// status: "Considering", "Offered", "Bought" or "Passed".
+// status: "New" (found by the daily Marketplace check, first look only), "Considering", "Offered", "Bought" or "Passed".
+// A "New" listing: id, title, url, source, location, listed, asking, checked, status: "New", photos,
+// estimate { low, high }, verdict ("Deal", "Fair", "Pass" or "Unsure"), offer (optional), summary, items: [{ what, value: [low, high], note }].
 // A passed listing only needs: id, title, url (optional), source, location, asking, checked, status: "Passed",
 // photos (the first one is shown) and passReason.
 // Each set: figs lists the minifigs the set comes with; seen: true when we spotted it in the listing.

@@ -2026,7 +2026,7 @@
   // ===================================================================
   // POSSIBLE BUYS (deals-data.js)
   // ===================================================================
-  let dealsTab = 'active';
+  let dealsTab = null;
   function renderDeals() {
     const deals = typeof DEALS !== 'undefined' ? DEALS : [];
     const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -2038,7 +2038,7 @@
       <div class="mf-stat-card">
         <div class="mf-stat-label">Listings Reviewed</div>
         <div class="mf-stat-value accent">${deals.length}</div>
-        <div class="mf-stat-sub">${open.length} open &middot; ${bought.length} bought &middot; ${passedCount} passed</div>
+        <div class="mf-stat-sub">${deals.filter(d => d.status === 'New').length} new &middot; ${open.length} open &middot; ${bought.length} bought &middot; ${passedCount} passed</div>
       </div>
       <div class="mf-stat-card">
         <div class="mf-stat-label">Asking (open)</div>
@@ -2136,16 +2136,47 @@
         </div>
       </article>`;
     };
+    // Listings the daily Marketplace check found and reviewed automatically (status "New")
+    const newCard = d => {
+      const base = `deals/${d.id}/`;
+      const mid = d.estimate ? (d.estimate.low + d.estimate.high) / 2 : 0;
+      const pct = mid ? Math.round(d.asking / mid * 100) : null;
+      const v = (d.verdict || 'Unsure');
+      return `<article class="dl-new dl-new-${v.toLowerCase().replace(/[^a-z]/g, '')}">
+        <div class="dl-new-photos">${(d.photos || []).slice(0, 6).map(ph => `<a href="${base}${ph.src}" target="_blank" rel="noopener"><img src="${base}${ph.src}" alt="${esc(ph.caption || '')}" loading="lazy"></a>`).join('')}</div>
+        <div class="dl-new-body">
+          <div class="dl-passed-head">
+            <h3>${esc(d.title)}</h3>
+            <div class="dl-price">${fmt(d.asking)}</div>
+          </div>
+          <div class="dl-source">${esc(d.source || 'Facebook Marketplace')}${d.location ? ' &middot; ' + esc(d.location) : ''}${d.listed ? ' &middot; ' + esc(d.listed) : ''} &middot; found ${fmtDay(parseDay(d.checked))}</div>
+          <div class="dl-new-verdict"><span class="dl-pill dl-pill-${v.toLowerCase().replace(/[^a-z]/g, '')}">${esc(v)}</span>
+            ${d.estimate ? `worth about <b>${fmt(d.estimate.low)}–${fmt(d.estimate.high)}</b>${pct != null ? ` &middot; asking is ~${pct}% of value` : ''}` : ''}
+            ${d.offer ? ` &middot; offer about <b>${fmt(d.offer)}</b>` : ''}</div>
+          <p>${esc(d.summary || '')}</p>
+          ${(d.items || []).length ? `<ul class="dl-list">${d.items.map(it => `<li><strong>${esc(it.what)}</strong>${it.value ? ` <span>${range(it.value)}</span>` : ''}${it.note ? ` <span>&middot; ${esc(it.note)}</span>` : ''}</li>`).join('')}</ul>` : ''}
+          <div class="dl-new-foot">${d.url ? `<a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">Open listing ↗</a>` : ''}<span>First look from the daily check. Ask Claude for a full review before buying.</span></div>
+        </div>
+      </article>`;
+    };
+    const fresh = deals.filter(d => d.status === 'New').sort((a, b) => {
+      const rank = x => ({ Deal: 0, Fair: 1, Unsure: 2, Pass: 3 }[x.verdict] ?? 2);
+      return b.checked.localeCompare(a.checked) || rank(a) - rank(b);
+    });
     const order = { Considering: 0, Offered: 1, Bought: 2 };
-    const active = deals.filter(d => d.status !== 'Passed').sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || b.checked.localeCompare(a.checked));
+    const active = deals.filter(d => d.status !== 'Passed' && d.status !== 'New').sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || b.checked.localeCompare(a.checked));
     const passed = deals.filter(d => d.status === 'Passed').sort((a, b) => b.checked.localeCompare(a.checked));
-    const tab = dealsTab === 'passed' ? 'passed' : 'active';
+    if (!dealsTab) dealsTab = fresh.some(d => d.verdict === 'Deal') ? 'new' : 'active';
+    const tab = dealsTab;
     document.getElementById('dlBoard').innerHTML = `
       <div class="dl-tabs">
+        <button class="dl-tab${tab === 'new' ? ' active' : ''}" data-dltab="new">🆕 New finds (${fresh.length})</button>
         <button class="dl-tab${tab === 'active' ? ' active' : ''}" data-dltab="active">Considering &amp; bought (${active.length})</button>
         <button class="dl-tab${tab === 'passed' ? ' active' : ''}" data-dltab="passed">Passed (${passed.length})</button>
       </div>
-      ${tab === 'active'
+      ${tab === 'new'
+        ? `<p class="dl-intro">New LEGO listings within 20 miles, checked every morning. Deals are listed first.</p>` + (fresh.map(newCard).join('') || '<p class="dl-empty">No new listings yet. The daily check runs every morning.</p>')
+        : tab === 'active'
         ? (active.map(card).join('') || '<p class="dl-empty">Nothing we\'re considering right now.</p>')
         : (passed.map(passedCard).join('') || '<p class="dl-empty">No passed listings yet.</p>')}`;
     document.querySelectorAll('.dl-tab').forEach(b => b.addEventListener('click', () => { dealsTab = b.dataset.dltab; renderDeals(); }));
