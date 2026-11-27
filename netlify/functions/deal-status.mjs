@@ -1,8 +1,7 @@
 // Moves a Possible Buys listing to another status ("Considering", "Passed", "Bought", "New")
 // by committing the change to deals-data.js on GitHub; Netlify then redeploys the site.
-// Needs two environment variables in Netlify (Site configuration > Environment variables):
+// Needs one environment variable in Netlify (Site configuration > Environment variables):
 //   GITHUB_TOKEN   fine-grained token with Contents: read & write on lucasmortner-star/lego-collection
-//   DEALS_PASSCODE a family passcode the page asks for once (stops strangers changing the list)
 const REPO = 'lucasmortner-star/lego-collection';
 const FILE = 'deals-data.js';
 const STATUSES = ['New', 'Considering', 'Offered', 'Bought', 'Passed'];
@@ -11,12 +10,11 @@ const json = (status, body) => new Response(JSON.stringify(body), { status, head
 
 export default async (req) => {
   if (req.method !== 'POST') return json(405, { error: 'POST only' });
-  const { GITHUB_TOKEN, DEALS_PASSCODE } = process.env;
-  if (!GITHUB_TOKEN || !DEALS_PASSCODE) return json(500, { error: 'Not set up yet: GITHUB_TOKEN and DEALS_PASSCODE are missing in Netlify.' });
+  const { GITHUB_TOKEN } = process.env;
+  if (!GITHUB_TOKEN) return json(500, { error: 'Not set up yet: GITHUB_TOKEN is missing in Netlify.' });
   let body;
   try { body = await req.json(); } catch { return json(400, { error: 'Bad request' }); }
-  const { id, status, reason, passcode } = body || {};
-  if (passcode !== DEALS_PASSCODE) return json(401, { error: 'Wrong passcode' });
+  const { id, status, reason } = body || {};
   if (!/^[a-z0-9-]+$/i.test(id || '') || !STATUSES.includes(status)) return json(400, { error: 'Bad id or status' });
 
   const api = `https://api.github.com/repos/${REPO}/contents/${FILE}`;

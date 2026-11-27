@@ -2040,7 +2040,6 @@
       ${btns.map(([st, label]) => `<button type="button" class="dl-act dl-act-${st.toLowerCase()}" data-status="${st}">${label}</button>`).join('')}
       <div class="dl-act-form" hidden>
         <input type="text" class="dl-act-reason" placeholder="Why are we passing? (optional)">
-        <input type="password" class="dl-act-pass" placeholder="Family passcode" autocomplete="off">
         <button type="button" class="dl-act-go">Save</button><button type="button" class="dl-act-cancel">Cancel</button>
       </div>
       <div class="dl-act-msg"></div>
@@ -2050,21 +2049,12 @@
     const id = box.dataset.id;
     const msg = box.querySelector('.dl-act-msg');
     const reason = (box.querySelector('.dl-act-reason') || {}).value || '';
-    let passcode = '';
-    try { passcode = localStorage.getItem('dealsPasscode') || ''; } catch (e) {}
-    const typed = (box.querySelector('.dl-act-pass') || {}).value || '';
-    if (typed) passcode = typed;
-    if (!passcode) { box.querySelector('.dl-act-form').hidden = false; box.querySelector('.dl-act-pass').focus(); msg.textContent = 'Enter the family passcode, then Save.'; return; }
     msg.textContent = 'Saving…';
     box.querySelectorAll('button').forEach(b => b.disabled = true);
     try {
-      const r = await fetch('/.netlify/functions/deal-status', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id, status, reason, passcode }) });
+      const r = await fetch('/.netlify/functions/deal-status', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id, status, reason }) });
       const out = await r.json().catch(() => ({}));
-      if (!r.ok) {
-        if (r.status === 401) { try { localStorage.removeItem('dealsPasscode'); } catch (e) {} box.querySelector('.dl-act-form').hidden = false; }
-        throw new Error(out.error || ('Error ' + r.status));
-      }
-      try { localStorage.setItem('dealsPasscode', passcode); } catch (e) {}
+      if (!r.ok) throw new Error(out.error || ('Error ' + r.status));
       const o = dealOverrides(); o[id] = { status, reason, at: Date.now() }; saveDealOverrides(o);
       renderDeals();
       showDealToast(`Moved to ${status === 'Passed' ? 'Passed' : status}. The site updates for everyone in about a minute.`);
@@ -2088,11 +2078,7 @@
     if (b.classList.contains('dl-act-go')) { saveDealStatus(box, box.dataset.pending); return; }
     const st = b.dataset.status;
     box.dataset.pending = st;
-    let havePass = false;
-    try { havePass = !!localStorage.getItem('dealsPasscode'); } catch (e) {}
-    box.querySelector('.dl-act-reason').hidden = st !== 'Passed';
-    box.querySelector('.dl-act-pass').hidden = havePass;
-    if (st === 'Passed' || !havePass) { form.hidden = false; (st === 'Passed' ? box.querySelector('.dl-act-reason') : box.querySelector('.dl-act-pass')).focus(); return; }
+    if (st === 'Passed') { form.hidden = false; box.querySelector('.dl-act-reason').focus(); return; }
     saveDealStatus(box, st);
   });
 
