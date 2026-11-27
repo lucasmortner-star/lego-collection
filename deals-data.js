@@ -169,7 +169,9 @@ const DEALS = [
     listed: "Listed 2 days ago",
     asking: 25,
     checked: "2026-11-27",
-    status: "New",
+    status: "Passed",
+    passedBy: "Alex",
+    statusChanged: "2026-11-27",
     photos: [
       { src: "01.jpg", caption: "The bin" }
     ],
