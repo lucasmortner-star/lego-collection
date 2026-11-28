@@ -15,6 +15,476 @@ const AUTO_PASS_PCT = 85;
 
 const DEALS = [
   {
+    "id": "eb-397014820327",
+    "title": "Massive LEGO lot: built adult sets (Fender, Grogu, Razor Crest, BrickHeadz...)",
+    "url": "https://www.ebay.com/itm/397014820327",
+    "source": "eBay (local pickup)",
+    "location": "Woodbury, CT",
+    "miles": 14,
+    "listed": "Buy It Now $275 (listing date not shown; probably not brand new)",
+    "asking": 275,
+    "checked": "2026-11-28",
+    "status": "New",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Steamboat Willie, Winnie the Pooh, Fender Stratocaster, Medieval Blacksmith and Grogu's plaque (Pooh, Blacksmith and Steamboat Willie already sold)"
+      },
+      {
+        "src": "02.jpg",
+        "caption": "The Child (Grogu), Central Perk, a birds build and the Pickup Truck (truck already sold)"
+      },
+      {
+        "src": "03.jpg",
+        "caption": "Razor Crest 75292 and the Tree House 21318 (Tree House already sold)"
+      },
+      {
+        "src": "04.jpg",
+        "caption": "BrickHeadz (Maleficent, R2-D2, Luke, Cruella...), Speed Champions and small Disney builds"
+      }
+    ],
+    "estimate": {
+      "low": 450,
+      "high": 600
+    },
+    "verdict": "Unsure",
+    "offer": 275,
+    "summary": "Built adult sets, all with instructions but no boxes, from a seller 14 miles away. The description says the whole lot was 'around $500', but the Tree House, Medieval Blacksmith, Steamboat Willie, Winnie the Pooh and Pickup Truck have ALREADY SOLD, so the photos show more than is left. It isn't clear what the $275 Buy It Now covers. What looks left (Fender Stratocaster, Grogu, Razor Crest, Kylo Ren's shuttle 75256, a bagged Fiat 500, Central Perk, about 8 BrickHeadz and some Speed Champions) is worth roughly $450–600 used. If $275 really buys all of that it's a Deal, so it's worth asking the seller exactly what's included.",
+    "items": [
+      {
+        "what": "21329 Fender Stratocaster (built)",
+        "value": [
+          90,
+          110
+        ],
+        "note": "probably still available"
+      },
+      {
+        "what": "75292 The Mandalorian's Razor Crest (built)",
+        "value": [
+          90,
+          110
+        ],
+        "note": "probably still available"
+      },
+      {
+        "what": "75256 Kylo Ren's Shuttle (with minifigs and instructions)",
+        "value": [
+          80,
+          100
+        ],
+        "note": "in description, not pictured"
+      },
+      {
+        "what": "75318 The Child / Grogu (built)",
+        "value": [
+          50,
+          65
+        ]
+      },
+      {
+        "what": "10271 Fiat 500 (in bags)",
+        "value": [
+          50,
+          65
+        ],
+        "note": "'yellow Fiat in plastic bags'"
+      },
+      {
+        "what": "21319 Central Perk (built)",
+        "value": [
+          50,
+          65
+        ],
+        "note": "probably; seen on the shelf"
+      },
+      {
+        "what": "About 8 BrickHeadz plus 2–3 Speed Champions cars and small builds",
+        "value": [
+          60,
+          100
+        ],
+        "note": "rough count"
+      },
+      {
+        "what": "21318 Tree House, 21325 Medieval Blacksmith, 21317 Steamboat Willie, 21326 Winnie the Pooh, 10290 Pickup Truck",
+        "value": [
+          0,
+          0
+        ],
+        "note": "already sold per the seller"
+      }
+    ]
+  },
+  {
+    "id": "eb-397017525208",
+    "title": "5 sealed sets: 75325 N-1 Starfighter, 21340 Space Age, 10314 Dried Flowers, 40622, 76914",
+    "url": "https://www.ebay.com/itm/397017525208",
+    "source": "eBay (local pickup)",
+    "location": "Woodbury, CT",
+    "miles": 14,
+    "listed": "Buy It Now $155 (listing date not shown)",
+    "asking": 155,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "75325 The Mandalorian's N-1 Starfighter, sealed"
+      }
+    ],
+    "estimate": {
+      "low": 140,
+      "high": 175
+    },
+    "verdict": "Fair",
+    "summary": "Five sealed, retired sets from the same Woodbury seller as the big built lot: 75325 Mandalorian's N-1 Starfighter, 21340 Tales of the Space Age, 10314 Dried Flower Centerpiece, 40622 Disney 100 BrickHeadz and 76914 Ferrari 812 Speed Champions. Built and used they're worth about $140–175; sealed they'd resell for about $210–250. At $155 it's a fair price, not a deal.",
+    "items": [
+      {
+        "what": "75325 The Mandalorian's N-1 Starfighter (sealed)",
+        "value": [
+          40,
+          55
+        ]
+      },
+      {
+        "what": "21340 Tales of the Space Age (sealed)",
+        "value": [
+          35,
+          45
+        ]
+      },
+      {
+        "what": "10314 Dried Flower Centerpiece (sealed)",
+        "value": [
+          30,
+          40
+        ]
+      },
+      {
+        "what": "40622 Disney 100 BrickHeadz (sealed)",
+        "value": [
+          25,
+          30
+        ]
+      },
+      {
+        "what": "76914 Ferrari 812 Competizione (sealed)",
+        "value": [
+          10,
+          15
+        ]
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 98% of the estimated value. Five sealed retired sets worth about $140–175 used (more like $210–250 sealed); $155 is a fair price, not a deal."
+  },
+  {
+    "id": "fb-2015859002382005",
+    "title": "LEGO 75951 Grindelwald's Escape + 75200 Ahch-To Island Training, sealed",
+    "url": "https://www.facebook.com/marketplace/item/2015859002382005/",
+    "source": "Facebook Marketplace",
+    "location": "Bristol, CT",
+    "miles": 30,
+    "listed": "Listed a day ago",
+    "asking": 70,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Both boxes, factory sealed"
+      }
+    ],
+    "estimate": {
+      "low": 50,
+      "high": 60
+    },
+    "verdict": "Pass",
+    "summary": "Two small retired sets, both sealed: Fantastic Beasts 75951 Grindelwald's Escape and Star Wars 75200 Ahch-To Island Training. BrickLink sold them for about $19.50 and $37 sealed in the last 6 months (about $12 and $18.50 used), so even sealed they're worth about $57. $70 is above value.",
+    "items": [
+      {
+        "what": "75951 Grindelwald's Escape (sealed)",
+        "value": [
+          17,
+          22
+        ],
+        "note": "BrickLink new avg $19.55; used $12"
+      },
+      {
+        "what": "75200 Ahch-To Island Training (sealed)",
+        "value": [
+          33,
+          40
+        ],
+        "note": "BrickLink new avg $37.17; used $18.50"
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 127% of the estimated value. BrickLink sealed prices add up to about $57 ($31 used), so $70 is more than they're worth."
+  },
+  {
+    "id": "fb-2593609957693584",
+    "title": "\"Huge LEGO collection\" bundle: one bin and four bags",
+    "url": "https://www.facebook.com/marketplace/item/2593609957693584/",
+    "source": "Facebook Marketplace",
+    "location": "Weston, CT",
+    "miles": 17,
+    "listed": "Listing date not shown (cross-posted)",
+    "asking": 60,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "The whole lot: a small bin, some numbered set bags and loose bags"
+      }
+    ],
+    "estimate": {
+      "low": 30,
+      "high": 45
+    },
+    "verdict": "Pass",
+    "summary": "Not really huge: one small bin plus four zip bags of mixed bricks (some numbered bags from a set), maybe 8–12 lb in all. Mostly normal City/Creator colours, no minifigs visible. Worth about $3–5 a pound, so $30–45.",
+    "items": [
+      {
+        "what": "About 8–12 lb of mixed bricks",
+        "value": [
+          30,
+          45
+        ],
+        "note": "estimated from photos"
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 160% of the estimated value. About 8–12 lb of loose bricks for $60, about 1.5 times what it's worth."
+  },
+  {
+    "id": "eb-168587033397",
+    "title": "1 lb 8 oz of minifig weapons and accessories, organised",
+    "url": "https://www.ebay.com/itm/168587033397",
+    "source": "eBay (local pickup)",
+    "location": "Prospect, CT",
+    "miles": 22,
+    "listed": "Buy It Now $174.99 or Best Offer (store listing)",
+    "asking": 175,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Sorted organiser of minifig weapons, helmets, hair and accessories"
+      }
+    ],
+    "estimate": {
+      "low": 70,
+      "high": 110
+    },
+    "verdict": "Pass",
+    "summary": "A reseller's sorted organiser of minifig accessories: swords, guns, helmets, hair, chains, flames, spider webs and some castle shields. Useful but common; loose accessories sell for about $45–70 a pound. Asking $175 is about double.",
+    "items": [
+      {
+        "what": "About 1.5 lb of minifig accessories",
+        "value": [
+          70,
+          110
+        ]
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 194% of the estimated value. Loose minifig accessories priced at about double their value; same seller has a second, similar tub (eb-158084236655)."
+  },
+  {
+    "id": "eb-158084236655",
+    "title": "1 lb 7 oz of minifig weapons and accessories (loose tub)",
+    "url": "https://www.ebay.com/itm/158084236655",
+    "source": "eBay (local pickup)",
+    "location": "Prospect, CT",
+    "miles": 22,
+    "listed": "Buy It Now $174.99 or Best Offer (store listing)",
+    "asking": 175,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Loose tub of minifig accessories"
+      }
+    ],
+    "estimate": {
+      "low": 65,
+      "high": 100
+    },
+    "verdict": "Pass",
+    "summary": "Twin of eb-168587033397 from the same seller: a loose tub of minifig weapons, wings, hair and accessories, plus some odd bricks. About 1.5 lb, worth roughly $65–100.",
+    "items": [
+      {
+        "what": "About 1.4 lb of loose minifig accessories",
+        "value": [
+          65,
+          100
+        ]
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 212% of the estimated value. Loose minifig accessories priced at about double their value."
+  },
+  {
+    "id": "eb-267766065861",
+    "title": "8 lb bulk LEGO bricks, mixed colours",
+    "url": "https://www.ebay.com/itm/267766065861",
+    "source": "eBay (local pickup)",
+    "location": "Naugatuck, CT",
+    "miles": 20,
+    "listed": "Buy It Now $34.99 or Best Offer",
+    "asking": 35,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "The bin: lots of Duplo bricks plus Bionicle and a few System pieces"
+      }
+    ],
+    "estimate": {
+      "low": 18,
+      "high": 30
+    },
+    "verdict": "Pass",
+    "summary": "An 8 lb bin, but the photo shows mostly big Duplo bricks (including Duplo animal pieces) plus Bionicle parts and a few ordinary bricks. Duplo-heavy bulk resells poorly, so it's worth about $18–30.",
+    "items": [
+      {
+        "what": "8 lb mixed, mostly Duplo with some Bionicle",
+        "value": [
+          18,
+          30
+        ]
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 146% of the estimated value. Mostly Duplo and Bionicle bulk; at $35 it's more than it's worth."
+  },
+  {
+    "id": "eb-235932874273",
+    "title": "2 lb of LEGO wheels, rims and tyres",
+    "url": "https://www.ebay.com/itm/235932874273",
+    "source": "eBay (local pickup)",
+    "location": "Ansonia, CT",
+    "miles": 22,
+    "listed": "Buy It Now $39.99 or Best Offer",
+    "asking": 40,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "Bowl of wheels and tyres"
+      }
+    ],
+    "estimate": {
+      "low": 20,
+      "high": 30
+    },
+    "verdict": "Pass",
+    "summary": "A bowl of common car and truck wheels and tyres, about 2 lb. Handy for MOCs, but tyres are heavy and common; worth about $20–30.",
+    "items": [
+      {
+        "what": "About 2 lb of wheels and tyres",
+        "value": [
+          20,
+          30
+        ]
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 160% of the estimated value. Common wheels and tyres at well above their value."
+  },
+  {
+    "id": "eb-137919164574",
+    "title": "24 LEGO and LEGO-inspired minifigures with accessories",
+    "url": "https://www.ebay.com/itm/137919164574",
+    "source": "eBay (local pickup)",
+    "location": "Oxford, CT",
+    "miles": 13,
+    "listed": "Buy It Now $37.49 or Best Offer",
+    "asking": 37,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "All 24 figures, two baby dinosaurs and a few accessories"
+      }
+    ],
+    "estimate": {
+      "low": 18,
+      "high": 30
+    },
+    "verdict": "Pass",
+    "summary": "24 figures, but the title says 'LEGO inspired' and many are clearly knockoffs (chrome Thor, Buzz Lightyear, the soldier figures). Maybe 8–10 are real LEGO City and town figures, plus two real Jurassic World baby dinosaurs. Worth about $18–30.",
+    "items": [
+      {
+        "what": "8–10 real LEGO figures (City, construction)",
+        "value": [
+          10,
+          20
+        ],
+        "note": "can't tell exactly from the photo"
+      },
+      {
+        "what": "2 Jurassic World baby dinosaurs (ankylosaurus, triceratops)",
+        "value": [
+          8,
+          12
+        ]
+      },
+      {
+        "what": "About 14 knockoff figures",
+        "value": [
+          0,
+          0
+        ]
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 154% of the estimated value. Many of the figures are knockoffs; the real LEGO is worth less than the asking price."
+  },
+  {
+    "id": "eb-137753821794",
+    "title": "10 LEGO Harry Potter instruction booklets (76422, 75955, 75957...)",
+    "url": "https://www.ebay.com/itm/137753821794",
+    "source": "eBay (local pickup)",
+    "location": "Newtown, CT",
+    "miles": 2,
+    "listed": "Buy It Now $24.49 or Best Offer",
+    "asking": 24,
+    "checked": "2026-11-28",
+    "photos": [
+      {
+        "src": "01.jpg",
+        "caption": "The booklets: Diagon Alley Weasleys', Hogwarts Express, Knight Bus, Privet Drive, Shrieking Shack and more"
+      }
+    ],
+    "estimate": {
+      "low": 22,
+      "high": 32
+    },
+    "verdict": "Fair",
+    "summary": "Ten Harry Potter instruction booklets only (no bricks), in Newtown: 76422 Weasleys' Wizard Wheezes, 75955 Hogwarts Express, 75957 Knight Bus, 75968 Privet Drive, a Shrieking Shack and several Hogwarts Moments. Only useful if we're rebuilding those sets; booklets sell for about $2–5 each.",
+    "items": [
+      {
+        "what": "10 Harry Potter instruction booklets",
+        "value": [
+          22,
+          32
+        ]
+      }
+    ],
+    "status": "Passed",
+    "passedBy": "auto",
+    "passReason": "Asking is about 89% of the estimated value. Instruction booklets only, priced about at their value; only worth it if we need one of these manuals."
+  },
+  {
     "id": "eb-327472960934",
     "title": "Bionicle Phantoka (2008) lot of 12",
     "url": "https://www.ebay.com/itm/327472960934",
