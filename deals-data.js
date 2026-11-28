@@ -1168,7 +1168,7 @@ const DEALS = [
     "checked": "2026-11-27",
     "status": "Passed",
     "passedBy": "Alex",
-    "passReason": "Alex decided to pass.",
+    "passReason": "Seller says there aren't many minifigures, and nothing recognizable shows in the photos.",
     "statusChanged": "2026-11-28",
     "photos": [
       {
