@@ -24,7 +24,10 @@ const DEALS = [
     "listed": "Buy It Now $275 (listing date not shown; probably not brand new)",
     "asking": 275,
     "checked": "2026-11-28",
-    "status": "New",
+    "status": "Passed",
+    "passedBy": "Alex",
+    "passReason": "Seller is holding out for decent prices (listing unchanged since Jan 2026, several sets already sold elsewhere) and the lot doesn't have sets Alex really wants.",
+    "statusChanged": "2026-11-28",
     "photos": [
       {
         "src": "01.jpg",
