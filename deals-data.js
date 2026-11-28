@@ -179,7 +179,8 @@ const DEALS = [
       }
     ],
     "status": "Passed",
-    "passedBy": "auto",
+    "passedBy": "Alex",
+    "statusChanged": "2026-11-28",
     "passReason": "Asking is about 98% of the estimated value. Five sealed retired sets worth about $140–175 used (more like $210–250 sealed); $155 is a fair price, not a deal."
   },
   {
@@ -1165,8 +1166,10 @@ const DEALS = [
     "listed": "Posted 8 days before we looked",
     "asking": 200,
     "checked": "2026-11-27",
-    "status": "Considering",
-    "statusChanged": "2026-11-27",
+    "status": "Passed",
+    "passedBy": "Alex",
+    "passReason": "Alex decided to pass.",
+    "statusChanged": "2026-11-28",
     "photos": [
       {
         "src": "01.jpg",
